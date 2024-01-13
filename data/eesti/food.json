@@ -1,142 +1,177 @@
 [
   {
     "en": "food",
-    "et": "toit"
+    "et": "toit",
+    "imgUrl": "https://a1canteen.com.au/wp-content/uploads/2021/09/traditional-food-around-the-world-Travlinmad.jpg"
   },
   {
     "en": "apple",
-    "et": "õun"
+    "et": "õun",
+    "imgUrl": "https://tewnj.org/wp-content/uploads/sites/162/2018/04/apple-food-fruit-39803.jpg"
   },
   {
     "en": "banana",
-    "et": "banaan"
+    "et": "banaan",
+    "imgUrl": "https://lovefreshfoods.ca/wp-content/uploads/2020/05/LoveFreshFoods_Bananas_res.jpg"
   },
   {
     "en": "bread",
-    "et": "leib"
+    "et": "leib",
+    "imgUrl": "https://www.besthealthmag.ca/wp-content/uploads/2021/03/shutterstock_380528278-scaled.jpg?resize=1536"
   },
   {
     "en": "cake",
-    "et": "kook"
+    "et": "kook",
+    "imgUrl": "http://www.zastavki.com/pictures/originals/2017Food___Cakes_and_Sweet_Appetizing_pieces_of_cake_with_cream__chocolate_and_strawberries_117333_.jpg"
   },
   {
     "en": "cheese",
-    "et": "juust"
+    "et": "juust",
+    "imgUrl": "http://deliciousfoodandwine.com/wp-content/uploads/2015/03/Dollarphotoclub_53674521.jpg"
   },
   {
     "en": "chicken",
-    "et": "kana"
+    "et": "kana",
+    "imgUrl": "https://a-lifestyle.com/wp-content/uploads/2020/09/Food-chicken-scaled.jpg"
   },
   {
     "en": "chocolate",
-    "et": "šokolaad"
+    "et": "šokolaad",
+    "imgUrl": "https://whiteoakinn.com/wp-content/uploads/2018/02/an-assortment-of-chocolates-e1526662854533.jpg"
   },
   {
     "en": "coffee",
-    "et": "kohv"
+    "et": "kohv",
+    "imgUrl": "https://fthmb.tqn.com/w8H_at2_KzYmmumbJq4LndAgaD0=/3264x2005/filters:fill(auto,1)/coffee-croissant-twenty20_698e38b4-beeb-432b-81a2-cc65e08dc77c-58e5b0e65f9b58ef7e06165e.jpg"
   },
   {
     "en": "cookie",
-    "et": "küpsis"
+    "et": "küpsis",
+    "imgUrl": "https://owlbbaking.com/wp-content/uploads/2018/02/DSC04473-min-scaled.jpg"
   },
   {
     "en": "corn",
-    "et": "mais"
+    "et": "mais",
+    "imgUrl": "https://foodprint.org/wp-content/uploads/2018/10/twenty20_d02bcecc-4ad9-40f2-bee1-88138db195dc.jpg"
   },
   {
     "en": "egg",
-    "et": "muna"
+    "et": "muna",
+    "imgUrl": "http://foodsogoodmall.com/wp-content/uploads/2013/03/Dollarphotoclub_62187824.jpg"
   },
   {
     "en": "fish",
-    "et": "kala"
+    "et": "kala",
+    "imgUrl": "https://media.petsathome.com/wcsstore/pah-cas01/900/1145.jpg"
   },
   {
     "en": "french fries",
-    "et": "friikartulid"
+    "et": "friikartulid",
+    "imgUrl": "https://static.fanpage.it/wp-content/uploads/sites/22/2020/09/iStock-618214356.jpg"
   },
   {
     "en": "grapes",
-    "et": "viinamarjad"
+    "et": "viinamarjad",
+    "imgUrl": "https://m.media-amazon.com/images/S/assets.wholefoodsmarket.com/content/08/cc/7ce0dba74d8c82347bf2a26dc6fa/seasons-sweetest-grapes-hero.jpg"
   },
   {
     "en": "hamburger",
-    "et": "hamburger"
+    "et": "hamburger",
+    "imgUrl": "https://cmx.weightwatchers.com/assets-proxy/weight-watchers/image/upload/v1594406683/visitor-site/prod/ca/burgers_mobile_my18jv"
   },
   {
     "en": "ice cream",
-    "et": "jäätis"
+    "et": "jäätis",
+    "imgUrl": "https://inspirationseek.com/wp-content/uploads/2016/02/Ice-Cream-Pictures.jpg"
   },
   {
     "en": "juice",
-    "et": "mahl"
+    "et": "mahl",
+    "imgUrl": "https://ehonami.blob.core.windows.net/media/2015/05/juice-feast-easiest-gentlest-internal-cleanse.jpg"
   },
   {
     "en": "milk",
-    "et": "piim"
+    "et": "piim",
+    "imgUrl": "https://foodallergycanada.ca/wp-content/uploads/milk-dairy-products.jpg"
   },
   {
     "en": "orange",
-    "et": "apelsin"
+    "et": "apelsin",
+    "imgUrl": "https://www.wallpaperup.com/uploads/wallpapers/2012/08/08/9908/2fa84f3b449270c3f6ced1c2b971d4c2-1000.jpg"
   },
   {
     "en": "pasta",
-    "et": "pasta"
+    "et": "pasta",
+    "imgUrl": "https://www.foodiecrush.com/wp-content/uploads/2019/07/Pomodoro-Sauce-foodiecrush.com-018.jpg"
   },
   {
     "en": "pizza",
-    "et": "pizza"
+    "et": "pizza",
+    "imgUrl": "http://www.wallpaperup.com/uploads/wallpapers/2015/04/11/659101/5ff9c57dcd7405f38eda737bc5be9e1c.jpg"
   },
   {
     "en": "potato",
-    "et": "kartul"
+    "et": "kartul",
+    "imgUrl": "https://i0.wp.com/wonkywonderful.com/wp-content/uploads/2016/03/roasted-potatoes-3.jpg?resize=980%2C1577&ssl=1"
   },
   {
     "en": "rice",
-    "et": "riis"
+    "et": "riis",
+    "imgUrl": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/delish-fried-rice-020-1543875572.jpg?cropu003d0.668xw:1.00xh;0.262xw,0u0026resizeu003d480:*"
   },
   {
     "en": "salad",
-    "et": "salat"
+    "et": "salat",
+    "imgUrl": "https://www.cookingclassy.com/wp-content/uploads/2019/11/best-salad-5.jpg"
   },
   {
     "en": "sandwich",
-    "et": "võileib"
+    "et": "võileib",
+    "imgUrl": "https://wallpaperaccess.com/full/1727371.jpg"
   },
   {
     "en": "sausage",
-    "et": "vorst"
+    "et": "vorst",
+    "imgUrl": "http://evergoodfoods.com/wp-content/uploads/2015/09/Evergood-Fine-Foods_Reasons-to-Go-to-Evergood-Fine-Foods-for-Sausage_Image-1.jpg"
   },
   {
     "en": "soup",
-    "et": "supp"
+    "et": "supp",
+    "imgUrl": "https://itsallgoodvegan.com/wp-content/uploads/2020/10/IMG_7091.jpg"
   },
   {
     "en": "steak",
-    "et": "liha"
+    "et": "liha",
+    "imgUrl": "https://bbqchiefs.com/wp-content/uploads/2019/04/Ribeye-Steak-Garlic-Butter.jpg"
   },
   {
     "en": "sushi",
-    "et": "sushi"
+    "et": "sushi",
+    "imgUrl": "https://www.tripsavvy.com/thmb/LJLRfoSPI_56ihVGr15EBH18yFk=/5096x3418/filters:fill(auto,1)/GettyImages-126553802-56a541cb3df78cf772875a68.jpg"
   },
   {
     "en": "tea",
-    "et": "tee"
+    "et": "tee",
+    "imgUrl": "https://www.thespruceeats.com/thmb/iFRf4rHETVGnwwhCbeT7vh0lELE=/2020x1483/filters:fill(auto,1)/GettyImages-661783421-a81a1b8fd1774855b6a7147e4f5ac069.jpg"
   },
   {
     "en": "tomato",
-    "et": "tomat"
+    "et": "tomat",
+    "imgUrl": "http://www.simplebites.net/wp-content/uploads/2010/07/cherrytoms.jpg"
   },
   {
     "en": "vegetable",
-    "et": "köögivili"
+    "et": "köögivili",
+    "imgUrl": "http://bettervitamin.com/wp-content/uploads/2013/07/vegetables.jpg"
   },
   {
     "en": "water",
-    "et": "vesi"
+    "et": "vesi",
+    "imgUrl": "https://kajabi-storefronts-production.global.ssl.fastly.net/kajabi-storefronts-production/blogs/3762/images/5DzTbQpwRpGrnIwYPs5Q_high_water_content_foods.jpg"
   },
   {
     "en": "wine",
-    "et": "vein"
+    "et": "vein",
+    "imgUrl": "http://kazzit.com/custom/domain_1/image_files/Blog_Photos/sitemgr_shutterstock_311633870.jpg"
   }
 ]

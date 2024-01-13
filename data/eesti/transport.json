@@ -1,454 +1,567 @@
 [
   {
     "en": "transport",
-    "et": "transport"
+    "et": "transport",
+    "imgUrl": "http://www.navata.com/cms/wp-content/uploads/2020/08/transportation-and-logistics.jpeg"
   },
   {
     "en": "car",
-    "et": "auto"
+    "et": "auto",
+    "imgUrl": "https://cdlscan.com/storage/uploads/5fe76d7098c50.jpeg"
   },
   {
     "en": "bus",
-    "et": "buss"
+    "et": "buss",
+    "imgUrl": "http://upload.wikimedia.org/wikipedia/commons/b/ba/London_Transport_bus_RF503_%28MXX_480%29%2C_2010_North_Weald_bus_rally.jpg"
   },
   {
     "en": "train",
-    "et": "rong"
+    "et": "rong",
+    "imgUrl": "https://cabootergroup.com/wp-content/uploads/2019/01/Rail-foto.jpg"
   },
   {
     "en": "bicycle",
-    "et": "jalgratas"
+    "et": "jalgratas",
+    "imgUrl": "http://twincoastcycletransport.co.nz/wp-content/uploads/2017/08/10-Bike-Trailer.jpg"
   },
   {
     "en": "motorcycle",
-    "et": "mootorratas"
+    "et": "mootorratas",
+    "imgUrl": "https://www.heritagemotorcycleshipping.com/wp-content/uploads/2017/10/Heritage-Motorcycle-Pallet-Loading.jpg"
   },
   {
     "en": "plane",
-    "et": "lennuk"
+    "et": "lennuk",
+    "imgUrl": "http://www.wallpaperup.com/uploads/wallpapers/2014/10/22/490254/018fb0a72c15abd51aaac521722be7fa.jpg"
   },
   {
     "en": "ship",
-    "et": "laev"
+    "et": "laev",
+    "imgUrl": "https://www.wallpaperup.com/uploads/wallpapers/2015/10/09/817127/fa7fddbdafadc824c30eb5ca9b21f12e.jpg"
   },
   {
     "en": "taxi",
-    "et": "takso"
+    "et": "takso",
+    "imgUrl": "http://www.uneviepratique.fr/wp-content/uploads/2019/07/Taxis-77.jpg"
   },
   {
     "en": "subway",
-    "et": "metroo"
+    "et": "metroo",
+    "imgUrl": "https://i.pinimg.com/originals/17/73/86/177386a110e48a171d706c3c2bbc73d7.jpg"
   },
   {
     "en": "boat",
-    "et": "paat"
+    "et": "paat",
+    "imgUrl": "https://www.brooksyachttransport.com/wp-content/uploads/Oversize-Boat-Transport-Yacht-Trucking-2048x1152.jpg"
   },
   {
     "en": "truck",
-    "et": "veoauto"
+    "et": "veoauto",
+    "imgUrl": "https://www.ti-insight.com/wp-content/uploads/2019/05/iStock-695894322-road-freight-1-e1562759150629.jpg"
   },
   {
     "en": "van",
-    "et": "buss"
+    "et": "buss",
+    "imgUrl": "https://truckcolors.com/wp-content/uploads/2019/02/bestcargovanforsmallbusiness.jpeg"
   },
   {
     "en": "motorboat",
-    "et": "mootorpaat"
+    "et": "mootorpaat",
+    "imgUrl": "https://thumbs.dreamstime.com/z/transport-motorboat-islands-indonesia-152194469.jpg"
   },
   {
     "en": "bicycle lane",
-    "et": "jalgrattatee"
+    "et": "jalgrattatee",
+    "imgUrl": "https://blog.mackaysposito.com/hs-fs/hubfs/Graphic_1.png?width=275&name=Graphic_1.png"
   },
   {
     "en": "railway",
-    "et": "raudtee"
+    "et": "raudtee",
+    "imgUrl": "http://meerland.com.ua/wp-content/uploads/2017/03/zhd_gruzoperevozki-e1508491515662.jpg"
   },
   {
     "en": "tram",
-    "et": "tramm"
+    "et": "tramm",
+    "imgUrl": "https://www.eudebates.tv/wp-content/uploads/2020/10/Transports-Bordeaux-Metropole-TBM-France-1200x800.jpg"
   },
   {
     "en": "helicopter",
-    "et": "helikopter"
+    "et": "helikopter",
+    "imgUrl": "https://www.wallpaperup.com/uploads/wallpapers/2014/04/30/347130/c7490414417c47917966d2575e04d820.jpg"
   },
   {
     "en": "ferry",
-    "et": "praam"
+    "et": "praam",
+    "imgUrl": "http://www.thetimes.co.uk/imageserver/image/methode/times/prod/web/bin/e43d8ee8-faf5-11e7-a987-7fcf5e9983dc.jpg?crop=3499%2C1968%2C0%2C182"
   },
   {
     "en": "caravan",
-    "et": "kalurikäru"
+    "et": "kalurikäru",
+    "imgUrl": "http://www.ndoecaravans.co.uk/wp-content/uploads/2015/09/DSCF0023.jpg"
   },
   {
     "en": "gondola",
-    "et": "gondel"
+    "et": "gondel",
+    "imgUrl": "https://www.traveldailymedia.com/assets/2019/10/Disney_Skyliner.jpg"
   },
   {
     "en": "motorway",
-    "et": "maantee"
+    "et": "maantee",
+    "imgUrl": "https://i.guim.co.uk/img/media/92804ff9d6156da27ea2e74498f531aa5d98eee2/0_50_3500_2101/master/3500.jpg?width=445&quality=45&auto=format&fit=max&dpr=2&s=d56935be9fa43ceda07dbc9ae4ffbe13"
   },
   {
     "en": "airport",
-    "et": "lennujaam"
+    "et": "lennujaam",
+    "imgUrl": "https://bakersfieldlimoservice.com/wp-content/uploads/2017/09/airport-limo-service.jpg"
   },
   {
     "en": "pedestrian",
-    "et": "jalakäija"
+    "et": "jalakäija",
+    "imgUrl": "https://get.pxhere.com/photo/pedestrian-people-traffic-transportation-transport-waiting-vehicle-public-transport-bus-public-wait-stop-1359223.jpg"
   },
   {
     "en": "street",
-    "et": "tänav"
+    "et": "tänav",
+    "imgUrl": "https://www.tripsavvy.com/thmb/2S-9mwsYM3nRoL1-FZe3R6cFmZc=/960x0/filters:no_upscale():max_bytes(150000):strip_icc()/toronto-streetcar-5b86ecb2c9e77c0050bb9c83.jpg"
   },
   {
     "en": "road",
-    "et": "tee"
+    "et": "tee",
+    "imgUrl": "https://infinite.com.vn/wp-content/uploads/2022/07/28_shutterstock_179200397b.jpg"
   },
   {
     "en": "highway",
-    "et": "maantee"
+    "et": "maantee",
+    "imgUrl": "https://d1.awsstatic.com/industry-images-customer-references/Customer-References-industry-Automotive-Traffic.3882da57b3a500231ab19d5183dc062aa28883f0.jpg"
   },
   {
     "en": "bridge",
-    "et": "sild"
+    "et": "sild",
+    "imgUrl": "http://www.titanvehicle.com/Uploads/products/en_Girder_Bridge_Transport_Trailer.jpg"
   },
   {
     "en": "tunnel",
-    "et": "tunnel"
+    "et": "tunnel",
+    "imgUrl": "https://northeastmaglev.com/wp-content/uploads/2018/10/featured_0004_tunnel.png"
   },
   {
     "en": "parking",
-    "et": "parkimine"
+    "et": "parkimine",
+    "imgUrl": "https://www.stthomas.edu/_media-library/_images/campus-safety/stthomas-parking-transportation-lot.jpg"
   },
   {
     "en": "garage",
-    "et": "garaaž"
+    "et": "garaaž",
+    "imgUrl": "https://sema-fertiggarage.ch/wp-content/uploads/IMG_1067-1024x768.jpg"
   },
   {
     "en": "traffic light",
-    "et": "liiklusmärk"
+    "et": "liiklusmärk",
+    "imgUrl": "https://get.pxhere.com/photo/light-road-trail-traffic-street-car-night-city-urban-travel-motion-transportation-transport-sign-evening-vehicle-darkness-street-light-intersection-lane-lighting-traffic-light-light-trail-public-transport-illuminated-lights-exposure-infrastructure-light-fixture-stop-shape-643485.jpg"
   },
   {
     "en": "roundabout",
-    "et": "ringristmik"
+    "et": "ringristmik",
+    "imgUrl": "https://thumbs.dreamstime.com/z/aerial-view-transport-interchanges-roundabout-traffic-shot-large-two-level-intersection-kashira-highway-moscow-230549966.jpg"
   },
   {
     "en": "railroad",
-    "et": "raudtee"
+    "et": "raudtee",
+    "imgUrl": "https://cabootergroup.com/wp-content/uploads/2019/01/Rail-foto.jpg"
   },
   {
     "en": "intersection",
-    "et": "ristmik"
+    "et": "ristmik",
+    "imgUrl": "https://thumbs.dreamstime.com/z/aerial-view-intersection-transport-city-road-park-161557071.jpg"
   },
   {
     "en": "sidewalk",
-    "et": "kõnnitee"
+    "et": "kõnnitee",
+    "imgUrl": "https://get.pxhere.com/photo/pedestrian-road-street-car-sidewalk-asphalt-metro-transport-vehicle-city-street-lane-infrastructure-urban-city-transporation-850855.jpg"
   },
   {
     "en": "board",
-    "et": "tahvel"
+    "et": "tahvel",
+    "imgUrl": "https://www.marina-shop.de/images/product_images/original_images/480019305-lifestyle-2-big.jpg"
   },
   {
     "en": "pier",
-    "et": "kai"
+    "et": "kai",
+    "imgUrl": "https://get.pxhere.com/photo/sea-ocean-dock-pier-ship-transportation-transport-construction-vessel-vehicle-equipment-mast-harbor-industrial-industry-business-port-freight-shipment-storage-savannah-nautical-container-cargo-shipyard-commercial-trade-georgia-crane-shipping-maritime-commerce-yard-delivery-loading-export-import-construction-equipment-ship-yard-1162693.jpg"
   },
   {
     "en": "bus stop",
-    "et": "bussipeatus"
+    "et": "bussipeatus",
+    "imgUrl": "http://image.digitalinsightresearch.in/uploads/imagelibrary/Archive/Main/10024_N1494_a3.jpg"
   },
   {
     "en": "train station",
-    "et": "rongijaam"
+    "et": "rongijaam",
+    "imgUrl": "https://get.wallhere.com/photo/London-city-urban-vehicle-train-train-station-transport-metro-electricity-Passenger-rapid-transit-tube-metropolitan-area-public-transport-londra-rail-transport-rolling-stock-562798.jpg"
   },
   {
     "en": "cruise ship",
-    "et": "kruiisilaev"
+    "et": "kruiisilaev",
+    "imgUrl": "http://www.newhavenlimo.org/uploads/4/7/3/1/47313633/685751_orig.jpg"
   },
   {
     "en": "airport terminal",
-    "et": "lennujaama terminal"
+    "et": "lennujaama terminal",
+    "imgUrl": "http://c8.alamy.com/comp/B7C7N2/shuttle-bus-between-terminals-at-dulles-international-airport-B7C7N2.jpg"
   },
   {
     "en": "bus station",
-    "et": "bussijaam"
+    "et": "bussijaam",
+    "imgUrl": "http://image.digitalinsightresearch.in/uploads/imagelibrary/Archive/Main/10024_N1494_a3.jpg"
   },
   {
     "en": "wagon",
-    "et": "vagun"
+    "et": "vagun",
+    "imgUrl": "https://www.railweb.ch/wp-content/uploads/2016/02/Lohr_UIC_and_2_standard_trailers_cropped_web.jpg"
   },
   {
     "en": "license plate",
-    "et": "numbrimärk"
+    "et": "numbrimärk",
+    "imgUrl": "http://www.licenseplatemania.com/fotos/amerika/florida/florida11.jpg"
   },
   {
     "en": "fuel",
-    "et": "kütus"
+    "et": "kütus",
+    "imgUrl": "https://24-7stores.com/wp-content/uploads/2016/10/ll2a6842.jpg"
   },
   {
     "en": "driver",
-    "et": "juht"
+    "et": "juht",
+    "imgUrl": "https://www.ntbtrk.com/images/made/docs/iStock-462716947_1620_1080_60.jpg"
   },
   {
     "en": "passenger",
-    "et": "reisija"
+    "et": "reisija",
+    "imgUrl": "https://www.windycitizen.com/wp-content/uploads/2020/10/images1643-5f7efa574b5d3.jpg"
   },
   {
     "en": "ticket",
-    "et": "pilet"
+    "et": "pilet",
+    "imgUrl": "http://www.transport-ticket.org.uk/wp-content/uploads/2018/12/FrontPageMontage-1024x854.jpg"
   },
   {
     "en": "fare",
-    "et": "piletihind"
+    "et": "piletihind",
+    "imgUrl": "https://landtransportguru.net/web/wp-content/uploads/2019/12/Bus-Train-Fares-2019_Front-scaled.jpg"
   },
   {
     "en": "speed limit",
-    "et": "kiiruspiirang"
+    "et": "kiiruspiirang",
+    "imgUrl": "https://c1.wallpaperflare.com/preview/318/423/792/road-speed-limit-transport-drive.jpg"
   },
   {
     "en": "ramp",
-    "et": "ramp"
+    "et": "ramp",
+    "imgUrl": "https://truckszilla.com/wp-content/uploads/ramp-ruck.jpg"
   },
   {
     "en": "crosswalk",
-    "et": "zebra"
+    "et": "zebra",
+    "imgUrl": "https://parkingtickets.org/wp-content/uploads/2018/04/3027096-poster-p-traffic-nyc-1.jpg"
   },
   {
     "en": "luggage",
-    "et": "pagas"
+    "et": "pagas",
+    "imgUrl": "https://foreignpolicyi.org/wp-content/uploads/2019/04/lugggage-2.jpg"
   },
   {
     "en": "baggage",
-    "et": "pagas"
+    "et": "pagas",
+    "imgUrl": "https://media.cntraveler.com/photos/57c48e1b65e6586e551da534/master/w_1200,c_limit/luggage-loading-plane-GettyImages-458222325.jpg"
   },
   {
     "en": "seatbelt",
-    "et": "turvavöö"
+    "et": "turvavöö",
+    "imgUrl": "https://www.qld.gov.au/__data/assets/image/0035/275678/Seatbelt-incorrect-and-correct-way-of-use.jpg"
   },
   {
     "en": "dashboard",
-    "et": "armatuurlaud"
+    "et": "armatuurlaud",
+    "imgUrl": "https://www.slideteam.net/media/catalog/product/cache/1280x720/t/r/transport_management_dashboard_for_logistics_company_with_fleet_status_slide01.jpg"
   },
   {
     "en": "traffic jam",
-    "et": "liiklusummik"
+    "et": "liiklusummik",
+    "imgUrl": "https://get.pxhere.com/photo/pedestrian-road-traffic-street-car-hour-city-urban-downtown-busy-transportation-transport-vehicle-lane-jam-scene-rush-neighbourhood-rush-hour-traffic-congestion-873405.jpg"
   },
   {
     "en": "bus driver",
-    "et": "bussijuht"
+    "et": "bussijuht",
+    "imgUrl": "https://www.onlinedegree.com/wp-content/uploads/2016/11/bus_driver.jpg"
   },
   {
     "en": "taxi driver",
-    "et": "taksijuht"
+    "et": "taksijuht",
+    "imgUrl": "https://www.transportforireland.ie/wp-content/uploads/2019/05/10052019_JB1-16.jpg"
   },
   {
     "en": "railway station",
-    "et": "raudteejaam"
+    "et": "raudteejaam",
+    "imgUrl": "https://www.tripsavvy.com/thmb/3hkjuVgeruKJGIU5xsleM9oQWDs=/2048x1365/filters:fill(auto,1)/DSC_0240-92f4cafe7b634f9f846b9fa747b0e7a7.jpg"
   },
   {
     "en": "metro station",
-    "et": "metroojaam"
+    "et": "metroojaam",
+    "imgUrl": "https://fthmb.tqn.com/xwyLEM-pMV5v76ZwVjOMxroJ5zA=/2118x1417/filters:fill(auto,1)/GettyImages-135568915-56c38e433df78c0b1397889c.jpg"
   },
   {
     "en": "helipad",
-    "et": "helikopteri maandumisplats"
+    "et": "helikopteri maandumisplats",
+    "imgUrl": "https://thumbs.dreamstime.com/z/meter-transport-ship-helipad-sydney-navy-centenary-celebrations-closeup-view-australia-support-rescue-starboard-196285877.jpg"
   },
   {
     "en": "runway",
-    "et": "õhkutõusmisrada"
+    "et": "õhkutõusmisrada",
+    "imgUrl": "https://get.pxhere.com/photo/wing-airport-airplane-aircraft-transport-vehicle-airline-aviation-flight-infrastructure-aeroplane-airliner-runway-jet-aircraft-atmosphere-of-earth-1326406.jpg"
   },
   {
     "en": "bus shelter",
-    "et": "bussipeatus"
+    "et": "bussipeatus",
+    "imgUrl": "https://ampron.eu/wp-content/uploads/2019/06/Ampron-smartcity-bus-shelter-2.jpg"
   },
   {
     "en": "airplane",
-    "et": "lennuk"
+    "et": "lennuk",
+    "imgUrl": "https://wallup.net/wp-content/uploads/2019/09/344761-boeing-747-airliner-aircraft-plane-airplane-boeing-747-transport-36-2.jpg"
   },
   {
     "en": "ferry terminal",
-    "et": "praami terminal"
+    "et": "praami terminal",
+    "imgUrl": "https://thumbs.dreamstime.com/b/ferry-terminal-public-transport-rose-bay-sydney-harbour-australia-51422239.jpg"
   },
   {
     "en": "toll booth",
-    "et": "teemaksu punkt"
+    "et": "teemaksu punkt",
+    "imgUrl": "https://images.moneycontrol.com/static-mcnews/2017/11/Toll-plaza-booth-roads-car-NHAI-770x433.jpg"
   },
   {
     "en": "pedestrian crossing",
-    "et": "jalakäijate ülekäigurada"
+    "et": "jalakäijate ülekäigurada",
+    "imgUrl": "https://www.nps.gov/caco/learn/news/images/Crossing-beacon-in-Eastham.jpg"
   },
   {
     "en": "parking lot",
-    "et": "parkla"
+    "et": "parkla",
+    "imgUrl": "https://www.stthomas.edu/_media-library/_images/campus-safety/stthomas-parking-transportation-lot.jpg"
   },
   {
     "en": "garage entry",
-    "et": "garaaži sissesõit"
+    "et": "garaaži sissesõit",
+    "imgUrl": "https://www.mats.co.nz/wp-content/uploads/2020/03/Rubber-ramp-garage-access-1-800x1067.jpg"
   },
   {
     "en": "bus lane",
-    "et": "bussirada"
+    "et": "bussirada",
+    "imgUrl": "http://www.mumbai77.com/images/newblog/Bus-Only-Lanes.jpg"
   },
   {
     "en": "highway exit",
-    "et": "maantee väljapääs"
+    "et": "maantee väljapääs",
+    "imgUrl": "https://static.epermittest.com/media/filer_public/46/c3/46c3f7f9-6756-40cd-9510-a0728ef6d563/exiting-a-highway.jpg"
   },
   {
     "en": "sailboat",
-    "et": "purjekas"
+    "et": "purjekas",
+    "imgUrl": "https://www.brooksyachttransport.com/wp-content/uploads/Sailboat-Transport-by-Road-2048x685.jpg"
   },
   {
     "en": "bicycle parking",
-    "et": "jalgratta parkla"
+    "et": "jalgratta parkla",
+    "imgUrl": "https://bikeep.com/wp-content/uploads/5docxkspng-shadows3-1.png"
   },
   {
     "en": "taxi stand",
-    "et": "taksopeatus"
+    "et": "taksopeatus",
+    "imgUrl": "https://www.fivepax.com/wp-content/uploads/2019/12/taxi-stand-jfk-1024x768.jpg"
   },
   {
     "en": "railroad crossing",
-    "et": "raudteeülesõit"
+    "et": "raudteeülesõit",
+    "imgUrl": "https://i.ytimg.com/vi/kkJiUTJlxlc/maxresdefault.jpg"
   },
   {
     "en": "uphill",
-    "et": "ülesmäge"
+    "et": "ülesmäge",
+    "imgUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple128/v4/4a/db/f3/4adbf3f4-7bec-4d48-27ce-7a929a837567/source/512x512bb.jpg"
   },
   {
     "en": "downhill",
-    "et": "allamäge"
+    "et": "allamäge",
+    "imgUrl": "https://thumbs.dreamstime.com/z/single-track-downhill-descending-railway-red-cable-car-mountainside-platform-steps-blue-mountains-national-park-134430825.jpg"
   },
   {
     "en": "round trip",
-    "et": "edasi-tagasi sõit"
+    "et": "edasi-tagasi sõit",
+    "imgUrl": "https://cdn.getyourguide.com/img/tour/5e00c65a33348.jpeg/146/Nice-to-Saint-Tropez--Round-Trip-Transportation-by-Boat.jpg"
   },
   {
     "en": "downtown",
-    "et": "kesklinn"
+    "et": "kesklinn",
+    "imgUrl": "https://www.tripsavvy.com/thmb/pjuBHTzdbUlMCxdqIZ0DWp7B4So=/2142x1399/filters:fill(auto,1)/GettyImages-689201164-5be4a54dc9e77c0026de9d49.jpg"
   },
   {
     "en": "destination",
-    "et": "sihtkoht"
+    "et": "sihtkoht",
+    "imgUrl": "https://www.destinationtrans.com/wp-content/uploads/2021/10/trucks-on-highway.jpg"
   },
   {
     "en": "commuter",
-    "et": "pendeldaja"
+    "et": "pendeldaja",
+    "imgUrl": "http://www.actransit.org/wp-content/uploads/afm_205a.jpg"
   },
   {
     "en": "handlebars",
-    "et": "juhtraud"
+    "et": "juhtraud",
+    "imgUrl": "https://thumbs.dreamstime.com/b/motorcycle-handlebars-transport-details-helmet-handlebar-rear-view-mirror-253343091.jpg"
   },
   {
     "en": "accelerator",
-    "et": "gaasipedaal"
+    "et": "gaasipedaal",
+    "imgUrl": "https://i.pinimg.com/originals/71/58/0b/71580b9b6930a84669c6faa9d750fd55.jpg"
   },
   {
     "en": "brakes",
-    "et": "pidurid"
+    "et": "pidurid",
+    "imgUrl": "https://image.freepik.com/free-photo/car-mechanic-changing-car-brakes-transportation-concept_310913-317.jpg"
   },
   {
     "en": "rearview mirror",
-    "et": "tagasivaatepeegel"
+    "et": "tagasivaatepeegel",
+    "imgUrl": "https://thumbs.dreamstime.com/z/large-rear-view-mirror-truck-cab-car-transportation-goods-goods-transport-logistics-company-view-259550540.jpg"
   },
   {
     "en": "turn signal",
-    "et": "suunatuli"
+    "et": "suunatuli",
+    "imgUrl": "https://www.jharlen.com/images/product/large/12837.jpg"
   },
   {
     "en": "gear",
-    "et": "käik"
+    "et": "käik",
+    "imgUrl": "https://thumbs.dreamstime.com/z/gear-transmission-different-transport-set-infographics-icons-75339932.jpg"
   },
   {
     "en": "engine",
-    "et": "mootor"
+    "et": "mootor",
+    "imgUrl": "https://images.squarespace-cdn.com/content/v1/568c49565a56689becb3c612/1593715037605-QYL5KPD0M89I0JJUMIT3/CFM56-3+Aircraft+Engine+Transport"
   },
   {
     "en": "fuel tank",
-    "et": "kütusepaak"
+    "et": "kütusepaak",
+    "imgUrl": "https://mcintoshenergy.com/wp-content/uploads/2018/06/kenworth-3270560_1920-1024x575.jpg"
   },
   {
     "en": "pedals",
-    "et": "pedaalid"
+    "et": "pedaalid",
+    "imgUrl": "https://soundsfunny.org/wp-content/uploads/2022/04/how-to-transport-guitar-pedals-scaled.jpg"
   },
   {
     "en": "bicycle wheel",
-    "et": "jalgratta ratas"
+    "et": "jalgratta ratas",
+    "imgUrl": "https://s3files.core77.com/blog/images/2013/10/HotardCampbellCollier-Transport-5.jpg"
   },
   {
     "en": "motorcycle helmet",
-    "et": "mootorratta kiiver"
+    "et": "mootorratta kiiver",
+    "imgUrl": "https://www.airsoft-gun.eu/32287/helmet-transport-bag-black.jpg"
   },
   {
     "en": "steering wheel",
-    "et": "rooliratas"
+    "et": "rooliratas",
+    "imgUrl": "https://thumbs.dreamstime.com/b/cockpit-trainer-transport-aircraft-steering-wheel-dashboards-two-seats-cockpit-trainer-transport-aircraft-steering-237715773.jpg"
   },
   {
     "en": "airplane wing",
-    "et": "lennuki tiib"
+    "et": "lennuki tiib",
+    "imgUrl": "https://i2-prod.dailypost.co.uk/incoming/article7762126.ece/ALTERNATES/s1227b/beluga-7.jpg"
   },
   {
     "en": "sail",
-    "et": "purjekas"
+    "et": "purjekas",
+    "imgUrl": "https://graindesail.com/img/cms/Grain%20de%20Sail/GDS2-RENDER-v5-00024-L2Onaval-WEB.jpg"
   },
   {
     "en": "rudder",
-    "et": "rool"
+    "et": "rool",
+    "imgUrl": "https://www.transportderudder.be/wp-content/uploads/2016/04/T-De-rudder-transport.jpg"
   },
   {
     "en": "anchor",
-    "et": "ankur"
+    "et": "ankur",
+    "imgUrl": "https://anchortransportation.com/wp-content/uploads/2020/05/contact-banner.jpg"
   },
   {
     "en": "cruise ship deck",
-    "et": "kruiisilaeva tek"
+    "et": "kruiisilaeva tek",
+    "imgUrl": "https://thumbs.dreamstime.com/b/cruise-ship-deck-caribbean-sea-february-crown-princess-open-crown-princess-grand-class-owned-princess-cruises-84417570.jpg"
   },
   {
     "en": "bus ticket",
-    "et": "bussipilet"
+    "et": "bussipilet",
+    "imgUrl": "https://hullisthis.news/wp-content/uploads/2021/06/Scanning-app-ticket-on-bus-SMALLER.jpg"
   },
   {
     "en": "train ticket",
-    "et": "rongipilet"
+    "et": "rongipilet",
+    "imgUrl": "https://www.alamy.com/aggregator-api/download?url=https://c8.alamy.com/comp/D05796/interrail-ticket-with-public-transport-tickets-from-around-europe-D05796.jpg"
   },
   {
     "en": "boarding pass",
-    "et": "pardakaart"
+    "et": "pardakaart",
+    "imgUrl": "https://images.squarespace-cdn.com/content/v1/6189aaf019981f6397a0e1a3/1661458737428-RZGKWPN8LUCJJTJOFH0J/how+to+read+a+boarding+pas"
   },
   {
     "en": "boat ticket",
-    "et": "paadipilet"
+    "et": "paadipilet",
+    "imgUrl": "https://static.vecteezy.com/system/resources/previews/000/454/277/non_2x/vector-ship-cruise-tickets.jpg"
   },
   {
     "en": "truck driver",
-    "et": "veoautojuht"
+    "et": "veoautojuht",
+    "imgUrl": "https://www.ntbtrk.com/images/made/docs/iStock-462716947_1620_1080_60.jpg"
   },
   {
     "en": "wagon wheel",
-    "et": "vaguni ratas"
+    "et": "vaguni ratas",
+    "imgUrl": "https://get.pxhere.com/photo/vintage-wheel-wagon-cart-retro-old-rustic-transportation-vehicle-usa-america-grand-canyon-arizona-rocks-carriage-land-vehicle-horse-and-buggy-816964.jpg"
   },
   {
     "en": "tire",
-    "et": "rehv"
+    "et": "rehv",
+    "imgUrl": "https://centurion.net.au/wp-content/uploads/2017/11/V__6BD8-tyre-trailer.jpg"
   },
   {
     "en": "gas station",
-    "et": "tankla"
+    "et": "tankla",
+    "imgUrl": "https://www.petronas.com/pgb/sites/pgb/files/2022-02/IMG_7955.jpg"
   },
   {
     "en": "parking meter",
-    "et": "pargimõõtur"
+    "et": "pargimõõtur",
+    "imgUrl": "https://www.td.gov.hk/filemanager/en/content_5034/parking%20meter.png"
   },
   {
     "en": "traffic sign",
-    "et": "liiklusmärk"
+    "et": "liiklusmärk",
+    "imgUrl": "https://c8.alamy.com/comp/H6R903/sign-signal-traffic-transportation-transport-collage-collection-set-H6R903.jpg"
   },
   {
     "en": "road sign",
-    "et": "liiklusmärk"
+    "et": "liiklusmärk",
+    "imgUrl": "https://i0.wp.com/onlymyenglish.com/wp-content/uploads/2020/12/Traffic-sign-1-min.png?resize=640%2C1024&ssl=1"
   },
   {
     "en": "speed bump",
-    "et": "kiirustõke"
+    "et": "kiirustõke",
+    "imgUrl": "https://cdn.shopify.com/s/files/1/0015/1162/products/IMG_7166_grande.jpg?v=1285247231"
   },
   {
     "en": "railway track",
-    "et": "raudteerada"
+    "et": "raudteerada",
+    "imgUrl": "https://get.pxhere.com/photo/track-transport-rail-transport-land-vehicle-vehicle-train-rolling-stock-lane-public-transport-1368563.jpg"
   }
 ]

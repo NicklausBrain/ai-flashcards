@@ -1,650 +1,812 @@
 [
   {
     "en": "dog",
-    "et": "koer"
+    "et": "koer",
+    "imgUrl": "https://www.wallpaperup.com/uploads/wallpapers/2015/09/03/798344/e5a2a103cae14869c9ccd9e418982d2f.jpg"
   },
   {
     "en": "cat",
-    "et": "kass"
+    "et": "kass",
+    "imgUrl": "https://pixnio.com/free-images/2017/09/26/2017-09-26-07-22-55.jpg"
   },
   {
     "en": "elephant",
-    "et": "elevant"
+    "et": "elevant",
+    "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/3/37/African_Bush_Elephant.jpg"
   },
   {
     "en": "lion",
-    "et": "lõvi"
+    "et": "lõvi",
+    "imgUrl": "https://greatzoo.org/media/library/fluid-ext-editor-widget/64/image/AdobeStock_59396481.jpeg?23"
   },
   {
     "en": "tiger",
-    "et": "tiiger"
+    "et": "tiiger",
+    "imgUrl": "https://endangeredwonders.org/wp-content/uploads/2019/07/Tiger-Header-Ca.jpg"
   },
   {
     "en": "monkey",
-    "et": "ahv"
+    "et": "ahv",
+    "imgUrl": "http://www.bestwebsiteinindia.com/blog/wp-content/uploads/2018/01/Rhesus-Macaque.jpg"
   },
   {
     "en": "horse",
-    "et": "hobune"
+    "et": "hobune",
+    "imgUrl": "https://thypix.com/wp-content/uploads/horse-53.jpg"
   },
   {
     "en": "cow",
-    "et": "lehm"
+    "et": "lehm",
+    "imgUrl": "http://upload.wikimedia.org/wikipedia/commons/0/0c/Cow_female_black_white.jpg"
   },
   {
     "en": "butterfly",
-    "et": "liblikas"
+    "et": "liblikas",
+    "imgUrl": "https://cdn.onlyinyourstate.com/wp-content/uploads/2017/09/16071290737_f25d7d19c3_k.jpg"
   },
   {
     "en": "sheep",
-    "et": "lammas"
+    "et": "lammas",
+    "imgUrl": "https://vignette.wikia.nocookie.net/animals/images/b/ba/Sheep.jpg/revision/latest?cb=20190209033122"
   },
   {
     "en": "crocodile",
-    "et": "krokodill"
+    "et": "krokodill",
+    "imgUrl": "https://get.wallhere.com/photo/crocodilia-crocodile-alligator-reptile-american-alligator-nile-crocodile-fauna-terrestrial-animal-Bank-wildlife-grass-organism-898982.jpg"
   },
   {
     "en": "snake",
-    "et": "madu"
+    "et": "madu",
+    "imgUrl": "http://wallup.net/wp-content/uploads/2016/01/180357-animals-snake-reptile.jpg"
   },
   {
     "en": "penguin",
-    "et": "pingviin"
+    "et": "pingviin",
+    "imgUrl": "http://static1.wikia.nocookie.net/__cb20120623094937/animals/images/2/28/King_Penguin_Closeup.jpg"
   },
   {
     "en": "elephant",
-    "et": "elevant"
+    "et": "elevant",
+    "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/3/37/African_Bush_Elephant.jpg"
   },
   {
     "en": "frog",
-    "et": "konn"
+    "et": "konn",
+    "imgUrl": "http://2.bp.blogspot.com/-JfVO_Hwqlb4/TlOjgETXGnI/AAAAAAAAAc4/KYiJ_rRA5vA/s1600/tree_frog_3.jpg"
   },
   {
     "en": "bird",
-    "et": "lind"
+    "et": "lind",
+    "imgUrl": "http://hdqwalls.com/wallpapers/colorful-parrot-bird.jpg"
   },
   {
     "en": "rabbit",
-    "et": "jänes"
+    "et": "jänes",
+    "imgUrl": "https://images.pexels.com/photos/3828097/pexels-photo-3828097.jpeg?cs=srgb&dl=pexels-lavoni-islam-3828097.jpg&fm=jpg"
   },
   {
     "en": "giraffe",
-    "et": "kiraf"
+    "et": "kiraf",
+    "imgUrl": "https://i.pinimg.com/originals/7a/db/f2/7adbf2686345625a6762157c4b4586cc.jpg"
   },
   {
     "en": "pig",
-    "et": "sigA"
+    "et": "sigA",
+    "imgUrl": "http://images6.fanpop.com/image/photos/36800000/-pigs-36848688-3008-2000.jpg"
   },
   {
     "en": "fish",
-    "et": "kala"
+    "et": "kala",
+    "imgUrl": "http://wallup.net/wp-content/uploads/2016/01/201581-animals-fish-sea-clownfish.jpg"
   },
   {
     "en": "shark",
-    "et": "hai"
+    "et": "hai",
+    "imgUrl": "https://3.bp.blogspot.com/-hyYrpZWawec/T71fpKSFIgI/AAAAAAAAGHA/nCRAKYPDKXk/s1600/great-white-shark_1200x900.jpg"
   },
   {
     "en": "whale",
-    "et": "vaal"
+    "et": "vaal",
+    "imgUrl": "http://wallup.net/wp-content/uploads/2016/01/150591-orca-animals-whale-water-jumping.jpg"
   },
   {
     "en": "dolphin",
-    "et": "delfiin"
+    "et": "delfiin",
+    "imgUrl": "http://www.japantimes.co.jp/wp-content/uploads/2013/08/wn20130809h5a.jpg"
   },
   {
     "en": "octopus",
-    "et": "kaheksajalg"
+    "et": "kaheksajalg",
+    "imgUrl": "https://fthmb.tqn.com/-tQ-2g4SZONLOBl8oj_LBpPiJfM=/2250x1500/filters:fill(auto,1)/182147638-56a006d35f9b58eba4ae8c3e.jpg"
   },
   {
     "en": "starfish",
-    "et": "meritäht"
+    "et": "meritäht",
+    "imgUrl": "https://facts.net/wp-content/uploads/2020/06/AdobeStock_213706998.jpeg"
   },
   {
     "en": "ostrich",
-    "et": "struts"
+    "et": "struts",
+    "imgUrl": "https://get.pxhere.com/photo/ostrich-bird-flightless-bird-ratite-vertebrate-beak-Greater-rhea-casuariiformes-emu-close-up-wildlife-adaptation-photography-neck-1495497.jpg"
   },
   {
     "en": "rhinoceros",
-    "et": "ninaehk"
+    "et": "ninaehk",
+    "imgUrl": "https://2.bp.blogspot.com/-aI6U3av0_2Q/TpPPrOxKNqI/AAAAAAAAAh4/KOO-IukoKQo/s1600/Caption+White+rhinoceros+%2528+Ceratotherium+simum+%2529+dangerous+animals+of+Africa+safaris.jpg"
   },
   {
     "en": "snail",
-    "et": "tigu"
+    "et": "tigu",
+    "imgUrl": "https://wallup.net/wp-content/uploads/2018/10/09/231477-snails-mollusks.jpg"
   },
   {
     "en": "ant",
-    "et": "sipelgas"
+    "et": "sipelgas",
+    "imgUrl": "http://www.hdwallpaperspulse.com/wp-content/uploads/2016/12/23/black-animal-ant-photo.jpg"
   },
   {
     "en": "bee",
-    "et": "mesilane"
+    "et": "mesilane",
+    "imgUrl": "https://wallup.net/wp-content/uploads/2018/10/08/996658-bees-closeup-animals-wallpapers.jpg"
   },
   {
     "en": "butterfly",
-    "et": "liblikas"
+    "et": "liblikas",
+    "imgUrl": "https://cdn.onlyinyourstate.com/wp-content/uploads/2017/09/16071290737_f25d7d19c3_k.jpg"
   },
   {
     "en": "spider",
-    "et": "ämblik"
+    "et": "ämblik",
+    "imgUrl": "http://wallup.net/wp-content/uploads/2016/10/12/387239-spider-animals.jpg"
   },
   {
     "en": "bat",
-    "et": "nahkhiir"
+    "et": "nahkhiir",
+    "imgUrl": "https://static.photocrowd.com/photos/2640247-d251962750b6e84f47f24d9eccc828b30c1c1662-hd.jpeg"
   },
   {
     "en": "mouse",
-    "et": "hiir"
+    "et": "hiir",
+    "imgUrl": "https://get.pxhere.com/photo/nature-sweet-mouse-animal-cute-wildlife-fur-small-brown-mammal-rodent-fauna-rat-whiskers-vertebrate-funny-nager-pest-mice-button-eyes-wood-mouse-apodemus-sylvaticus-gerbil-muroidea-muridae-478430.jpg"
   },
   {
     "en": "rat",
-    "et": "rott"
+    "et": "rott",
+    "imgUrl": "https://wallpapercave.com/wp/wp1947053.jpg"
   },
   {
     "en": "buffalo",
-    "et": "pühvel"
+    "et": "pühvel",
+    "imgUrl": "https://wallup.net/wp-content/uploads/2016/01/4677-buffalo-animals-bison.jpg"
   },
   {
     "en": "camel",
-    "et": "kamel"
+    "et": "kamel",
+    "imgUrl": "https://animalia-life.com/data_images/camel/camel1.jpg"
   },
   {
     "en": "deer",
-    "et": "hirv"
+    "et": "hirv",
+    "imgUrl": "https://www.goodfreephotos.com/albums/united-states/tennessee/great-smoky-mountains-national-park/mountains-deer-wildlife-great-smoky-mountains-national-park-tennessee.jpg"
   },
   {
     "en": "goat",
-    "et": "kits"
+    "et": "kits",
+    "imgUrl": "http://4.bp.blogspot.com/-t6RfInF_sPg/U1ISKLwN_qI/AAAAAAAAA7I/f0IUcJKFdtQ/s1600/Goat_face.jpg"
   },
   {
     "en": "kangaroo",
-    "et": "känguru"
+    "et": "känguru",
+    "imgUrl": "https://animalia-life.com/data_images/kangaroo/kangaroo1.jpg"
   },
   {
     "en": "koala",
-    "et": "kuala"
+    "et": "kuala",
+    "imgUrl": "http://1.bp.blogspot.com/-j4F5lXwqlTo/Uc5VY8LQ1YI/AAAAAAAADyc/nTB0r0DND-U/s1600/Koala-Animal-Pictures.jpg"
   },
   {
     "en": "leopard",
-    "et": "leopard"
+    "et": "leopard",
+    "imgUrl": "http://www.pixelstalk.net/wp-content/uploads/2016/05/Animal-Leopard-HD-Wallpaper-High-Resolution.jpg"
   },
   {
     "en": "tortoise",
-    "et": "kilpkonn"
+    "et": "kilpkonn",
+    "imgUrl": "https://a-z-animals.com/media/2019/11/Tortoise-radiated.jpg"
   },
   {
     "en": "turtle",
-    "et": "merikilpkonn"
+    "et": "merikilpkonn",
+    "imgUrl": "http://photos.demandstudios.com/getty/article/223/12/100304366.jpg"
   },
   {
     "en": "parrot",
-    "et": "papagoi"
+    "et": "papagoi",
+    "imgUrl": "https://www.thesprucepets.com/thmb/aDuC-Ci2824gpYfCiUGoXN7QxAk=/2688x1792/filters:fill(auto,1)/close-up-of-hand-holding-a-bird-1277291554-886920995ba54952b8105e128d859881.jpg"
   },
   {
     "en": "pigeon",
-    "et": "tuvi"
+    "et": "tuvi",
+    "imgUrl": "https://www.publicdomainpictures.net/pictures/40000/velka/pigeon-1364561001yVr.jpg"
   },
   {
     "en": "eagle",
-    "et": "kotkas"
+    "et": "kotkas",
+    "imgUrl": "https://www.thoughtco.com/thmb/jBOQlxme8kdtHlza9_rgJEgoqI8=/3865x2576/filters:fill(auto,1)/american-bald-eagle-head-in-front-of-american-flag-950701786-5b85581346e0fb0025e00b06.jpg"
   },
   {
     "en": "vulture",
-    "et": "kondor"
+    "et": "kondor",
+    "imgUrl": "https://animalia-life.com/data_images/vulture/vulture9.jpg"
   },
   {
     "en": "peacock",
-    "et": "paviljon"
+    "et": "paviljon",
+    "imgUrl": "http://images6.fanpop.com/image/photos/38800000/Peacock-peacocks-38848287-5069-3168.jpg"
   },
   {
     "en": "duck",
-    "et": "part"
+    "et": "part",
+    "imgUrl": "https://passnownow.com/wp-content/uploads/2015/06/duck.jpg"
   },
   {
     "en": "swan",
-    "et": "luik"
+    "et": "luik",
+    "imgUrl": "http://upload.wikimedia.org/wikipedia/commons/e/e8/Mute_swan.jpg"
   },
   {
     "en": "seagull",
-    "et": "kajakas"
+    "et": "kajakas",
+    "imgUrl": "https://i.pinimg.com/originals/44/cd/00/44cd00872b1d3c58d8c3b85d18ddb958.jpg"
   },
   {
     "en": "pigeon",
-    "et": "tuvi"
+    "et": "tuvi",
+    "imgUrl": "https://www.publicdomainpictures.net/pictures/40000/velka/pigeon-1364561001yVr.jpg"
   },
   {
     "en": "penguin",
-    "et": "pingviin"
+    "et": "pingviin",
+    "imgUrl": "http://static1.wikia.nocookie.net/__cb20120623094937/animals/images/2/28/King_Penguin_Closeup.jpg"
   },
   {
     "en": "sparrow",
-    "et": "varblas"
+    "et": "varblas",
+    "imgUrl": "https://w.wallha.com/ws/12/e4hjEFlx.jpg"
   },
   {
     "en": "nightingale",
-    "et": "näärits"
+    "et": "näärits",
+    "imgUrl": "https://a-z-animals.com/media/2018/09/Nightingale-Bluethroat.jpg"
   },
   {
     "en": "chicken",
-    "et": "kana"
+    "et": "kana",
+    "imgUrl": "https://cs-tf.com/wp-content/uploads/2021/06/nicest-chicken-breeds.jpg"
   },
   {
     "en": "duck",
-    "et": "part"
+    "et": "part",
+    "imgUrl": "https://passnownow.com/wp-content/uploads/2015/06/duck.jpg"
   },
   {
     "en": "rooster",
-    "et": "kukk"
+    "et": "kukk",
+    "imgUrl": "https://i.pinimg.com/originals/9e/41/d9/9e41d90f8ad6339f133dbc121abb03b8.jpg"
   },
   {
     "en": "turkey",
-    "et": "kalkun"
+    "et": "kalkun",
+    "imgUrl": "http://www.conservewildlifenj.org/blog/wp-content/uploads/2020/11/Wild_Turkeys-scaled.jpg"
   },
   {
     "en": "crab",
-    "et": "krab"
+    "et": "krab",
+    "imgUrl": "https://petkeen.com/wp-content/uploads/2021/07/Crab.jpg"
   },
   {
     "en": "lobster",
-    "et": "homar"
+    "et": "homar",
+    "imgUrl": "http://floridakeysreeladventures.com/files/2012/03/spiny-Lobster.jpg"
   },
   {
     "en": "shrimp",
-    "et": "krevett"
+    "et": "krevett",
+    "imgUrl": "https://a-z-animals.com/media/2019/11/Shrimp-cherry.jpg"
   },
   {
     "en": "starfish",
-    "et": "meritäht"
+    "et": "meritäht",
+    "imgUrl": "https://facts.net/wp-content/uploads/2020/06/AdobeStock_213706998.jpeg"
   },
   {
     "en": "jellyfish",
-    "et": "meduus"
+    "et": "meduus",
+    "imgUrl": "https://ukjellyfish.co.uk/wp-content/uploads/2016/12/Supersize-jelly.jpg"
   },
   {
     "en": "whale",
-    "et": "vaal"
+    "et": "vaal",
+    "imgUrl": "http://wallup.net/wp-content/uploads/2016/01/150591-orca-animals-whale-water-jumping.jpg"
   },
   {
     "en": "dolphin",
-    "et": "delfiin"
+    "et": "delfiin",
+    "imgUrl": "http://www.japantimes.co.jp/wp-content/uploads/2013/08/wn20130809h5a.jpg"
   },
   {
     "en": "shark",
-    "et": "hai"
+    "et": "hai",
+    "imgUrl": "https://3.bp.blogspot.com/-hyYrpZWawec/T71fpKSFIgI/AAAAAAAAGHA/nCRAKYPDKXk/s1600/great-white-shark_1200x900.jpg"
   },
   {
     "en": "crane",
-    "et": "kraana"
+    "et": "kraana",
+    "imgUrl": "http://animals.sandiegozoo.org/sites/default/files/2016-10/crane_east_african_01.jpg"
   },
   {
     "en": "duck",
-    "et": "part"
+    "et": "part",
+    "imgUrl": "https://passnownow.com/wp-content/uploads/2015/06/duck.jpg"
   },
   {
     "en": "swan",
-    "et": "luik"
+    "et": "luik",
+    "imgUrl": "http://upload.wikimedia.org/wikipedia/commons/e/e8/Mute_swan.jpg"
   },
   {
     "en": "pigeon",
-    "et": "tuvi"
+    "et": "tuvi",
+    "imgUrl": "https://www.publicdomainpictures.net/pictures/40000/velka/pigeon-1364561001yVr.jpg"
   },
   {
     "en": "peacock",
-    "et": "paviljon"
+    "et": "paviljon",
+    "imgUrl": "http://images6.fanpop.com/image/photos/38800000/Peacock-peacocks-38848287-5069-3168.jpg"
   },
   {
     "en": "hawk",
-    "et": "kull"
+    "et": "kull",
+    "imgUrl": "https://site-547756.mozfiles.com/files/547756/medium/hawk-957728.jpg"
   },
   {
     "en": "crow",
-    "et": "kraakleja"
+    "et": "kraakleja",
+    "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fd/American_Crow_SanDiego_RWD.jpg"
   },
   {
     "en": "eagle",
-    "et": "kotkas"
+    "et": "kotkas",
+    "imgUrl": "https://www.thoughtco.com/thmb/jBOQlxme8kdtHlza9_rgJEgoqI8=/3865x2576/filters:fill(auto,1)/american-bald-eagle-head-in-front-of-american-flag-950701786-5b85581346e0fb0025e00b06.jpg"
   },
   {
     "en": "parrot",
-    "et": "papagoi"
+    "et": "papagoi",
+    "imgUrl": "https://www.thesprucepets.com/thmb/aDuC-Ci2824gpYfCiUGoXN7QxAk=/2688x1792/filters:fill(auto,1)/close-up-of-hand-holding-a-bird-1277291554-886920995ba54952b8105e128d859881.jpg"
   },
   {
     "en": "woodpecker",
-    "et": "peoleo"
+    "et": "peoleo",
+    "imgUrl": "http://animalia-life.com/data_images/woodpecker/woodpecker7.jpg"
   },
   {
     "en": "owl",
-    "et": "öökull"
+    "et": "öökull",
+    "imgUrl": "https://www.worldatlas.com/r/w1200-q80/upload/b3/19/27/great-horned-owl.jpg"
   },
   {
     "en": "ostrich",
-    "et": "struts"
+    "et": "struts",
+    "imgUrl": "https://get.pxhere.com/photo/ostrich-bird-flightless-bird-ratite-vertebrate-beak-Greater-rhea-casuariiformes-emu-close-up-wildlife-adaptation-photography-neck-1495497.jpg"
   },
   {
     "en": "penguin",
-    "et": "pingviin"
+    "et": "pingviin",
+    "imgUrl": "http://static1.wikia.nocookie.net/__cb20120623094937/animals/images/2/28/King_Penguin_Closeup.jpg"
   },
   {
     "en": "swallow",
-    "et": "neel"
+    "et": "neel",
+    "imgUrl": "http://3.bp.blogspot.com/_eDsYe_W-c-E/S-_UfOux8II/AAAAAAAAETY/aujCle7bgeM/s1600/Swallow-Barn-1474.jpg"
   },
   {
     "en": "flamingo",
-    "et": "flamingo"
+    "et": "flamingo",
+    "imgUrl": "http://www.marylandzoo.org/wp-content/uploads/2010/02/Flamingo.jpg"
   },
   {
     "en": "stork",
-    "et": "toonekurg"
+    "et": "toonekurg",
+    "imgUrl": "https://cdn.pixabay.com/photo/2015/05/28/21/42/stork-788666_960_720.jpg"
   },
   {
     "en": "butterfly",
-    "et": "liblikas"
+    "et": "liblikas",
+    "imgUrl": "https://cdn.onlyinyourstate.com/wp-content/uploads/2017/09/16071290737_f25d7d19c3_k.jpg"
   },
   {
     "en": "dragonfly",
-    "et": "liblikas"
+    "et": "liblikas",
+    "imgUrl": "https://animals.sandiegozoo.org/sites/default/files/2016-10/animals_hero_dragonfly.jpg"
   },
   {
     "en": "bee",
-    "et": "mesilane"
+    "et": "mesilane",
+    "imgUrl": "https://wallup.net/wp-content/uploads/2018/10/08/996658-bees-closeup-animals-wallpapers.jpg"
   },
   {
     "en": "ant",
-    "et": "sipelgas"
+    "et": "sipelgas",
+    "imgUrl": "http://www.hdwallpaperspulse.com/wp-content/uploads/2016/12/23/black-animal-ant-photo.jpg"
   },
   {
     "en": "fly",
-    "et": "kärbI"
+    "et": "kärbI",
+    "imgUrl": "https://aminus3.s3.amazonaws.com/image/g0009/u00008843/i00334418/cea317395d1a40c3c5150d60e2d1e450_large.jpg"
   },
   {
     "en": "mosquito",
-    "et": "sääsk"
+    "et": "sääsk",
+    "imgUrl": "https://pixnio.com/free-images/fauna-animals/insects-and-bugs/mosquito/female-aedes-albopictus-mosquito-insect-close-up-detailed-macro-insect-photograph.jpg"
   },
   {
     "en": "ladybug",
-    "et": "lepalind"
+    "et": "lepalind",
+    "imgUrl": "https://www.gannett-cdn.com/-mm-/20a1fb76521ef2cadf77bcfff4c94bdd1cd61a8d/c=0-501-2304-1803/local/-/media/2015/10/21/WIGroup/Appleton/635810158778684356-ThinkstockPhotos-468060496.jpg?width=2304&height=1302&fit=crop&format=pjpg&auto=webp"
   },
   {
     "en": "spider",
-    "et": "ämblik"
+    "et": "ämblik",
+    "imgUrl": "http://wallup.net/wp-content/uploads/2016/10/12/387239-spider-animals.jpg"
   },
   {
     "en": "caterpillar",
-    "et": "tou"
+    "et": "tou",
+    "imgUrl": "http://4.bp.blogspot.com/-JQX-iNgD7vM/T2wPTSdDHUI/AAAAAAAAGJc/KX8Ug55DZ3Q/s1600/Caterpillar-06.JPG"
   },
   {
     "en": "bat",
-    "et": "nahkhiir"
+    "et": "nahkhiir",
+    "imgUrl": "https://static.photocrowd.com/photos/2640247-d251962750b6e84f47f24d9eccc828b30c1c1662-hd.jpeg"
   },
   {
     "en": "scorpion",
-    "et": "skorpion"
+    "et": "skorpion",
+    "imgUrl": "https://1.bp.blogspot.com/-1LCbXld9v-c/Tur2K2LBu0I/AAAAAAAAIIs/YIvIDGjtOdc/s1600/emperor-scorpion.jpg"
   },
   {
     "en": "centipede",
-    "et": "hundijalg"
+    "et": "hundijalg",
+    "imgUrl": "https://site-547756.mozfiles.com/files/547756/medium/Centepede_Bug_Insect.jpg"
   },
   {
     "en": "worm",
-    "et": "uss"
+    "et": "uss",
+    "imgUrl": "https://content.eol.org/data/media/8a/7f/ce/549.BI-image-78414.jpg"
   },
   {
     "en": "snail",
-    "et": "tigu"
+    "et": "tigu",
+    "imgUrl": "https://wallup.net/wp-content/uploads/2018/10/09/231477-snails-mollusks.jpg"
   },
   {
     "en": "cricket",
-    "et": "särtS"
+    "et": "särtS",
+    "imgUrl": "https://i0.wp.com/madmikesamerica.com/wp-content/uploads/2019/09/Field-cricket.jpg?ssl=1"
   },
   {
     "en": "grasshopper",
-    "et": "rohutirts"
+    "et": "rohutirts",
+    "imgUrl": "http://3.bp.blogspot.com/-SVwFhOAzCrY/T72oqALoQ2I/AAAAAAAAGHc/MAN4RUpc850/s1600/green_grasshopper_1200x900.jpg"
   },
   {
     "en": "lizard",
-    "et": "sisalik"
+    "et": "sisalik",
+    "imgUrl": "https://animals.sandiegozoo.org/sites/default/files/2016-11/animals_hero_lizards.jpg"
   },
   {
     "en": "snake",
-    "et": "madu"
+    "et": "madu",
+    "imgUrl": "http://wallup.net/wp-content/uploads/2016/01/180357-animals-snake-reptile.jpg"
   },
   {
     "en": "crocodile",
-    "et": "krokodill"
+    "et": "krokodill",
+    "imgUrl": "https://get.wallhere.com/photo/crocodilia-crocodile-alligator-reptile-american-alligator-nile-crocodile-fauna-terrestrial-animal-Bank-wildlife-grass-organism-898982.jpg"
   },
   {
     "en": "tortoise",
-    "et": "kilpkonn"
+    "et": "kilpkonn",
+    "imgUrl": "https://a-z-animals.com/media/2019/11/Tortoise-radiated.jpg"
   },
   {
     "en": "turtle",
-    "et": "merikilpkonn"
+    "et": "merikilpkonn",
+    "imgUrl": "http://photos.demandstudios.com/getty/article/223/12/100304366.jpg"
   },
   {
     "en": "dinosaur",
-    "et": "dinosauruse"
+    "et": "dinosauruse",
+    "imgUrl": "https://images.pexels.com/photos/410857/pexels-photo-410857.jpeg?cs=srgb&dl=pexels-mike-410857.jpg&fm=jpg"
   },
   {
     "en": "rat",
-    "et": "rott"
+    "et": "rott",
+    "imgUrl": "https://wallpapercave.com/wp/wp1947053.jpg"
   },
   {
     "en": "mouse",
-    "et": "hiir"
+    "et": "hiir",
+    "imgUrl": "https://get.pxhere.com/photo/nature-sweet-mouse-animal-cute-wildlife-fur-small-brown-mammal-rodent-fauna-rat-whiskers-vertebrate-funny-nager-pest-mice-button-eyes-wood-mouse-apodemus-sylvaticus-gerbil-muroidea-muridae-478430.jpg"
   },
   {
     "en": "hamster",
-    "et": "koer"
+    "et": "koer",
+    "imgUrl": "https://wallup.net/wp-content/uploads/2018/10/09/519286-hamster-rodent-pet-cricetinae.jpg"
   },
   {
     "en": "squirrel",
-    "et": "orav"
+    "et": "orav",
+    "imgUrl": "http://3.bp.blogspot.com/-btWoFC3jTr0/TXbUvyeLQ9I/AAAAAAAAFyI/wbPUy5P8mYg/s1600/Squirrel%2B7.jpg"
   },
   {
     "en": "chimpanzee",
-    "et": "šimpansi"
+    "et": "šimpansi",
+    "imgUrl": "https://animalia-life.com/data_images/chimpanzee/chimpanzee1.jpg"
   },
   {
     "en": "orangutan",
-    "et": "orangutan"
+    "et": "orangutan",
+    "imgUrl": "https://www.thoughtco.com/thmb/mqYoPKbEvAJGk_wZhm76qiGzJsA=/4750x3814/filters:fill(auto,1)/orangutan-sarawak-borneo-58741d893df78c17b65c1565.jpg"
   },
   {
     "en": "gorilla",
-    "et": "gorilla"
+    "et": "gorilla",
+    "imgUrl": "http://4.bp.blogspot.com/-DlaPBMdLhEk/UQp2_aDhYcI/AAAAAAAADEw/d0mV5eDG54U/s1600/Gorilla.jpg"
   },
   {
     "en": "monkey",
-    "et": "ahv"
+    "et": "ahv",
+    "imgUrl": "http://www.bestwebsiteinindia.com/blog/wp-content/uploads/2018/01/Rhesus-Macaque.jpg"
   },
   {
     "en": "baboon",
-    "et": "paviljon"
+    "et": "paviljon",
+    "imgUrl": "http://animalia-life.com/data_images/baboon/baboon1.jpg"
   },
   {
     "en": "pig",
-    "et": "sigA"
+    "et": "sigA",
+    "imgUrl": "http://images6.fanpop.com/image/photos/36800000/-pigs-36848688-3008-2000.jpg"
   },
   {
     "en": "hippopotamus",
-    "et": "jõehobu"
+    "et": "jõehobu",
+    "imgUrl": "https://www.thoughtco.com/thmb/Nad_jByBQB5WmjaWiDpZNw1wVuI=/2123x1412/filters:no_upscale():max_bytes(150000):strip_icc()/hippoGE-5943d0e45f9b58d58ab484b7.jpg"
   },
   {
     "en": "rhinoceros",
-    "et": "ninaehk"
+    "et": "ninaehk",
+    "imgUrl": "https://2.bp.blogspot.com/-aI6U3av0_2Q/TpPPrOxKNqI/AAAAAAAAAh4/KOO-IukoKQo/s1600/Caption+White+rhinoceros+%2528+Ceratotherium+simum+%2529+dangerous+animals+of+Africa+safaris.jpg"
   },
   {
     "en": "elephant",
-    "et": "elevant"
+    "et": "elevant",
+    "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/3/37/African_Bush_Elephant.jpg"
   },
   {
     "en": "lion",
-    "et": "lõvi"
+    "et": "lõvi",
+    "imgUrl": "https://greatzoo.org/media/library/fluid-ext-editor-widget/64/image/AdobeStock_59396481.jpeg?23"
   },
   {
     "en": "tiger",
-    "et": "tiiger"
+    "et": "tiiger",
+    "imgUrl": "https://endangeredwonders.org/wp-content/uploads/2019/07/Tiger-Header-Ca.jpg"
   },
   {
     "en": "leopard",
-    "et": "leopard"
+    "et": "leopard",
+    "imgUrl": "http://www.pixelstalk.net/wp-content/uploads/2016/05/Animal-Leopard-HD-Wallpaper-High-Resolution.jpg"
   },
   {
     "en": "cheetah",
-    "et": "gepard"
+    "et": "gepard",
+    "imgUrl": "http://2.bp.blogspot.com/-prV_8zvUR-E/T-SIaq727BI/AAAAAAAAARQ/LnYsezb6XAE/s1600/Cheetah4.jpg"
   },
   {
     "en": "panther",
-    "et": "panteri"
+    "et": "panteri",
+    "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Black_Panther.JPG"
   },
   {
     "en": "jaguar",
-    "et": "jaguari"
+    "et": "jaguari",
+    "imgUrl": "https://www.wallpaperup.com/uploads/wallpapers/2014/04/17/335235/a2cdc099338014cff66b37f2abf50bed.jpg"
   },
   {
     "en": "lynx",
-    "et": "ilves"
+    "et": "ilves",
+    "imgUrl": "http://www.maximumwall.com/wp-content/uploads/2015/07/fonds-ecran-lynx-8.jpg"
   },
   {
     "en": "wolf",
-    "et": "hunt"
+    "et": "hunt",
+    "imgUrl": "http://www.worldatlas.com/upload/69/4f/1c/thinkstockphotos-177598743.jpg"
   },
   {
     "en": "fox",
-    "et": "rebane"
+    "et": "rebane",
+    "imgUrl": "https://www.pwpark.com/wp-content/uploads/2018/09/Red-Fox-min.jpg"
   },
   {
     "en": "bear",
-    "et": "karu"
+    "et": "karu",
+    "imgUrl": "https://fthmb.tqn.com/5I5yYvEZcTZ361zX35sXRItXIDw=/3867x2578/filters:fill(auto,1)/getty-brown-bear-56afcf215f9b58b7d01d5195.jpg"
   },
   {
     "en": "polar bear",
-    "et": "jääkaru"
+    "et": "jääkaru",
+    "imgUrl": "http://4.bp.blogspot.com/-1oDohTNTMrc/UbmEtUgxvzI/AAAAAAAAHTs/S0MJUXUcUSU/s1600/Polar-Bear-Photo.jpg"
   },
   {
     "en": "camel",
-    "et": "kamel"
+    "et": "kamel",
+    "imgUrl": "https://animalia-life.com/data_images/camel/camel1.jpg"
   },
   {
     "en": "kangaroo",
-    "et": "känguru"
+    "et": "känguru",
+    "imgUrl": "https://animalia-life.com/data_images/kangaroo/kangaroo1.jpg"
   },
   {
     "en": "koala",
-    "et": "kuala"
+    "et": "kuala",
+    "imgUrl": "http://1.bp.blogspot.com/-j4F5lXwqlTo/Uc5VY8LQ1YI/AAAAAAAADyc/nTB0r0DND-U/s1600/Koala-Animal-Pictures.jpg"
   },
   {
     "en": "zebra",
-    "et": "sebra"
+    "et": "sebra",
+    "imgUrl": "http://images6.fanpop.com/image/photos/35200000/Zebras-zebras-35204219-2800-2410.jpg"
   },
   {
     "en": "giraffe",
-    "et": "kiraf"
+    "et": "kiraf",
+    "imgUrl": "https://i.pinimg.com/originals/7a/db/f2/7adbf2686345625a6762157c4b4586cc.jpg"
   },
   {
     "en": "deer",
-    "et": "hirv"
+    "et": "hirv",
+    "imgUrl": "https://www.goodfreephotos.com/albums/united-states/tennessee/great-smoky-mountains-national-park/mountains-deer-wildlife-great-smoky-mountains-national-park-tennessee.jpg"
   },
   {
     "en": "elk",
-    "et": "põder"
+    "et": "põder",
+    "imgUrl": "http://1.bp.blogspot.com/-8eH9s6vOEyQ/UXpFMKESHiI/AAAAAAAAC10/kOV7vxj5lp8/s1600/Elk-Animal-Wallpaper.jpg"
   },
   {
     "en": "antelope",
-    "et": "antiloop"
+    "et": "antiloop",
+    "imgUrl": "http://animals.sandiegozoo.org/sites/default/files/2016-09/animals_hero_antelope.jpg"
   },
   {
     "en": "goat",
-    "et": "kits"
+    "et": "kits",
+    "imgUrl": "http://4.bp.blogspot.com/-t6RfInF_sPg/U1ISKLwN_qI/AAAAAAAAA7I/f0IUcJKFdtQ/s1600/Goat_face.jpg"
   },
   {
     "en": "sheep",
-    "et": "lammas"
+    "et": "lammas",
+    "imgUrl": "https://vignette.wikia.nocookie.net/animals/images/b/ba/Sheep.jpg/revision/latest?cb=20190209033122"
   },
   {
     "en": "cow",
-    "et": "lehm"
+    "et": "lehm",
+    "imgUrl": "http://upload.wikimedia.org/wikipedia/commons/0/0c/Cow_female_black_white.jpg"
   },
   {
     "en": "buffalo",
-    "et": "pühvel"
+    "et": "pühvel",
+    "imgUrl": "https://wallup.net/wp-content/uploads/2016/01/4677-buffalo-animals-bison.jpg"
   },
   {
     "en": "horse",
-    "et": "hobune"
+    "et": "hobune",
+    "imgUrl": "https://thypix.com/wp-content/uploads/horse-53.jpg"
   },
   {
     "en": "donkey",
-    "et": "eesel"
+    "et": "eesel",
+    "imgUrl": "https://i2.wp.com/passnownow.com/wp-content/uploads/2015/06/donkey.jpg?fit=2197%2C1463&ssl=1"
   },
   {
     "en": "mule",
-    "et": "mull"
+    "et": "mull",
+    "imgUrl": "https://i.pinimg.com/originals/6a/e7/d2/6ae7d24ecba33c53ebe4e3959284f358.jpg"
   },
   {
     "en": "pony",
-    "et": "plika"
+    "et": "plika",
+    "imgUrl": "https://misanimales.com/wp-content/uploads/2021/02/poni-fondo-verde.jpg"
   },
   {
     "en": "unicorn",
-    "et": "ühenik"
+    "et": "ühenik",
+    "imgUrl": "https://www.wallpaperup.com/uploads/wallpapers/2013/11/10/172445/64fbaf491a19f674c71fd7ee147b57e0.jpg"
   },
   {
     "en": "reindeer",
-    "et": "põdrakarvas"
+    "et": "põdrakarvas",
+    "imgUrl": "http://elelur.com/data_images/mammals/reindeer/reindeer-01.jpg"
   },
   {
     "en": "eagle",
-    "et": "kotkas"
+    "et": "kotkas",
+    "imgUrl": "https://www.thoughtco.com/thmb/jBOQlxme8kdtHlza9_rgJEgoqI8=/3865x2576/filters:fill(auto,1)/american-bald-eagle-head-in-front-of-american-flag-950701786-5b85581346e0fb0025e00b06.jpg"
   },
   {
     "en": "hawk",
-    "et": "kull"
+    "et": "kull",
+    "imgUrl": "https://site-547756.mozfiles.com/files/547756/medium/hawk-957728.jpg"
   },
   {
     "en": "crow",
-    "et": "kraakleja"
+    "et": "kraakleja",
+    "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fd/American_Crow_SanDiego_RWD.jpg"
   },
   {
     "en": "swallow",
-    "et": "neel"
+    "et": "neel",
+    "imgUrl": "http://3.bp.blogspot.com/_eDsYe_W-c-E/S-_UfOux8II/AAAAAAAAETY/aujCle7bgeM/s1600/Swallow-Barn-1474.jpg"
   },
   {
     "en": "sparrow",
-    "et": "varblas"
+    "et": "varblas",
+    "imgUrl": "https://w.wallha.com/ws/12/e4hjEFlx.jpg"
   },
   {
     "en": "woodpecker",
-    "et": "peoleo"
+    "et": "peoleo",
+    "imgUrl": "http://animalia-life.com/data_images/woodpecker/woodpecker7.jpg"
   },
   {
     "en": "parrot",
-    "et": "papagoi"
+    "et": "papagoi",
+    "imgUrl": "https://www.thesprucepets.com/thmb/aDuC-Ci2824gpYfCiUGoXN7QxAk=/2688x1792/filters:fill(auto,1)/close-up-of-hand-holding-a-bird-1277291554-886920995ba54952b8105e128d859881.jpg"
   },
   {
     "en": "pigeon",
-    "et": "tuvi"
+    "et": "tuvi",
+    "imgUrl": "https://www.publicdomainpictures.net/pictures/40000/velka/pigeon-1364561001yVr.jpg"
   },
   {
     "en": "turkey",
-    "et": "kalkun"
+    "et": "kalkun",
+    "imgUrl": "http://www.conservewildlifenj.org/blog/wp-content/uploads/2020/11/Wild_Turkeys-scaled.jpg"
   },
   {
     "en": "duck",
-    "et": "part"
+    "et": "part",
+    "imgUrl": "https://passnownow.com/wp-content/uploads/2015/06/duck.jpg"
   },
   {
     "en": "goose",
-    "et": "part"
+    "et": "part",
+    "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/3/39/Domestic_Goose.jpg"
   },
   {
     "en": "swan",
-    "et": "luik"
+    "et": "luik",
+    "imgUrl": "http://upload.wikimedia.org/wikipedia/commons/e/e8/Mute_swan.jpg"
   },
   {
     "en": "ostrich",
-    "et": "struts"
+    "et": "struts",
+    "imgUrl": "https://get.pxhere.com/photo/ostrich-bird-flightless-bird-ratite-vertebrate-beak-Greater-rhea-casuariiformes-emu-close-up-wildlife-adaptation-photography-neck-1495497.jpg"
   },
   {
     "en": "penguin",
-    "et": "pingviin"
+    "et": "pingviin",
+    "imgUrl": "http://static1.wikia.nocookie.net/__cb20120623094937/animals/images/2/28/King_Penguin_Closeup.jpg"
   }
 ]

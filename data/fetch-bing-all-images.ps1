@@ -8,25 +8,47 @@ Write-Output $BING_SEARCH_V7_KEY
 # $allAnimals | ForEach-Object {
 #     $animal = $_.en
 #     Write-Output $animal
-#     ./fetch-bing-image.ps1 $BING_SEARCH_V7_KEY "animal" $animal
+#     # ./fetch-bing-image.ps1 $BING_SEARCH_V7_KEY "animal" $animal
+#     $imgMeta = cat "./img/animal/bing-$animal.json" | ConvertFrom-Json
+#     $url = $imgMeta.value[0].contentUrl
+#     $_ | Add-Member imgUrl $url
 # }
+# $allAnimals | ConvertTo-Json > "./eesti/animals.json"
 
 # $allFoods = cat "./eesti/food.json" | ConvertFrom-Json
 # $allFoods | ForEach-Object {
 #     $food = $_.en
 #     Write-Output $food
-#     ./fetch-bing-image.ps1 $BING_SEARCH_V7_KEY "food" $food
+#     #./fetch-bing-image.ps1 $BING_SEARCH_V7_KEY "food" $food
+#     $imgMeta = cat "./img/food/bing-$food.json" | ConvertFrom-Json
+#     $url = $imgMeta.value[0].contentUrl
+#     $_ | Add-Member imgUrl $url
 # }
+
+# $allFoods | ConvertTo-Json > "./eesti/food.json"
 
 # $allTransport = cat "./eesti/transport.json" | ConvertFrom-Json
 # $allTransport | ForEach-Object {
-#     Write-Output $_.en
-#     ./fetch-bing-image.ps1 $BING_SEARCH_V7_KEY "transport" $_.en
+#     $transport = $_.en
+#     Write-Output $transport
+#     #./fetch-bing-image.ps1 $BING_SEARCH_V7_KEY "transport" $_.en
+#     $imgMeta = cat "./img/transport/bing-$transport.json" | ConvertFrom-Json
+#     $url = $imgMeta.value[0].contentUrl
+#     $_ | Add-Member imgUrl $url
 # }
 
+# $allTransport | ConvertTo-Json > "./eesti/transport.json"
 
 $allActivity = cat "./eesti/human-activity.json" | ConvertFrom-Json
 $allActivity | ForEach-Object {
-    Write-Output $_.en
-    ./fetch-bing-image.ps1 $BING_SEARCH_V7_KEY "human activity" $_.en
+    $activity = $_.en
+    Write-Output $activity
+    #./fetch-bing-image.ps1 $BING_SEARCH_V7_KEY "human activity" $_.en
+    $imgMeta = cat "./img/human-activity/bing-$activity.json" | ConvertFrom-Json
+    $url = $imgMeta.value[0].contentUrl
+    $_ | Add-Member imgUrl $url
 }
+
+$allActivity | ConvertTo-Json > "./eesti/human-activity.json"
+
+#$j.value[0].contentUrl  
