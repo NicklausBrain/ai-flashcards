@@ -1,0 +1,470 @@
+[
+  {
+    "en": "transport",
+    "et": "transport"
+  },
+  {
+    "en": "car",
+    "et": "auto"
+  },
+  {
+    "en": "bus",
+    "et": "buss"
+  },
+  {
+    "en": "train",
+    "et": "rong"
+  },
+  {
+    "en": "bicycle",
+    "et": "jalgratas"
+  },
+  {
+    "en": "motorcycle",
+    "et": "mootorratas"
+  },
+  {
+    "en": "plane",
+    "et": "lennuk"
+  },
+  {
+    "en": "ship",
+    "et": "laev"
+  },
+  {
+    "en": "taxi",
+    "et": "takso"
+  },
+  {
+    "en": "subway",
+    "et": "metroo"
+  },
+  {
+    "en": "boat",
+    "et": "paat"
+  },
+  {
+    "en": "truck",
+    "et": "veoauto"
+  },
+  {
+    "en": "van",
+    "et": "buss"
+  },
+  {
+    "en": "motorboat",
+    "et": "mootorpaat"
+  },
+  {
+    "en": "bicycle lane",
+    "et": "jalgrattatee"
+  },
+  {
+    "en": "railway",
+    "et": "raudtee"
+  },
+  {
+    "en": "tram",
+    "et": "tramm"
+  },
+  {
+    "en": "helicopter",
+    "et": "helikopter"
+  },
+  {
+    "en": "ferry",
+    "et": "praam"
+  },
+  {
+    "en": "caravan",
+    "et": "kalurikäru"
+  },
+  {
+    "en": "gondola",
+    "et": "gondel"
+  },
+  {
+    "en": "motorway",
+    "et": "maantee"
+  },
+  {
+    "en": "airport",
+    "et": "lennujaam"
+  },
+  {
+    "en": "pedestrian",
+    "et": "jalakäija"
+  },
+  {
+    "en": "street",
+    "et": "tänav"
+  },
+  {
+    "en": "road",
+    "et": "tee"
+  },
+  {
+    "en": "highway",
+    "et": "maantee"
+  },
+  {
+    "en": "bridge",
+    "et": "sild"
+  },
+  {
+    "en": "tunnel",
+    "et": "tunnel"
+  },
+  {
+    "en": "parking",
+    "et": "parkimine"
+  },
+  {
+    "en": "garage",
+    "et": "garaaž"
+  },
+  {
+    "en": "traffic light",
+    "et": "liiklusmärk"
+  },
+  {
+    "en": "roundabout",
+    "et": "ringristmik"
+  },
+  {
+    "en": "railroad",
+    "et": "raudtee"
+  },
+  {
+    "en": "intersection",
+    "et": "ristmik"
+  },
+  {
+    "en": "sidewalk",
+    "et": "kõnnitee"
+  },
+  {
+    "en": "board",
+    "et": "tahvel"
+  },
+  {
+    "en": "pier",
+    "et": "kai"
+  },
+  {
+    "en": "bus stop",
+    "et": "bussipeatus"
+  },
+  {
+    "en": "train station",
+    "et": "rongijaam"
+  },
+  {
+    "en": "cruise ship",
+    "et": "kruiisilaev"
+  },
+  {
+    "en": "airport terminal",
+    "et": "lennujaama terminal"
+  },
+  {
+    "en": "bus station",
+    "et": "bussijaam"
+  },
+  {
+    "en": "wagon",
+    "et": "vagun"
+  },
+  {
+    "en": "license plate",
+    "et": "numbrimärk"
+  },
+  {
+    "en": "fuel",
+    "et": "kütus"
+  },
+  {
+    "en": "driver",
+    "et": "juht"
+  },
+  {
+    "en": "passenger",
+    "et": "reisija"
+  },
+  {
+    "en": "ticket",
+    "et": "pilet"
+  },
+  {
+    "en": "fare",
+    "et": "piletihind"
+  },
+  {
+    "en": "speed limit",
+    "et": "kiiruspiirang"
+  },
+  {
+    "en": "ramp",
+    "et": "ramp"
+  },
+  {
+    "en": "crosswalk",
+    "et": "zebra"
+  },
+  {
+    "en": "luggage",
+    "et": "pagas"
+  },
+  {
+    "en": "baggage",
+    "et": "pagas"
+  },
+  {
+    "en": "seatbelt",
+    "et": "turvavöö"
+  },
+  {
+    "en": "dashboard",
+    "et": "armatuurlaud"
+  },
+  {
+    "en": "traffic jam",
+    "et": "liiklusummik"
+  },
+  {
+    "en": "bus driver",
+    "et": "bussijuht"
+  },
+  {
+    "en": "taxi driver",
+    "et": "taksijuht"
+  },
+  {
+    "en": "railway station",
+    "et": "raudteejaam"
+  },
+  {
+    "en": "metro station",
+    "et": "metroojaam"
+  },
+  {
+    "en": "helipad",
+    "et": "helikopteri maandumisplats"
+  },
+  {
+    "en": "runway",
+    "et": "õhkutõusmisrada"
+  },
+  {
+    "en": "bus shelter",
+    "et": "bussipeatus"
+  },
+  {
+    "en": "airplane",
+    "et": "lennuk"
+  },
+  {
+    "en": "ferry terminal",
+    "et": "praami terminal"
+  },
+  {
+    "en": "toll booth",
+    "et": "teemaksu punkt"
+  },
+  {
+    "en": "pedestrian crossing",
+    "et": "jalakäijate ülekäigurada"
+  },
+  {
+    "en": "parking lot",
+    "et": "parkla"
+  },
+  {
+    "en": "garage entry",
+    "et": "garaaži sissesõit"
+  },
+  {
+    "en": "bus lane",
+    "et": "bussirada"
+  },
+  {
+    "en": "highway exit",
+    "et": "maantee väljapääs"
+  },
+  {
+    "en": "sailboat",
+    "et": "purjekas"
+  },
+  {
+    "en": "bicycle parking",
+    "et": "jalgratta parkla"
+  },
+  {
+    "en": "taxi stand",
+    "et": "taksopeatus"
+  },
+  {
+    "en": "railroad crossing",
+    "et": "raudteeülesõit"
+  },
+  {
+    "en": "third",
+    "et": "kolmsada"
+  },
+  {
+    "en": "single",
+    "et": "üksik"
+  },
+  {
+    "en": "two-sided",
+    "et": "kahepoolne"
+  },
+  {
+    "en": "parallel",
+    "et": "paralleelne"
+  },
+  {
+    "en": "uphill",
+    "et": "ülesmäge"
+  },
+  {
+    "en": "downhill",
+    "et": "allamäge"
+  },
+  {
+    "en": "round trip",
+    "et": "edasi-tagasi sõit"
+  },
+  {
+    "en": "downtown",
+    "et": "kesklinn"
+  },
+  {
+    "en": "destination",
+    "et": "sihtkoht"
+  },
+  {
+    "en": "commuter",
+    "et": "pendeldaja"
+  },
+  {
+    "en": "handlebars",
+    "et": "juhtraud"
+  },
+  {
+    "en": "accelerator",
+    "et": "gaasipedaal"
+  },
+  {
+    "en": "brakes",
+    "et": "pidurid"
+  },
+  {
+    "en": "rearview mirror",
+    "et": "tagasivaatepeegel"
+  },
+  {
+    "en": "turn signal",
+    "et": "suunatuli"
+  },
+  {
+    "en": "gear",
+    "et": "käik"
+  },
+  {
+    "en": "engine",
+    "et": "mootor"
+  },
+  {
+    "en": "fuel tank",
+    "et": "kütusepaak"
+  },
+  {
+    "en": "pedals",
+    "et": "pedaalid"
+  },
+  {
+    "en": "bicycle wheel",
+    "et": "jalgratta ratas"
+  },
+  {
+    "en": "motorcycle helmet",
+    "et": "mootorratta kiiver"
+  },
+  {
+    "en": "steering wheel",
+    "et": "rooliratas"
+  },
+  {
+    "en": "airplane wing",
+    "et": "lennuki tiib"
+  },
+  {
+    "en": "sail",
+    "et": "purjekas"
+  },
+  {
+    "en": "rudder",
+    "et": "rool"
+  },
+  {
+    "en": "anchor",
+    "et": "ankur"
+  },
+  {
+    "en": "cruise ship deck",
+    "et": "kruiisilaeva tek"
+  },
+  {
+    "en": "bus ticket",
+    "et": "bussipilet"
+  },
+  {
+    "en": "train ticket",
+    "et": "rongipilet"
+  },
+  {
+    "en": "boarding pass",
+    "et": "pardakaart"
+  },
+  {
+    "en": "boat ticket",
+    "et": "paadipilet"
+  },
+  {
+    "en": "truck driver",
+    "et": "veoautojuht"
+  },
+  {
+    "en": "wagon wheel",
+    "et": "vaguni ratas"
+  },
+  {
+    "en": "tire",
+    "et": "rehv"
+  },
+  {
+    "en": "gas station",
+    "et": "tankla"
+  },
+  {
+    "en": "parking meter",
+    "et": "pargimõõtur"
+  },
+  {
+    "en": "traffic sign",
+    "et": "liiklusmärk"
+  },
+  {
+    "en": "road sign",
+    "et": "liiklusmärk"
+  },
+  {
+    "en": "speed bump",
+    "et": "kiirustõke"
+  },
+  {
+    "en": "railway track",
+    "et": "raudteerada"
+  }
+]
