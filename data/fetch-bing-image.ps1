@@ -15,3 +15,4 @@ $response.Content > "./img/$CATEGORY/bing-$WORD.json"
 
 return $response
 
+#$j.value[0].contentUrl  
