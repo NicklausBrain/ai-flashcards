@@ -1,0 +1,522 @@
+[
+{
+  "en": "activity",
+  "et": "tegevus"
+},
+{
+  "en": "run",
+  "et": "jooksma"
+},
+{
+  "en": "eat",
+  "et": "sööma"
+},
+{
+  "en": "sleep",
+  "et": "magama"
+},
+{
+  "en": "dance",
+  "et": "tantsima"
+},
+{
+  "en": "write",
+  "et": "kirjutama"
+},
+{
+  "en": "read",
+  "et": "lugema"
+},
+{
+  "en": "sing",
+  "et": "laulma"
+},
+{
+  "en": "play",
+  "et": "mängima"
+},
+{
+  "en": "swim",
+  "et": "ujuma"
+},
+{
+  "en": "talk",
+  "et": "rääkima"
+},
+{
+  "en": "think",
+  "et": "mõtlema"
+},
+{
+  "en": "hear",
+  "et": "kuulama"
+},
+{
+  "en": "see",
+  "et": "nägema"
+},
+{
+  "en": "watch",
+  "et": "vaatama"
+},
+{
+  "en": "walk",
+  "et": "kõndima"
+},
+{
+  "en": "laugh",
+  "et": "naerma"
+},
+{
+  "en": "love",
+  "et": "armastama"
+},
+{
+  "en": "smile",
+  "et": "naeratama"
+},
+{
+  "en": "work",
+  "et": "töötama"
+},
+{
+  "en": "wait",
+  "et": "ootama"
+},
+{
+  "en": "help",
+  "et": "aitama"
+},
+{
+  "en": "create",
+  "et": "loomine"
+},
+{
+  "en": "build",
+  "et": "ehitama"
+},
+{
+  "en": "paint",
+  "et": "maalima"
+},
+{
+  "en": "draw",
+  "et": "joonistama"
+},
+{
+  "en": "drive",
+  "et": "sõitma"
+},
+{
+  "en": "travel",
+  "et": "reisima"
+},
+{
+  "en": "learn",
+  "et": "õppima"
+},
+{
+  "en": "teach",
+  "et": "õpetama"
+},
+{
+  "en": "study",
+  "et": "uurima"
+},
+{
+  "en": "watch",
+  "et": "vaatama"
+},
+{
+  "en": "listen",
+  "et": "kuulama"
+},
+{
+  "en": "fight",
+  "et": "võitlema"
+},
+{
+  "en": "climb",
+  "et": "ronima"
+},
+{
+  "en": "jump",
+  "et": "hüppama"
+},
+{
+  "en": "swim",
+  "et": "ujuv"
+},
+{
+  "en": "celebrate",
+  "et": "tähistama"
+},
+{
+  "en": "party",
+  "et": "pidu"
+},
+{
+  "en": "cook",
+  "et": "kokk"
+},
+{
+  "en": "bake",
+  "et": "küpsetama"
+},
+{
+  "en": "clean",
+  "et": "puhastama"
+},
+{
+  "en": "wash",
+  "et": "pesema"
+},
+{
+  "en": "decorate",
+  "et": "kaunistama"
+},
+{
+  "en": "plant",
+  "et": "istutama"
+},
+{
+  "en": "grow",
+  "et": "kasvama"
+},
+{
+  "en": "harvest",
+  "et": "saak"
+},
+{
+  "en": "hunt",
+  "et": "jahtima"
+},
+{
+  "en": "fish",
+  "et": "kalastama"
+},
+{
+  "en": "explore",
+  "et": "uurima"
+},
+{
+  "en": "discover",
+  "et": "avastama"
+},
+{
+  "en": "clean",
+  "et": "puhastama"
+},
+{
+  "en": "exercise",
+  "et": "harjutus"
+},
+{
+  "en": "meditate",
+  "et": "mediteerima"
+},
+{
+  "en": "practice",
+  "et": "praktika"
+},
+{
+  "en": "play",
+  "et": "mängima"
+},
+{
+  "en": "perform",
+  "et": "soorima"
+},
+{
+  "en": "compete",
+  "et": "võistelge"
+},
+{
+  "en": "win",
+  "et": "võitma"
+},
+{
+  "en": "lose",
+  "et": "kaotama"
+},
+{
+  "en": "paint",
+  "et": "maalima"
+},
+{
+  "en": "draw",
+  "et": "joonistama"
+},
+{
+  "en": "sculpt",
+  "et": "voolima"
+},
+{
+  "en": "create",
+  "et": "loo"
+},
+{
+  "en": "write",
+  "et": "kirjutama"
+},
+{
+  "en": "sing",
+  "et": "laulma"
+},
+{
+  "en": "act",
+  "et": "tegevus"
+},
+{
+  "en": "perform",
+  "et": "soorima"
+},
+{
+  "en": "read",
+  "et": "lugema"
+},
+{
+  "en": "watch",
+  "et": "vaatama"
+},
+{
+  "en": "listen",
+  "et": "kuulama"
+},
+{
+  "en": "enjoy",
+  "et": "nautima"
+},
+{
+  "en": "relax",
+  "et": "lõõgastuma"
+},
+{
+  "en": "sleeping",
+  "et": "magamine"
+},
+{
+  "en": "waking",
+  "et": "ärkamine"
+},
+{
+  "en": "dreaming",
+  "et": "unistamine"
+},
+{
+  "en": "feeling",
+  "et": "tunne"
+},
+{
+  "en": "thinking",
+  "et": "mõtlemine"
+},
+{
+  "en": "deciding",
+  "et": "otsustamine"
+},
+{
+  "en": "planning",
+  "et": "kavandamine"
+},
+{
+  "en": "working",
+  "et": "töötamine"
+},
+{
+  "en": "resting",
+  "et": "puhata"
+},
+{
+  "en": "eating",
+  "et": "söömine"
+},
+{
+  "en": "drinking",
+  "et": "joomine"
+},
+{
+  "en": "cooking",
+  "et": "kokk"
+},
+{
+  "en": "shopping",
+  "et": "pood"
+},
+{
+  "en": "cleaning",
+  "et": "puhastamine"
+},
+{
+  "en": "dressing",
+  "et": "riideid"
+},
+{
+  "en": "bathing",
+  "et": "vann"
+},
+{
+  "en": "showering",
+  "et": "dušš"
+},
+{
+  "en": "driving",
+  "et": "sõitmine"
+},
+{
+  "en": "walking",
+  "et": "jalutamine"
+},
+{
+  "en": "running",
+  "et": "jooksma"
+},
+{
+  "en": "jumping",
+  "et": "hüppama"
+},
+{
+  "en": "climbing",
+  "et": "ronimine"
+},
+{
+  "en": "swimming",
+  "et": "ujumine"
+},
+{
+  "en": "cycling",
+  "et": "jalgrattasõit"
+},
+{
+  "en": "exercising",
+  "et": "harjutamine"
+},
+{
+  "en": "playing",
+  "et": "mängimine"
+},
+{
+  "en": "dancing",
+  "et": "tantsimine"
+},
+{
+  "en": "watching",
+  "et": "vaatamine"
+},
+{
+  "en": "reading",
+  "et": "lugemine"
+},
+{
+  "en": "studying",
+  "et": "õppimine"
+},
+{
+  "en": "writing",
+  "et": "kirjutamine"
+},
+{
+  "en": "drawing",
+  "et": "joonistamine"
+},
+{
+  "en": "painting",
+  "et": "maalimine"
+},
+{
+  "en": "acting",
+  "et": "mängimine"
+},
+{
+  "en": "listening",
+  "et": "kuulamine"
+},
+{
+  "en": "singing",
+  "et": "laulmine"
+},
+{
+  "en": "socializing",
+  "et": "sotsialiseerumine"
+},
+{
+  "en": "hugging",
+  "et": "kallistamine"
+},
+{
+  "en": "kissing",
+  "et": "suudlemine"
+},
+{
+  "en": "celebrating",
+  "et": "tähistamine"
+},
+{
+  "en": "partying",
+  "et": "pidu"
+},
+{
+  "en": "traveling",
+  "et": "reisimine"
+},
+{
+  "en": "exploring",
+  "et": "uurimine"
+},
+{
+  "en": "discovering",
+  "et": "avastamine"
+},
+{
+  "en": "relaxing",
+  "et": "lõõgastav"
+},
+{
+  "en": "meditating",
+  "et": "mediteerimine"
+},
+{
+  "en": "winning",
+  "et": "võidu"
+},
+{
+  "en": "losing",
+  "et": "kaotus"
+},
+{
+  "en": "believing",
+  "et": "uskuma"
+},
+{
+  "en": "praying",
+  "et": "palvetama"
+},
+{
+  "en": "worshiping",
+  "et": "kummardamine"
+},
+{
+  "en": "working out",
+  "et": "välja töötatud"
+},
+{
+  "en": "gardening",
+  "et": "aiandus"
+},
+{
+  "en": "fishing",
+  "et": "kalapüük"
+},
+{
+  "en": "hunting",
+  "et": "jahtima"
+},
+{
+  "en": "gaming",
+  "et": "mängima"
+},
+{
+  "en": "watching TV",
+  "et": "TV vaatamine"
+}
+]
