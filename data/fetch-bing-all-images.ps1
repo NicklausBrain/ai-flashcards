@@ -11,9 +11,15 @@ Write-Output $BING_SEARCH_V7_KEY
 #     ./fetch-bing-image.ps1 $BING_SEARCH_V7_KEY "animal" $animal
 # }
 
-$allFoods = cat "./eesti/food.json" | ConvertFrom-Json
+# $allFoods = cat "./eesti/food.json" | ConvertFrom-Json
+# $allFoods | ForEach-Object {
+#     $food = $_.en
+#     Write-Output $food
+#     ./fetch-bing-image.ps1 $BING_SEARCH_V7_KEY "food" $food
+# }
+
+$allFoods = cat "./eesti/transport.json" | ConvertFrom-Json
 $allFoods | ForEach-Object {
-    $food = $_.en
-    Write-Output $food
-    ./fetch-bing-image.ps1 $BING_SEARCH_V7_KEY "food" $food
+    Write-Output $_.en
+    ./fetch-bing-image.ps1 $BING_SEARCH_V7_KEY "transport" $_.en
 }
