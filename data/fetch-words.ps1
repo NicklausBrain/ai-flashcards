@@ -1,15 +1,21 @@
+param(
+  [Parameter(Mandatory=$true)]
+  [string]$OPENAI_API_KEY,
+  [Parameter(Mandatory=$true)]
+  [string]$CATEGORY) 
+
 $headers = @{
   "Authorization" = "Bearer $OPENAI_API_KEY"
 }
 
-$prompt = @'
-Top 100 words in category of animals. 2 languages: english and estonian.
+$prompt = @"
+Top 100 words in category of $CATEGORY. 2 languages: english and estonian.
 Return result in JSON array format:
 [{
   "en": "word in english"
   "et": "word in estonian"
 }]
-'@ | ConvertTo-Json
+"@ | ConvertTo-Json
 
 $body = "{
   `"model`": `"gpt-3.5-turbo-16k-0613`",
@@ -34,7 +40,6 @@ $response = Invoke-WebRequest -Uri "https://api.openai.com/v1/chat/completions" 
 $content = $response.Content | ConvertFrom-Json
 $innerContent = $content.choices[0].message.content
 
-$innerContent > "./eesti/animals.json"
+$innerContent > "./eesti/$CATEGORY.json"
 
 return $response;
-
