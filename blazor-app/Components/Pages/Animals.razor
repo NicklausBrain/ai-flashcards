@@ -32,8 +32,8 @@
         @foreach (var animal in animals.Skip(6).Take(4))
         {
             <div class="col-sm-6">
-                <div class="card bg-dark text-white">
-                    <img class="card-img mw-100 rounded mx-auto d-block" src="@animal.imgUrl" alt="Card image">
+                <div class="card bg-dark text-white mt-1">
+                    <img class="card-img img-fluid" src="@animal.imgUrl" alt="Card image">
                     <div class="card-img-overlay">
                         <h5 class="card-title">@animal.et</h5>
                     </div>
