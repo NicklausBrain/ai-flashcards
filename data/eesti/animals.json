@@ -1,0 +1,650 @@
+[
+  {
+    "en": "dog",
+    "et": "koer"
+  },
+  {
+    "en": "cat",
+    "et": "kass"
+  },
+  {
+    "en": "elephant",
+    "et": "elevant"
+  },
+  {
+    "en": "lion",
+    "et": "lõvi"
+  },
+  {
+    "en": "tiger",
+    "et": "tiiger"
+  },
+  {
+    "en": "monkey",
+    "et": "ahv"
+  },
+  {
+    "en": "horse",
+    "et": "hobune"
+  },
+  {
+    "en": "cow",
+    "et": "lehm"
+  },
+  {
+    "en": "butterfly",
+    "et": "liblikas"
+  },
+  {
+    "en": "sheep",
+    "et": "lammas"
+  },
+  {
+    "en": "crocodile",
+    "et": "krokodill"
+  },
+  {
+    "en": "snake",
+    "et": "madu"
+  },
+  {
+    "en": "penguin",
+    "et": "pingviin"
+  },
+  {
+    "en": "elephant",
+    "et": "elevant"
+  },
+  {
+    "en": "frog",
+    "et": "konn"
+  },
+  {
+    "en": "bird",
+    "et": "lind"
+  },
+  {
+    "en": "rabbit",
+    "et": "jänes"
+  },
+  {
+    "en": "giraffe",
+    "et": "kiraf"
+  },
+  {
+    "en": "pig",
+    "et": "sigA"
+  },
+  {
+    "en": "fish",
+    "et": "kala"
+  },
+  {
+    "en": "shark",
+    "et": "hai"
+  },
+  {
+    "en": "whale",
+    "et": "vaal"
+  },
+  {
+    "en": "dolphin",
+    "et": "delfiin"
+  },
+  {
+    "en": "octopus",
+    "et": "kaheksajalg"
+  },
+  {
+    "en": "starfish",
+    "et": "meritäht"
+  },
+  {
+    "en": "ostrich",
+    "et": "struts"
+  },
+  {
+    "en": "rhinoceros",
+    "et": "ninaehk"
+  },
+  {
+    "en": "snail",
+    "et": "tigu"
+  },
+  {
+    "en": "ant",
+    "et": "sipelgas"
+  },
+  {
+    "en": "bee",
+    "et": "mesilane"
+  },
+  {
+    "en": "butterfly",
+    "et": "liblikas"
+  },
+  {
+    "en": "spider",
+    "et": "ämblik"
+  },
+  {
+    "en": "bat",
+    "et": "nahkhiir"
+  },
+  {
+    "en": "mouse",
+    "et": "hiir"
+  },
+  {
+    "en": "rat",
+    "et": "rott"
+  },
+  {
+    "en": "buffalo",
+    "et": "pühvel"
+  },
+  {
+    "en": "camel",
+    "et": "kamel"
+  },
+  {
+    "en": "deer",
+    "et": "hirv"
+  },
+  {
+    "en": "goat",
+    "et": "kits"
+  },
+  {
+    "en": "kangaroo",
+    "et": "känguru"
+  },
+  {
+    "en": "koala",
+    "et": "kuala"
+  },
+  {
+    "en": "leopard",
+    "et": "leopard"
+  },
+  {
+    "en": "tortoise",
+    "et": "kilpkonn"
+  },
+  {
+    "en": "turtle",
+    "et": "merikilpkonn"
+  },
+  {
+    "en": "parrot",
+    "et": "papagoi"
+  },
+  {
+    "en": "pigeon",
+    "et": "tuvi"
+  },
+  {
+    "en": "eagle",
+    "et": "kotkas"
+  },
+  {
+    "en": "vulture",
+    "et": "kondor"
+  },
+  {
+    "en": "peacock",
+    "et": "paviljon"
+  },
+  {
+    "en": "duck",
+    "et": "part"
+  },
+  {
+    "en": "swan",
+    "et": "luik"
+  },
+  {
+    "en": "seagull",
+    "et": "kajakas"
+  },
+  {
+    "en": "pigeon",
+    "et": "tuvi"
+  },
+  {
+    "en": "penguin",
+    "et": "pingviin"
+  },
+  {
+    "en": "sparrow",
+    "et": "varblas"
+  },
+  {
+    "en": "nightingale",
+    "et": "näärits"
+  },
+  {
+    "en": "chicken",
+    "et": "kana"
+  },
+  {
+    "en": "duck",
+    "et": "part"
+  },
+  {
+    "en": "rooster",
+    "et": "kukk"
+  },
+  {
+    "en": "turkey",
+    "et": "kalkun"
+  },
+  {
+    "en": "crab",
+    "et": "krab"
+  },
+  {
+    "en": "lobster",
+    "et": "homar"
+  },
+  {
+    "en": "shrimp",
+    "et": "krevett"
+  },
+  {
+    "en": "starfish",
+    "et": "meritäht"
+  },
+  {
+    "en": "jellyfish",
+    "et": "meduus"
+  },
+  {
+    "en": "whale",
+    "et": "vaal"
+  },
+  {
+    "en": "dolphin",
+    "et": "delfiin"
+  },
+  {
+    "en": "shark",
+    "et": "hai"
+  },
+  {
+    "en": "crane",
+    "et": "kraana"
+  },
+  {
+    "en": "duck",
+    "et": "part"
+  },
+  {
+    "en": "swan",
+    "et": "luik"
+  },
+  {
+    "en": "pigeon",
+    "et": "tuvi"
+  },
+  {
+    "en": "peacock",
+    "et": "paviljon"
+  },
+  {
+    "en": "hawk",
+    "et": "kull"
+  },
+  {
+    "en": "crow",
+    "et": "kraakleja"
+  },
+  {
+    "en": "eagle",
+    "et": "kotkas"
+  },
+  {
+    "en": "parrot",
+    "et": "papagoi"
+  },
+  {
+    "en": "woodpecker",
+    "et": "peoleo"
+  },
+  {
+    "en": "owl",
+    "et": "öökull"
+  },
+  {
+    "en": "ostrich",
+    "et": "struts"
+  },
+  {
+    "en": "penguin",
+    "et": "pingviin"
+  },
+  {
+    "en": "swallow",
+    "et": "neel"
+  },
+  {
+    "en": "flamingo",
+    "et": "flamingo"
+  },
+  {
+    "en": "stork",
+    "et": "toonekurg"
+  },
+  {
+    "en": "butterfly",
+    "et": "liblikas"
+  },
+  {
+    "en": "dragonfly",
+    "et": "liblikas"
+  },
+  {
+    "en": "bee",
+    "et": "mesilane"
+  },
+  {
+    "en": "ant",
+    "et": "sipelgas"
+  },
+  {
+    "en": "fly",
+    "et": "kärbI"
+  },
+  {
+    "en": "mosquito",
+    "et": "sääsk"
+  },
+  {
+    "en": "ladybug",
+    "et": "lepalind"
+  },
+  {
+    "en": "spider",
+    "et": "ämblik"
+  },
+  {
+    "en": "caterpillar",
+    "et": "tou"
+  },
+  {
+    "en": "bat",
+    "et": "nahkhiir"
+  },
+  {
+    "en": "scorpion",
+    "et": "skorpion"
+  },
+  {
+    "en": "centipede",
+    "et": "hundijalg"
+  },
+  {
+    "en": "worm",
+    "et": "uss"
+  },
+  {
+    "en": "snail",
+    "et": "tigu"
+  },
+  {
+    "en": "cricket",
+    "et": "särtS"
+  },
+  {
+    "en": "grasshopper",
+    "et": "rohutirts"
+  },
+  {
+    "en": "lizard",
+    "et": "sisalik"
+  },
+  {
+    "en": "snake",
+    "et": "madu"
+  },
+  {
+    "en": "crocodile",
+    "et": "krokodill"
+  },
+  {
+    "en": "tortoise",
+    "et": "kilpkonn"
+  },
+  {
+    "en": "turtle",
+    "et": "merikilpkonn"
+  },
+  {
+    "en": "dinosaur",
+    "et": "dinosauruse"
+  },
+  {
+    "en": "rat",
+    "et": "rott"
+  },
+  {
+    "en": "mouse",
+    "et": "hiir"
+  },
+  {
+    "en": "hamster",
+    "et": "koer"
+  },
+  {
+    "en": "squirrel",
+    "et": "orav"
+  },
+  {
+    "en": "chimpanzee",
+    "et": "šimpansi"
+  },
+  {
+    "en": "orangutan",
+    "et": "orangutan"
+  },
+  {
+    "en": "gorilla",
+    "et": "gorilla"
+  },
+  {
+    "en": "monkey",
+    "et": "ahv"
+  },
+  {
+    "en": "baboon",
+    "et": "paviljon"
+  },
+  {
+    "en": "pig",
+    "et": "sigA"
+  },
+  {
+    "en": "hippopotamus",
+    "et": "jõehobu"
+  },
+  {
+    "en": "rhinoceros",
+    "et": "ninaehk"
+  },
+  {
+    "en": "elephant",
+    "et": "elevant"
+  },
+  {
+    "en": "lion",
+    "et": "lõvi"
+  },
+  {
+    "en": "tiger",
+    "et": "tiiger"
+  },
+  {
+    "en": "leopard",
+    "et": "leopard"
+  },
+  {
+    "en": "cheetah",
+    "et": "gepard"
+  },
+  {
+    "en": "panther",
+    "et": "panteri"
+  },
+  {
+    "en": "jaguar",
+    "et": "jaguari"
+  },
+  {
+    "en": "lynx",
+    "et": "ilves"
+  },
+  {
+    "en": "wolf",
+    "et": "hunt"
+  },
+  {
+    "en": "fox",
+    "et": "rebane"
+  },
+  {
+    "en": "bear",
+    "et": "karu"
+  },
+  {
+    "en": "polar bear",
+    "et": "jääkaru"
+  },
+  {
+    "en": "camel",
+    "et": "kamel"
+  },
+  {
+    "en": "kangaroo",
+    "et": "känguru"
+  },
+  {
+    "en": "koala",
+    "et": "kuala"
+  },
+  {
+    "en": "zebra",
+    "et": "sebra"
+  },
+  {
+    "en": "giraffe",
+    "et": "kiraf"
+  },
+  {
+    "en": "deer",
+    "et": "hirv"
+  },
+  {
+    "en": "elk",
+    "et": "põder"
+  },
+  {
+    "en": "antelope",
+    "et": "antiloop"
+  },
+  {
+    "en": "goat",
+    "et": "kits"
+  },
+  {
+    "en": "sheep",
+    "et": "lammas"
+  },
+  {
+    "en": "cow",
+    "et": "lehm"
+  },
+  {
+    "en": "buffalo",
+    "et": "pühvel"
+  },
+  {
+    "en": "horse",
+    "et": "hobune"
+  },
+  {
+    "en": "donkey",
+    "et": "eesel"
+  },
+  {
+    "en": "mule",
+    "et": "mull"
+  },
+  {
+    "en": "pony",
+    "et": "plika"
+  },
+  {
+    "en": "unicorn",
+    "et": "ühenik"
+  },
+  {
+    "en": "reindeer",
+    "et": "põdrakarvas"
+  },
+  {
+    "en": "eagle",
+    "et": "kotkas"
+  },
+  {
+    "en": "hawk",
+    "et": "kull"
+  },
+  {
+    "en": "crow",
+    "et": "kraakleja"
+  },
+  {
+    "en": "swallow",
+    "et": "neel"
+  },
+  {
+    "en": "sparrow",
+    "et": "varblas"
+  },
+  {
+    "en": "woodpecker",
+    "et": "peoleo"
+  },
+  {
+    "en": "parrot",
+    "et": "papagoi"
+  },
+  {
+    "en": "pigeon",
+    "et": "tuvi"
+  },
+  {
+    "en": "turkey",
+    "et": "kalkun"
+  },
+  {
+    "en": "duck",
+    "et": "part"
+  },
+  {
+    "en": "goose",
+    "et": "part"
+  },
+  {
+    "en": "swan",
+    "et": "luik"
+  },
+  {
+    "en": "ostrich",
+    "et": "struts"
+  },
+  {
+    "en": "penguin",
+    "et": "pingviin"
+  }
+]
