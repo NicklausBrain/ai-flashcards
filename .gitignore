@@ -397,5 +397,11 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+# vscode
+.DS_Store
+data/.DS_Store
+data/img/.DS_Store
+data/img/animals/.DS_Store
 
+# keys
 data/keys.ps1
