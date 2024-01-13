@@ -45,7 +45,7 @@ $allActivity | ForEach-Object {
     Write-Output $activity
     #./fetch-bing-image.ps1 $BING_SEARCH_V7_KEY "human activity" $_.en
     $imgMeta = cat "./img/human-activity/bing-$activity.json" | ConvertFrom-Json
-    $url = $imgMeta.value[0].contentUrl
+    $url = $imgMeta.value[1].contentUrl
     $_ | Add-Member imgUrl $url
 }
 
