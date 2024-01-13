@@ -1,0 +1,45 @@
+@page "/Animals"
+
+@inject HttpClient Http
+@inject IConfiguration Config
+
+
+@code {
+    private Animal[] animals;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        // fix it
+        animals = await Http.GetFromJsonAsync<Animal[]>("http://localhost:5085/data/animals.json");
+    }
+
+    public class Animal
+    {
+        public string en { get; set; }
+        public string et { get; set; }
+        public string imgUrl { get; set; }
+    }
+}
+
+<div class="row">
+    @if (animals == null)
+    {
+        <p>Loading...</p>
+    }
+    else
+    {
+        @foreach (var animal in animals.Skip(6).Take(4))
+        {
+            <div class="col-sm-6">
+                <div class="card bg-dark text-white">
+                    <img class="card-img mw-100 rounded mx-auto d-block" src="@animal.imgUrl" alt="Card image">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title">@animal.et</h5>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+</div>
