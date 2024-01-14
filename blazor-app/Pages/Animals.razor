@@ -8,10 +8,9 @@
 @code {
     private Animal[] animals;
 
-
     protected override async Task OnInitializedAsync()
     {
-        animals = await Http.GetFromJsonAsync<Animal[]>(NavigationManager.BaseUri + "/data/animals.json");
+        animals = await Http.GetFromJsonAsync<Animal[]>($"{NavigationManager.BaseUri}/data/animals.json");
     }
 
     public class Animal
@@ -20,15 +19,12 @@
         public string et { get; set; }
         public string imgUrl { get; set; }
     }
-
-
 }
 
 <script>
     function playSound() {
         new Audio("src").play()
     }
-
 </script>
 
 <div class="row">
@@ -54,5 +50,4 @@
             </div>
         }
     }
-
 </div>

@@ -1,8 +1,10 @@
 name: DeployToGitHubPages
 env:
-  PUBLISH_DIR: bin/Release/net8.0/publish/wwwroot
+  PUBLISH_DIR: blazor-app/bin/Release/net8.0/publish/wwwroot
 
 # Controls when the action will run
+#/Users/nick/repos/ai-flashcards/blazor-app/bin/Release/net8.0/publish/
+
 on:
   push:
     branches: [ main ]
@@ -14,13 +16,13 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Publish app
-      run: dotnet publish -c Release
+      run: dotnet publish -c Release ./blazor-app/
 
     - name: Rewrite base href
       uses: SteveSandersonMS/ghaction-rewrite-base-href@v1
       with:
         html_path: ${{ env.PUBLISH_DIR }}/index.html
-        base_href: /BlazorOnGitHubPages/
+        base_href: /ai-flashcards/
 
     - name: GitHub Pages
       if: success()
