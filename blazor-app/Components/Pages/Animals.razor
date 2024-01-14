@@ -20,7 +20,16 @@
         public string et { get; set; }
         public string imgUrl { get; set; }
     }
+
+
 }
+
+<script>
+    function playSound() {
+        new Audio("src").play()
+    }
+
+</script>
 
 <div class="row">
     @if (animals == null)
@@ -31,13 +40,17 @@
     {
         @foreach (var animal in animals)
         {
-            <div class="col-sm-2">
-                <div class="card bg-dark text-white mt-1" style="max-height: 7rem; max-width: 7rem">
+            <div class="col-sm-6">
+                <div class="card bg-dark text-white mt-1" style="max-height: 17rem; max-width: 17rem">
                     <img class="card-img img-fluid" src="@animal.imgUrl" alt="Card image">
                     <div class="card-img-overlay">
                         <h5 class="card-title">@animal.et</h5>
+
                     </div>
                 </div>
+                <audio controls class="">
+                    <source src="/data/audio/@(animal.et).wav">
+                </audio>
             </div>
         }
     }
