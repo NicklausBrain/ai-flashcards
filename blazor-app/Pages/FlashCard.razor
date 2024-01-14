@@ -1,14 +1,11 @@
 @using blazor_app.Core;
 
-@inject NavigationManager NavigationManager
 @inject IJSRuntime JsRuntime
 
 @code {
     string GetAudioUrl()
     {
-        return NavigationManager.BaseUri.Contains("github")
-        ? $"https://github.com/NicklausBrain/ai-flashcards/raw/main/data/eesti/audio/{Data.Et}.wav"
-        : $"/data/audio/{Data.Et}.wav";
+        return $"https://github.com/NicklausBrain/ai-flashcards/raw/main/data/eesti/audio/{Data.Et}.wav";
     }
 
     private async Task ImageClicked()
