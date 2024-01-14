@@ -29,10 +29,10 @@
     }
     else
     {
-        @foreach (var animal in animals.Skip(6).Take(4))
+        @foreach (var animal in animals)
         {
-            <div class="col-sm-6">
-                <div class="card bg-dark text-white mt-1">
+            <div class="col-sm-2">
+                <div class="card bg-dark text-white mt-1" style="max-height: 7rem; max-width: 7rem">
                     <img class="card-img img-fluid" src="@animal.imgUrl" alt="Card image">
                     <div class="card-img-overlay">
                         <h5 class="card-title">@animal.et</h5>
