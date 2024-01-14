@@ -1,0 +1,4 @@
+#has to be done this way due to a bug: https://github.com/jekyll/jekyll/issues/1352
+include:
+  - "_framework"
+  - "_bin"
