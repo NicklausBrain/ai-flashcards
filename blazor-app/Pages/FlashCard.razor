@@ -1,25 +1,29 @@
 @using blazor_app.Core;
 
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
 
-<div class="col-sm-6">
+@code {
+    string GetAudioUrl()
+    {
+        return NavigationManager.BaseUri.Contains("github")
+        ? $"https://github.com/NicklausBrain/ai-flashcards/raw/main/data/eesti/audio/{Data.Et}.wav"
+        : $"/data/audio/{Data.Et}.wav";
+    }
+
+    private async Task ImageClicked()
+    {
+        await JsRuntime.InvokeVoidAsync("playSound", GetAudioUrl());
+    }
+}
+
+<div class="col-sm-6" @onclick=ImageClicked>
     <div class="card bg-dark text-white mt-1" style="max-height: 17rem; max-width: 17rem">
-        <img class="card-img img-fluid" src="@Data.ImgUrl" alt="Card image">
+        <img class="card-img img-fluid" src="@Data.ImgUrl" alt="@Data.Et">
         <div class="card-img-overlay">
             <h5 class="card-title">@Data.Et</h5>
         </div>
     </div>
-
-    <audio controls class="">
-        @if (NavigationManager.BaseUri.Contains("github"))
-        {
-            <source src="https://github.com/NicklausBrain/ai-flashcards/raw/main/data/eesti/audio/@(Data.Et).wav">
-        }
-        else
-        {
-            <source src="/data/audio/@(Data.Et).wav">
-        }
-    </audio>
 </div>
 
 
