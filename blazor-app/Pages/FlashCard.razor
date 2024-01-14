@@ -1,0 +1,29 @@
+@using blazor_app.Core;
+
+@inject NavigationManager NavigationManager
+
+<div class="col-sm-6">
+    <div class="card bg-dark text-white mt-1" style="max-height: 17rem; max-width: 17rem">
+        <img class="card-img img-fluid" src="@Data.ImgUrl" alt="Card image">
+        <div class="card-img-overlay">
+            <h5 class="card-title">@Data.Et</h5>
+        </div>
+    </div>
+
+    <audio controls class="">
+        @if (NavigationManager.BaseUri.Contains("github"))
+        {
+            <source src="https://github.com/NicklausBrain/ai-flashcards/raw/main/data/eesti/audio/@(Data.Et).wav">
+        }
+        else
+        {
+            <source src="/data/audio/@(Data.Et).wav">
+        }
+    </audio>
+</div>
+
+
+@code {
+    [Parameter]
+    public Core.FlashCard Data { get; set; }
+}

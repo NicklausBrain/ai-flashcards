@@ -1,31 +1,18 @@
 @page "/Animals"
 
+@using blazor_app.Core;
+
 @inject HttpClient Http
-@inject IConfiguration Config
 @inject NavigationManager NavigationManager
 
-
 @code {
-    private Animal[] animals;
+    private Core.FlashCard[] animals;
 
     protected override async Task OnInitializedAsync()
     {
-        animals = await Http.GetFromJsonAsync<Animal[]>($"{NavigationManager.BaseUri}/data/animals.json");
-    }
-
-    public class Animal
-    {
-        public string en { get; set; }
-        public string et { get; set; }
-        public string imgUrl { get; set; }
+        animals = await Http.GetFromJsonAsync<Core.FlashCard[]>($"{NavigationManager.BaseUri}/data/animals.json");
     }
 }
-
-<script>
-    function playSound() {
-        new Audio("src").play()
-    }
-</script>
 
 <div class="row">
     @if (animals == null)
@@ -36,26 +23,7 @@
     {
         @foreach (var animal in animals)
         {
-            <div class="col-sm-6">
-                <div class="card bg-dark text-white mt-1" style="max-height: 17rem; max-width: 17rem">
-                    <img class="card-img img-fluid" src="@animal.imgUrl" alt="Card image">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title">@animal.et</h5>
-
-                    </div>
-                </div>
-
-                <audio controls class="">
-                    @if (NavigationManager.BaseUri.Contains("github"))
-                    {
-                        <source src="https://github.com/NicklausBrain/ai-flashcards/raw/main/data/eesti/audio/@(animal.et).wav">
-                    }
-                    else
-                    {
-                        <source src="/data/audio/@(animal.et).wav">
-                    }
-                </audio>
-            </div>
+            <FlashCard Data="@animal"></FlashCard>
         }
     }
 </div>
