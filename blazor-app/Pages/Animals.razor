@@ -6,7 +6,7 @@
 @inject NavigationManager NavigationManager
 
 @code {
-    private Core.FlashCard[] animals;
+    private Core.FlashCard[]? animals;
 
     protected override async Task OnInitializedAsync()
     {
@@ -14,16 +14,4 @@
     }
 }
 
-<div class="row">
-    @if (animals == null)
-    {
-        <p>Loading...</p>
-    }
-    else
-    {
-        @foreach (var animal in animals)
-        {
-            <FlashCard Data="@animal"></FlashCard>
-        }
-    }
-</div>
+<FlashCardsList Cards="@animals"></FlashCardsList>

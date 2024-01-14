@@ -1,0 +1,27 @@
+@using blazor_app.Core;
+
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+@code {
+    [Parameter]
+    public Core.FlashCard[]? Cards { get; set; }
+
+}
+
+<div class="row">
+    @if (Cards == null)
+    {
+        <div class="d-flex align-items-center">
+            <strong>Loading...</strong>
+            <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+        </div>
+    }
+    else
+    {
+        @foreach (var card in Cards)
+        {
+            <FlashCard Data="@card"></FlashCard>
+        }
+    }
+</div>
