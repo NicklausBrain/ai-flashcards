@@ -2,6 +2,7 @@
 
 @inject HttpClient Http
 @inject IConfiguration Config
+@inject NavigationManager NavigationManager
 
 
 @code {
@@ -10,8 +11,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // fix it
-        animals = await Http.GetFromJsonAsync<Animal[]>("http://localhost:5085/data/animals.json");
+        animals = await Http.GetFromJsonAsync<Animal[]>(NavigationManager.BaseUri + "/data/animals.json");
     }
 
     public class Animal
