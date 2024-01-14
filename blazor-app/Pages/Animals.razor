@@ -44,8 +44,16 @@
 
                     </div>
                 </div>
+
                 <audio controls class="">
-                    <source src="/data/audio/@(animal.et).wav">
+                    @if (NavigationManager.BaseUri.Contains("github"))
+                    {
+                        <source src="https://github.com/NicklausBrain/ai-flashcards/raw/main/data/eesti/audio/@(animal.et).wav">
+                    }
+                    else
+                    {
+                        <source src="/data/audio/@(animal.et).wav">
+                    }
                 </audio>
             </div>
         }
