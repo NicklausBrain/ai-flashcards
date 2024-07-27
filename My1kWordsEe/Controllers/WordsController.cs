@@ -4,11 +4,11 @@ using System.Diagnostics;
 
 namespace My1kWordsEe.Controllers
 {
-    public class HomeController : Controller
+    public class WordsController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<WordsController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public WordsController(ILogger<WordsController> logger)
         {
             _logger = logger;
         }
