@@ -1,4 +1,4 @@
-namespace _1kWordsEe.Models
+namespace My1kWordsEe.Models
 {
     public class ErrorViewModel
     {

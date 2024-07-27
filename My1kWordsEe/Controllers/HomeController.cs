@@ -1,8 +1,8 @@
-using _1kWordsEe.Models;
 using Microsoft.AspNetCore.Mvc;
+using My1kWordsEe.Models;
 using System.Diagnostics;
 
-namespace _1kWordsEe.Controllers
+namespace My1kWordsEe.Controllers
 {
     public class HomeController : Controller
     {
