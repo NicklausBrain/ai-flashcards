@@ -13,9 +13,21 @@ namespace My1kWordsEe.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string search, string selectedWord)
         {
-            return View();
+            var words = new Ee1kWords();
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                words = words.WithSearch(search);
+            }
+
+            if (!string.IsNullOrWhiteSpace(selectedWord))
+            {
+                words = words.WithSelectedWord(selectedWord);
+            }
+
+            return View(words);
         }
 
         public IActionResult Privacy()

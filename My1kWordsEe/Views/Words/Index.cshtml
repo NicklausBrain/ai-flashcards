@@ -1,16 +1,43 @@
-﻿@{
+﻿@model Ee1kWords;
+
+@{
     ViewData["Title"] = "Words";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">
+        building Web apps with ASP.NET Core</a>.
+    </p>
 
+    <div class="container">
+        <iframe src="https://sonaveeb.ee/search/unif/dlall/dsall/alati/1"></iframe>
+    </div>
     <ul class="list-group">
-        <li class="list-group-item active" aria-current="true">An active item</li>
+        @foreach(var word in Model.SelectedWords)
+        {
+            <div class="row">
+                <div class="col">
+                    <a href="@Url.Action("Index", "Words", new {selectedWord = word})">
+            <li class="list-group-item @(word == Model.SelectedWord ? "active" : null)">@word</li>
+            </a>
+                </div>
+                <div class="col">
+
+
+                   @*  @if (word == Model.SelectedWord)
+                    {
+            <iframe src="@($"https://sonaveeb.ee/search/unif/dlall/dsall/{Model.SelectedWord}/1")"></iframe>
+                    } *@
+                </div>
+            </div>
+            
+          
+        }
+        @* <li class="list-group-item active" aria-current="true">An active item</li>
         <li class="list-group-item">A second item</li>
         <li class="list-group-item">A third item</li>
         <li class="list-group-item">A fourth item</li>
-        <li class="list-group-item">And a fifth one</li>
+        <li class="list-group-item">And a fifth one</li> *@
     </ul>
 </div>
