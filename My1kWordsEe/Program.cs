@@ -1,7 +1,19 @@
+using My1kWordsEe.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+var openApiKey = builder.Configuration["Secrets:OpenAiKey"];
+
+if (string.IsNullOrWhiteSpace(openApiKey))
+{
+    throw new InvalidOperationException("OpenAI API key is missing");
+}
+
+builder.Services.AddSingleton(new OpenAiService(openApiKey));
 
 var app = builder.Build();
 
