@@ -1,4 +1,5 @@
 using My1kWordsEe.Components;
+using My1kWordsEe.Services;
 
 namespace My1kWordsEe
 {
@@ -7,6 +8,14 @@ namespace My1kWordsEe
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            var openApiKey = builder.Configuration["Secrets:OpenAiKey"];
+
+            if (string.IsNullOrWhiteSpace(openApiKey))
+            {
+                throw new ApplicationException("Secrets:OpenAiKey is missing");
+            }
+            builder.Services.AddSingleton(new OpenAiService(openApiKey));
 
             // Add services to the container.
             builder.Services.AddRazorComponents()

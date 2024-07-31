@@ -1,7 +1,43 @@
 ﻿@page "/"
+@rendermode InteractiveServer
+
+@using My1kWordsEe.Services;
+@using My1kWordsEe.Models;
+@inject OpenAiService OpenAiService
+
+
+@code {
+    public Ee1kWords Ee1KWords { get; private set; } = new Ee1kWords();
+
+    private void SelectWord(MouseEventArgs e, string word)
+    {
+        Ee1KWords = Ee1KWords.WithSelectedWord(word);
+    }
+}
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+
+
+<div class="text-center">
+    <div class="row">Search to be there</div>
+
+    <br>
+    <ul class="list-group">
+        @foreach (var word in Ee1KWords.SelectedWords)
+        {
+            <div class="row">
+                <div class="col">
+                    <li class="list-group-item
+                        @(word == Ee1KWords.SelectedWord ? "active" : null)"
+                        @onclick="@(e => SelectWord(e, word))">@word</li>
+                </div>
+                <div class="col">
+                </div>
+            </div>
+        }
+    </ul>
+</div>
