@@ -1,22 +1,42 @@
-﻿@code {
-    [Parameter]
-    public string Ee { get; set; }
-    [Parameter]
-    public string En { get; set; }
+﻿@using My1kWordsEe.Services;
+@using My1kWordsEe.Models;
+@using CSharpFunctionalExtensions;
 
+@inject OpenAiService OpenAiService
+
+@code {
+    [Parameter]
+    public string EeWord { get; set; }
+
+    private Result<Sentence>? sentence;
+
+    protected override async Task OnInitializedAsync()
+    {
+        sentence = await OpenAiService.GetSampleSentence(EeWord);
+    }
 }
 
 <div>
     <div class="row">
-
-        <ul class="list-group">
-            <li class="list-group-item">
-                @Ee
-            </li>
-            <li class="list-group-item">
-                @En
-            </li>
-        </ul>
+        @if (sentence == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else if (sentence.Value.IsSuccess)
+        {
+            <ul class="list-group">
+                <li class="list-group-item">
+                    @sentence.Value.Value.Ee
+                </li>
+                <li class="list-group-item">
+                    @sentence.Value.Value.En
+                </li>
+            </ul>
+        }
+        else
+        {
+            <p><em>@sentence.Value.Error</em></p>
+        }
 
     </div>
 </div>

@@ -3,8 +3,9 @@
 
 @using My1kWordsEe.Services;
 @using My1kWordsEe.Models;
-@inject OpenAiService OpenAiService
+@using My1kWordsEe.Components.Layout;
 
+@inject OpenAiService OpenAiService
 
 @code {
     public Ee1kWords Ee1KWords { get; private set; } = new Ee1kWords();
@@ -44,6 +45,11 @@
                             @onclick="@(e => SelectWord(e, word))">@word</li>
                     </div>
                     <div class="col">
+                        @if (word == Ee1KWords.SelectedWord)
+                        {
+                            <Sample EeWord="@word">
+                            </Sample>
+                        }
                     </div>
                 </div>
             }

@@ -1,9 +1,7 @@
-﻿using OpenAI.Chat;
-using System;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using CSharpFunctionalExtensions;
+using OpenAI.Chat;
 
 namespace My1kWordsEe.Services
 {
@@ -16,7 +14,7 @@ namespace My1kWordsEe.Services
 
         private string ApiKey { get; }
 
-        public async Task<SentenceResult> GetSampleSentence(string word)
+        public async Task<Result<Sentence>> GetSampleSentence(string word)
         {
             ChatClient client = new(model: "gpt-4o-mini", ApiKey);
 
@@ -30,26 +28,29 @@ namespace My1kWordsEe.Services
                         "Your task is to provide a sample sentence using this word, " +
                         "preferably in combination with some of the other 1000 most common Estonian words. " +
                         "Your output is JSON object with the sample sentence in Estonian and its respective English translation:\n" +
-                        "```\n{\n     \"ee_sentence\": \"<sample in Estonian>\",\n     \"en_sentence\": \"<sample in English>\"\n}\n```"),
+                        "```\n" +
+                        "{\"ee_sentence\": \"<sample in Estonian>\", \"en_sentence\": \"<sample in English>\" }" +
+                        "\n```"),
                     new UserChatMessage(word),
                 ]);
 
             foreach (var c in chatCompletion.Content)
             {
-                var sentence = JsonSerializer.Deserialize<Sentence>(c.Text);
-                return new SentenceResult { Sentence = sentence };
+                var jsonStr = c.Text.Trim('`', ' ', '\'', '"');
+                var sentence = JsonSerializer.Deserialize<Sentence>(jsonStr);
+                if (sentence == null)
+                {
+                    break;
+                }
+                else
+                {
+                    return Result.Success(sentence);
+                }
             }
 
-            return new SentenceResult { Error = "No response found" };
+            return Result.Failure<Sentence>("Empty response");
         }
     }
-}
-
-public class SentenceResult
-{
-    public Sentence? Sentence { get; set; }
-
-    public string Error { get; set; }
 }
 
 public class Sentence
