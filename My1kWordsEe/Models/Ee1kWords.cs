@@ -11,12 +11,24 @@
 
         public Ee1kWords WithSearch(string search)
         {
-            return new Ee1kWords
+            if (string.IsNullOrWhiteSpace(search))
             {
-                SelectedWord = this.SelectedWord,
-                Search = search,
-                SelectedWords = AllWords.Where(w => w.Contains(search)).ToArray()
-            };
+                return new Ee1kWords
+                {
+                    SelectedWord = this.SelectedWord,
+                    Search = search,
+                    SelectedWords = AllWords
+                };
+            }
+            else
+            {
+                return new Ee1kWords
+                {
+                    SelectedWord = this.SelectedWord,
+                    Search = search,
+                    SelectedWords = AllWords.Where(w => w.Contains(search)).ToArray()
+                };
+            }
         }
 
         public Ee1kWords WithSelectedWord(string selectedWord)

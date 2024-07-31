@@ -13,6 +13,12 @@
     {
         Ee1KWords = Ee1KWords.WithSelectedWord(word);
     }
+
+    private void OnSearchInput(ChangeEventArgs e)
+    {
+        var searchTerm = e.Value?.ToString() ?? string.Empty;
+        Ee1KWords = Ee1KWords.WithSearch(searchTerm);
+    }
 }
 
 <PageTitle>Home</PageTitle>
@@ -23,21 +29,29 @@ Welcome to your new app.
 
 
 <div class="text-center">
-    <div class="row">Search to be there</div>
-
-    <br>
-    <ul class="list-group">
-        @foreach (var word in Ee1KWords.SelectedWords)
-        {
-            <div class="row">
-                <div class="col">
-                    <li class="list-group-item
-                        @(word == Ee1KWords.SelectedWord ? "active" : null)"
-                        @onclick="@(e => SelectWord(e, word))">@word</li>
-                </div>
-                <div class="col">
-                </div>
+    <div class="row">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Search</span>
             </div>
-        }
-    </ul>
+            <input type="text" class="form-control" aria-label="Search" aria-describedby="inputGroup-sizing-default"
+                   @oninput="OnSearchInput" />
+        </div>
+    </div>
+    <div class="row">
+        <ul class="list-group">
+            @foreach (var word in Ee1KWords.SelectedWords)
+            {
+                <div class="row">
+                    <div class="col">
+                        <li class="list-group-item
+                            @(word == Ee1KWords.SelectedWord ? "active" : null)"
+                            @onclick="@(e => SelectWord(e, word))">@word</li>
+                    </div>
+                    <div class="col">
+                    </div>
+                </div>
+            }
+        </ul>
+    </div>
 </div>
