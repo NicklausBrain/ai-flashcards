@@ -16,6 +16,7 @@ namespace My1kWordsEe
                 throw new ApplicationException("Secrets:OpenAiKey is missing");
             }
             builder.Services.AddSingleton(new OpenAiService(openApiKey));
+            builder.Services.AddSingleton(new TartuNlpService());
 
             // Add services to the container.
             builder.Services.AddRazorComponents()

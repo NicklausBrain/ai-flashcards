@@ -2,9 +2,13 @@
 @using My1kWordsEe.Models;
 @using CSharpFunctionalExtensions;
 
-@inject OpenAiService OpenAiService
+@inject OpenAiService OpenAiService;
+@inject TartuNlpService TartuNlpService;
+@inject IJSRuntime JS
 
 @code {
+    //const string AudioControlId = "sampleAudio";
+
     [Parameter]
     public string EeWord { get; set; }
 
@@ -14,17 +18,64 @@
     {
         sentence = await OpenAiService.GetSampleSentence(EeWord);
     }
+
+    private async Task PlaySample(MouseEventArgs e)
+    {
+        var hasAudio = await JS.InvokeAsync<bool>("hasAudio");
+
+        if (!hasAudio && sentence.HasValue && sentence.Value.IsSuccess)
+        {
+            var eeText = sentence.Value.Value.Ee;
+            var imageStream = await TartuNlpService.GetSpeech(eeText);
+            var dotnetImageStream = new DotNetStreamReference(imageStream);
+            await JS.InvokeVoidAsync("setAudioSample", "sampleAudio", dotnetImageStream);
+        }
+
+        await JS.InvokeVoidAsync("playAudioSample");
+    }
 }
+
+<script>
+    window.setAudioSample = async (audioElementId, audioStream) => {
+        const arrayBuffer = await audioStream.arrayBuffer();
+        const blob = new Blob([arrayBuffer]);
+        const url = URL.createObjectURL(blob);
+        const audio = document.getElementById(audioElementId);
+        audio.onload = () => {
+            URL.revokeObjectURL(url);
+        }
+        audio.src = url;
+    };
+    window.playAudioSample = async () => {
+        const audio = document.getElementById('sampleAudio');
+        await audio.play();
+    };
+    window.hasAudio = () => {
+        const audio = document.getElementById('sampleAudio');
+        return audio.src ? true : false;
+    };
+</script>
 
 <div>
     <div class="row">
         @if (sentence == null)
         {
-            <p><em>Loading...</em></p>
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
         }
         else if (sentence.Value.IsSuccess)
         {
             <ul class="list-group">
+                <li class="list-group-item">
+                    <button type="button" class="btn btn-primary" @onclick="PlaySample">
+                        @* <i class="bi bi-play-circle-fill"></i> *@
+                        <i class="bi bi-volume-down-fill"></i>
+                    </button>
+                    <audio id="sampleAudio"></audio>
+                </li>
                 <li class="list-group-item">
                     @sentence.Value.Value.Ee
                 </li>
