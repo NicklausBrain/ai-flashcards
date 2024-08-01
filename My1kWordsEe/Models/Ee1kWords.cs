@@ -1,4 +1,7 @@
-﻿namespace My1kWordsEe.Models
+﻿using System.Globalization;
+using System.Text;
+
+namespace My1kWordsEe.Models
 {
     public class Ee1kWords
     {
@@ -26,7 +29,10 @@
                 {
                     SelectedWord = this.SelectedWord,
                     Search = search,
-                    SelectedWords = AllWords.Where(w => w.Contains(search)).ToArray()
+                    SelectedWords = AllWords
+                        .Where(w => w.Contains(search, StringComparison.InvariantCultureIgnoreCase)
+                            || _allWordsDiacriticsFree[w].Contains(search, StringComparison.InvariantCultureIgnoreCase))
+                        .ToArray()
                 };
             }
         }
@@ -1046,5 +1052,25 @@
             "minust",
             "kasutamise"
         ];
+
+        private static readonly IReadOnlyDictionary<string, string> _allWordsDiacriticsFree =
+            AllWords.ToDictionary(w => w, RemoveDiacritics);
+
+        static string RemoveDiacritics(string stIn)
+        {
+            string stFormD = stIn.Normalize(NormalizationForm.FormD);
+            StringBuilder sb = new StringBuilder();
+
+            for (int ich = 0; ich < stFormD.Length; ich++)
+            {
+                UnicodeCategory uc = CharUnicodeInfo.GetUnicodeCategory(stFormD[ich]);
+                if (uc != UnicodeCategory.NonSpacingMark)
+                {
+                    sb.Append(stFormD[ich]);
+                }
+            }
+
+            return (sb.ToString().Normalize(NormalizationForm.FormC));
+        }
     }
 }
