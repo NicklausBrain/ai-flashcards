@@ -40,9 +40,16 @@
             {
                 <div class="row">
                     <div class="col">
-                        <li class="list-group-item
-                            @(word == Ee1KWords.SelectedWord ? "active" : null)"
-                            @onclick="@(e => SelectWord(e, word))">@word</li>
+                        @if (word == Ee1KWords.SelectedWord)
+                        {
+                            <li class="list-group-item active">@word</li>
+                        }
+                        else
+                        {
+                            <li class="list-group-item"
+                                @onclick="@(e => SelectWord(e, word))"
+                                role="button">@word</li>
+                        }
                     </div>
                     <div class="col">
                         @if (word == Ee1KWords.SelectedWord)
