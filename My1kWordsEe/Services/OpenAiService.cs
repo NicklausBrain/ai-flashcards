@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 using CSharpFunctionalExtensions;
 using OpenAI.Chat;
+using OpenAI.Images;
 
 namespace My1kWordsEe.Services
 {
@@ -13,6 +14,33 @@ namespace My1kWordsEe.Services
         }
 
         private string ApiKey { get; }
+
+        public async Task<Result<Uri>> GetSampleImageUri(string sentence)
+        {
+            ImageClient client = new(model: "dall-e-3", ApiKey);
+            var prompt =
+                "generate a picture " + // a simple and sketchy
+                "to illustrate the sentence for language learning purpose: " +
+                $"\"{sentence}\". \n" +
+                "main colors are blue, white and black.";
+
+            try
+            {
+                var imageResponse = await client.GenerateImageAsync(prompt, new ImageGenerationOptions
+                {
+                    Quality = GeneratedImageQuality.Standard,
+                    Size = GeneratedImageSize.W1024xH1024,
+                    Style = GeneratedImageStyle.Natural,
+                    ResponseFormat = GeneratedImageFormat.Uri,
+                });
+
+                return Result.Success(imageResponse.Value.ImageUri);
+            }
+            catch (Exception e)
+            {
+                return Result.Failure<Uri>(e.Message);
+            }
+        }
 
         public async Task<Result<Sentence>> GetSampleSentence(string word)
         {

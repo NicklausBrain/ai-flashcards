@@ -7,12 +7,13 @@
 @inject IJSRuntime JS
 
 @code {
-    //const string AudioControlId = "sampleAudio";
-
     [Parameter]
     public string EeWord { get; set; }
 
     private Result<Sentence>? sentence;
+
+    private bool isImageLoading = false;
+    private Result<Uri>? imageUrl;
 
     protected override async Task OnInitializedAsync()
     {
@@ -32,6 +33,17 @@
         }
 
         await JS.InvokeVoidAsync("playAudioSample");
+    }
+
+    private async Task ImageSample(MouseEventArgs e)
+    {
+        isImageLoading = true;
+        if (!imageUrl.HasValue && sentence.HasValue && sentence.Value.IsSuccess)
+        {
+            var enText = sentence.Value.Value.En;
+            imageUrl = await OpenAiService.GetSampleImageUri(enText);
+        }
+        isImageLoading = false;
     }
 }
 
@@ -54,6 +66,10 @@
         const audio = document.getElementById('sampleAudio');
         return audio.src ? true : false;
     };
+    // window.hasImage = () => {
+    //     const image = document.getElementById('sampleImage');
+    //     return image.src ? true : false;
+    // };
 </script>
 
 <div>
@@ -71,8 +87,10 @@
             <ul class="list-group">
                 <li class="list-group-item">
                     <button type="button" class="btn btn-primary" @onclick="PlaySample">
-                        @* <i class="bi bi-play-circle-fill"></i> *@
                         <i class="bi bi-volume-down-fill"></i>
+                    </button>
+                    <button type="button" class="btn btn-primary" @onclick="ImageSample">
+                        <i class="bi bi-card-image"></i>
                     </button>
                     <audio id="sampleAudio"></audio>
                 </li>
@@ -82,12 +100,30 @@
                 <li class="list-group-item">
                     @sentence.Value.Value.En
                 </li>
+                <li class="list-group-item">
+                    @if (imageUrl.HasValue)
+                    {
+                        if (imageUrl.Value.IsSuccess)
+                        {
+                            <img src="@imageUrl.Value.Value" width="256" height="256" />
+                        }
+                        else
+                        {
+                            @imageUrl.Value.Error
+                        }
+                    }
+
+                    @if (isImageLoading){
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    }
+                </li>
             </ul>
         }
         else
         {
             <p><em>@sentence.Value.Error</em></p>
         }
-
     </div>
 </div>
