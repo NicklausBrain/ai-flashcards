@@ -15,18 +15,41 @@ namespace My1kWordsEe.Services
 
         private string ApiKey { get; }
 
-        public async Task<Result<Uri>> GetSampleImageUri(string sentence)
+        private async Task<Result<string>> GetDallEPrompt(string sentence)
         {
-            ImageClient client = new(model: "dall-e-3", ApiKey);
-            var prompt =
-                "generate a picture " + // a simple and sketchy
-                "to illustrate the sentence for language learning purpose: " +
-                $"\"{sentence}\". \n" +
-                "main colors are blue, white and black.";
+            ChatClient client = new(model: "gpt-4o-mini", ApiKey);
 
             try
             {
-                var imageResponse = await client.GenerateImageAsync(prompt, new ImageGenerationOptions
+                ChatCompletion chatCompletion = await client.CompleteChatAsync(
+                    [
+                        new SystemChatMessage(
+                        "You are part of the language learning system.\n" +
+                        "Your task is to generate a DALL-E prompt so that it will create a picture to illustrate the sentence provided by the user.\n" +
+                        "The image should be sketchy, mostly shades of blue, black, and white.\n" +
+                        "Your response is a DALL-E prompt as a plain string.\n"),
+                    new UserChatMessage(sentence)]);
+                return Result.Success(chatCompletion.Content[0].Text);
+            }
+            catch (Exception e)
+            {
+                return Result.Failure<string>(e.Message);
+            }
+        }
+
+        public async Task<Result<Uri>> GetSampleImageUri(string sentence)
+        {
+            ImageClient client = new(model: "dall-e-3", ApiKey);
+            var prompt = await this.GetDallEPrompt(sentence);
+
+            if (prompt.IsFailure)
+            {
+                return Result.Failure<Uri>(prompt.Error);
+            }
+
+            try
+            {
+                var imageResponse = await client.GenerateImageAsync(prompt.Value, new ImageGenerationOptions
                 {
                     Quality = GeneratedImageQuality.Standard,
                     Size = GeneratedImageSize.W1024xH1024,
