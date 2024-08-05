@@ -4,6 +4,7 @@
 
 @inject OpenAiService OpenAiService;
 @inject TartuNlpService TartuNlpService;
+@inject StabilityAiService StabilityAiService;
 @inject IJSRuntime JS
 
 @code {
@@ -27,8 +28,8 @@
         if (!hasAudio && sentence.HasValue && sentence.Value.IsSuccess)
         {
             var eeText = sentence.Value.Value.Ee;
-            var imageStream = await TartuNlpService.GetSpeech(eeText);
-            var dotnetImageStream = new DotNetStreamReference(imageStream);
+            var audioStream = await TartuNlpService.GetSpeech(eeText);
+            var dotnetImageStream = new DotNetStreamReference(audioStream);
             await JS.InvokeVoidAsync("setAudioSample", "sampleAudio", dotnetImageStream);
         }
 
@@ -41,7 +42,16 @@
         if (!imageUrl.HasValue && sentence.HasValue && sentence.Value.IsSuccess)
         {
             var enText = sentence.Value.Value.En;
-            imageUrl = await OpenAiService.GetSampleImageUri(enText);
+            var prompt = await OpenAiService.GetDallEPrompt(enText);
+            var imageStream = await StabilityAiService.GenerateImage(prompt.Value);
+            if (imageStream.IsFailure)
+            {
+                imageUrl = Result.Failure<Uri>(imageStream.Error);
+                return;
+            }
+            var dotnetImageStream = new DotNetStreamReference(imageStream.Value);
+            // imageUrl = await OpenAiService.GetSampleImageUri(enText);
+            await JS.InvokeVoidAsync("setImageSample", "sampleImage", dotnetImageStream);
         }
         isImageLoading = false;
     }
@@ -49,6 +59,7 @@
 
 <script>
     window.setAudioSample = async (audioElementId, audioStream) => {
+        debugger;
         const arrayBuffer = await audioStream.arrayBuffer();
         const blob = new Blob([arrayBuffer]);
         const url = URL.createObjectURL(blob);
@@ -57,6 +68,15 @@
             URL.revokeObjectURL(url);
         }
         audio.src = url;
+    };
+    window.setImageSample = async (imageElementId, audioStream) => {
+        const arrayBuffer = await audioStream.arrayBuffer();
+        const blob = new Blob([arrayBuffer]);
+        const url = URL.createObjectURL(blob);
+        const image = document.getElementById(imageElementId);
+        debugger;
+        image.src = url;
+        image.className = '';
     };
     window.playAudioSample = async () => {
         const audio = document.getElementById('sampleAudio');
@@ -101,13 +121,11 @@
                     @sentence.Value.Value.En
                 </li>
                 <li class="list-group-item">
+                    <img id="sampleImage" width="256" height="256" class="d-none" />
+
                     @if (imageUrl.HasValue)
                     {
-                        if (imageUrl.Value.IsSuccess)
-                        {
-                            <img src="@imageUrl.Value.Value" width="256" height="256" />
-                        }
-                        else
+                        if (imageUrl.Value.IsFailure)
                         {
                             @imageUrl.Value.Error
                         }
