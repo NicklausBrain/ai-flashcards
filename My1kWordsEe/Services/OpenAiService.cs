@@ -15,7 +15,8 @@ namespace My1kWordsEe.Services
 
         private string ApiKey { get; }
 
-        private async Task<Result<string>> GetDallEPrompt(string sentence)
+        // todo: rename
+        public async Task<Result<string>> GetDallEPrompt(string sentence)
         {
             ChatClient client = new(model: "gpt-4o-mini", ApiKey);
 
