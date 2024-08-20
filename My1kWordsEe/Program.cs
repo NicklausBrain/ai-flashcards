@@ -15,6 +15,15 @@ namespace My1kWordsEe
             {
                 throw new ApplicationException("Secrets:OpenAiKey is missing");
             }
+
+            var stabilityAiKey = builder.Configuration["Secrets:StabilityAiKey"];
+
+            if (string.IsNullOrWhiteSpace(stabilityAiKey))
+            {
+                throw new ApplicationException("Secrets:StabilityAiKey is missing");
+            }
+
+            builder.Services.AddSingleton(new StabilityAiService(stabilityAiKey));
             builder.Services.AddSingleton(new OpenAiService(openApiKey));
             builder.Services.AddSingleton(new TartuNlpService());
 

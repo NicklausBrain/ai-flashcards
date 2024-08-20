@@ -1,6 +1,8 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+
 using CSharpFunctionalExtensions;
+
 using OpenAI.Chat;
 using OpenAI.Images;
 
@@ -15,7 +17,7 @@ namespace My1kWordsEe.Services
 
         private string ApiKey { get; }
 
-        private async Task<Result<string>> GetDallEPrompt(string sentence)
+        public async Task<Result<string>> GetDallEPrompt(string sentence)
         {
             ChatClient client = new(model: "gpt-4o-mini", ApiKey);
 
