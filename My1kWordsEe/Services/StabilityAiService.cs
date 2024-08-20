@@ -1,8 +1,9 @@
-﻿using CSharpFunctionalExtensions;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+
+using CSharpFunctionalExtensions;
 
 namespace My1kWordsEe.Services
 {
@@ -67,20 +68,16 @@ namespace My1kWordsEe.Services
             return Result.Failure<MemoryStream>("No artifacts found in response");
         }
 
-        public class GenerationResponse
+        private class GenerationResponse
         {
             [JsonPropertyName("artifacts")]
             public List<Artifact> Artifacts { get; set; }
         }
 
-        public class Artifact
+        private class Artifact
         {
             [JsonPropertyName("base64")]
             public string Base64 { get; set; }
-
-            //throws exception
-            //[JsonPropertyName("seed")]
-            //public int Seed { get; set; }
 
             [JsonPropertyName("finishReason")]
             public string FinishReason { get; set; }

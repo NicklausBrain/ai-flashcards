@@ -50,7 +50,6 @@
                 return;
             }
             var dotnetImageStream = new DotNetStreamReference(imageStream.Value);
-            // imageUrl = await OpenAiService.GetSampleImageUri(enText);
             await JS.InvokeVoidAsync("setImageSample", "sampleImage", dotnetImageStream);
         }
         isImageLoading = false;
@@ -86,10 +85,6 @@
         const audio = document.getElementById('sampleAudio');
         return audio.src ? true : false;
     };
-    // window.hasImage = () => {
-    //     const image = document.getElementById('sampleImage');
-    //     return image.src ? true : false;
-    // };
 </script>
 
 <div>
