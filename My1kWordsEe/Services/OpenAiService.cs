@@ -1,7 +1,8 @@
 ﻿using System.Text.Json;
-using System.Text.Json.Serialization;
 
 using CSharpFunctionalExtensions;
+
+using My1kWordsEe.Models;
 
 using OpenAI.Chat;
 using OpenAI.Images;
@@ -67,7 +68,7 @@ namespace My1kWordsEe.Services
             }
         }
 
-        public async Task<Result<Sentence>> GetSampleSentence(string word)
+        public async Task<Result<SampleSentence>> GetSampleSentence(string word)
         {
             ChatClient client = new(model: "gpt-4o-mini", ApiKey);
 
@@ -90,27 +91,21 @@ namespace My1kWordsEe.Services
             foreach (var c in chatCompletion.Content)
             {
                 var jsonStr = c.Text.Trim('`', ' ', '\'', '"');
-                var sentence = JsonSerializer.Deserialize<Sentence>(jsonStr);
+                var sentence = JsonSerializer.Deserialize<SampleSentence>(jsonStr);
                 if (sentence == null)
                 {
                     break;
                 }
                 else
                 {
+                    sentence.EeWord = word; // fix mutation
+
+
                     return Result.Success(sentence);
                 }
             }
 
-            return Result.Failure<Sentence>("Empty response");
+            return Result.Failure<SampleSentence>("Empty response");
         }
     }
-}
-
-public class Sentence
-{
-    [JsonPropertyName("ee_sentence")]
-    public string Ee { get; set; }
-
-    [JsonPropertyName("en_sentence")]
-    public string En { get; set; }
 }

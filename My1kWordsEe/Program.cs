@@ -26,6 +26,7 @@ namespace My1kWordsEe
             builder.Services.AddSingleton(new StabilityAiService(stabilityAiKey));
             builder.Services.AddSingleton(new OpenAiService(openApiKey));
             builder.Services.AddSingleton(new TartuNlpService());
+            builder.Services.AddSingleton(new LocalFileService(builder.Environment, "content"));
 
             // Add services to the container.
             builder.Services.AddRazorComponents()

@@ -1,17 +1,19 @@
 ﻿@using My1kWordsEe.Services;
 @using My1kWordsEe.Models;
 @using CSharpFunctionalExtensions;
+@using System.Text.Json
 
 @inject OpenAiService OpenAiService;
 @inject TartuNlpService TartuNlpService;
 @inject StabilityAiService StabilityAiService;
+@inject LocalFileService LocalFileService;
 @inject IJSRuntime JS
 
 @code {
     [Parameter]
     public string EeWord { get; set; }
 
-    private Result<Sentence>? sentence;
+    private Result<SampleSentence>? sentence;
 
     private bool isImageLoading = false;
     private Result<Uri>? imageUrl;
@@ -19,6 +21,13 @@
     protected override async Task OnInitializedAsync()
     {
         sentence = await OpenAiService.GetSampleSentence(EeWord);
+        if (sentence.Value.IsSuccess)
+        {
+            var eeText = sentence.Value.Value.EeSentence;
+            await LocalFileService.Save(
+                $"{eeText}json",
+                new MemoryStream(JsonSerializer.SerializeToUtf8Bytes(sentence.Value.Value)));
+        }
     }
 
     private async Task PlaySample(MouseEventArgs e)
@@ -27,9 +36,12 @@
 
         if (!hasAudio && sentence.HasValue && sentence.Value.IsSuccess)
         {
-            var eeText = sentence.Value.Value.Ee;
+            var eeText = sentence.Value.Value.EeSentence;
             var audioStream = await TartuNlpService.GetSpeech(eeText);
+            await LocalFileService.Save($"{eeText.Replace(' ', '_')}wav", audioStream);
+            audioStream.Position = 0;
             var dotnetImageStream = new DotNetStreamReference(audioStream);
+
             await JS.InvokeVoidAsync("setAudioSample", "sampleAudio", dotnetImageStream);
         }
 
@@ -41,7 +53,7 @@
         isImageLoading = true;
         if (!imageUrl.HasValue && sentence.HasValue && sentence.Value.IsSuccess)
         {
-            var enText = sentence.Value.Value.En;
+            var enText = sentence.Value.Value.EnSentence;
             var prompt = await OpenAiService.GetDallEPrompt(enText);
             var imageStream = await StabilityAiService.GenerateImage(prompt.Value);
             if (imageStream.IsFailure)
@@ -49,6 +61,8 @@
                 imageUrl = Result.Failure<Uri>(imageStream.Error);
                 return;
             }
+            await LocalFileService.Save($"{enText.Replace(' ', '_')}jpg", imageStream.Value);
+            imageStream.Value.Position = 0;
             var dotnetImageStream = new DotNetStreamReference(imageStream.Value);
             await JS.InvokeVoidAsync("setImageSample", "sampleImage", dotnetImageStream);
         }
@@ -110,10 +124,10 @@
                     <audio id="sampleAudio"></audio>
                 </li>
                 <li class="list-group-item">
-                    @sentence.Value.Value.Ee
+                    @sentence.Value.Value.EeSentence
                 </li>
                 <li class="list-group-item">
-                    @sentence.Value.Value.En
+                    @sentence.Value.Value.EnSentence
                 </li>
                 <li class="list-group-item">
                     <img id="sampleImage" width="256" height="256" class="d-none" />
