@@ -1,0 +1,22 @@
+@page "/word/{eeWord}"
+@rendermode InteractiveServer
+
+@using My1kWordsEe.Services;
+@using My1kWordsEe.Models;
+@using My1kWordsEe.Components.Layout;
+
+@inject OpenAiService OpenAiService
+
+@code {
+    [Parameter]
+    public string EeWord { get; set; }
+}
+
+<div class="text-left">
+    <div class="row">
+        <h1>@EeWord / EN Translation</h1>
+
+        <h3>EnWord translations</h3>
+        <h3>En description</h3>
+    </div>
+</div>
