@@ -5,7 +5,7 @@ name: Build and deploy ASP.Net Core app to Azure Web App - my-1k-ee
 
 defaults:
   run:
-    working-directory: ./scripts
+    working-directory: ./My1kWordsEe
 
 on:
   push:
