@@ -8,6 +8,7 @@ namespace My1kWordsEe
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Configuration.AddEnvironmentVariables();
 
             var openApiKey = builder.Configuration["Secrets:OpenAiKey"];
 
