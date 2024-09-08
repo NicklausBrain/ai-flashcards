@@ -8,15 +8,20 @@ namespace My1kWordsEe
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Configuration.AddEnvironmentVariables();
 
-            var openApiKey = builder.Configuration["Secrets:OpenAiKey"];
+            var openApiKey =
+                builder.Configuration["Secrets:OpenAiKey"] ??
+                Environment.GetEnvironmentVariable("Secrets_OpenAiKey");
 
             if (string.IsNullOrWhiteSpace(openApiKey))
             {
                 throw new ApplicationException("Secrets:OpenAiKey is missing");
             }
 
-            var stabilityAiKey = builder.Configuration["Secrets:StabilityAiKey"];
+            var stabilityAiKey =
+                builder.Configuration["Secrets:StabilityAiKey"] ??
+                Environment.GetEnvironmentVariable("Secrets_StabilityAiKey");
 
             if (string.IsNullOrWhiteSpace(stabilityAiKey))
             {
