@@ -1,7 +1,10 @@
-using My1kWordsEe.Models;
-using Azure.Storage.Blobs;
 using System.Text.Json;
+
+using Azure.Storage.Blobs;
+
 using CSharpFunctionalExtensions;
+
+using My1kWordsEe.Models;
 
 namespace My1kWordsEe.Services.Db
 {
@@ -17,18 +20,26 @@ namespace My1kWordsEe.Services.Db
         public async Task<Result<SampleWord>> GetWordData(string word)
         {
             BlobContainerClient container = await GetWordsContainer();
-
             BlobClient blob = container.GetBlobClient(BlobName(word));
 
             if (await blob.ExistsAsync())
             {
-                var content = await blob.DownloadContentAsync();
+                var response = await blob.DownloadContentAsync();
+                if (response != null && response.HasValue)
+                {
+                    var sampleWord = JsonSerializer.Deserialize<SampleWord>(response.Value.Content);
+
+                    if (sampleWord != null)
+                    {
+                        return Result.Success(sampleWord);
+                    }
+                }
             }
 
             return Result.Failure<SampleWord>($"Word '{word}' is not recorded");
         }
 
-        public async void SaveWordData(SampleWord word)
+        public async Task SaveWordData(SampleWord word)
         {
             BlobContainerClient container = await GetWordsContainer();
 

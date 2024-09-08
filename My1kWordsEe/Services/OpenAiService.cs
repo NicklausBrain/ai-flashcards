@@ -3,6 +3,8 @@ using System.Text.Json.Serialization;
 
 using CSharpFunctionalExtensions;
 
+using My1kWordsEe.Models;
+
 using OpenAI.Chat;
 using OpenAI.Images;
 
@@ -104,23 +106,45 @@ namespace My1kWordsEe.Services
             return Result.Failure<Sentence>("Empty response");
         }
 
-        public async Task<Result<string>> GetCompletion(string instructions, string input)
+        public async Task<Result<SampleWord>> GetWordMetadata(string word)
         {
             ChatClient client = new(model: "gpt-4o-mini", ApiKey);
 
             ChatCompletion chatCompletion = await client.CompleteChatAsync(
                 [
                     new SystemChatMessage(
-                        instructions),
-                    new UserChatMessage(input),
+                        "Your input is an Estonian word. " +
+                        "Your output is word metadata in JSON:\n" +
+                        "```\n{\n" +
+                        "ee_word: \"<given word>\",\n" +
+                        "en_word: \"<english translation>\"\n" +
+                        "en_words: [<alternative translations if applicable>]\n" +
+                        "en_explanation: \"<explanation of the word in english>\"\n" +
+                        "}\n```"),
+                    new UserChatMessage(word),
                 ]);
 
             foreach (var c in chatCompletion.Content)
             {
-                return c.Text;
+                var jsonStr = c.Text.Trim('`', ' ', '\'', '"');
+                var wordMetadata = JsonSerializer.Deserialize<WordMetadata>(jsonStr);
+                if (wordMetadata == null)
+                {
+                    break;
+                }
+                else
+                {
+                    return Result.Success(new SampleWord
+                    {
+                        EeWord = wordMetadata.EeWord,
+                        EnWord = wordMetadata.EnWord,
+                        EnWords = wordMetadata.EnWords,
+                        EnExplanation = wordMetadata.EnExplanation,
+                    });
+                }
             }
 
-            return Result.Failure<string>("Empty response");
+            return Result.Failure<SampleWord>("Empty response");
         }
     }
 }
@@ -132,4 +156,19 @@ public class Sentence
 
     [JsonPropertyName("en_sentence")]
     public string En { get; set; }
+}
+
+public class WordMetadata
+{
+    [JsonPropertyName("ee_word")]
+    public string EeWord { get; set; }
+
+    [JsonPropertyName("en_word")]
+    public string EnWord { get; set; }
+
+    [JsonPropertyName("en_explanation")]
+    public string EnExplanation { get; set; }
+
+    [JsonPropertyName("en_words")]
+    public string[] EnWords { get; set; }
 }

@@ -1,5 +1,6 @@
 using My1kWordsEe.Components;
 using My1kWordsEe.Services;
+using My1kWordsEe.Services.Cqs;
 using My1kWordsEe.Services.Db;
 
 namespace My1kWordsEe
@@ -42,6 +43,7 @@ namespace My1kWordsEe
             builder.Services.AddSingleton(new OpenAiService(openApiKey));
             builder.Services.AddSingleton(new AzureBlobService(azureBlobConnectionString));
             builder.Services.AddSingleton(new TartuNlpService());
+            builder.Services.AddSingleton<EnsureWordCommand>();
 
             // Add services to the container.
             builder.Services.AddRazorComponents()

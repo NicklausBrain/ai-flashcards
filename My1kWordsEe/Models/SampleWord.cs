@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-
 namespace My1kWordsEe.Models
 {
     public record SampleWord
@@ -17,7 +15,7 @@ namespace My1kWordsEe.Models
         /// <summary>
         /// Alternatives to EnWord
         /// </summary>
-        public string EnWords { get; init; }
+        public string[] EnWords { get; init; }
 
         public string EnExplanation { get; init; }
 
