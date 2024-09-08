@@ -103,6 +103,25 @@ namespace My1kWordsEe.Services
 
             return Result.Failure<Sentence>("Empty response");
         }
+
+        public async Task<Result<string>> GetCompletion(string instructions, string input)
+        {
+            ChatClient client = new(model: "gpt-4o-mini", ApiKey);
+
+            ChatCompletion chatCompletion = await client.CompleteChatAsync(
+                [
+                    new SystemChatMessage(
+                        instructions),
+                    new UserChatMessage(input),
+                ]);
+
+            foreach (var c in chatCompletion.Content)
+            {
+                return c.Text;
+            }
+
+            return Result.Failure<string>("Empty response");
+        }
     }
 }
 
