@@ -5,8 +5,9 @@
 @using My1kWordsEe.Services;
 @using My1kWordsEe.Models;
 @using My1kWordsEe.Components.Layout;
-@using My1kWordsEe.Services.Cqs
+@using My1kWordsEe.Services.Cqs;
 
+@inject IJSRuntime JS
 @inject EnsureWordCommand EnsureWordCommand
 
 @code {
@@ -23,7 +24,11 @@
 
 <div class="text-left">
     <div class="row">
-        <h1>@EeWord</h1>
+        <h1>@EeWord
+           @*  <button type="button" class="btn btn-primary">
+                <i class="bi bi-volume-down-fill"></i>
+            </button> *@
+        </h1>
 
         @if (WordMetadata.HasValue)
         {
@@ -35,11 +40,15 @@
         }
         else
         {
-            <div class="d-flex justify-content-center">
+            @* <div class="d-flex justify-content-center">
                 <div class="spinner-border" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
-            </div>
+            </div> *@
         }
     </div>
+    @* <div class="row">
+        <Sample EeWord="@EeWord">
+        </Sample>
+    </div> *@
 </div>
