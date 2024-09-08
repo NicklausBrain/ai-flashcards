@@ -22,5 +22,7 @@ namespace My1kWordsEe.Models
         public string EnExplanation { get; init; }
 
         public Uri EeAudioUrl { get; init; }
+
+        public SampleSentence[] Samples { get; init; }
     }
 }

@@ -1,6 +1,6 @@
 using My1kWordsEe.Models;
 
-namespace My1kWordsEe.Services.Db
+namespace My1kWordsEe.Services.Cqs
 {
     public class EnsureWordCommand
     {
