@@ -26,7 +26,7 @@ namespace My1kWordsEe.Services.Cqs
 
         public async Task<Result<SampleWord>> Invoke(SampleWord word)
         {
-            var sentence = await this.openAiService.GetSampleSentence(word.EnWord);
+            var sentence = await this.openAiService.GetSampleSentence(word.EeWord);
             var imageGeneration = this.GenerateImage(sentence.Value);
             var speechGeneration = this.GenerateSpeech(sentence.Value);
             await Task.WhenAll(imageGeneration, speechGeneration);
