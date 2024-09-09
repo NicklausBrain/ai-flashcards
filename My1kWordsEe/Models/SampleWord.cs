@@ -4,8 +4,10 @@ namespace My1kWordsEe.Models
     {
 
         private string eeWord = "";
+        private string[] enWords = [];
 
         private SampleSentence[] samples = [];
+
 
         /// <summary>
         /// Estonian word
@@ -24,7 +26,11 @@ namespace My1kWordsEe.Models
         /// <summary>
         /// Alternatives to EnWord
         /// </summary>
-        public string[] EnWords { get; init; }
+        public string[] EnWords
+        {
+            get => this.enWords;
+            init => this.enWords = value ?? this.enWords;
+        }
 
         public string EnExplanation { get; init; }
 
@@ -33,7 +39,7 @@ namespace My1kWordsEe.Models
         public SampleSentence[] Samples
         {
             get => this.samples;
-            init => this.samples = value ?? [];
+            init => this.samples = value ?? this.samples;
         }
     }
 }

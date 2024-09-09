@@ -118,27 +118,41 @@ namespace My1kWordsEe.Services
                         "en_word: \"<english translation>\"\n" +
                         "en_words: [<alternative translations if applicable>]\n" +
                         "en_explanation: \"<explanation of the word in english>\"\n" +
-                        "}\n```"),
+                        "}\n```\n" +
+                        "If the given word is not Estonian return 404"),
                     new UserChatMessage(word),
                 ]);
 
             foreach (var c in chatCompletion.Content)
             {
                 var jsonStr = c.Text.Trim('`', ' ', '\'', '"');
-                var wordMetadata = JsonSerializer.Deserialize<WordMetadata>(jsonStr);
-                if (wordMetadata == null)
+
+                if (jsonStr.Contains("404"))
                 {
-                    break;
+                    return Result.Failure<SampleWord>("Not an Estonian word");
                 }
-                else
+
+                try
                 {
-                    return Result.Success(new SampleWord
+                    var wordMetadata = JsonSerializer.Deserialize<WordMetadata>(jsonStr);
+                    if (wordMetadata == null)
                     {
-                        EeWord = wordMetadata.EeWord,
-                        EnWord = wordMetadata.EnWord,
-                        EnWords = wordMetadata.EnWords,
-                        EnExplanation = wordMetadata.EnExplanation,
-                    });
+                        break;
+                    }
+                    else
+                    {
+                        return Result.Success(new SampleWord
+                        {
+                            EeWord = wordMetadata.EeWord,
+                            EnWord = wordMetadata.EnWord,
+                            EnWords = wordMetadata.EnWords,
+                            EnExplanation = wordMetadata.EnExplanation,
+                        });
+                    }
+                }
+                catch (JsonException)
+                {
+                    return Result.Failure<SampleWord>("Unexpected data returned by AI");
                 }
             }
 

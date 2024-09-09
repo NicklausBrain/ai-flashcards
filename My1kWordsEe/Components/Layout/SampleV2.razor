@@ -32,12 +32,10 @@
 
     <ul class="list-group">
         <li class="list-group-item">
-            <audio id="@Sample.EeAudioUrl" src="@Sample.EeAudioUrl"></audio>
-        </li>
-        <li class="list-group-item">
             @Sample.EeSentence
             <button type="button" class="btn btn-primary" @onclick="PlaySample">
                 <i class="bi bi-volume-down-fill"></i>
+                <audio id="@Sample.EeAudioUrl" src="@Sample.EeAudioUrl"></audio>
             </button>
         </li>
         <li class="list-group-item">
