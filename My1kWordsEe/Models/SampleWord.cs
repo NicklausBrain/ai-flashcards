@@ -2,10 +2,19 @@ namespace My1kWordsEe.Models
 {
     public record SampleWord
     {
+
+        private string eeWord = "";
+
+        private SampleSentence[] samples = [];
+
         /// <summary>
         /// Estonian word
         /// </summary>
-        public string EeWord { get; init; }
+        public string EeWord
+        {
+            get => this.eeWord;
+            init => this.eeWord = value?.ToLower() ?? "";
+        }
 
         /// <summary>
         /// Default translation to English
@@ -21,6 +30,10 @@ namespace My1kWordsEe.Models
 
         public Uri EeAudioUrl { get; init; }
 
-        public SampleSentence[] Samples { get; init; }
+        public SampleSentence[] Samples
+        {
+            get => this.samples;
+            init => this.samples = value ?? [];
+        }
     }
 }

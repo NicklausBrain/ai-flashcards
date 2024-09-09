@@ -9,6 +9,7 @@
 
 @inject IJSRuntime JS
 @inject EnsureWordCommand EnsureWordCommand
+@inject CreateSampleCommand CreateSampleCommand
 
 @code {
     [Parameter]
@@ -18,15 +19,27 @@
 
     protected override async Task OnInitializedAsync()
     {
-        WordMetadata = await EnsureWordCommand.Invoke(EeWord);
+        WordMetadata = await this.EnsureWordCommand.Invoke(EeWord);
+    }
+
+    private bool isGenerationInProgress = false;
+
+    private async Task GenerateSample(MouseEventArgs e)
+    {
+        this.isGenerationInProgress = true;
+        if (WordMetadata.HasValue)
+        {
+            this.WordMetadata = await this.CreateSampleCommand.Invoke(WordMetadata.Value.Value);
+        }
+        this.isGenerationInProgress = false;
     }
 }
 
 <div class="text-left">
     <div class="row">
         <h1>@EeWord
-           @*  <button type="button" class="btn btn-primary">
-                <i class="bi bi-volume-down-fill"></i>
+            @* <button type="button" class="btn btn-primary">
+            <i class="bi bi-volume-down-fill"></i>
             </button> *@
         </h1>
 
@@ -40,15 +53,39 @@
         }
         else
         {
-            @* <div class="d-flex justify-content-center">
+            @* *@
+        }
+    </div>
+
+
+    <div class="row">
+        @if (this.isGenerationInProgress)
+        {
+            <div class="d-flex justify-content-center">
                 <div class="spinner-border" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
-            </div> *@
+            </div>
+        }
+        else
+        {
+            <button type="button" class="btn btn-primary" onclick="@GenerateSample">
+                @* <i class="bi bi-volume-down-fill"></i> *@
+                Generate sample sentence
+            </button>
+        }
+
+    </div>
+
+    <div class="row">
+        @if (this.WordMetadata.HasValue)
+        {
+            @foreach (var sample in this.WordMetadata.Value.Value.Samples)
+            {
+                <SampleV2 Sample="@sample">
+                </SampleV2>
+            }
         }
     </div>
-    @* <div class="row">
-        <Sample EeWord="@EeWord">
-        </Sample>
-    </div> *@
+
 </div>

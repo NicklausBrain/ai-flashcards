@@ -20,7 +20,7 @@ namespace My1kWordsEe.Services.Db
         public async Task<Result<SampleWord>> GetWordData(string word)
         {
             BlobContainerClient container = await GetWordsContainer();
-            BlobClient blob = container.GetBlobClient(BlobName(word));
+            BlobClient blob = container.GetBlobClient(JsonBlobName(word));
 
             if (await blob.ExistsAsync())
             {
@@ -44,7 +44,7 @@ namespace My1kWordsEe.Services.Db
             BlobContainerClient container = await GetWordsContainer();
 
             // Get a reference to a blob
-            BlobClient blob = container.GetBlobClient(BlobName(word.EeWord));
+            BlobClient blob = container.GetBlobClient(JsonBlobName(word.EeWord));
 
             // Upload file data
             await blob.UploadAsync(
@@ -52,15 +52,42 @@ namespace My1kWordsEe.Services.Db
                 overwrite: true);
         }
 
-        private async Task<BlobContainerClient> GetWordsContainer()
+        public async Task<Uri> SaveAudio(Stream audioStream)
+        {
+            BlobContainerClient container = await GetAudioContainer();
+            BlobClient blob = container.GetBlobClient(WavBlobName());
+            await blob.UploadAsync(audioStream);
+            return blob.Uri;
+        }
+
+        public async Task<Uri> SaveImage(Stream imageStream)
+        {
+            BlobContainerClient container = await GetImageContainer();
+            BlobClient blob = container.GetBlobClient(JpgBlobName());
+            await blob.UploadAsync(imageStream);
+            return blob.Uri;
+        }
+
+
+        private async Task<BlobContainerClient> GetWordsContainer() => await this.GetContainer("words");
+
+        private async Task<BlobContainerClient> GetAudioContainer() => await this.GetContainer("audio");
+
+        private async Task<BlobContainerClient> GetImageContainer() => await this.GetContainer("image");
+
+        private async Task<BlobContainerClient> GetContainer(string containerId)
         {
             BlobContainerClient container = new BlobContainerClient(
-                this.connectionString,
-                "words");
+                            this.connectionString,
+                            containerId);
             await container.CreateIfNotExistsAsync();
             return container;
         }
 
-        static string BlobName(string word) => word.ToLower() + ".json";
+        static string JsonBlobName(string word) => word.ToLower() + ".json";
+
+        static string WavBlobName() => Guid.NewGuid() + ".wav";
+
+        static string JpgBlobName() => Guid.NewGuid() + ".jpg";
     }
 }

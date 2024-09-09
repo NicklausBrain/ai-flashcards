@@ -1,0 +1,51 @@
+﻿@using My1kWordsEe.Services;
+@using My1kWordsEe.Models;
+@using CSharpFunctionalExtensions;
+
+@inject OpenAiService OpenAiService;
+@inject TartuNlpService TartuNlpService;
+@inject StabilityAiService StabilityAiService;
+@inject IJSRuntime JS
+
+@code {
+    [Parameter]
+    public SampleSentence Sample { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+    }
+
+    private async Task PlaySample(MouseEventArgs e)
+    {
+        await JS.InvokeVoidAsync("playAudioSample", Sample.EeAudioUrl);
+    }
+}
+
+<script>
+    window.playAudioSample = async (audioId) => {
+        const audio = document.getElementById(audioId);
+        await audio.play();
+    };
+</script>
+
+<div class="col-sm-6">
+
+    <ul class="list-group">
+        <li class="list-group-item">
+            <audio id="@Sample.EeAudioUrl" src="@Sample.EeAudioUrl"></audio>
+        </li>
+        <li class="list-group-item">
+            @Sample.EeSentence
+            <button type="button" class="btn btn-primary" @onclick="PlaySample">
+                <i class="bi bi-volume-down-fill"></i>
+            </button>
+        </li>
+        <li class="list-group-item">
+            @Sample.EnSentence
+        </li>
+        <li class="list-group-item">
+            <img id="sampleImage" width="256" height="256" src="@Sample.ImageUrl" />
+        </li>
+    </ul>
+
+</div>

@@ -44,6 +44,7 @@ namespace My1kWordsEe
             builder.Services.AddSingleton(new AzureBlobService(azureBlobConnectionString));
             builder.Services.AddSingleton(new TartuNlpService());
             builder.Services.AddSingleton<EnsureWordCommand>();
+            builder.Services.AddSingleton<CreateSampleCommand>();
 
             // Add services to the container.
             builder.Services.AddRazorComponents()
