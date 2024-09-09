@@ -1,0 +1,100 @@
+@page "/word/{eeWord}"
+@rendermode InteractiveServer
+
+@using CSharpFunctionalExtensions
+@using My1kWordsEe.Services;
+@using My1kWordsEe.Models;
+@using My1kWordsEe.Components.Layout;
+@using My1kWordsEe.Services.Cqs;
+
+@inject IJSRuntime JS
+@inject EnsureWordCommand EnsureWordCommand
+@inject CreateSampleCommand CreateSampleCommand
+
+@code {
+    [Parameter]
+    public string EeWord { get; set; }
+
+    private Result<SampleWord>? WordMetadata;
+
+    protected override async Task OnInitializedAsync()
+    {
+        WordMetadata = await this.EnsureWordCommand.Invoke(EeWord);
+    }
+
+    private bool isGenerationInProgress = false;
+
+    private async Task GenerateSample(MouseEventArgs e)
+    {
+        this.isGenerationInProgress = true;
+        if (WordMetadata.HasValue)
+        {
+            this.WordMetadata = await this.CreateSampleCommand.Invoke(WordMetadata.Value.Value);
+        }
+        this.isGenerationInProgress = false;
+    }
+}
+
+<div class="text-left">
+    <div class="row">
+        <h1>@EeWord
+        </h1>
+
+        @if (WordMetadata.HasValue)
+        {
+            if (WordMetadata.Value.IsSuccess)
+            {
+                <h3>[@WordMetadata.Value.Value.EnWord]</h3>
+
+                @if (WordMetadata.Value.Value.EnWords.Any())
+                {
+                    <h4>[@string.Join(" / ", WordMetadata.Value.Value.EnWords)]</h4>
+                }
+
+                <h3>@WordMetadata.Value.Value.EnExplanation</h3>
+            }
+            else
+            {
+                <h3>@WordMetadata.Value.Error</h3>
+            }
+        }
+        else
+        {
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        }
+    </div>
+
+    @if (this.WordMetadata.HasValue && this.WordMetadata.Value.IsSuccess)
+    {
+        <div class="row">
+            @foreach (var sample in this.WordMetadata.Value.Value.Samples)
+            {
+                <SampleV2 Sample="@sample">
+                </SampleV2>
+            }
+
+            <div class="col-sm-6">
+                @if (this.isGenerationInProgress)
+                {
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-primary" onclick="@GenerateSample">
+                        <i class="bi bi-robot"></i>
+                        Generate sample sentence
+                    </button>
+                }
+
+            </div>
+        </div>
+    }
+</div>

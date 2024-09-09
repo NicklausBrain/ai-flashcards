@@ -1,5 +1,7 @@
 using My1kWordsEe.Components;
 using My1kWordsEe.Services;
+using My1kWordsEe.Services.Cqs;
+using My1kWordsEe.Services.Db;
 
 namespace My1kWordsEe
 {
@@ -28,9 +30,21 @@ namespace My1kWordsEe
                 throw new ApplicationException("Secrets:StabilityAiKey is missing");
             }
 
+            var azureBlobConnectionString =
+                builder.Configuration["Secrets:AzureBlobConnectionString"] ??
+                Environment.GetEnvironmentVariable("Secrets_AzureBlobConnectionString");
+
+            if (string.IsNullOrWhiteSpace(azureBlobConnectionString))
+            {
+                throw new ApplicationException("Secrets:AzureBlobConnectionString is missing");
+            }
+
             builder.Services.AddSingleton(new StabilityAiService(stabilityAiKey));
             builder.Services.AddSingleton(new OpenAiService(openApiKey));
+            builder.Services.AddSingleton(new AzureBlobService(azureBlobConnectionString));
             builder.Services.AddSingleton(new TartuNlpService());
+            builder.Services.AddSingleton<EnsureWordCommand>();
+            builder.Services.AddSingleton<CreateSampleCommand>();
 
             // Add services to the container.
             builder.Services.AddRazorComponents()

@@ -5,6 +5,7 @@
 @using My1kWordsEe.Models;
 @using My1kWordsEe.Components.Layout;
 
+@inject NavigationManager NavigationManager
 @inject OpenAiService OpenAiService
 
 @code {
@@ -12,7 +13,8 @@
 
     private void SelectWord(MouseEventArgs e, string word)
     {
-        Ee1KWords = Ee1KWords.WithSelectedWord(word);
+        //Ee1KWords = Ee1KWords.WithSelectedWord(word);
+        NavigationManager.NavigateTo($"/word/{word}");
     }
 
     private void OnSearchInput(ChangeEventArgs e)
@@ -31,7 +33,7 @@
                 <span class="input-group-text" id="inputGroup-sizing-default">Search</span>
             </div>
             <input type="text" class="form-control " aria-label="Search" aria-describedby="inputGroup-sizing-default"
-                   @oninput="OnSearchInput" />
+                @oninput="OnSearchInput" />
         </div>
     </div>
     <div class="row">
