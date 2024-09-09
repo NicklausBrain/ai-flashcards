@@ -13,8 +13,10 @@
 
     private void SelectWord(MouseEventArgs e, string word)
     {
-        //Ee1KWords = Ee1KWords.WithSelectedWord(word);
-        NavigationManager.NavigateTo($"/word/{word}");
+        NavigationManager.NavigateTo($"/word/{word}", new NavigationOptions
+            {
+                ForceLoad = true
+            });
     }
 
     private void OnSearchInput(ChangeEventArgs e)
@@ -48,9 +50,7 @@
                         }
                         else
                         {
-                            <li class="list-group-item"
-                                @onclick="@(e => SelectWord(e, word))"
-                                role="button">@word</li>
+                            <li class="list-group-item" @onclick="@(e => SelectWord(e, word))" role="button">@word</li>
                         }
                     </div>
                     <div class="col">

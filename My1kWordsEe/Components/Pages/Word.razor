@@ -1,5 +1,5 @@
 @page "/word/{eeWord}"
-@rendermode InteractiveServer
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
 
 @using CSharpFunctionalExtensions
 @using My1kWordsEe.Services;
