@@ -69,22 +69,23 @@ namespace My1kWordsEe.Services
             }
         }
 
-        public async Task<Result<Sentence>> GetSampleSentence(string word)
+        public async Task<Result<Sentence>> GetSampleSentence(string eeWord)
         {
             ChatClient client = new(model: "gpt-4o-mini", ApiKey);
 
             ChatCompletion chatCompletion = await client.CompleteChatAsync(
                 [
                     new SystemChatMessage(
-                        "This is the system to help learn most common Estonian words. " +
-                        "Your input is Estonian word. " +
-                        "Your task is to provide a sample sentence using this word, " +
-                        "preferably in combination with some of the other most common Estonian words. " +
-                        "Your output is JSON object with the sample sentence in Estonian and its respective English translation:\n" +
+                        "Sa oled keeleõppe süsteemi abiline, mis aitab õppida enim levinud eesti keele sõnu. " +
+                        "Sinu sisend on üks sõna eesti keeles. " +
+                        "Sinu ülesanne on kirjutada selle kasutamise kohta lihtne lühike näitelause, kasutades seda sõna. " +
+                        "Lauses kasuta kõige levinuimaid ja lihtsamaid sõnu eesti keeles et toetada keeleõpet. " +
+                        "Sinu väljund on JSON objekt, milles on näitelaus eesti keeles ja selle vastav tõlge inglise keelde:\n" +
                         "```\n" +
-                        "{\"ee_sentence\": \"<sample in Estonian>\", \"en_sentence\": \"<sample in English>\" }" +
-                        "\n```"),
-                    new UserChatMessage(word),
+                        "{\"ee_sentence\": \"<näide eesti keeles>\", \"en_sentence\": \"<näide inglise keeles>\" }" +
+                        "\n```" +
+                        "\n Tagastab ainult json-objekti!"),
+                    new UserChatMessage(eeWord),
                 ]);
 
             foreach (var c in chatCompletion.Content)
