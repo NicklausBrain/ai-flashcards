@@ -59,7 +59,7 @@ namespace My1kWordsEe.Services.Cqs
         private async Task<Result<Uri>> GenerateSpeech(Sentence sentence)
         {
             var speech = await this.tartuNlpService.GetSpeech(sentence.Ee);
-            var url = await this.azureBlobService.SaveAudio(speech);
+            var url = await this.azureBlobService.SaveAudio(speech.Value);
             return url;
         }
     }

@@ -1,10 +1,11 @@
 ﻿using System.Net.Http.Headers;
+using CSharpFunctionalExtensions;
 
 namespace My1kWordsEe.Services
 {
     public class TartuNlpService
     {
-        public async Task<Stream> GetSpeech(string text)
+        public async Task<Result<Stream>> GetSpeech(string text)
         {
             using HttpClient client = new HttpClient();
 
@@ -17,8 +18,16 @@ namespace My1kWordsEe.Services
 
             HttpResponseMessage response = await client.SendAsync(request);
 
-            var stream = await response.Content.ReadAsStreamAsync();
-            return stream;
+            if (response.IsSuccessStatusCode)
+            {
+                var stream = await response.Content.ReadAsStreamAsync();
+                return Result.Success(stream);
+            }
+            else
+            {
+                var str = await response.Content.ReadAsStringAsync();
+                return Result.Failure<Stream>(str);
+            }
         }
     }
 }
