@@ -25,8 +25,8 @@ namespace My1kWordsEe.Services
             }
             else
             {
-                var str = await response.Content.ReadAsStringAsync();
-                return Result.Failure<Stream>(str);
+                var errorStr = await response.Content.ReadAsStringAsync();
+                return Result.Failure<Stream>($"{response.ReasonPhrase}: {errorStr}");
             }
         }
     }

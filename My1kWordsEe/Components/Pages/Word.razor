@@ -27,7 +27,7 @@
     private async Task GenerateSample(MouseEventArgs e)
     {
         this.isGenerationInProgress = true;
-        if (WordMetadata.HasValue)
+        if (WordMetadata.HasValue && WordMetadata.Value.IsSuccess)
         {
             this.WordMetadata = await this.CreateSampleCommand.Invoke(WordMetadata.Value.Value);
         }
