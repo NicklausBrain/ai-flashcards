@@ -27,9 +27,24 @@ namespace My1kWordsEe.Services.Cqs
         public async Task<Result<SampleWord>> Invoke(SampleWord word)
         {
             var sentence = await this.openAiService.GetSampleSentence(word.EeWord);
+            if (sentence.IsFailure)
+            {
+                return Result.Failure<SampleWord>($"Sentence generation failed: {sentence.Error}");
+            }
+
             var imageGeneration = this.GenerateImage(sentence.Value);
             var speechGeneration = this.GenerateSpeech(sentence.Value);
             await Task.WhenAll(imageGeneration, speechGeneration);
+
+            if (imageGeneration.Result.IsFailure)
+            {
+                return Result.Failure<SampleWord>($"Image generation failed: {imageGeneration.Result.Error}");
+            }
+
+            if (speechGeneration.Result.IsFailure)
+            {
+                return Result.Failure<SampleWord>($"Speech generation failed: {speechGeneration.Result.Error}");
+            }
 
             var updatedWordData = word with
             {
@@ -48,19 +63,13 @@ namespace My1kWordsEe.Services.Cqs
             return Result.Success(updatedWordData);
         }
 
-        private async Task<Result<Uri>> GenerateImage(Sentence sentence)
-        {
-            var prompt = await this.openAiService.GetDallEPrompt(sentence.En);
-            var image = await this.stabilityAiService.GenerateImage(prompt.Value);
-            var url = await this.azureBlobService.SaveImage(image.Value);
-            return url;
-        }
+        private Task<Result<Uri>> GenerateImage(Sentence sentence) =>
+            this.openAiService.GetDallEPrompt(sentence.En)
+                .Bind(this.stabilityAiService.GenerateImage)
+                .Bind(image => Result.Of(this.azureBlobService.SaveImage(image)));
 
-        private async Task<Result<Uri>> GenerateSpeech(Sentence sentence)
-        {
-            var speech = await this.tartuNlpService.GetSpeech(sentence.Ee);
-            var url = await this.azureBlobService.SaveAudio(speech);
-            return url;
-        }
+        private Task<Result<Uri>> GenerateSpeech(Sentence sentence) =>
+            this.tartuNlpService.GetSpeech(sentence.Ee)
+                .Bind(speech => Result.Of(this.azureBlobService.SaveAudio(speech)));
     }
 }
