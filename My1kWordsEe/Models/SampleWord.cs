@@ -3,10 +3,10 @@ namespace My1kWordsEe.Models
     public record SampleWord
     {
 
-        private string eeWord = "";
-        private string[] enWords = [];
+        private readonly string eeWord = "";
+        private readonly string[] enWords = [];
 
-        private SampleSentence[] samples = [];
+        private readonly SampleSentence[] samples = [];
 
 
         /// <summary>

@@ -39,57 +39,28 @@
         </div>
     </div>
     <div class="row">
-        <ul class="list-group">
-            @foreach (var word in Ee1KWords.SelectedWords)
-            {
-                <div class="row">
-                    <div class="col">
-                        @if (word == Ee1KWords.SelectedWord)
-                        {
-                            <li class="list-group-item active">@word</li>
-                        }
-                        else
-                        {
-                            <li class="list-group-item" @onclick="@(e => SelectWord(e, word))" role="button">@word</li>
-                        }
-                    </div>
-                    <div class="col">
-                        @if (word == Ee1KWords.SelectedWord)
-                        {
-                            <Sample EeWord="@word">
-                            </Sample>
-                        }
-                    </div>
-                </div>
-            }
-        </ul>
         <table class="table">
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">EE Word</th>
+                    <th scope="col">En Words</th>
+                    <th scope="col">Category</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>3</td>
-                </tr>
+                @{
+                    var i = 0;
+                    foreach (var word in Ee1KWords.SelectedWords)
+                    {
+                        <tr @onclick="@(e => SelectWord(e, word.Value))" >
+                            <th scope="row">@(i++)</th>
+                            <td>@word.Value</td>
+                            <td>@word.EnWord</td>
+                            <td>@word.PartOfSpeech</td>
+                        </tr>
+                    }
+                }
             </tbody>
         </table>
     </div>
