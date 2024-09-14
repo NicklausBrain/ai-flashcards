@@ -12,7 +12,6 @@ namespace ConsoleApp
 
         private static readonly string[] Words = new string[]
         {
-            "enam","need","tea","ent","too","president","no"
         };
 
         static async Task Main(string[] args)

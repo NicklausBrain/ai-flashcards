@@ -109,7 +109,7 @@ namespace My1kWordsEe.Services
 
             foreach (var c in chatCompletion.Content)
             {
-                var jsonStr = c.Text.Trim('`', ' ', '\'', '"');
+                var jsonStr = c.Text.Replace("json", "", StringComparison.OrdinalIgnoreCase).Trim('`', ' ', '\'', '"');
                 var sentence = JsonSerializer.Deserialize<Sentence>(jsonStr);
                 if (sentence == null)
                 {
@@ -145,7 +145,7 @@ namespace My1kWordsEe.Services
 
             foreach (var c in chatCompletion.Content)
             {
-                var jsonStr = c.Text.Trim('`', ' ', '\'', '"');
+                var jsonStr = c.Text.Replace("json", "", StringComparison.OrdinalIgnoreCase).Trim('`', ' ', '\'', '"');
 
                 if (jsonStr.Contains("404"))
                 {
