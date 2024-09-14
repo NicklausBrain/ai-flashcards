@@ -19,6 +19,23 @@ namespace My1kWordsEe.Services
 
         private string ApiKey { get; }
 
+        public async Task<Result<string>> CompleteAsync(string instructions, string input)
+        {
+            ChatClient client = new(model: "gpt-4o-mini", ApiKey);
+
+            try
+            {
+                ChatCompletion chatCompletion = await client.CompleteChatAsync([
+                    new SystemChatMessage(instructions),
+                    new UserChatMessage(input)]);
+                return Result.Success(chatCompletion.Content[0].Text);
+            }
+            catch (Exception e)
+            {
+                return Result.Failure<string>(e.Message);
+            }
+        }
+
         public async Task<Result<string>> GetDallEPrompt(string sentence)
         {
             ChatClient client = new(model: "gpt-4o-mini", ApiKey);

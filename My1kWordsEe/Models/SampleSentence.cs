@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-
 namespace My1kWordsEe.Models
 {
     public class SampleSentence

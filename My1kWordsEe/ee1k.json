@@ -1,0 +1,8661 @@
+[
+  {
+    "value": "ja",
+    "part_of_speech": "Sidesõna",
+    "en_words": [
+      "and"
+    ]
+  },
+  {
+    "value": "on",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "is",
+      "are",
+      "on"
+    ]
+  },
+  {
+    "value": "ei",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "no",
+      "not"
+    ]
+  },
+  {
+    "value": "et",
+    "part_of_speech": "Sidesõna",
+    "en_words": [
+      "that",
+      "so that",
+      "in order to"
+    ]
+  },
+  {
+    "value": "kui",
+    "part_of_speech": "Sidesõna",
+    "en_words": [
+      "if",
+      "when",
+      "as"
+    ]
+  },
+  {
+    "value": "oli",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "was",
+      "were"
+    ]
+  },
+  {
+    "value": "ta",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "he",
+      "she",
+      "that"
+    ]
+  },
+  {
+    "value": "ka",
+    "part_of_speech": "Sidesõna",
+    "en_words": [
+      "also",
+      "too"
+    ]
+  },
+  {
+    "value": "see",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "that",
+      "this"
+    ]
+  },
+  {
+    "value": "ning",
+    "part_of_speech": "Sidesõna",
+    "en_words": [
+      "and",
+      "also"
+    ]
+  },
+  {
+    "value": "mis",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "what",
+      "which",
+      "that"
+    ]
+  },
+  {
+    "value": "aga",
+    "part_of_speech": "Sidesõna",
+    "en_words": [
+      "but",
+      "however",
+      "yet"
+    ]
+  },
+  {
+    "value": "ma",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "I",
+      "me"
+    ]
+  },
+  {
+    "value": "oma",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "my",
+      "own"
+    ]
+  },
+  {
+    "value": "siis",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "then",
+      "so",
+      "at that time"
+    ]
+  },
+  {
+    "value": "või",
+    "part_of_speech": "Sidesõna",
+    "en_words": [
+      "or",
+      "butter"
+    ]
+  },
+  {
+    "value": "nii",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "so",
+      "like this",
+      "like that"
+    ]
+  },
+  {
+    "value": "seda",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "this",
+      "that",
+      "it"
+    ]
+  },
+  {
+    "value": "selle",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "this",
+      "that"
+    ]
+  },
+  {
+    "value": "kes",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "who",
+      "whom",
+      "that"
+    ]
+  },
+  {
+    "value": "nagu",
+    "part_of_speech": "Sidesõna",
+    "en_words": [
+      "as",
+      "like",
+      "such as"
+    ]
+  },
+  {
+    "value": "kuid",
+    "part_of_speech": "Sidesõna",
+    "en_words": [
+      "but",
+      "however",
+      "yet"
+    ]
+  },
+  {
+    "value": "tema",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "he",
+      "she",
+      "they",
+      "it"
+    ]
+  },
+  {
+    "value": "pole",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "pole",
+      "is not",
+      "are not"
+    ]
+  },
+  {
+    "value": "veel",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "more",
+      "still",
+      "else"
+    ]
+  },
+  {
+    "value": "kas",
+    "part_of_speech": "Sidesõna",
+    "en_words": [
+      "whether",
+      "if"
+    ]
+  },
+  {
+    "value": "mida",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "what",
+      "which"
+    ]
+  },
+  {
+    "value": "välja",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "out",
+      "outward",
+      "outside"
+    ]
+  },
+  {
+    "value": "juba",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "already",
+      "just",
+      "by now"
+    ]
+  },
+  {
+    "value": "võib",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "may",
+      "can",
+      "might"
+    ]
+  },
+  {
+    "value": "vaid",
+    "part_of_speech": "Sidesõna",
+    "en_words": [
+      "but",
+      "only",
+      "just"
+    ]
+  },
+  {
+    "value": "nad",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "they",
+      "them"
+    ]
+  },
+  {
+    "value": "mitte",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "not",
+      "no"
+    ]
+  },
+  {
+    "value": "kõik",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "all",
+      "everything"
+    ]
+  },
+  {
+    "value": "ole",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "be",
+      "are",
+      "is"
+    ]
+  },
+  {
+    "value": "nende",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "their",
+      "theirs"
+    ]
+  },
+  {
+    "value": "sest",
+    "part_of_speech": "Sidesõna",
+    "en_words": [
+      "because",
+      "for",
+      "since"
+    ]
+  },
+  {
+    "value": "olid",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "were",
+      "was"
+    ]
+  },
+  {
+    "value": "sa",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "you"
+    ]
+  },
+  {
+    "value": "kus",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "where"
+    ]
+  },
+  {
+    "value": "üle",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "over",
+      "above",
+      "across"
+    ]
+  },
+  {
+    "value": "ära",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "away",
+      "not",
+      "no longer"
+    ]
+  },
+  {
+    "value": "midagi",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "something",
+      "anything"
+    ]
+  },
+  {
+    "value": "pärast",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "after",
+      "following",
+      "post"
+    ]
+  },
+  {
+    "value": "oleks",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "would be",
+      "if it were",
+      "could be"
+    ]
+  },
+  {
+    "value": "üks",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "one",
+      "a",
+      "single"
+    ]
+  },
+  {
+    "value": "olnud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "been"
+    ]
+  },
+  {
+    "value": "küll",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "indeed",
+      "certainly",
+      "surely"
+    ]
+  },
+  {
+    "value": "nüüd",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "now",
+      "at this moment",
+      "currently"
+    ]
+  },
+  {
+    "value": "väga",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "very",
+      "really",
+      "extremely"
+    ]
+  },
+  {
+    "value": "ainult",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "only",
+      "just",
+      "merely"
+    ]
+  },
+  {
+    "value": "tuleb",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "must",
+      "has to",
+      "should"
+    ]
+  },
+  {
+    "value": "enam",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "more",
+      "anymore"
+    ]
+  },
+  {
+    "value": "need",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "need",
+      "require",
+      "want"
+    ]
+  },
+  {
+    "value": "vastu",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "against",
+      "towards",
+      "opposite",
+      "in response to"
+    ]
+  },
+  {
+    "value": "mille",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "whose",
+      "of which"
+    ]
+  },
+  {
+    "value": "olla",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to be",
+      "to exist"
+    ]
+  },
+  {
+    "value": "kõige",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "most",
+      "of all"
+    ]
+  },
+  {
+    "value": "meie",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "we",
+      "our"
+    ]
+  },
+  {
+    "value": "ju",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "then",
+      "so",
+      "you know"
+    ]
+  },
+  {
+    "value": "neid",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "them",
+      "those"
+    ]
+  },
+  {
+    "value": "kuidas",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "how",
+      "in what way",
+      "in what manner"
+    ]
+  },
+  {
+    "value": "eest",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "from",
+      "in front of",
+      "to the east"
+    ]
+  },
+  {
+    "value": "aasta",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "year",
+      "annum"
+    ]
+  },
+  {
+    "value": "palju",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "many",
+      "much",
+      "a lot"
+    ]
+  },
+  {
+    "value": "ütles",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "said",
+      "told"
+    ]
+  },
+  {
+    "value": "saab",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "can",
+      "is able to",
+      "may"
+    ]
+  },
+  {
+    "value": "ise",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "self",
+      "oneself",
+      "by oneself"
+    ]
+  },
+  {
+    "value": "kohta",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "place",
+      "point",
+      "spot"
+    ]
+  },
+  {
+    "value": "me",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "me",
+      "us"
+    ]
+  },
+  {
+    "value": "ega",
+    "part_of_speech": "Sidesõna",
+    "en_words": [
+      "nor",
+      "neither",
+      "either"
+    ]
+  },
+  {
+    "value": "peale",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "on",
+      "upon",
+      "after"
+    ]
+  },
+  {
+    "value": "sellest",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "from this",
+      "about this",
+      "of this"
+    ]
+  },
+  {
+    "value": "aastal",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in the year",
+      "year"
+    ]
+  },
+  {
+    "value": "minu",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "my",
+      "mine"
+    ]
+  },
+  {
+    "value": "näiteks",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "for example",
+      "such as",
+      "like"
+    ]
+  },
+  {
+    "value": "kogu",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "collection",
+      "whole",
+      "entirety"
+    ]
+  },
+  {
+    "value": "läbi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "through",
+      "by",
+      "past"
+    ]
+  },
+  {
+    "value": "seal",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "seal",
+      "marquee",
+      "sign"
+    ]
+  },
+  {
+    "value": "tagasi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "back",
+      "again"
+    ]
+  },
+  {
+    "value": "siin",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "here",
+      "in this place"
+    ]
+  },
+  {
+    "value": "peab",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "must",
+      "has to",
+      "should",
+      "ought to"
+    ]
+  },
+  {
+    "value": "rohkem",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "more",
+      "greater",
+      "further"
+    ]
+  },
+  {
+    "value": "polnud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "was not",
+      "had not"
+    ]
+  },
+  {
+    "value": "mulle",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "to me",
+      "for me"
+    ]
+  },
+  {
+    "value": "just",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "just",
+      "fair",
+      "only",
+      "precisely"
+    ]
+  },
+  {
+    "value": "olen",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "I am",
+      "am"
+    ]
+  },
+  {
+    "value": "teda",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "him",
+      "her",
+      "it"
+    ]
+  },
+  {
+    "value": "kaks",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "two",
+      "a couple",
+      "pair"
+    ]
+  },
+  {
+    "value": "isegi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "even",
+      "also"
+    ]
+  },
+  {
+    "value": "ette",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "forward",
+      "in front",
+      "before"
+    ]
+  },
+  {
+    "value": "ajal",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in time",
+      "during",
+      "at the time"
+    ]
+  },
+  {
+    "value": "vahel",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "sometimes",
+      "occasionally",
+      "in between"
+    ]
+  },
+  {
+    "value": "mina",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "I",
+      "mine"
+    ]
+  },
+  {
+    "value": "ikka",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "always",
+      "still",
+      "yet"
+    ]
+  },
+  {
+    "value": "siiski",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "however",
+      "nevertheless",
+      "still"
+    ]
+  },
+  {
+    "value": "ehk",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "or",
+      "perhaps",
+      "maybe"
+    ]
+  },
+  {
+    "value": "talle",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "to him",
+      "to her"
+    ]
+  },
+  {
+    "value": "teha",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to do",
+      "to make"
+    ]
+  },
+  {
+    "value": "enne",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "before",
+      "prior to",
+      "ahead of"
+    ]
+  },
+  {
+    "value": "mul",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "to me",
+      "for me"
+    ]
+  },
+  {
+    "value": "saa",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "get",
+      "receive"
+    ]
+  },
+  {
+    "value": "saanud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "received",
+      "gotten",
+      "become"
+    ]
+  },
+  {
+    "value": "poolt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "by",
+      "from"
+    ]
+  },
+  {
+    "value": "alla",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "down",
+      "below",
+      "under"
+    ]
+  },
+  {
+    "value": "kokku",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "together",
+      "into",
+      "all",
+      "in total"
+    ]
+  },
+  {
+    "value": "mu",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "my",
+      "mine"
+    ]
+  },
+  {
+    "value": "ühe",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "one",
+      "a single"
+    ]
+  },
+  {
+    "value": "tal",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "he",
+      "that",
+      "they"
+    ]
+  },
+  {
+    "value": "puhul",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "case",
+      "situation",
+      "instance"
+    ]
+  },
+  {
+    "value": "samuti",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "also",
+      "too",
+      "as well"
+    ]
+  },
+  {
+    "value": "sai",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "bread",
+      "bun"
+    ]
+  },
+  {
+    "value": "mind",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "mind",
+      "myself"
+    ]
+  },
+  {
+    "value": "koos",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "together",
+      "with"
+    ]
+  },
+  {
+    "value": "osa",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "part",
+      "piece",
+      "section"
+    ]
+  },
+  {
+    "value": "poole",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "half",
+      "side"
+    ]
+  },
+  {
+    "value": "tuli",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "fire",
+      "flame",
+      "light"
+    ]
+  },
+  {
+    "value": "iga",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "every",
+      "each"
+    ]
+  },
+  {
+    "value": "krooni",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "crown",
+      "kroon"
+    ]
+  },
+  {
+    "value": "olema",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to be",
+      "being",
+      "to exist"
+    ]
+  },
+  {
+    "value": "kuni",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "until",
+      "as far as",
+      "by"
+    ]
+  },
+  {
+    "value": "kuigi",
+    "part_of_speech": "Sidesõna",
+    "en_words": [
+      "although",
+      "even though"
+    ]
+  },
+  {
+    "value": "hea",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "good",
+      "nice",
+      "well"
+    ]
+  },
+  {
+    "value": "mees",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "man",
+      "male"
+    ]
+  },
+  {
+    "value": "praegu",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "now",
+      "currently",
+      "at the moment"
+    ]
+  },
+  {
+    "value": "keegi",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "someone",
+      "somebody",
+      "anyone",
+      "anybody"
+    ]
+  },
+  {
+    "value": "võimalik",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "possible",
+      "feasible",
+      "viable"
+    ]
+  },
+  {
+    "value": "miks",
+    "part_of_speech": "Hüüdsõna",
+    "en_words": [
+      "why"
+    ]
+  },
+  {
+    "value": "selles",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in this",
+      "in there"
+    ]
+  },
+  {
+    "value": "eriti",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "especially",
+      "particularly",
+      "notably"
+    ]
+  },
+  {
+    "value": "samas",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "at the same time",
+      "same",
+      "also"
+    ]
+  },
+  {
+    "value": "kuna",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "when",
+      "since",
+      "as"
+    ]
+  },
+  {
+    "value": "elu",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "life",
+      "existence"
+    ]
+  },
+  {
+    "value": "peaks",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "should",
+      "ought to"
+    ]
+  },
+  {
+    "value": "end",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "end",
+      "finish",
+      "conclusion"
+    ]
+  },
+  {
+    "value": "aastat",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "year",
+      "annum"
+    ]
+  },
+  {
+    "value": "järgi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "after",
+      "according to",
+      "following"
+    ]
+  },
+  {
+    "value": "korral",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "order",
+      "arrangement",
+      "organization"
+    ]
+  },
+  {
+    "value": "raha",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "money",
+      "cash",
+      "funds"
+    ]
+  },
+  {
+    "value": "korda",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "repeat",
+      "do again",
+      "recall"
+    ]
+  },
+  {
+    "value": "juurde",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "to",
+      "towards",
+      "into",
+      "addition"
+    ]
+  },
+  {
+    "value": "all",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "all",
+      "every",
+      "whole"
+    ]
+  },
+  {
+    "value": "jaoks",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "for",
+      "for the sake of",
+      "to"
+    ]
+  },
+  {
+    "value": "kohe",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "immediately",
+      "right away",
+      "at once"
+    ]
+  },
+  {
+    "value": "edasi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "forward",
+      "ahead",
+      "further"
+    ]
+  },
+  {
+    "value": "suur",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "big",
+      "large",
+      "great",
+      "huge"
+    ]
+  },
+  {
+    "value": "ees",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "front",
+      "before",
+      "in front of"
+    ]
+  },
+  {
+    "value": "aega",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "time",
+      "period",
+      "duration"
+    ]
+  },
+  {
+    "value": "sõnul",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "according to",
+      "in terms of",
+      "by",
+      "speaking of"
+    ]
+  },
+  {
+    "value": "juhul",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "case",
+      "event",
+      "situation"
+    ]
+  },
+  {
+    "value": "teine",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "second",
+      "other"
+    ]
+  },
+  {
+    "value": "lihtsalt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "just",
+      "simply",
+      "only"
+    ]
+  },
+  {
+    "value": "jäi",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "stayed",
+      "remained"
+    ]
+  },
+  {
+    "value": "saada",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to send",
+      "to get",
+      "to receive"
+    ]
+  },
+  {
+    "value": "sama",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "same",
+      "similar"
+    ]
+  },
+  {
+    "value": "maha",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "down",
+      "off",
+      "away"
+    ]
+  },
+  {
+    "value": "alati",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "always",
+      "ever",
+      "at all times"
+    ]
+  },
+  {
+    "value": "vaja",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "needed",
+      "necessary",
+      "required"
+    ]
+  },
+  {
+    "value": "alles",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "all",
+      "everything"
+    ]
+  },
+  {
+    "value": "töö",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "work",
+      "job",
+      "labor"
+    ]
+  },
+  {
+    "value": "seotud",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "related",
+      "connected",
+      "linked"
+    ]
+  },
+  {
+    "value": "seega",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "therefore",
+      "thus",
+      "so"
+    ]
+  },
+  {
+    "value": "olin",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "I was",
+      "I am",
+      "I have been"
+    ]
+  },
+  {
+    "value": "ema",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "mother",
+      "mom",
+      "mum"
+    ]
+  },
+  {
+    "value": "kunagi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "sometime",
+      "at some time",
+      "ever"
+    ]
+  },
+  {
+    "value": "üles",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "up",
+      "upwards",
+      "above"
+    ]
+  },
+  {
+    "value": "muidugi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "of course",
+      "certainly",
+      "surely"
+    ]
+  },
+  {
+    "value": "tegelikult",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "actually",
+      "in fact",
+      "really"
+    ]
+  },
+  {
+    "value": "üldse",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "at all",
+      "generally",
+      "altogether"
+    ]
+  },
+  {
+    "value": "enda",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "myself",
+      "oneself"
+    ]
+  },
+  {
+    "value": "teise",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "second",
+      "other"
+    ]
+  },
+  {
+    "value": "võiks",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "could",
+      "might",
+      "would"
+    ]
+  },
+  {
+    "value": "sisse",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "inside",
+      "into"
+    ]
+  },
+  {
+    "value": "jooksul",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "during",
+      "in the course of",
+      "while"
+    ]
+  },
+  {
+    "value": "hästi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "well",
+      "good",
+      "properly"
+    ]
+  },
+  {
+    "value": "kaasa",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "with",
+      "together",
+      "along"
+    ]
+  },
+  {
+    "value": "selleks",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "for this",
+      "to this",
+      "for that"
+    ]
+  },
+  {
+    "value": "aru",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "forest",
+      "wood",
+      "glade"
+    ]
+  },
+  {
+    "value": "ilma",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "weather",
+      "air",
+      "sky"
+    ]
+  },
+  {
+    "value": "sel",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "that",
+      "so",
+      "this"
+    ]
+  },
+  {
+    "value": "tea",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "tea",
+      "infusion"
+    ]
+  },
+  {
+    "value": "mingi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "some",
+      "any"
+    ]
+  },
+  {
+    "value": "juures",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "near",
+      "by",
+      "with",
+      "at"
+    ]
+  },
+  {
+    "value": "pea",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "head",
+      "top",
+      "leader"
+    ]
+  },
+  {
+    "value": "isa",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "father",
+      "dad",
+      "papa"
+    ]
+  },
+  {
+    "value": "vähemalt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "at least",
+      "minimum"
+    ]
+  },
+  {
+    "value": "inimesed",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "people",
+      "persons"
+    ]
+  },
+  {
+    "value": "kinni",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "closed",
+      "tight",
+      "secure"
+    ]
+  },
+  {
+    "value": "meil",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "we",
+      "us",
+      "our"
+    ]
+  },
+  {
+    "value": "aeg",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "time",
+      "period",
+      "duration"
+    ]
+  },
+  {
+    "value": "lisaks",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in addition",
+      "besides",
+      "additionally"
+    ]
+  },
+  {
+    "value": "kelle",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "whose",
+      "who's"
+    ]
+  },
+  {
+    "value": "ent",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "ent",
+      "tree gelatin",
+      "tree resin"
+    ]
+  },
+  {
+    "value": "endale",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "to oneself",
+      "to myself"
+    ]
+  },
+  {
+    "value": "sellele",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "to this",
+      "for this",
+      "to that"
+    ]
+  },
+  {
+    "value": "kolm",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "three"
+    ]
+  },
+  {
+    "value": "hiljem",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "later",
+      "afterwards",
+      "after"
+    ]
+  },
+  {
+    "value": "jääb",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "remains",
+      "stays",
+      "will remain"
+    ]
+  },
+  {
+    "value": "te",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "you"
+    ]
+  },
+  {
+    "value": "ennast",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "oneself",
+      "yourself"
+    ]
+  },
+  {
+    "value": "läks",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "went",
+      "has gone",
+      "went off"
+    ]
+  },
+  {
+    "value": "kord",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "time",
+      "order",
+      "instance"
+    ]
+  },
+  {
+    "value": "neist",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "they",
+      "them"
+    ]
+  },
+  {
+    "value": "teada",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to know",
+      "to be aware",
+      "to find out"
+    ]
+  },
+  {
+    "value": "sellega",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "with that",
+      "by that",
+      "therewith"
+    ]
+  },
+  {
+    "value": "ümber",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "around",
+      "over",
+      "about"
+    ]
+  },
+  {
+    "value": "kahe",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "two",
+      "of two"
+    ]
+  },
+  {
+    "value": "uue",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "new",
+      "novel",
+      "fresh"
+    ]
+  },
+  {
+    "value": "teiste",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "others",
+      "the others"
+    ]
+  },
+  {
+    "value": "öelda",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to say",
+      "to tell",
+      "to speak"
+    ]
+  },
+  {
+    "value": "hakkas",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "started",
+      "began"
+    ]
+  },
+  {
+    "value": "lõpuks",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "finally",
+      "at last",
+      "eventually"
+    ]
+  },
+  {
+    "value": "liiga",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "too",
+      "excessively",
+      "overly"
+    ]
+  },
+  {
+    "value": "selline",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "such",
+      "like this",
+      "that kind of"
+    ]
+  },
+  {
+    "value": "pidi",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "had to",
+      "was supposed to"
+    ]
+  },
+  {
+    "value": "tõttu",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "due to",
+      "because of",
+      "for the sake of"
+    ]
+  },
+  {
+    "value": "võtta",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to take",
+      "to receive",
+      "to capture"
+    ]
+  },
+  {
+    "value": "ilmselt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "apparently",
+      "probably",
+      "presumably"
+    ]
+  },
+  {
+    "value": "naine",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "woman",
+      "wife",
+      "female"
+    ]
+  },
+  {
+    "value": "inimene",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "human",
+      "person",
+      "individual"
+    ]
+  },
+  {
+    "value": "päris",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "real",
+      "genuine",
+      "true"
+    ]
+  },
+  {
+    "value": "antud",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "given",
+      "provided"
+    ]
+  },
+  {
+    "value": "minna",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to go",
+      "to walk",
+      "to leave"
+    ]
+  },
+  {
+    "value": "näha",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to see",
+      "to perceive",
+      "to notice"
+    ]
+  },
+  {
+    "value": "olevat",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "being",
+      "existing"
+    ]
+  },
+  {
+    "value": "oled",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "you are",
+      "are you",
+      "you"
+    ]
+  },
+  {
+    "value": "jälle",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "again",
+      "once more"
+    ]
+  },
+  {
+    "value": "taha",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to want",
+      "to desire",
+      "to wish"
+    ]
+  },
+  {
+    "value": "hoopis",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "actually",
+      "rather",
+      "instead"
+    ]
+  },
+  {
+    "value": "suhtes",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in relation",
+      "in connection",
+      "regarding"
+    ]
+  },
+  {
+    "value": "varem",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "earlier",
+      "before",
+      "previously"
+    ]
+  },
+  {
+    "value": "maailma",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "world",
+      "universe"
+    ]
+  },
+  {
+    "value": "läheb",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "goes",
+      "is going",
+      "will go"
+    ]
+  },
+  {
+    "value": "tegemist",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "action",
+      "doing",
+      "task",
+      "work"
+    ]
+  },
+  {
+    "value": "kindlasti",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "certainly",
+      "surely",
+      "definitely"
+    ]
+  },
+  {
+    "value": "mõju",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "influence",
+      "effect",
+      "impact"
+    ]
+  },
+  {
+    "value": "kaudu",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "through",
+      "by",
+      "via"
+    ]
+  },
+  {
+    "value": "taga",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "behind",
+      "back",
+      "after"
+    ]
+  },
+  {
+    "value": "neil",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "they",
+      "them"
+    ]
+  },
+  {
+    "value": "lahti",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "open",
+      "loose",
+      "off"
+    ]
+  },
+  {
+    "value": "jäänud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "remained",
+      "stayed",
+      "left"
+    ]
+  },
+  {
+    "value": "asi",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "thing",
+      "object",
+      "matter"
+    ]
+  },
+  {
+    "value": "tegi",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "did",
+      "made"
+    ]
+  },
+  {
+    "value": "peaaegu",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "almost",
+      "nearly"
+    ]
+  },
+  {
+    "value": "umbes",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "about",
+      "approximately",
+      "around"
+    ]
+  },
+  {
+    "value": "mööda",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "past",
+      "along",
+      "by"
+    ]
+  },
+  {
+    "value": "päeva",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "day",
+      "of the day"
+    ]
+  },
+  {
+    "value": "võis",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "mould",
+      "butter",
+      "fat"
+    ]
+  },
+  {
+    "value": "jah",
+    "part_of_speech": "Hüüdsõna",
+    "en_words": [
+      "yes",
+      "yeah"
+    ]
+  },
+  {
+    "value": "suure",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "big",
+      "large",
+      "great"
+    ]
+  },
+  {
+    "value": "tee",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "tea",
+      "path",
+      "way"
+    ]
+  },
+  {
+    "value": "vana",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "old",
+      "ancient",
+      "aged"
+    ]
+  },
+  {
+    "value": "neile",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "to them",
+      "for them"
+    ]
+  },
+  {
+    "value": "inimese",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "person",
+      "human",
+      "individual"
+    ]
+  },
+  {
+    "value": "pool",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "half",
+      "side",
+      "part"
+    ]
+  },
+  {
+    "value": "esimene",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "first",
+      "primary",
+      "initial"
+    ]
+  },
+  {
+    "value": "vist",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "probably",
+      "seems",
+      "perhaps"
+    ]
+  },
+  {
+    "value": "eile",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "yesterday"
+    ]
+  },
+  {
+    "value": "tõesti",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "really",
+      "indeed",
+      "truly"
+    ]
+  },
+  {
+    "value": "täna",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "today",
+      "now"
+    ]
+  },
+  {
+    "value": "võivad",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "can",
+      "may",
+      "are allowed to"
+    ]
+  },
+  {
+    "value": "ütleb",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "says",
+      "tells"
+    ]
+  },
+  {
+    "value": "täiesti",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "completely",
+      "totally",
+      "entirely"
+    ]
+  },
+  {
+    "value": "sinna",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "there",
+      "to there"
+    ]
+  },
+  {
+    "value": "viis",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "five",
+      "way",
+      "manner"
+    ]
+  },
+  {
+    "value": "teinud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "done",
+      "made"
+    ]
+  },
+  {
+    "value": "mõni",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "some",
+      "any"
+    ]
+  },
+  {
+    "value": "tähendab",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "means",
+      "signifies",
+      "denotes"
+    ]
+  },
+  {
+    "value": "riigi",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "state",
+      "nation",
+      "country"
+    ]
+  },
+  {
+    "value": "suurem",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "bigger",
+      "larger",
+      "greater"
+    ]
+  },
+  {
+    "value": "millest",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "from what",
+      "about what",
+      "of what"
+    ]
+  },
+  {
+    "value": "raske",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "heavy",
+      "difficult"
+    ]
+  },
+  {
+    "value": "tehtud",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "done",
+      "completed",
+      "made"
+    ]
+  },
+  {
+    "value": "teeb",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "makes",
+      "does"
+    ]
+  },
+  {
+    "value": "tulnud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "come",
+      "arrived"
+    ]
+  },
+  {
+    "value": "vähem",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "less",
+      "fewer"
+    ]
+  },
+  {
+    "value": "järele",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "after",
+      "following",
+      "behind"
+    ]
+  },
+  {
+    "value": "võttis",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "took",
+      "took hold",
+      "seized"
+    ]
+  },
+  {
+    "value": "üsna",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "rather",
+      "quite",
+      "fairly"
+    ]
+  },
+  {
+    "value": "aja",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "time",
+      "period",
+      "epoch"
+    ]
+  },
+  {
+    "value": "kuhu",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "where",
+      "to where",
+      "whither"
+    ]
+  },
+  {
+    "value": "sõna",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "word",
+      "term",
+      "expression"
+    ]
+  },
+  {
+    "value": "teatud",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "certain",
+      "specific",
+      "particular"
+    ]
+  },
+  {
+    "value": "mingit",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "any",
+      "some",
+      "anything"
+    ]
+  },
+  {
+    "value": "esimese",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "first",
+      "initial",
+      "primary"
+    ]
+  },
+  {
+    "value": "uus",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "new",
+      "fresh",
+      "novel"
+    ]
+  },
+  {
+    "value": "oluline",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "important",
+      "significant",
+      "relevant"
+    ]
+  },
+  {
+    "value": "igal",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "every",
+      "each"
+    ]
+  },
+  {
+    "value": "annab",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "gives",
+      "provides",
+      "grants"
+    ]
+  },
+  {
+    "value": "ometi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "however",
+      "still",
+      "nevertheless"
+    ]
+  },
+  {
+    "value": "vastavalt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "according to",
+      "in accordance with"
+    ]
+  },
+  {
+    "value": "mõne",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "some",
+      "a few",
+      "several"
+    ]
+  },
+  {
+    "value": "mõned",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "some",
+      "several",
+      "a few"
+    ]
+  },
+  {
+    "value": "kasutada",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to use",
+      "to utilize",
+      "to employ"
+    ]
+  },
+  {
+    "value": "teie",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "you (plural/formal)",
+      "your (plural/formal)"
+    ]
+  },
+  {
+    "value": "olemas",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "existing",
+      "present",
+      "available"
+    ]
+  },
+  {
+    "value": "tööd",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "work",
+      "job",
+      "task"
+    ]
+  },
+  {
+    "value": "seetõttu",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "therefore",
+      "thus",
+      "for that reason"
+    ]
+  },
+  {
+    "value": "läinud",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "gone",
+      "passed"
+    ]
+  },
+  {
+    "value": "võrreldes",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "compared",
+      "in comparison"
+    ]
+  },
+  {
+    "value": "valmis",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "ready",
+      "prepared"
+    ]
+  },
+  {
+    "value": "tabel",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "table",
+      "chart",
+      "grid"
+    ]
+  },
+  {
+    "value": "alusel",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "basis",
+      "foundation",
+      "ground"
+    ]
+  },
+  {
+    "value": "inimeste",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "people",
+      "humans",
+      "individuals"
+    ]
+  },
+  {
+    "value": "osas",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "part",
+      "portion",
+      "section"
+    ]
+  },
+  {
+    "value": "linna",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "city",
+      "town"
+    ]
+  },
+  {
+    "value": "muud",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "other",
+      "different",
+      "else"
+    ]
+  },
+  {
+    "value": "kohaselt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "appropriately",
+      "relevantly",
+      "suitably"
+    ]
+  },
+  {
+    "value": "samal",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "same",
+      "at the same"
+    ]
+  },
+  {
+    "value": "kõrval",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "next to",
+      "beside",
+      "alongside"
+    ]
+  },
+  {
+    "value": "isiku",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "person",
+      "individual",
+      "character"
+    ]
+  },
+  {
+    "value": "kätte",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "at hand",
+      "to hand",
+      "in hand"
+    ]
+  },
+  {
+    "value": "mitu",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "several",
+      "many",
+      "some"
+    ]
+  },
+  {
+    "value": "teised",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "others",
+      "the others"
+    ]
+  },
+  {
+    "value": "asja",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "thing",
+      "matter",
+      "item"
+    ]
+  },
+  {
+    "value": "pigem",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "rather",
+      "preferably",
+      "sooner"
+    ]
+  },
+  {
+    "value": "maja",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "house",
+      "building",
+      "home"
+    ]
+  },
+  {
+    "value": "eelkõige",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "primarily",
+      "mainly",
+      "especially"
+    ]
+  },
+  {
+    "value": "abil",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "by",
+      "with",
+      "through"
+    ]
+  },
+  {
+    "value": "oleme",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "we are",
+      "we have"
+    ]
+  },
+  {
+    "value": "anda",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to give",
+      "to hand over",
+      "to provide"
+    ]
+  },
+  {
+    "value": "tuleks",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "would come",
+      "should come"
+    ]
+  },
+  {
+    "value": "joonis",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "drawing",
+      "figure",
+      "diagram"
+    ]
+  },
+  {
+    "value": "miljonit",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "million",
+      "millions"
+    ]
+  },
+  {
+    "value": "hakkab",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "is starting",
+      "will start",
+      "begins"
+    ]
+  },
+  {
+    "value": "ongi",
+    "part_of_speech": "Sidesõna",
+    "en_words": [
+      "indeed",
+      "is",
+      "is it"
+    ]
+  },
+  {
+    "value": "ikkagi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "still",
+      "anyway",
+      "nevertheless",
+      "yet"
+    ]
+  },
+  {
+    "value": "täis",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "full",
+      "filled",
+      "complete"
+    ]
+  },
+  {
+    "value": "sinu",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "your",
+      "yours"
+    ]
+  },
+  {
+    "value": "kolme",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "three",
+      "of three"
+    ]
+  },
+  {
+    "value": "tähelepanu",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "attention",
+      "notice",
+      "focus"
+    ]
+  },
+  {
+    "value": "sulle",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "to you",
+      "for you"
+    ]
+  },
+  {
+    "value": "taas",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "again",
+      "once more"
+    ]
+  },
+  {
+    "value": "alates",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "from",
+      "since"
+    ]
+  },
+  {
+    "value": "peavad",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "must",
+      "have to",
+      "should"
+    ]
+  },
+  {
+    "value": "sageli",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "often",
+      "frequently",
+      "often times"
+    ]
+  },
+  {
+    "value": "küsis",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "asked",
+      "inquired",
+      "interrogated"
+    ]
+  },
+  {
+    "value": "järel",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "after",
+      "afterwards",
+      "subsequently"
+    ]
+  },
+  {
+    "value": "paar",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "pair",
+      "couple"
+    ]
+  },
+  {
+    "value": "väike",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "small",
+      "little",
+      "tiny"
+    ]
+  },
+  {
+    "value": "keda",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "who",
+      "whom"
+    ]
+  },
+  {
+    "value": "vähe",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "little",
+      "few"
+    ]
+  },
+  {
+    "value": "rääkis",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "spoke",
+      "talked",
+      "said"
+    ]
+  },
+  {
+    "value": "sul",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "you",
+      "to you"
+    ]
+  },
+  {
+    "value": "täpselt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "exactly",
+      "precisely",
+      "accurately"
+    ]
+  },
+  {
+    "value": "veidi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "a little",
+      "slightly",
+      "somewhat"
+    ]
+  },
+  {
+    "value": "maa",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "land",
+      "earth",
+      "ground"
+    ]
+  },
+  {
+    "value": "keele",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "language",
+      "tongue"
+    ]
+  },
+  {
+    "value": "õige",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "right",
+      "correct",
+      "true"
+    ]
+  },
+  {
+    "value": "sind",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "you",
+      "yourself"
+    ]
+  },
+  {
+    "value": "kuidagi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "somehow",
+      "in some way"
+    ]
+  },
+  {
+    "value": "seni",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "you",
+      "to you"
+    ]
+  },
+  {
+    "value": "ligi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "near",
+      "close"
+    ]
+  },
+  {
+    "value": "jõudnud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "arrived",
+      "reached"
+    ]
+  },
+  {
+    "value": "andis",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "gave",
+      "provided",
+      "delivered"
+    ]
+  },
+  {
+    "value": "leida",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to find",
+      "to discover",
+      "to locate"
+    ]
+  },
+  {
+    "value": "poleks",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "would not",
+      "wouldn't"
+    ]
+  },
+  {
+    "value": "rääkida",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to talk",
+      "to speak",
+      "to discuss"
+    ]
+  },
+  {
+    "value": "panna",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to put",
+      "to place",
+      "to set"
+    ]
+  },
+  {
+    "value": "hulgas",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "including",
+      "among",
+      "together with"
+    ]
+  },
+  {
+    "value": "sina",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "you",
+      "your",
+      "yours"
+    ]
+  },
+  {
+    "value": "inimest",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "person",
+      "human",
+      "individual"
+    ]
+  },
+  {
+    "value": "kahju",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "pity",
+      "loss",
+      "damage",
+      "harm"
+    ]
+  },
+  {
+    "value": "minema",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to go",
+      "to leave",
+      "to depart"
+    ]
+  },
+  {
+    "value": "parem",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "better",
+      "right"
+    ]
+  },
+  {
+    "value": "tule",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "come",
+      "fire"
+    ]
+  },
+  {
+    "value": "oluliselt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "significantly",
+      "importantly",
+      "markedly",
+      "essentially"
+    ]
+  },
+  {
+    "value": "vaatas",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "looked",
+      "watched",
+      "saw"
+    ]
+  },
+  {
+    "value": "õhtul",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in the evening",
+      "evening"
+    ]
+  },
+  {
+    "value": "sealt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "there",
+      "from there"
+    ]
+  },
+  {
+    "value": "tavaliselt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "usually",
+      "normally",
+      "generally"
+    ]
+  },
+  {
+    "value": "eks",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "ex",
+      "former",
+      "past"
+    ]
+  },
+  {
+    "value": "ringi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "around",
+      "circle",
+      "ring"
+    ]
+  },
+  {
+    "value": "kiiresti",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "quickly",
+      "fast",
+      "rapidly"
+    ]
+  },
+  {
+    "value": "milles",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "in which",
+      "in what",
+      "what"
+    ]
+  },
+  {
+    "value": "kohal",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "present",
+      "at",
+      "here"
+    ]
+  },
+  {
+    "value": "inimesi",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "people",
+      "human beings",
+      "humans"
+    ]
+  },
+  {
+    "value": "arvates",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "according to",
+      "in opinion",
+      "assuming"
+    ]
+  },
+  {
+    "value": "kust",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "where",
+      "from where"
+    ]
+  },
+  {
+    "value": "põhjal",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "thoroughly",
+      "deeply",
+      "thorough"
+    ]
+  },
+  {
+    "value": "su",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "you",
+      "your"
+    ]
+  },
+  {
+    "value": "erinevate",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "different",
+      "various"
+    ]
+  },
+  {
+    "value": "viimase",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "last",
+      "final",
+      "latest"
+    ]
+  },
+  {
+    "value": "kõigi",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "everyone's",
+      "of all",
+      "everyone"
+    ]
+  },
+  {
+    "value": "otsa",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "to the end",
+      "to the top",
+      "to the finish",
+      "at the end"
+    ]
+  },
+  {
+    "value": "võib-olla",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "maybe",
+      "perhaps",
+      "possibly"
+    ]
+  },
+  {
+    "value": "saaks",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "could",
+      "might",
+      "would be able to"
+    ]
+  },
+  {
+    "value": "näinud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "seen",
+      "saw"
+    ]
+  },
+  {
+    "value": "pidada",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "keep",
+      "maintain",
+      "hold"
+    ]
+  },
+  {
+    "value": "arv",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "number",
+      "figure",
+      "quantity"
+    ]
+  },
+  {
+    "value": "üksnes",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "only",
+      "just",
+      "alone"
+    ]
+  },
+  {
+    "value": "mehed",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "men",
+      "males"
+    ]
+  },
+  {
+    "value": "saavad",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "get",
+      "receive",
+      "obtain"
+    ]
+  },
+  {
+    "value": "esitatud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "submitted",
+      "presented"
+    ]
+  },
+  {
+    "value": "aastatel",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in the years",
+      "during the years"
+    ]
+  },
+  {
+    "value": "silmad",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "eyes",
+      "sight",
+      "vision"
+    ]
+  },
+  {
+    "value": "siia",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "here",
+      "to here"
+    ]
+  },
+  {
+    "value": "ühel",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "one",
+      "at one",
+      "on one"
+    ]
+  },
+  {
+    "value": "suhteliselt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "relatively"
+    ]
+  },
+  {
+    "value": "millega",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "with what",
+      "by what",
+      "what with"
+    ]
+  },
+  {
+    "value": "hetkel",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "at the moment",
+      "currently",
+      "now"
+    ]
+  },
+  {
+    "value": "päeval",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in the day",
+      "daily",
+      "by day"
+    ]
+  },
+  {
+    "value": "paljud",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "many",
+      "numerous",
+      "several"
+    ]
+  },
+  {
+    "value": "suurt",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "big",
+      "large",
+      "great"
+    ]
+  },
+  {
+    "value": "neli",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "four",
+      "fourth"
+    ]
+  },
+  {
+    "value": "uuesti",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "again",
+      "anew",
+      "once more"
+    ]
+  },
+  {
+    "value": "mehe",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "man",
+      "husband"
+    ]
+  },
+  {
+    "value": "toimub",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "takes place",
+      "is happening",
+      "occurs"
+    ]
+  },
+  {
+    "value": "natuke",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "a little",
+      "slightly",
+      "somewhat"
+    ]
+  },
+  {
+    "value": "too",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "also",
+      "too"
+    ]
+  },
+  {
+    "value": "muidu",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "otherwise",
+      "anyway",
+      "in any case"
+    ]
+  },
+  {
+    "value": "kõiki",
+    "part_of_speech": "Asesõna",
+    "en_words": [ "everyone", "all", "everything" ]
+  },
+  {
+    "value": "sajandi",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "century",
+      "hundred year period"
+    ]
+  },
+  {
+    "value": "nimetatud",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "named",
+      "designated",
+      "mentioned"
+    ]
+  },
+  {
+    "value": "seejärel",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "afterwards",
+      "then",
+      "subsequently"
+    ]
+  },
+  {
+    "value": "peal",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "on",
+      "above",
+      "upon"
+    ]
+  },
+  {
+    "value": "maailmas",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in the world",
+      "worldwide",
+      "globally"
+    ]
+  },
+  {
+    "value": "pidanud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "had",
+      "tenant",
+      "obliged"
+    ]
+  },
+  {
+    "value": "viimane",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "last",
+      "final",
+      "latest"
+    ]
+  },
+  {
+    "value": "mõttes",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in thought",
+      "in mind",
+      "thoughtfully"
+    ]
+  },
+  {
+    "value": "head",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "head",
+      "leader",
+      "top"
+    ]
+  },
+  {
+    "value": "hommikul",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in the morning",
+      "morning"
+    ]
+  },
+  {
+    "value": "teist",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "other",
+      "second",
+      "another"
+    ]
+  },
+  {
+    "value": "võimalus",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "possibility",
+      "option",
+      "chance"
+    ]
+  },
+  {
+    "value": "meid",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "us",
+      "we"
+    ]
+  },
+  {
+    "value": "sellist",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "such",
+      "like this",
+      "similar"
+    ]
+  },
+  {
+    "value": "mõlemad",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "both",
+      "either"
+    ]
+  },
+  {
+    "value": "selge",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "clear",
+      "evident",
+      "obvious"
+    ]
+  },
+  {
+    "value": "kell",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "clock",
+      "watch"
+    ]
+  },
+  {
+    "value": "huvi",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "interest",
+      "curiosity",
+      "concern"
+    ]
+  },
+  {
+    "value": "meile",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "to us",
+      "for us"
+    ]
+  },
+  {
+    "value": "küsimus",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "question",
+      "inquiry",
+      "interrogation"
+    ]
+  },
+  {
+    "value": "asemel",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "instead",
+      "in place of",
+      "as a substitute"
+    ]
+  },
+  {
+    "value": "kõrvale",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "aside",
+      "to the side",
+      "away"
+    ]
+  },
+  {
+    "value": "loomulikult",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "naturally",
+      "of course",
+      "naturally"
+    ]
+  },
+  {
+    "value": "sellepärast",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "that is why",
+      "for that reason"
+    ]
+  },
+  {
+    "value": "mil",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "when",
+      "if"
+    ]
+  },
+  {
+    "value": "vahele",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in between",
+      "in the middle",
+      "intervening"
+    ]
+  },
+  {
+    "value": "keeles",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "language",
+      "tongue",
+      "speech"
+    ]
+  },
+  {
+    "value": "teatas",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "announced",
+      "informed",
+      "reported"
+    ]
+  },
+  {
+    "value": "käes",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in hand",
+      "at hand",
+      "on hand"
+    ]
+  },
+  {
+    "value": "ehkki",
+    "part_of_speech": "Sidesõna",
+    "en_words": [
+      "even though",
+      "although",
+      "though"
+    ]
+  },
+  {
+    "value": "kohale",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "to place",
+      "to location",
+      "to spot"
+    ]
+  },
+  {
+    "value": "terve",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "whole",
+      "healthy"
+    ]
+  },
+  {
+    "value": "päev",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "day",
+      "daytime",
+      "DATE"
+    ]
+  },
+  {
+    "value": "koju",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "home",
+      "to home"
+    ]
+  },
+  {
+    "value": "tegema",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to do",
+      "to make"
+    ]
+  },
+  {
+    "value": "enamasti",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "mostly",
+      "generally",
+      "primarily"
+    ]
+  },
+  {
+    "value": "äkki",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "perhaps",
+      "maybe",
+      "suddenly",
+      "all of a sudden"
+    ]
+  },
+  {
+    "value": "lausa",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "actually",
+      "indeed",
+      "just",
+      "merely"
+    ]
+  },
+  {
+    "value": "lugu",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "story",
+      "tale",
+      "narrative"
+    ]
+  },
+  {
+    "value": "lapse",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "child",
+      "kids"
+    ]
+  },
+  {
+    "value": "said",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "said",
+      "said it",
+      "uttered",
+      "spoke"
+    ]
+  },
+  {
+    "value": "kuu",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "moon",
+      "month"
+    ]
+  },
+  {
+    "value": "õigus",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "right",
+      "law",
+      "justice"
+    ]
+  },
+  {
+    "value": "lapsed",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "children",
+      "kids",
+      "youths"
+    ]
+  },
+  {
+    "value": "käigus",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in progress",
+      "active",
+      "ongoing"
+    ]
+  },
+  {
+    "value": "kodus",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "at home",
+      "home"
+    ]
+  },
+  {
+    "value": "otse",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "directly",
+      "straight"
+    ]
+  },
+  {
+    "value": "juriidilise",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "legal",
+      "juridical"
+    ]
+  },
+  {
+    "value": "pisut",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "a little",
+      "slightly",
+      "somewhat"
+    ]
+  },
+  {
+    "value": "tahab",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "wants",
+      "desires",
+      "wishes"
+    ]
+  },
+  {
+    "value": "pani",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "put",
+      "placed",
+      "set"
+    ]
+  },
+  {
+    "value": "käis",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "went",
+      "was walking",
+      "visited"
+    ]
+  },
+  {
+    "value": "tahtnud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "wanted",
+      "wished"
+    ]
+  },
+  {
+    "value": "nime",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "name",
+      "nominal"
+    ]
+  },
+  {
+    "value": "laste",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "children",
+      "kids",
+      "youth"
+    ]
+  },
+  {
+    "value": "võtab",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "takes",
+      "seizes",
+      "captures"
+    ]
+  },
+  {
+    "value": "vastas",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "answered",
+      "responded",
+      "replied"
+    ]
+  },
+  {
+    "value": "tunne",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "feeling",
+      "sense",
+      "emotion"
+    ]
+  },
+  {
+    "value": "poiss",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "boy",
+      "lad",
+      "youth"
+    ]
+  },
+  {
+    "value": "muutunud",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "changed",
+      "altered",
+      "transformed"
+    ]
+  },
+  {
+    "value": "ülikooli",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "university",
+      "college"
+    ]
+  },
+  {
+    "value": "hakata",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to begin",
+      "to start"
+    ]
+  },
+  {
+    "value": "hulka",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "crowd",
+      "multitude",
+      "group"
+    ]
+  },
+  {
+    "value": "auto",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "car",
+      "automobile"
+    ]
+  },
+  {
+    "value": "tüdruk",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "girl",
+      "young woman",
+      "lass"
+    ]
+  },
+  {
+    "value": "teisel",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "second",
+      "on the second"
+    ]
+  },
+  {
+    "value": "pead",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "head",
+      "heads"
+    ]
+  },
+  {
+    "value": "silma",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "eye",
+      "sight"
+    ]
+  },
+  {
+    "value": "sellise",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "such",
+      "this type of",
+      "like this"
+    ]
+  },
+  {
+    "value": "ühes",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in one",
+      "together"
+    ]
+  },
+  {
+    "value": "tulla",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to come",
+      "to arrive"
+    ]
+  },
+  {
+    "value": "president",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "president",
+      "chief executive",
+      "head of state"
+    ]
+  },
+  {
+    "value": "kõike",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "everything",
+      "all",
+      "anything"
+    ]
+  },
+  {
+    "value": "kasutatakse",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "is used",
+      "used",
+      "utilized"
+    ]
+  },
+  {
+    "value": "uut",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "new",
+      "novel"
+    ]
+  },
+  {
+    "value": "paremini",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "better",
+      "more effectively"
+    ]
+  },
+  {
+    "value": "nõnda",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "thus",
+      "so",
+      "in this way"
+    ]
+  },
+  {
+    "value": "meelde",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "remember",
+      "memorize",
+      "recall"
+    ]
+  },
+  {
+    "value": "toodud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "brought",
+      "delivered"
+    ]
+  },
+  {
+    "value": "kindel",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "certain",
+      "sure",
+      "definite"
+    ]
+  },
+  {
+    "value": "kõrge",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "high",
+      "tall"
+    ]
+  },
+  {
+    "value": "teed",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "road",
+      "way",
+      "path"
+    ]
+  },
+  {
+    "value": "seas",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "sea",
+      "ocean"
+    ]
+  },
+  {
+    "value": "justkui",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "as if",
+      "like",
+      "seemingly"
+    ]
+  },
+  {
+    "value": "sees",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "inside",
+      "in",
+      "within"
+    ]
+  },
+  {
+    "value": "nimelt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "namely",
+      "that is",
+      "i.e."
+    ]
+  },
+  {
+    "value": "seoses",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in connection",
+      "in relation",
+      "in association"
+    ]
+  },
+  {
+    "value": "esimest",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "first",
+      "foremost"
+    ]
+  },
+  {
+    "value": "esile",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "forward",
+      "to the front",
+      "in front"
+    ]
+  },
+  {
+    "value": "vaadata",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to watch",
+      "to look",
+      "to see"
+    ]
+  },
+  {
+    "value": "saadud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "received",
+      "obtained",
+      "acquired"
+    ]
+  },
+  {
+    "value": "kooli",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "school",
+      "of school"
+    ]
+  },
+  {
+    "value": "teab",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "knows",
+      "is aware",
+      "understands"
+    ]
+  },
+  {
+    "value": "elus",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "alive",
+      "living",
+      "life"
+    ]
+  },
+  {
+    "value": "kaua",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "how long",
+      "long"
+    ]
+  },
+  {
+    "value": "tundus",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "seemed",
+      "appeared"
+    ]
+  },
+  {
+    "value": "leidis",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "found",
+      "discovered"
+    ]
+  },
+  {
+    "value": "räägib",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "talks",
+      "speaks",
+      "says"
+    ]
+  },
+  {
+    "value": "näitab",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "shows",
+      "demonstrates",
+      "indicates"
+    ]
+  },
+  {
+    "value": "süsteemi",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "system",
+      "syndrome"
+    ]
+  },
+  {
+    "value": "viimasel",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "last",
+      "final",
+      "latest"
+    ]
+  },
+  {
+    "value": "käest",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "from hand",
+      "out of hand"
+    ]
+  },
+  {
+    "value": "alguses",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "at first",
+      "initially",
+      "in the beginning"
+    ]
+  },
+  {
+    "value": "suutnud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "managed",
+      "able",
+      "capable"
+    ]
+  },
+  {
+    "value": "nimi",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "name",
+      "title"
+    ]
+  },
+  {
+    "value": "hulk",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "bulk",
+      "mass",
+      "horde",
+      "crowd"
+    ]
+  },
+  {
+    "value": "tänu",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "thanks",
+      "gratitude",
+      "appreciation"
+    ]
+  },
+  {
+    "value": "üheks",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "nine",
+      "for nine"
+    ]
+  },
+  {
+    "value": "tulemused",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "results",
+      "outcomes",
+      "findings"
+    ]
+  },
+  {
+    "value": "veelgi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "even more",
+      "still more",
+      "more"
+    ]
+  },
+  {
+    "value": "tundis",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "felt",
+      "experienced",
+      "sensed"
+    ]
+  },
+  {
+    "value": "tihti",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "often",
+      "frequently"
+    ]
+  },
+  {
+    "value": "olgu",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "let it be",
+      "may",
+      "be"
+    ]
+  },
+  {
+    "value": "lisas",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "added",
+      "inserted"
+    ]
+  },
+  {
+    "value": "asju",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "things",
+      "stuff",
+      "items"
+    ]
+  },
+  {
+    "value": "protsenti",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "percentage",
+      "percent"
+    ]
+  },
+  {
+    "value": "tohi",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "may",
+      "be allowed",
+      "can"
+    ]
+  },
+  {
+    "value": "võtnud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "taken",
+      "took",
+      "receiving"
+    ]
+  },
+  {
+    "value": "politsei",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "police",
+      "police force"
+    ]
+  },
+  {
+    "value": "naise",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "woman's",
+      "woman",
+      "wife"
+    ]
+  },
+  {
+    "value": "ravi",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "treatment",
+      "therapy"
+    ]
+  },
+  {
+    "value": "nägu",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "face",
+      "appearance",
+      "visage"
+    ]
+  },
+  {
+    "value": "peamiselt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "mainly",
+      "primarily",
+      "mostly"
+    ]
+  },
+  {
+    "value": "korraga",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "at once",
+      "simultaneously",
+      "all at once"
+    ]
+  },
+  {
+    "value": "no",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "no",
+      "not"
+    ]
+  },
+  {
+    "value": "aastate",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "years",
+      "of years"
+    ]
+  },
+  {
+    "value": "teel",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "road",
+      "way",
+      "path"
+    ]
+  },
+  {
+    "value": "mõtles",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "thought",
+      "considered",
+      "reflected"
+    ]
+  },
+  {
+    "value": "laps",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "child",
+      "kid",
+      "baby"
+    ]
+  },
+  {
+    "value": "erinevad",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "different",
+      "various",
+      "diverse"
+    ]
+  },
+  {
+    "value": "pean",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "must",
+      "have to",
+      "need"
+    ]
+  },
+  {
+    "value": "sellel",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "this",
+      "that"
+    ]
+  },
+  {
+    "value": "keskmine",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "average",
+      "mean",
+      "medium"
+    ]
+  },
+  {
+    "value": "tundub",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "seems",
+      "appears",
+      "looks"
+    ]
+  },
+  {
+    "value": "algul",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "initially",
+      "at first",
+      "in the beginning"
+    ]
+  },
+  {
+    "value": "ukse",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "door",
+      "gate"
+    ]
+  },
+  {
+    "value": "sain",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "got",
+      "received"
+    ]
+  },
+  {
+    "value": "õpetaja",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "teacher",
+      "instructor",
+      "educator"
+    ]
+  },
+  {
+    "value": "kasutatud",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "used",
+      "utilized",
+      "exploited"
+    ]
+  },
+  {
+    "value": "riik",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "country",
+      "state",
+      "nation"
+    ]
+  },
+  {
+    "value": "kinnitas",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "confirmed",
+      "affirmed",
+      "validated"
+    ]
+  },
+  {
+    "value": "selgus",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "clarity",
+      "understanding",
+      "revelation"
+    ]
+  },
+  {
+    "value": "tööle",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "to work",
+      "at work"
+    ]
+  },
+  {
+    "value": "üha",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "ever",
+      "increasingly",
+      "more and more"
+    ]
+  },
+  {
+    "value": "muu",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "other",
+      "another",
+      "else"
+    ]
+  },
+  {
+    "value": "piisavalt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "sufficiently",
+      "enough"
+    ]
+  },
+  {
+    "value": "firma",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "company",
+      "firm",
+      "business"
+    ]
+  },
+  {
+    "value": "noh",
+    "part_of_speech": "Hüüdsõna",
+    "en_words": [
+      "well",
+      "so",
+      "you know"
+    ]
+  },
+  {
+    "value": "kohaliku",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "local",
+      "regional"
+    ]
+  },
+  {
+    "value": "suunas",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "guided",
+      "directed",
+      "steered"
+    ]
+  },
+  {
+    "value": "jõudis",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "reached",
+      "arrived",
+      "got to"
+    ]
+  },
+  {
+    "value": "võetud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "taken",
+      "seized",
+      "grabbed"
+    ]
+  },
+  {
+    "value": "kuus",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "six",
+      "month",
+      "tree"
+    ]
+  },
+  {
+    "value": "rahva",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "people",
+      "nation",
+      "folk"
+    ]
+  },
+  {
+    "value": "andnud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "given",
+      "handed over",
+      "delivered"
+    ]
+  },
+  {
+    "value": "eraldi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "separately",
+      "apart",
+      "individually"
+    ]
+  },
+  {
+    "value": "leidnud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "found",
+      "discovered",
+      "obtained"
+    ]
+  },
+  {
+    "value": "käib",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "goes",
+      "is going",
+      "walks"
+    ]
+  },
+  {
+    "value": "temaga",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "with him",
+      "with her",
+      "with them"
+    ]
+  },
+  {
+    "value": "koguni",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "even",
+      "indeed",
+      "actually"
+    ]
+  },
+  {
+    "value": "alt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "alt",
+      "below"
+    ]
+  },
+  {
+    "value": "määral",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "on a scale",
+      "degree",
+      "in a range"
+    ]
+  },
+  {
+    "value": "tekkinud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "arisen",
+      "occurred",
+      "emerged"
+    ]
+  },
+  {
+    "value": "jääda",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to remain",
+      "to stay",
+      "to abide"
+    ]
+  },
+  {
+    "value": "õiguse",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "right",
+      "law",
+      "justice"
+    ]
+  },
+  {
+    "value": "tuntud",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "known",
+      "famous",
+      "recognized"
+    ]
+  },
+  {
+    "value": "ühte",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "one",
+      "together",
+      "united"
+    ]
+  },
+  {
+    "value": "muutus",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "change",
+      "alteration",
+      "transformation"
+    ]
+  },
+  {
+    "value": "nägi",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "saw",
+      "looked",
+      "perceived"
+    ]
+  },
+  {
+    "value": "lugeda",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to read",
+      "to count"
+    ]
+  },
+  {
+    "value": "ütlesin",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "I said",
+      "I told"
+    ]
+  },
+  {
+    "value": "temast",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "about him/her",
+      "from him/her",
+      "of him/her"
+    ]
+  },
+  {
+    "value": "tõepoolest",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "indeed",
+      "truly",
+      "really"
+    ]
+  },
+  {
+    "value": "nõukogude",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "Soviet",
+      "council",
+      "committee"
+    ]
+  },
+  {
+    "value": "võibolla",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "maybe",
+      "perhaps",
+      "possibly"
+    ]
+  },
+  {
+    "value": "uusi",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "new",
+      "novel",
+      "fresh"
+    ]
+  },
+  {
+    "value": "sõltub",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "depends",
+      "depends on"
+    ]
+  },
+  {
+    "value": "toimunud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "occurred",
+      "happened",
+      "taken place"
+    ]
+  },
+  {
+    "value": "tegu",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "act",
+      "deed",
+      "action"
+    ]
+  },
+  {
+    "value": "esineb",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "appears",
+      "present",
+      "occurs"
+    ]
+  },
+  {
+    "value": "poolest",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "from",
+      "of",
+      "by",
+      "because of"
+    ]
+  },
+  {
+    "value": "kellel",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "who",
+      "whom"
+    ]
+  },
+  {
+    "value": "eri",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "different",
+      "special",
+      "various"
+    ]
+  },
+  {
+    "value": "võrra",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "by",
+      "than",
+      "in comparison"
+    ]
+  },
+  {
+    "value": "keelt",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "language",
+      "tongue",
+      "speech"
+    ]
+  },
+  {
+    "value": "koht",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "place",
+      "spot",
+      "location",
+      "instance"
+    ]
+  },
+  {
+    "value": "kedagi",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "someone",
+      "somebody"
+    ]
+  },
+  {
+    "value": "juttu",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "talk",
+      "story",
+      "speech"
+    ]
+  },
+  {
+    "value": "kuulub",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "belongs",
+      "is owned by"
+    ]
+  },
+  {
+    "value": "küllap",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "probably",
+      "perhaps",
+      "likely"
+    ]
+  },
+  {
+    "value": "suured",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "big",
+      "large",
+      "great"
+    ]
+  },
+  {
+    "value": "hakkama",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to start",
+      "to begin",
+      "to manage",
+      "to cope"
+    ]
+  },
+  {
+    "value": "seepärast",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "therefore",
+      "for that reason"
+    ]
+  },
+  {
+    "value": "aastast",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "from the year",
+      "of the year"
+    ]
+  },
+  {
+    "value": "hoida",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to keep",
+      "to hold",
+      "to preserve"
+    ]
+  },
+  {
+    "value": "surma",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "death",
+      "mortality",
+      "doom"
+    ]
+  },
+  {
+    "value": "tõi",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "brought",
+      "bring"
+    ]
+  },
+  {
+    "value": "mõtlesin",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "I thought",
+      "I was thinking"
+    ]
+  },
+  {
+    "value": "pidevalt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "constantly",
+      "continuously",
+      "steadily"
+    ]
+  },
+  {
+    "value": "tahtis",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "wanted",
+      "wished"
+    ]
+  },
+  {
+    "value": "käinud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "gone",
+      "been"
+    ]
+  },
+  {
+    "value": "järgmisel",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "next",
+      "following"
+    ]
+  },
+  {
+    "value": "seisis",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "stood",
+      "was standing"
+    ]
+  },
+  {
+    "value": "abi",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "help",
+      "assistance",
+      "aid"
+    ]
+  },
+  {
+    "value": "hakanud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "started",
+      "begun",
+      "commenced"
+    ]
+  },
+  {
+    "value": "enamik",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "majority",
+      "most",
+      "bulk"
+    ]
+  },
+  {
+    "value": "tuua",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to bring",
+      "to carry",
+      "to fetch"
+    ]
+  },
+  {
+    "value": "puudub",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "missing",
+      "lacking",
+      "absent"
+    ]
+  },
+  {
+    "value": "vaba",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "free",
+      "available",
+      "liberated"
+    ]
+  },
+  {
+    "value": "ilus",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "beautiful",
+      "pretty",
+      "nice"
+    ]
+  },
+  {
+    "value": "eesmärgiks",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "objective",
+      "goal",
+      "aim",
+      "purpose"
+    ]
+  },
+  {
+    "value": "ammu",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "long ago",
+      "a long time ago",
+      "long since"
+    ]
+  },
+  {
+    "value": "valitsuse",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "government",
+      "administration",
+      "regime"
+    ]
+  },
+  {
+    "value": "tekib",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "occurs",
+      "arises",
+      "comes up"
+    ]
+  },
+  {
+    "value": "leiab",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "finds",
+      "will find",
+      "is finding"
+    ]
+  },
+  {
+    "value": "tean",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "I know",
+      "know"
+    ]
+  },
+  {
+    "value": "suurema",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "larger",
+      "bigger"
+    ]
+  },
+  {
+    "value": "tundi",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "hour",
+      "class",
+      "session"
+    ]
+  },
+  {
+    "value": "naised",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "women",
+      "wives"
+    ]
+  },
+  {
+    "value": "esimesel",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "first",
+      "at the first"
+    ]
+  },
+  {
+    "value": "endast",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "oneself",
+      "yourself",
+      "themselves"
+    ]
+  },
+  {
+    "value": "vajalik",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "necessary",
+      "required",
+      "essential"
+    ]
+  },
+  {
+    "value": "näeb",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "sees",
+      "seesaw",
+      "notice",
+      "look"
+    ]
+  },
+  {
+    "value": "teksti",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "text",
+      "script",
+      "writing"
+    ]
+  },
+  {
+    "value": "tarvis",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "need",
+      "necessary",
+      "requirement"
+    ]
+  },
+  {
+    "value": "arvu",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "number",
+      "quantity"
+    ]
+  },
+  {
+    "value": "juhataja",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "manager",
+      "leader",
+      "director",
+      "supervisor"
+    ]
+  },
+  {
+    "value": "uute",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "new",
+      "fresh"
+    ]
+  },
+  {
+    "value": "käed",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "hands",
+      "arms"
+    ]
+  },
+  {
+    "value": "miljoni",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "million",
+      "one million"
+    ]
+  },
+  {
+    "value": "meest",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "man",
+      "male"
+    ]
+  },
+  {
+    "value": "siit",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "here",
+      "from here",
+      "this place"
+    ]
+  },
+  {
+    "value": "varsti",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "soon",
+      "shortly",
+      "in a moment"
+    ]
+  },
+  {
+    "value": "muutub",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "changes",
+      "becomes",
+      "turns"
+    ]
+  },
+  {
+    "value": "omakorda",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in turn",
+      "again",
+      "alternatively"
+    ]
+  },
+  {
+    "value": "omavahel",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "together",
+      "among themselves",
+      "with each other"
+    ]
+  },
+  {
+    "value": "võimaldab",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "allows",
+      "enables",
+      "permits"
+    ]
+  },
+  {
+    "value": "oleksid",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "would be",
+      "were",
+      "would exist"
+    ]
+  },
+  {
+    "value": "lausus",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "sentence",
+      "utterance",
+      "statement"
+    ]
+  },
+  {
+    "value": "toob",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "brings",
+      "carries",
+      "delivers"
+    ]
+  },
+  {
+    "value": "toimus",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "took place",
+      "occurred",
+      "happened"
+    ]
+  },
+  {
+    "value": "keha",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "body",
+      "bodies"
+    ]
+  },
+  {
+    "value": "kellele",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "to whom",
+      "who"
+    ]
+  },
+  {
+    "value": "valge",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "white"
+    ]
+  },
+  {
+    "value": "aluseks",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "basis",
+      "foundation",
+      "groundwork"
+    ]
+  },
+  {
+    "value": "mõte",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "thought",
+      "idea",
+      "meaning"
+    ]
+  },
+  {
+    "value": "teadis",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "knew",
+      "was aware"
+    ]
+  },
+  {
+    "value": "pealegi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "besides",
+      "furthermore",
+      "moreover"
+    ]
+  },
+  {
+    "value": "istus",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "chair",
+      "seat",
+      "stool"
+    ]
+  },
+  {
+    "value": "viia",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to take",
+      "to carry",
+      "to lead"
+    ]
+  },
+  {
+    "value": "esialgu",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "initially",
+      "at first",
+      "at the beginning"
+    ]
+  },
+  {
+    "value": "milline",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "which",
+      "what kind of"
+    ]
+  },
+  {
+    "value": "koha",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "place",
+      "spot",
+      "location"
+    ]
+  },
+  {
+    "value": "pealt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "from above",
+      "on top",
+      "over"
+    ]
+  },
+  {
+    "value": "käe",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "hand",
+      "arm"
+    ]
+  },
+  {
+    "value": "tänavu",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "this year",
+      "in this year"
+    ]
+  },
+  {
+    "value": "toime",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "function",
+      "action",
+      "effect",
+      "operation"
+    ]
+  },
+  {
+    "value": "suuda",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to be able",
+      "to manage",
+      "to cope"
+    ]
+  },
+  {
+    "value": "mõnikord",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "sometimes",
+      "occasionally"
+    ]
+  },
+  {
+    "value": "erinevaid",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "different",
+      "various"
+    ]
+  },
+  {
+    "value": "saama",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to get",
+      "to receive",
+      "to become"
+    ]
+  },
+  {
+    "value": "igatahes",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in any case",
+      "at any rate",
+      "anyhow"
+    ]
+  },
+  {
+    "value": "lõpus",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "at the end",
+      "in the end",
+      "last"
+    ]
+  },
+  {
+    "value": "käsi",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "hand",
+      "arm"
+    ]
+  },
+  {
+    "value": "tegevuse",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "activity",
+      "action"
+    ]
+  },
+  {
+    "value": "üksi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "alone",
+      "by oneself",
+      "single"
+    ]
+  },
+  {
+    "value": "jumal",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "God",
+      "deity",
+      "divinity"
+    ]
+  },
+  {
+    "value": "asjad",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "things",
+      "items",
+      "objects"
+    ]
+  },
+  {
+    "value": "andmed",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "data",
+      "information",
+      "details"
+    ]
+  },
+  {
+    "value": "peetakse",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "is considered",
+      "is held",
+      "is regarded"
+    ]
+  },
+  {
+    "value": "millele",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "to which",
+      "for which",
+      "to what"
+    ]
+  },
+  {
+    "value": "pidas",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "held",
+      "kept",
+      "preserved"
+    ]
+  },
+  {
+    "value": "tõusis",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "rose",
+      "ascended",
+      "increased"
+    ]
+  },
+  {
+    "value": "ilmus",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "appeared",
+      "was published",
+      "came out"
+    ]
+  },
+  {
+    "value": "teadnud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "known",
+      "aware",
+      "informed"
+    ]
+  },
+  {
+    "value": "noor",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "young",
+      "youthful",
+      "junior"
+    ]
+  },
+  {
+    "value": "jätta",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to leave",
+      "to let",
+      "to abandon"
+    ]
+  },
+  {
+    "value": "ühest",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "from one",
+      "about one",
+      "of one"
+    ]
+  },
+  {
+    "value": "probleeme",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "problems",
+      "issues",
+      "difficulties"
+    ]
+  },
+  {
+    "value": "teiseks",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "second",
+      "for the second time"
+    ]
+  },
+  {
+    "value": "arvata",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to guess",
+      "to estimate",
+      "to suppose"
+    ]
+  },
+  {
+    "value": "paari",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "pair",
+      "couple",
+      "few"
+    ]
+  },
+  {
+    "value": "möödunud",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "past",
+      "elapsed",
+      "gone by"
+    ]
+  },
+  {
+    "value": "seejuures",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "besides",
+      "at the same time",
+      "in addition"
+    ]
+  },
+  {
+    "value": "kõigile",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "to everyone",
+      "for all",
+      "to all"
+    ]
+  },
+  {
+    "value": "mõista",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "understand",
+      "comprehend",
+      "grasp"
+    ]
+  },
+  {
+    "value": "surnud",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "dead",
+      "deceased",
+      "lifeless"
+    ]
+  },
+  {
+    "value": "eesmärk",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "goal",
+      "objective",
+      "aim"
+    ]
+  },
+  {
+    "value": "nädala",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "week",
+      "weekly"
+    ]
+  },
+  {
+    "value": "muuta",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to change",
+      "to alter",
+      "to modify"
+    ]
+  },
+  {
+    "value": "ajaks",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "time",
+      "period",
+      "instance"
+    ]
+  },
+  {
+    "value": "olukord",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "situation",
+      "condition",
+      "state"
+    ]
+  },
+  {
+    "value": "kadunud",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "lost",
+      "missing"
+    ]
+  },
+  {
+    "value": "tahan",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "want",
+      "wish"
+    ]
+  },
+  {
+    "value": "öelnud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "said",
+      "told",
+      "spoken"
+    ]
+  },
+  {
+    "value": "piima",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "milk",
+      "of milk"
+    ]
+  },
+  {
+    "value": "kirja",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "letter",
+      "write",
+      "message"
+    ]
+  },
+  {
+    "value": "kümme",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "ten",
+      "10"
+    ]
+  },
+  {
+    "value": "lõi",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "hit",
+      "struck",
+      "beat"
+    ]
+  },
+  {
+    "value": "mõelda",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to think",
+      "to ponder",
+      "to reflect"
+    ]
+  },
+  {
+    "value": "ainus",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "only",
+      "unique",
+      "sole"
+    ]
+  },
+  {
+    "value": "tehakse",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "is done",
+      "is made",
+      "is being done"
+    ]
+  },
+  {
+    "value": "nelja",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "four",
+      "fourth"
+    ]
+  },
+  {
+    "value": "jäid",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "stayed",
+      "remained"
+    ]
+  },
+  {
+    "value": "informatsiooni",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "information",
+      "data",
+      "news"
+    ]
+  },
+  {
+    "value": "väiksem",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "smaller",
+      "lesser"
+    ]
+  },
+  {
+    "value": "lihtne",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "simple",
+      "easy"
+    ]
+  },
+  {
+    "value": "hoolimata",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "despite",
+      "in spite of"
+    ]
+  },
+  {
+    "value": "järjest",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "continuously",
+      "in succession",
+      "consecutively"
+    ]
+  },
+  {
+    "value": "autor",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "author",
+      "creator",
+      "originator"
+    ]
+  },
+  {
+    "value": "olete",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "you are",
+      "you've been"
+    ]
+  },
+  {
+    "value": "nemad",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "they",
+      "them"
+    ]
+  },
+  {
+    "value": "vaatamata",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "despite",
+      "regardless of",
+      "in spite of"
+    ]
+  },
+  {
+    "value": "linnas",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "in the city",
+      "city",
+      "town"
+    ]
+  },
+  {
+    "value": "kõigepealt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "first",
+      "first of all",
+      "initially"
+    ]
+  },
+  {
+    "value": "pärit",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "origin",
+      "from",
+      "coming from"
+    ]
+  },
+  {
+    "value": "võimalusi",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "possibilities",
+      "options",
+      "opportunities"
+    ]
+  },
+  {
+    "value": "tahaks",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "would like",
+      "want",
+      "wish"
+    ]
+  },
+  {
+    "value": "üht",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "one",
+      "same",
+      "a single"
+    ]
+  },
+  {
+    "value": "tead",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "know",
+      "understand",
+      "realize"
+    ]
+  },
+  {
+    "value": "pikk",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "long",
+      "tall"
+    ]
+  },
+  {
+    "value": "kusjuures",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "by the way",
+      "incidentally",
+      "as it happens"
+    ]
+  },
+  {
+    "value": "tõenäoliselt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "likely",
+      "probably",
+      "presumably"
+    ]
+  },
+  {
+    "value": "kella",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "clock",
+      "bell"
+    ]
+  },
+  {
+    "value": "ülejäänud",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "remaining",
+      "the rest",
+      "leftover"
+    ]
+  },
+  {
+    "value": "korra",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "time",
+      "once",
+      "occasion"
+    ]
+  },
+  {
+    "value": "valitsus",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "government",
+      "administration",
+      "authority"
+    ]
+  },
+  {
+    "value": "meelest",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "from the mind",
+      "of the mind",
+      "in memory"
+    ]
+  },
+  {
+    "value": "hääl",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "voice",
+      "vote",
+      "sound"
+    ]
+  },
+  {
+    "value": "ajaloo",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "history",
+      "the history"
+    ]
+  },
+  {
+    "value": "kuuluvad",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "belong",
+      "are included",
+      "pertain"
+    ]
+  },
+  {
+    "value": "tagant",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "from behind",
+      "behind",
+      "from the back"
+    ]
+  },
+  {
+    "value": "ükski",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "none",
+      "no one",
+      "not one"
+    ]
+  },
+  {
+    "value": "millal",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "when",
+      "at what time"
+    ]
+  },
+  {
+    "value": "teises",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in the other",
+      "in another",
+      "other"
+    ]
+  },
+  {
+    "value": "riigikogu",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "parliament",
+      "state council"
+    ]
+  },
+  {
+    "value": "vahepeal",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "meanwhile",
+      "interim",
+      "in the meantime"
+    ]
+  },
+  {
+    "value": "aitab",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "helps",
+      "aid",
+      "assists"
+    ]
+  },
+  {
+    "value": "nägin",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "saw",
+      "have seen"
+    ]
+  },
+  {
+    "value": "arvas",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "thought",
+      "guessed",
+      "believed"
+    ]
+  },
+  {
+    "value": "ühiskonna",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "society",
+      "community",
+      "association"
+    ]
+  },
+  {
+    "value": "oligi",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "was",
+      "it was",
+      "indeed"
+    ]
+  },
+  {
+    "value": "näe",
+    "part_of_speech": "Hüüdsõna",
+    "en_words": [
+      "look",
+      "see"
+    ]
+  },
+  {
+    "value": "luua",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to create",
+      "to establish",
+      "to set up"
+    ]
+  },
+  {
+    "value": "võimalust",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "possibility",
+      "opportunity"
+    ]
+  },
+  {
+    "value": "tulevad",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "come",
+      "arrive",
+      "will come"
+    ]
+  },
+  {
+    "value": "tähtis",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "important",
+      "significant",
+      "necessary"
+    ]
+  },
+  {
+    "value": "kasutamine",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "use",
+      "utilization",
+      "application"
+    ]
+  },
+  {
+    "value": "püsti",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "upright",
+      "standing",
+      "erect"
+    ]
+  },
+  {
+    "value": "keskmiselt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "on average",
+      "average",
+      "mean"
+    ]
+  },
+  {
+    "value": "uued",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "new",
+      "novel",
+      "recent"
+    ]
+  },
+  {
+    "value": "ettevõtte",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "company",
+      "enterprise",
+      "business"
+    ]
+  },
+  {
+    "value": "loodud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "created",
+      "made",
+      "born"
+    ]
+  },
+  {
+    "value": "hinnangul",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "according to the estimate",
+      "in terms of evaluation",
+      "in estimation"
+    ]
+  },
+  {
+    "value": "mõiste",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "concept",
+      "term",
+      "notion"
+    ]
+  },
+  {
+    "value": "oska",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "know",
+      "be able to",
+      "can"
+    ]
+  },
+  {
+    "value": "andmete",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "data",
+      "information"
+    ]
+  },
+  {
+    "value": "kirjutab",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "writes",
+      "is writing",
+      "does write"
+    ]
+  },
+  {
+    "value": "töötajate",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "employees",
+      "workers"
+    ]
+  },
+  {
+    "value": "muusika",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "music",
+      "musical"
+    ]
+  },
+  {
+    "value": "osanud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "able",
+      "capable",
+      "skilled"
+    ]
+  },
+  {
+    "value": "kasutati",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "was used",
+      "used"
+    ]
+  },
+  {
+    "value": "tehti",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "was done",
+      "was made"
+    ]
+  },
+  {
+    "value": "olemasolu",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "existence",
+      "being",
+      "presence"
+    ]
+  },
+  {
+    "value": "huvitav",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "interesting",
+      "curious",
+      "fascinating"
+    ]
+  },
+  {
+    "value": "projekti",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "project",
+      "initiative",
+      "plan"
+    ]
+  },
+  {
+    "value": "tunda",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to feel",
+      "to sense",
+      "to perceive"
+    ]
+  },
+  {
+    "value": "selliseid",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "such",
+      "those",
+      "like this"
+    ]
+  },
+  {
+    "value": "meeste",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "men",
+      "of men",
+      "men's"
+    ]
+  },
+  {
+    "value": "teisi",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "others",
+      "the others"
+    ]
+  },
+  {
+    "value": "põhjuseks",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "reason",
+      "cause"
+    ]
+  },
+  {
+    "value": "mitmeid",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "several",
+      "many",
+      "multiple"
+    ]
+  },
+  {
+    "value": "sellised",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "such",
+      "like this",
+      "these kinds"
+    ]
+  },
+  {
+    "value": "riikide",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "countries",
+      "states"
+    ]
+  },
+  {
+    "value": "teevad",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "do",
+      "make",
+      "are doing"
+    ]
+  },
+  {
+    "value": "leitud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "found",
+      "discovered",
+      "located"
+    ]
+  },
+  {
+    "value": "erinevalt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "differently",
+      "unlike",
+      "in contrast"
+    ]
+  },
+  {
+    "value": "eelmisel",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "previous",
+      "last",
+      "prior"
+    ]
+  },
+  {
+    "value": "sõnas",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "word",
+      "term"
+    ]
+  },
+  {
+    "value": "üldiselt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "generally",
+      "usually",
+      "overall"
+    ]
+  },
+  {
+    "value": "keel",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "language",
+      "tongue",
+      "slang"
+    ]
+  },
+  {
+    "value": "kahjuks",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "unfortunately",
+      "regrettably",
+      "sadly"
+    ]
+  },
+  {
+    "value": "tunduvalt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "considerably",
+      "significantly",
+      "noticeably"
+    ]
+  },
+  {
+    "value": "sõnad",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "words",
+      "terms",
+      "vocabulary"
+    ]
+  },
+  {
+    "value": "rahvas",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "people",
+      "nation",
+      "folk"
+    ]
+  },
+  {
+    "value": "naiste",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "women's",
+      "of women"
+    ]
+  },
+  {
+    "value": "mõeldud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "thought",
+      "considered",
+      "meant"
+    ]
+  },
+  {
+    "value": "elada",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to live",
+      "to reside"
+    ]
+  },
+  {
+    "value": "võeti",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "was taken",
+      "was received"
+    ]
+  },
+  {
+    "value": "seaduse",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "law",
+      "statute",
+      "regulation"
+    ]
+  },
+  {
+    "value": "ajas",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "in time",
+      "at the time",
+      "as"
+    ]
+  },
+  {
+    "value": "probleem",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "problem",
+      "issue",
+      "difficulty"
+    ]
+  },
+  {
+    "value": "näitas",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "showed",
+      "demonstrated",
+      "indicated"
+    ]
+  },
+  {
+    "value": "jäävad",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "remain",
+      "stay",
+      "leave behind"
+    ]
+  },
+  {
+    "value": "ilmunud",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "published",
+      "released",
+      "emerged"
+    ]
+  },
+  {
+    "value": "pähe",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "head",
+      "to head",
+      "in head",
+      "onto head"
+    ]
+  },
+  {
+    "value": "mitmed",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "several",
+      "multiple",
+      "various"
+    ]
+  },
+  {
+    "value": "juhtus",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "happened",
+      "occurred",
+      "took place"
+    ]
+  },
+  {
+    "value": "esimees",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "chairman",
+      "chair",
+      "president"
+    ]
+  },
+  {
+    "value": "arvan",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "I think",
+      "I believe",
+      "I reckon"
+    ]
+  },
+  {
+    "value": "peaksid",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "should",
+      "ought to"
+    ]
+  },
+  {
+    "value": "paraku",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "unfortunately",
+      "regrettably",
+      "alas"
+    ]
+  },
+  {
+    "value": "kiire",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "fast",
+      "quick",
+      "rapid"
+    ]
+  },
+  {
+    "value": "andmetel",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "data",
+      "information"
+    ]
+  },
+  {
+    "value": "sisu",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "content",
+      "substance",
+      "meaning"
+    ]
+  },
+  {
+    "value": "ühtegi",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "none",
+      "not any"
+    ]
+  },
+  {
+    "value": "astus",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "step",
+      "stair",
+      "pace"
+    ]
+  },
+  {
+    "value": "tulid",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "came",
+      "arrived"
+    ]
+  },
+  {
+    "value": "avatud",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "open",
+      "unlocked",
+      "available"
+    ]
+  },
+  {
+    "value": "silmas",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "in the eye",
+      "eyes",
+      "sight"
+    ]
+  },
+  {
+    "value": "kirjutatud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "written",
+      "inscribed",
+      "drafted"
+    ]
+  },
+  {
+    "value": "nendega",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "with them",
+      "with those"
+    ]
+  },
+  {
+    "value": "sündinud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "born",
+      "given birth"
+    ]
+  },
+  {
+    "value": "kusagil",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "somewhere",
+      "anywhere"
+    ]
+  },
+  {
+    "value": "kuulnud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "heard",
+      "listened",
+      "overheard"
+    ]
+  },
+  {
+    "value": "mingil",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "some",
+      "any",
+      "at some"
+    ]
+  },
+  {
+    "value": "mõtet",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "thought",
+      "idea",
+      "meaning"
+    ]
+  },
+  {
+    "value": "saan",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "I can",
+      "I get",
+      "I receive"
+    ]
+  },
+  {
+    "value": "vaata",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "look",
+      "see",
+      "watch"
+    ]
+  },
+  {
+    "value": "kirjutas",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "wrote",
+      "has written",
+      "was writing"
+    ]
+  },
+  {
+    "value": "ühtlasi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "also",
+      "simultaneously",
+      "as well"
+    ]
+  },
+  {
+    "value": "lähedal",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "near",
+      "close"
+    ]
+  },
+  {
+    "value": "süü",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "guilt",
+      "sin",
+      "fault"
+    ]
+  },
+  {
+    "value": "vabariigi",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "republic",
+      "of the republic",
+      "republic's"
+    ]
+  },
+  {
+    "value": "osta",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "buy",
+      "purchase"
+    ]
+  },
+  {
+    "value": "edaspidi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "from now on",
+      "hereafter",
+      "henceforth"
+    ]
+  },
+  {
+    "value": "organisatsiooni",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "organization",
+      "organisational"
+    ]
+  },
+  {
+    "value": "asjaolu",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "circumstance",
+      "fact",
+      "situation"
+    ]
+  },
+  {
+    "value": "aastas",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "annually",
+      "per year"
+    ]
+  },
+  {
+    "value": "ruumi",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "space",
+      "room"
+    ]
+  },
+  {
+    "value": "oodata",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to wait",
+      "to expect",
+      "to anticipate"
+    ]
+  },
+  {
+    "value": "teil",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "you",
+      "to you",
+      "your"
+    ]
+  },
+  {
+    "value": "suvel",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in summer",
+      "summer"
+    ]
+  },
+  {
+    "value": "väikese",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "small",
+      "little"
+    ]
+  },
+  {
+    "value": "pannud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "put",
+      "placed",
+      "set"
+    ]
+  },
+  {
+    "value": "vanaema",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "grandmother",
+      "granny",
+      "nana"
+    ]
+  },
+  {
+    "value": "linn",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "city",
+      "town"
+    ]
+  },
+  {
+    "value": "nõuab",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "requires",
+      "demands",
+      "asks"
+    ]
+  },
+  {
+    "value": "kodu",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "home",
+      "house",
+      "dwelling"
+    ]
+  },
+  {
+    "value": "niisama",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "just like that",
+      "for no reason",
+      "just",
+      "simply"
+    ]
+  },
+  {
+    "value": "lõpuni",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "to the end",
+      "until the end",
+      "up to the end"
+    ]
+  },
+  {
+    "value": "oleksin",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "I would be",
+      "I would exist"
+    ]
+  },
+  {
+    "value": "millel",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "which",
+      "on which",
+      "that which"
+    ]
+  },
+  {
+    "value": "isik",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "person",
+      "individual",
+      "figure"
+    ]
+  },
+  {
+    "value": "tahad",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "want",
+      "desire",
+      "wish"
+    ]
+  },
+  {
+    "value": "asub",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "is located",
+      "is situated",
+      "resides"
+    ]
+  },
+  {
+    "value": "teid",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "you",
+      "your",
+      "yours"
+    ]
+  },
+  {
+    "value": "korras",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in order",
+      "correct",
+      "properly"
+    ]
+  },
+  {
+    "value": "õnneks",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "luckily",
+      "fortunately"
+    ]
+  },
+  {
+    "value": "tugev",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "strong",
+      "tough",
+      "sturdy"
+    ]
+  },
+  {
+    "value": "endiselt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "still",
+      "yet",
+      "remains"
+    ]
+  },
+  {
+    "value": "valida",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to choose",
+      "to pick",
+      "to select"
+    ]
+  },
+  {
+    "value": "aina",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "always",
+      "just",
+      "only",
+      "still"
+    ]
+  },
+  {
+    "value": "teile",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "you (plural)",
+      "you (formal)"
+    ]
+  },
+  {
+    "value": "kuud",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "moon",
+      "months"
+    ]
+  },
+  {
+    "value": "selgelt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "clearly",
+      "distinctly",
+      "evidently"
+    ]
+  },
+  {
+    "value": "mängu",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "game",
+      "play",
+      "match"
+    ]
+  },
+  {
+    "value": "punkti",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "point",
+      "dot",
+      "punctuation"
+    ]
+  },
+  {
+    "value": "elab",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "lives",
+      "resides",
+      "inhabits"
+    ]
+  },
+  {
+    "value": "tegevus",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "activity",
+      "action",
+      "operation"
+    ]
+  },
+  {
+    "value": "sugugi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "at all",
+      "in the least"
+    ]
+  },
+  {
+    "value": "hakkasid",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "started",
+      "began"
+    ]
+  },
+  {
+    "value": "andmeid",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "data",
+      "information",
+      "records"
+    ]
+  },
+  {
+    "value": "paistis",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "shone",
+      "seemed",
+      "appeared"
+    ]
+  },
+  {
+    "value": "määratud",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "determined",
+      "designated",
+      "specified"
+    ]
+  },
+  {
+    "value": "nõus",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "agree",
+      "willing",
+      "consenting"
+    ]
+  },
+  {
+    "value": "niisiis",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "so",
+      "therefore",
+      "thus"
+    ]
+  },
+  {
+    "value": "kuhugi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "somewhere",
+      "anywhere"
+    ]
+  },
+  {
+    "value": "olles",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "being",
+      "while being",
+      "being in a state of",
+      "existing"
+    ]
+  },
+  {
+    "value": "märkis",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "marked",
+      "noted",
+      "indicated"
+    ]
+  },
+  {
+    "value": "maailm",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "world",
+      "universe",
+      "globe"
+    ]
+  },
+  {
+    "value": "milleks",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "for what",
+      "why",
+      "for which"
+    ]
+  },
+  {
+    "value": "niisugune",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "such",
+      "like this",
+      "of this kind"
+    ]
+  },
+  {
+    "value": "juht",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "leader",
+      "driver",
+      "guide",
+      "manager"
+    ]
+  },
+  {
+    "value": "võimalikult",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "as much as possible",
+      "possibly",
+      "as far as possible"
+    ]
+  },
+  {
+    "value": "tegid",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "did",
+      "made",
+      "created"
+    ]
+  },
+  {
+    "value": "rolli",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "role",
+      "roll"
+    ]
+  },
+  {
+    "value": "tekkis",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "created",
+      "occurred",
+      "arose"
+    ]
+  },
+  {
+    "value": "paljude",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "many",
+      "much"
+    ]
+  },
+  {
+    "value": "püüdis",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "tried",
+      "attempted"
+    ]
+  },
+  {
+    "value": "juhatuse",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "board",
+      "management",
+      "directorship"
+    ]
+  },
+  {
+    "value": "olime",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "we were",
+      "we are",
+      "we have been"
+    ]
+  },
+  {
+    "value": "võimaluse",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "possibility",
+      "opportunity",
+      "chance"
+    ]
+  },
+  {
+    "value": "paneb",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "puts",
+      "places",
+      "sets"
+    ]
+  },
+  {
+    "value": "külge",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "to",
+      "toward",
+      "side"
+    ]
+  },
+  {
+    "value": "anna",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "give",
+      "gift",
+      "present"
+    ]
+  },
+  {
+    "value": "rahul",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "calm",
+      "satisfied",
+      "content"
+    ]
+  },
+  {
+    "value": "vaevalt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "barely",
+      "hardly",
+      "scarcely"
+    ]
+  },
+  {
+    "value": "leidub",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "is found",
+      "exists",
+      "can be found"
+    ]
+  },
+  {
+    "value": "maksab",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "pays",
+      "costs"
+    ]
+  },
+  {
+    "value": "viga",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "mistake",
+      "error",
+      "fault"
+    ]
+  },
+  {
+    "value": "järgmise",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "next",
+      "following"
+    ]
+  },
+  {
+    "value": "pandud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "put",
+      "placed"
+    ]
+  },
+  {
+    "value": "kerge",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "light",
+      "easy"
+    ]
+  },
+  {
+    "value": "kasvanud",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "grown",
+      "increased",
+      "developed"
+    ]
+  },
+  {
+    "value": "seekord",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "this time",
+      "at this time"
+    ]
+  },
+  {
+    "value": "kellegi",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "someone's",
+      "somebody's"
+    ]
+  },
+  {
+    "value": "mingeid",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "some",
+      "any"
+    ]
+  },
+  {
+    "value": "metsa",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "forest",
+      "woods"
+    ]
+  },
+  {
+    "value": "sõnu",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "words",
+      "terms",
+      "sayings"
+    ]
+  },
+  {
+    "value": "nimel",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in the name",
+      "for the sake of",
+      "on behalf of"
+    ]
+  },
+  {
+    "value": "koolis",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "at school",
+      "in school"
+    ]
+  },
+  {
+    "value": "foto",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "photo",
+      "picture",
+      "image"
+    ]
+  },
+  {
+    "value": "võime",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "power",
+      "capacity",
+      "ability"
+    ]
+  },
+  {
+    "value": "analüüsi",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "analysis",
+      "analyses"
+    ]
+  },
+  {
+    "value": "nõukogu",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "council",
+      "committee",
+      "board"
+    ]
+  },
+  {
+    "value": "lasta",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to let",
+      "to allow",
+      "to release"
+    ]
+  },
+  {
+    "value": "kõigil",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "everyone",
+      "all",
+      "anyone"
+    ]
+  },
+  {
+    "value": "eelmise",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "previous",
+      "last"
+    ]
+  },
+  {
+    "value": "vett",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "water",
+      "aqua"
+    ]
+  },
+  {
+    "value": "esimesed",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "first",
+      "initial",
+      "earliest"
+    ]
+  },
+  {
+    "value": "küsida",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to ask",
+      "to inquire",
+      "to question"
+    ]
+  },
+  {
+    "value": "väljas",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "outside",
+      "outdoor",
+      "out"
+    ]
+  },
+  {
+    "value": "sõnade",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "words",
+      "of words"
+    ]
+  },
+  {
+    "value": "aastaid",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "years",
+      "years old",
+      "ages"
+    ]
+  },
+  {
+    "value": "vastava",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "corresponding",
+      "relevant",
+      "appropriate"
+    ]
+  },
+  {
+    "value": "tõsi",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "true",
+      "truth",
+      "genuine"
+    ]
+  },
+  {
+    "value": "heaks",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "good",
+      "well",
+      "fine",
+      "acceptable"
+    ]
+  },
+  {
+    "value": "vaatama",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to watch",
+      "to look",
+      "to see"
+    ]
+  },
+  {
+    "value": "usu",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "faith",
+      "belief",
+      "trust"
+    ]
+  },
+  {
+    "value": "arvestada",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to consider",
+      "to calculate",
+      "to take into account"
+    ]
+  },
+  {
+    "value": "vara",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "property",
+      "asset",
+      "goods",
+      "belonging"
+    ]
+  },
+  {
+    "value": "miski",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "something",
+      "anything"
+    ]
+  },
+  {
+    "value": "selgub",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "turns out",
+      "becomes clear",
+      "is revealed"
+    ]
+  },
+  {
+    "value": "tundsin",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "I felt",
+      "I sensed",
+      "I experienced"
+    ]
+  },
+  {
+    "value": "lapsi",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "children",
+      "kids"
+    ]
+  },
+  {
+    "value": "suunatud",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "directed",
+      "aimed",
+      "oriented"
+    ]
+  },
+  {
+    "value": "poeg",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "son",
+      "child"
+    ]
+  },
+  {
+    "value": "otsustas",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "decided",
+      "determined",
+      "resolved"
+    ]
+  },
+  {
+    "value": "laua",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "table",
+      "desk"
+    ]
+  },
+  {
+    "value": "pakub",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "offers",
+      "provides",
+      "supplies"
+    ]
+  },
+  {
+    "value": "kohus",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "court",
+      "justice",
+      "tribunal"
+    ]
+  },
+  {
+    "value": "kaheksa",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "eight"
+    ]
+  },
+  {
+    "value": "jõuab",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "reaches",
+      "arrives",
+      "gets to"
+    ]
+  },
+  {
+    "value": "läksid",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "you went",
+      "went"
+    ]
+  },
+  {
+    "value": "põhjust",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "cause",
+      "reason",
+      "motive"
+    ]
+  },
+  {
+    "value": "noored",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "young",
+      "youth",
+      "teenagers"
+    ]
+  },
+  {
+    "value": "ääres",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "edge",
+      "side",
+      "verge"
+    ]
+  },
+  {
+    "value": "viisil",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "manner",
+      "way",
+      "method"
+    ]
+  },
+  {
+    "value": "täielikult",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "completely",
+      "totally",
+      "fully"
+    ]
+  },
+  {
+    "value": "väärtus",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "value",
+      "worth",
+      "importance"
+    ]
+  },
+  {
+    "value": "teisiti",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "differently",
+      "otherwise"
+    ]
+  },
+  {
+    "value": "autori",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "author",
+      "of the author"
+    ]
+  },
+  {
+    "value": "kõne",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "speech",
+      "talk",
+      "conversation"
+    ]
+  },
+  {
+    "value": "kasutades",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "using",
+      "utilizing"
+    ]
+  },
+  {
+    "value": "ükskõik",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "any",
+      "no matter",
+      "regardless"
+    ]
+  },
+  {
+    "value": "raamatu",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "book",
+      "of the book"
+    ]
+  },
+  {
+    "value": "last",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "last",
+      "final",
+      "latest",
+      "remaining"
+    ]
+  },
+  {
+    "value": "võtma",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to take",
+      "to grab",
+      "to seize"
+    ]
+  },
+  {
+    "value": "kolmas",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "third",
+      "third one"
+    ]
+  },
+  {
+    "value": "vastupidi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "on the contrary",
+      "opposite",
+      "contradictory"
+    ]
+  },
+  {
+    "value": "käesoleva",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "present",
+      "current",
+      "ongoing"
+    ]
+  },
+  {
+    "value": "suu",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "mouth",
+      "muzzle",
+      "opening"
+    ]
+  },
+  {
+    "value": "käega",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "by hand",
+      "with hand"
+    ]
+  },
+  {
+    "value": "vajab",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "needs",
+      "requires"
+    ]
+  },
+  {
+    "value": "töös",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "in work",
+      "working",
+      "at work"
+    ]
+  },
+  {
+    "value": "tulemus",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "result",
+      "outcome",
+      "consequence"
+    ]
+  },
+  {
+    "value": "selja",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "back",
+      "spine"
+    ]
+  },
+  {
+    "value": "otsuse",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "decision",
+      "judgment",
+      "resolution"
+    ]
+  },
+  {
+    "value": "otsekui",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "as if",
+      "as though",
+      "like",
+      "as"
+    ]
+  },
+  {
+    "value": "tingitud",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "conditional",
+      "induced",
+      "derived"
+    ]
+  },
+  {
+    "value": "küllalt",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "enough",
+      "sufficiently",
+      "quite"
+    ]
+  },
+  {
+    "value": "kevadel",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in spring",
+      "springtime"
+    ]
+  },
+  {
+    "value": "hind",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "price",
+      "value",
+      "cost"
+    ]
+  },
+  {
+    "value": "seisab",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "stands",
+      "is standing"
+    ]
+  },
+  {
+    "value": "teistest",
+    "part_of_speech": "Hüüdsõna",
+    "en_words": [
+      "from others",
+      "than others"
+    ]
+  },
+  {
+    "value": "õieti",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "right",
+      "correctly",
+      "actually"
+    ]
+  },
+  {
+    "value": "arvestades",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "considering",
+      "accounting",
+      "taking into account"
+    ]
+  },
+  {
+    "value": "hinnata",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "to evaluate",
+      "to assess",
+      "to rate"
+    ]
+  },
+  {
+    "value": "liige",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "member",
+      "joint",
+      "limb"
+    ]
+  },
+  {
+    "value": "pika",
+    "part_of_speech": "Omadussõna",
+    "en_words": [
+      "long",
+      "tall"
+    ]
+  },
+  {
+    "value": "pere",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "family",
+      "household"
+    ]
+  },
+  {
+    "value": "mitme",
+    "part_of_speech": "Arvsõna",
+    "en_words": [
+      "multiple",
+      "several",
+      "many"
+    ]
+  },
+  {
+    "value": "idee",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "idea",
+      "concept",
+      "notion"
+    ]
+  },
+  {
+    "value": "sügisel",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in autumn",
+      "in fall"
+    ]
+  },
+  {
+    "value": "kultuuri",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "culture",
+      "cultivation",
+      "civilization"
+    ]
+  },
+  {
+    "value": "niimoodi",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "like this",
+      "in this way",
+      "thus"
+    ]
+  },
+  {
+    "value": "tüüpi",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "type",
+      "kind",
+      "sort"
+    ]
+  },
+  {
+    "value": "kõigest",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "of everything",
+      "about everything",
+      "from everything"
+    ]
+  },
+  {
+    "value": "arengu",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "development",
+      "growth",
+      "advancement"
+    ]
+  },
+  {
+    "value": "algab",
+    "part_of_speech": "Tegusõna",
+    "en_words": [
+      "starts",
+      "begins"
+    ]
+  },
+  {
+    "value": "tulevikus",
+    "part_of_speech": "Määrsõna",
+    "en_words": [
+      "in the future",
+      "future"
+    ]
+  },
+  {
+    "value": "minust",
+    "part_of_speech": "Asesõna",
+    "en_words": [
+      "about me",
+      "from me",
+      "of me"
+    ]
+  },
+  {
+    "value": "kasutamise",
+    "part_of_speech": "Nimisõna",
+    "en_words": [
+      "use",
+      "usage",
+      "utilization"
+    ]
+  }
+]
