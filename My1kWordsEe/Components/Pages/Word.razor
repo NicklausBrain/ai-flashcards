@@ -12,6 +12,8 @@
 @inject CreateSampleCommand CreateSampleCommand
 
 @code {
+    const string audioBlobRoot = "https://my1kee.blob.core.windows.net/audio";
+
     [Parameter]
     public string EeWord { get; set; }
 
@@ -33,11 +35,28 @@
         }
         this.isGenerationInProgress = false;
     }
+
+    private async Task SpeakWord(MouseEventArgs e)
+    {
+        await JS.InvokeVoidAsync("speakWord", EeWord);
+    }
 }
+
+<script>
+    window.speakWord = async (audioId) => {
+        const audio = document.getElementById(audioId);
+        await audio.play();
+    };
+</script>
 
 <div class="text-left">
     <div class="row">
-        <h1>@EeWord
+        <h1>
+            @EeWord
+            <i class="bi bi-volume-down-fill small" @onclick="SpeakWord">
+
+            </i>
+                <audio id="@EeWord" src="@($"{audioBlobRoot}/{EeWord.ToLower()}.wav")"></audio>
         </h1>
 
         @if (WordMetadata.HasValue)
