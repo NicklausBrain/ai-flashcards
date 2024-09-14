@@ -31,6 +31,7 @@ namespace My1kWordsEe.Services.Cqs
 
             if (sampleWord.IsSuccess)
             {
+                // generate audio
                 await azureBlobService.SaveWordData(sampleWord.Value);
             }
 

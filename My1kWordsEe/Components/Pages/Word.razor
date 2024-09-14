@@ -33,11 +33,33 @@
         }
         this.isGenerationInProgress = false;
     }
+
+    private async Task SpeakWord(MouseEventArgs e)
+    {
+        await JS.InvokeVoidAsync("speakWord", EeWord);
+    }
+
+    private bool IsDataLoadedOk => WordMetadata.HasValue && WordMetadata.Value.IsSuccess;
 }
+
+<script>
+    window.speakWord = async (audioId) => {
+        const audio = document.getElementById(audioId);
+        await audio.play();
+    };
+</script>
 
 <div class="text-left">
     <div class="row">
-        <h1>@EeWord
+        <h1>
+            @EeWord
+
+            @if (IsDataLoadedOk)
+            {
+                <i class="bi bi-volume-down-fill small" @onclick="SpeakWord">
+                    <audio id="@EeWord" src="@WordMetadata.Value.Value.EeAudioUrl"></audio>
+                </i>
+            }
         </h1>
 
         @if (WordMetadata.HasValue)

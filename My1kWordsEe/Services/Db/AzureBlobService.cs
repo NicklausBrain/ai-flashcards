@@ -52,13 +52,15 @@ namespace My1kWordsEe.Services.Db
                 overwrite: true);
         }
 
-        public async Task<Uri> SaveAudio(Stream audioStream)
+        public async Task<Uri> SaveAudio(Stream audioStream, string blobName)
         {
             BlobContainerClient container = await GetAudioContainer();
-            BlobClient blob = container.GetBlobClient(WavBlobName());
-            await blob.UploadAsync(audioStream);
+            BlobClient blob = container.GetBlobClient(blobName);
+            await blob.UploadAsync(audioStream, overwrite: true);
             return blob.Uri;
         }
+
+        public Task<Uri> SaveAudio(Stream audioStream) => SaveAudio(audioStream, WavBlobName());
 
         public async Task<Uri> SaveImage(Stream imageStream)
         {
