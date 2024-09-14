@@ -126,7 +126,7 @@ namespace My1kWordsEe.Services
 
         public async Task<Result<SampleWord>> GetWordMetadata(string word)
         {
-            ChatClient client = new(model: "gpt-4o", ApiKey);
+            ChatClient client = new(model: "gpt-4o-mini", ApiKey);
 
             ChatCompletion chatCompletion = await client.CompleteChatAsync(
                 [
