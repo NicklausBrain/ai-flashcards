@@ -54,7 +54,7 @@
         <h1>
             @EeWord
 
-            @if (IsDataLoadedOk)
+            @if (IsDataLoadedOk && WordMetadata.Value.Value.EeAudioUrl != null)
             {
                 <i class="bi bi-volume-down-fill small" @onclick="SpeakWord">
                     <audio id="@EeWord" src="@WordMetadata.Value.Value.EeAudioUrl"></audio>
