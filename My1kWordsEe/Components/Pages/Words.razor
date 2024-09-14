@@ -11,6 +11,8 @@
 @code {
     public Ee1kWords Ee1KWords { get; private set; } = new Ee1kWords();
 
+    public static readonly Dictionary<EeWord, int> WordIndex = Ee1kWords.AllWords.Select((w, i) => (w,i)).ToDictionary(p => p.w, p=>p.i+1);
+
     private void SelectWord(MouseEventArgs e, string word)
     {
         NavigationManager.NavigateTo($"/word/{word}", new NavigationOptions
@@ -50,11 +52,10 @@
             </thead>
             <tbody>
                 @{
-                    var i = 0;
                     foreach (var word in Ee1KWords.SelectedWords)
                     {
                         <tr role="button" @onclick="@(e => SelectWord(e, word.Value))">
-                            <th scope="row">@(++i)</th>
+                            <th scope="row">@WordIndex[word]</th>
                             <td>@word.Value</td>
                             <td>@string.Join(" / ",word.EnWords)
                             </td>
