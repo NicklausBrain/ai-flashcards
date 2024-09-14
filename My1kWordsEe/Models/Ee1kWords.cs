@@ -54,7 +54,6 @@ namespace My1kWordsEe.Models
 
         public string? SelectedWord { get; private set; }
 
-
         public static readonly EeWord[] AllWords = Load1kEeWords();
 
         private static readonly IReadOnlyDictionary<string, string> _allWordsDiacriticsFree =
@@ -80,13 +79,9 @@ namespace My1kWordsEe.Models
         private static EeWord[] Load1kEeWords()
         {
             var assembly = typeof(EeWord).Assembly;
-
             var resourceName = "My1kWordsEe.ee1k.json";
-
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-            {
-                return JsonSerializer.Deserialize<EeWord[]>(stream);
-            }
+            using Stream stream = assembly.GetManifestResourceStream(resourceName);
+            return JsonSerializer.Deserialize<EeWord[]>(stream);
         }
     }
 }
