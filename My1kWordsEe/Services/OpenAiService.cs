@@ -12,9 +12,12 @@ namespace My1kWordsEe.Services
 {
     public class OpenAiService
     {
-        public OpenAiService(string apiKey)
+        private readonly ILogger logger;
+
+        public OpenAiService(ILogger<OpenAiService> logger, string apiKey)
         {
-            ApiKey = apiKey;
+            this.logger = logger;
+            this.ApiKey = apiKey;
         }
 
         private string ApiKey { get; }
@@ -93,15 +96,14 @@ namespace My1kWordsEe.Services
             ChatCompletion chatCompletion = await client.CompleteChatAsync(
                 [
                     new SystemChatMessage(
-                        "Sa oled keeleõppe süsteemi abiline, mis aitab õppida enim levinud eesti keele sõnu. " +
-                        "Sinu sisend on üks sõna eesti keeles. " +
-                        "Sinu ülesanne on kirjutada selle kasutamise kohta lihtne lühike näitelause, kasutades seda sõna. " +
-                        "Lauses kasuta kõige levinuimaid ja lihtsamaid sõnu eesti keeles et toetada keeleõpet. " +
-                        "Sinu väljund on JSON objekt, milles on näitelaus eesti keeles ja selle vastav tõlge inglise keelde:\n" +
-                        "```\n" +
-                        "{\"ee_sentence\": \"<näide eesti keeles>\", \"en_sentence\": \"<näide inglise keeles>\" }" +
-                        "\n```" +
-                        "\n Tagastab ainult json-objekti!"),
+                        "Sa oled keeleõppe süsteemi abiline, mis aitab õppida enim levinud eesti keele sõnu.\n" +
+                        "Sinu sisend on üks sõna eesti keeles.\n" +
+                        "Sinu ülesanne on kirjutada selle kasutamise kohta lihtne lühike näitelause, kasutades seda sõna.\n" +
+                        "Lauses kasuta kõige levinuimaid ja lihtsamaid sõnu eesti keeles et toetada keeleõpet.\n" +
+                        "Teie väljundiks on JSON-objekt koos eestikeelse näidislausega ja sellele vastav tõlge inglise keelde vastavalt lepingule:\n" +
+                        "```\n{\n" +
+                        "\"ee_sentence\": \"<näide eesti keeles>\", \"en_sentence\": \"<näide inglise keeles>\"" +
+                        "\n}\n```"),
                     new UserChatMessage(eeWord),
                 ]);
 
@@ -130,14 +132,14 @@ namespace My1kWordsEe.Services
                 [
                     new SystemChatMessage(
                         "Sinu sisend on eestikeelne sõna.\n" +
-                        "Teie väljund on sõna metaandmed JSON-is:\n" +
+                        "Kui antud sõna ei ole eestikeelne, tagasta 404\n"+
+                        "Teie väljund on sõna metaandmed JSON-is vastavalt antud lepingule:\n" +
                         "```\n{\n" +
                         "ee_word: \"<antud sõna>\",\n" +
                         "en_word: \"<english translation>\"\n" +
                         "en_words: [<alternative english translations if applicable>]\n" +
                         "en_explanation: \"<explanation of the word meaning in english>\"\n" +
-                        "}\n```\n" +
-                        "Kui antud sõna ei ole eestikeelne, tagasta 404"),
+                        "}\n```\n"),
                     new UserChatMessage(word),
                 ]);
 
@@ -168,8 +170,9 @@ namespace My1kWordsEe.Services
                         });
                     }
                 }
-                catch (JsonException)
+                catch (JsonException jsonException)
                 {
+                    this.logger.LogError(jsonException, "Failed to deserialize JSON: {jsonStr}", jsonStr);
                     return Result.Failure<SampleWord>("Unexpected data returned by AI");
                 }
             }
