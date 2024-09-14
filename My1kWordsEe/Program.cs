@@ -12,11 +12,11 @@ namespace My1kWordsEe
             var builder = WebApplication.CreateBuilder(args);
             builder.Configuration.AddEnvironmentVariables();
 
-            var openApiKey =
+            var openAiKey =
                 builder.Configuration["Secrets:OpenAiKey"] ??
                 Environment.GetEnvironmentVariable("Secrets_OpenAiKey");
 
-            if (string.IsNullOrWhiteSpace(openApiKey))
+            if (string.IsNullOrWhiteSpace(openAiKey))
             {
                 throw new ApplicationException("Secrets:OpenAiKey is missing");
             }
@@ -40,7 +40,7 @@ namespace My1kWordsEe
             }
 
             builder.Services.AddSingleton(new StabilityAiService(stabilityAiKey));
-            builder.Services.AddSingleton(new OpenAiService(openApiKey));
+            builder.Services.AddSingleton(new OpenAiService(openAiKey));
             builder.Services.AddSingleton(new AzureBlobService(azureBlobConnectionString));
             builder.Services.AddSingleton(new TartuNlpService());
             builder.Services.AddSingleton<EnsureWordCommand>();

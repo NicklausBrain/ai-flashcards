@@ -129,15 +129,15 @@ namespace My1kWordsEe.Services
             ChatCompletion chatCompletion = await client.CompleteChatAsync(
                 [
                     new SystemChatMessage(
-                        "Your input is an Estonian word. " +
-                        "Your output is word metadata in JSON:\n" +
+                        "Sinu sisend on eestikeelne sõna.\n" +
+                        "Teie väljund on sõna metaandmed JSON-is:\n" +
                         "```\n{\n" +
-                        "ee_word: \"<given word>\",\n" +
+                        "ee_word: \"<antud sõna>\",\n" +
                         "en_word: \"<english translation>\"\n" +
-                        "en_words: [<alternative translations if applicable>]\n" +
-                        "en_explanation: \"<explanation of the word in english>\"\n" +
+                        "en_words: [<alternative english translations if applicable>]\n" +
+                        "en_explanation: \"<explanation of the word meaning in english>\"\n" +
                         "}\n```\n" +
-                        "If the given word is not Estonian return 404"),
+                        "Kui antud sõna ei ole eestikeelne, tagasta 404"),
                     new UserChatMessage(word),
                 ]);
 
