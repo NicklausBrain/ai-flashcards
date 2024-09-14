@@ -21,17 +21,17 @@ namespace My1kWordsEe.Models
         public required string Value { get; init; }
 
         [JsonPropertyName("part_of_speech")]
-        public EePartOfSpeech PartOfSpeech { get; init; }
+        public EePartOfSpeech EePartOfSpeech { get; init; }
 
-        /// <summary>
-        /// Alternatives to PartOfSpeech
-        /// </summary>
-        [JsonPropertyName("parts_of_speech")]
-        public EePartOfSpeech[] PartsOfSpeech
-        {
-            get => this.partsOfSpeech;
-            init => this.partsOfSpeech = value ?? this.partsOfSpeech;
-        }
+        // /// <summary>
+        // /// Alternatives to PartOfSpeech
+        // /// </summary>
+        // [JsonPropertyName("parts_of_speech")]
+        // public EePartOfSpeech[] PartsOfSpeech
+        // {
+        //     get => this.partsOfSpeech;
+        //     init => this.partsOfSpeech = value ?? this.partsOfSpeech;
+        // }
 
         /// <summary>
         /// Default translation to English

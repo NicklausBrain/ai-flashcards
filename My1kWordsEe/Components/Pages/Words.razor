@@ -43,9 +43,9 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">EE Word</th>
-                    <th scope="col">En Words</th>
-                    <th scope="col">Category</th>
+                    <th scope="col">Eestikeelne sõna</th>
+                    <th scope="col">English word(s)</th>
+                    <th scope="col">Part of speech</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,10 +54,11 @@
                     foreach (var word in Ee1KWords.SelectedWords)
                     {
                         <tr @onclick="@(e => SelectWord(e, word.Value))" >
-                            <th scope="row">@(i++)</th>
+                            <th scope="row">@(++i)</th>
                             <td>@word.Value</td>
-                            <td>@word.EnWord</td>
-                            <td>@word.PartOfSpeech</td>
+                            <td>@string.Join(" / ",word.EnWords)
+                            </td>
+                            <td>@word.EePartOfSpeech.ToEnPartOfSpeech() / @word.EePartOfSpeech</td>
                         </tr>
                     }
                 }

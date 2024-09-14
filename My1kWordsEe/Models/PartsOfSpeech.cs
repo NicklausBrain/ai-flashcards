@@ -70,6 +70,40 @@ namespace My1kWordsEe.Models
         Article,
         Determiner
     }
+
+    public static class PartsOfSpeechExtensions
+    {
+        public static EnPartOfSpeech ToEnPartOfSpeech(this EePartOfSpeech eePartOfSpeech)
+        {
+            switch (eePartOfSpeech)
+            {
+                case EePartOfSpeech.Nimisõna:
+                    return EnPartOfSpeech.Noun;
+                case EePartOfSpeech.Omadussõna:
+                    return EnPartOfSpeech.Adjective;
+                case EePartOfSpeech.Asesõna:
+                    return EnPartOfSpeech.Pronoun;
+                case EePartOfSpeech.Arvsõna:
+                    return EnPartOfSpeech.Numeral;
+                case EePartOfSpeech.Tegusõna:
+                    return EnPartOfSpeech.Verb;
+                case EePartOfSpeech.Määrsõna:
+                    return EnPartOfSpeech.Adverb;
+                case EePartOfSpeech.Hüüdsõna:
+                    return EnPartOfSpeech.Interjection;
+                case EePartOfSpeech.Sidesõna:
+                    return EnPartOfSpeech.Conjunction;
+                case EePartOfSpeech.Kaassõna:
+                    return EnPartOfSpeech.Preposition;
+                // case EePartOfSpeech.Artikkel:
+                //     return EnPartOfSpeech.Article;
+                // case EePartOfSpeech.ArtikkelMäärsõna:
+                //     return EnPartOfSpeech.Determiner;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(eePartOfSpeech), eePartOfSpeech, "Invalid EE part of speech value.");
+            }
+        }
+    }
 }
 
 // English Part of Speech,Estonian Part of Speech
