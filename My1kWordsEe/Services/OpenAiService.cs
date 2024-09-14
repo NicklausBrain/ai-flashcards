@@ -126,7 +126,7 @@ namespace My1kWordsEe.Services
 
         public async Task<Result<SampleWord>> GetWordMetadata(string word)
         {
-            ChatClient client = new(model: "gpt-4o-mini", ApiKey);
+            ChatClient client = new(model: "gpt-4o", ApiKey);
 
             ChatCompletion chatCompletion = await client.CompleteChatAsync(
                 [
@@ -135,10 +135,10 @@ namespace My1kWordsEe.Services
                         "Kui antud sõna ei ole eestikeelne, tagasta 404\n"+
                         "Teie väljund on sõna metaandmed JSON-is vastavalt antud lepingule:\n" +
                         "```\n{\n" +
-                        "ee_word: \"<antud sõna>\",\n" +
-                        "en_word: \"<english translation>\"\n" +
-                        "en_words: [<alternative english translations if applicable>]\n" +
-                        "en_explanation: \"<explanation of the word meaning in english>\"\n" +
+                        "\"ee_word\": \"<antud sõna>\",\n" +
+                        "\"en_word\": \"<english translation>\"\n" +
+                        "\"en_words\": [<array of alternative english translations if applicable>]\n" +
+                        "\"en_explanation\": \"<explanation of the word meaning in english>\"\n" +
                         "}\n```\n"),
                     new UserChatMessage(word),
                 ]);

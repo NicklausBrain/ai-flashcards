@@ -12,7 +12,7 @@ namespace ConsoleApp
 
         private static readonly string[] Words = new string[]
         {
-            "on","et","enam","need","just","mind","end","all","tea","ent","too","said","president","no","last"
+            "enam","need","tea","ent","too","president","no"
         };
 
         static async Task Main(string[] args)
@@ -74,7 +74,7 @@ namespace ConsoleApp
                 }
             }
 
-            File.WriteAllLines("cmd-errors-3.txt", errors);
+            File.WriteAllLines("cmd-errors-5.txt", errors);
         }
     }
 }
