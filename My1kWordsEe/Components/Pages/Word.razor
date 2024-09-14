@@ -54,9 +54,8 @@
         <h1>
             @EeWord
             <i class="bi bi-volume-down-fill small" @onclick="SpeakWord">
-
-            </i>
                 <audio id="@EeWord" src="@($"{audioBlobRoot}/{EeWord.ToLower()}.wav")"></audio>
+            </i>
         </h1>
 
         @if (WordMetadata.HasValue)
