@@ -2,12 +2,9 @@ namespace My1kWordsEe.Models
 {
     public record SampleWord
     {
-
         private readonly string eeWord = "";
         private readonly string[] enWords = [];
-
         private readonly SampleSentence[] samples = [];
-
 
         /// <summary>
         /// Estonian word

@@ -1,21 +1,11 @@
 ﻿using System.Globalization;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using Microsoft.Extensions.Options;
 
 namespace My1kWordsEe.Models
 {
     public class Ee1kWords
     {
-        //private static readonly JsonSerializerOptions options = new JsonSerializerOptions();
-
-        static Ee1kWords()
-        {
-            //options.Converters.Add(new JsonStringEnumConverter());
-            //options.PropertyNameCaseInsensitive = true;
-        }
-
         public Ee1kWords()
         {
             this.SelectedWord = null;
@@ -65,136 +55,7 @@ namespace My1kWordsEe.Models
         public string? SelectedWord { get; private set; }
 
 
-        public static readonly EeWord[] AllWords = JsonSerializer.Deserialize<EeWord[]>(
-        """
-        [
-        {
-            "value": "ja",
-            "part_of_speech": "Sidesõna",
-            "parts_of_speech": [
-                "Sidesõna"
-            ],
-            "en_word": "and",
-            "en_words": [
-                "and"
-            ]
-        },
-        {
-            "value": "on",
-            "part_of_speech": "Tegusõna",
-            "parts_of_speech": [
-                "Tegusõna"
-            ],
-            "en_word": "is",
-            "en_words": [
-                "is"
-            ]
-        },
-        {
-            "value": "ei",
-            "part_of_speech": "Määrsõna",
-            "parts_of_speech": [
-                "Määrsõna"
-            ],
-            "en_word": "no",
-            "en_words": [
-                "no",
-                "not"
-            ]
-        },
-        {
-            "value": "et",
-            "part_of_speech": "Sidesõna",
-            "parts_of_speech": [
-                "Sidesõna"
-            ],
-            "en_word": "that",
-            "en_words": [
-                "that"
-            ]
-        },
-        {
-            "value": "kui",
-            "part_of_speech": "Sidesõna",
-            "parts_of_speech": [
-                "Sidesõna"
-            ],
-            "en_word": "if",
-            "en_words": [
-                "if",
-                "when"
-            ]
-        },
-        {
-            "value": "oli",
-            "part_of_speech": "Tegusõna",
-            "parts_of_speech": [
-                "Tegusõna"
-            ],
-            "en_word": "was",
-            "en_words": [
-                "was"
-            ]
-        },
-        {
-            "value": "see",
-            "part_of_speech": "Asesõna",
-            "parts_of_speech": [
-                "Asesõna"
-            ],
-            "en_word": "this",
-            "en_words": [
-                "this",
-                "it"
-            ]
-        },
-        {
-            "value": "mis",
-            "part_of_speech": "Asesõna",
-            "parts_of_speech": [
-                "Asesõna"
-            ],
-            "en_word": "what",
-            "en_words": [
-                "what",
-                "which"
-            ]
-        },
-        {
-            "value": "kes",
-            "part_of_speech": "Asesõna",
-            "parts_of_speech": [
-                "Asesõna"
-            ],
-            "en_word": "who",
-            "en_words": [
-                "who"
-            ]
-        },
-        {
-            "value": "mina",
-            "part_of_speech": "Asesõna",
-            "parts_of_speech": [
-                "Asesõna"
-            ],
-            "en_word": "I",
-            "en_words": [
-                "I"
-            ]
-        },
-        {
-            "value": "kaks",
-            "part_of_speech": "Arvsõna",
-            "parts_of_speech": [
-                "Arvsõna"
-            ],
-            "en_word": "two",
-            "en_words": [
-                "two"
-            ]
-        }
-        ]
-        """);
+        public static readonly EeWord[] AllWords = Load1kEeWords();
 
         private static readonly IReadOnlyDictionary<string, string> _allWordsDiacriticsFree =
             AllWords.ToDictionary(w => w.Value, q => RemoveDiacritics(q.Value));
@@ -214,6 +75,18 @@ namespace My1kWordsEe.Models
             }
 
             return (sb.ToString().Normalize(NormalizationForm.FormC));
+        }
+
+        private static EeWord[] Load1kEeWords()
+        {
+            var assembly = typeof(EeWord).Assembly;
+
+            var resourceName = "My1kWordsEe.ee1k.json";
+
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                return JsonSerializer.Deserialize<EeWord[]>(stream);
+            }
         }
     }
 }

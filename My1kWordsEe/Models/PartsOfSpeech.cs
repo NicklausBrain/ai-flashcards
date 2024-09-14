@@ -2,12 +2,10 @@ using System.Text.Json.Serialization;
 
 namespace My1kWordsEe.Models
 {
-
     /// <summary>
     /// Sõnaliik (Estonian parts of speech)
     /// </summary>
     [JsonConverter(typeof(JsonStringEnumConverter))]
-
     public enum EePartOfSpeech
     {
         /// <summary>
