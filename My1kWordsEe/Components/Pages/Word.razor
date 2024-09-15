@@ -40,6 +40,8 @@
     {
         await JS.InvokeVoidAsync("speakWord", EeWord);
     }
+
+    private bool IsDataLoadedOk => WordMetadata.HasValue && WordMetadata.Value.IsSuccess;
 }
 
 <script>
@@ -53,10 +55,13 @@
     <div class="row">
         <h1>
             @EeWord
-            <i class="bi bi-volume-down-fill small" @onclick="SpeakWord">
 
-            </i>
-                <audio id="@EeWord" src="@($"{audioBlobRoot}/{EeWord.ToLower()}.wav")"></audio>
+            @if (IsDataLoadedOk && WordMetadata.Value.Value.EeAudioUrl != null)
+            {
+                <i class="bi bi-volume-down-fill small" @onclick="SpeakWord">
+                    <audio id="@EeWord" src="@WordMetadata.Value.Value.EeAudioUrl"></audio>
+                </i>
+            }
         </h1>
 
         @if (WordMetadata.HasValue)
