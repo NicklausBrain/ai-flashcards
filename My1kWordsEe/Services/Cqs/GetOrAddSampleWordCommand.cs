@@ -5,12 +5,12 @@ using My1kWordsEe.Services.Db;
 
 namespace My1kWordsEe.Services.Cqs
 {
-    public class EnsureWordCommand
+    public class GetOrAddSampleWordCommand
     {
         private readonly AzureBlobService azureBlobService;
         private readonly OpenAiService openAiService;
 
-        public EnsureWordCommand(
+        public GetOrAddSampleWordCommand(
             AzureBlobService azureBlobService,
             OpenAiService openAiService)
         {

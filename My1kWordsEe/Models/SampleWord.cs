@@ -1,5 +1,8 @@
 namespace My1kWordsEe.Models
 {
+    /// <summary>
+    /// A word of the Estonian language with the respective translations and usage examples
+    /// </summary>
     public record SampleWord
     {
         private readonly string eeWord = "";
@@ -21,7 +24,7 @@ namespace My1kWordsEe.Models
         public string EnWord { get; init; }
 
         /// <summary>
-        /// Alternatives to EnWord
+        /// Alternative translations to English
         /// </summary>
         public string[] EnWords
         {
@@ -29,10 +32,19 @@ namespace My1kWordsEe.Models
             init => this.enWords = value ?? this.enWords;
         }
 
+        /// <summary>
+        /// Explaining the word in English
+        /// </summary>
         public string EnExplanation { get; init; }
 
+        /// <summary>
+        /// Sample pronunciation of the word
+        /// </summary>
         public Uri EeAudioUrl { get; init; }
 
+        /// <summary>
+        /// Word usage examples
+        /// </summary>
         public SampleSentence[] Samples
         {
             get => this.samples;

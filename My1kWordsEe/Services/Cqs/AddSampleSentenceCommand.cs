@@ -5,14 +5,14 @@ using My1kWordsEe.Services.Db;
 
 namespace My1kWordsEe.Services.Cqs
 {
-    public class CreateSampleCommand
+    public class AddSampleSentenceCommand
     {
         private readonly AzureBlobService azureBlobService;
         private readonly OpenAiService openAiService;
         private readonly TartuNlpService tartuNlpService;
         private readonly StabilityAiService stabilityAiService;
 
-        public CreateSampleCommand(
+        public AddSampleSentenceCommand(
             AzureBlobService azureBlobService,
             OpenAiService openAiService,
             TartuNlpService tartuNlpService,

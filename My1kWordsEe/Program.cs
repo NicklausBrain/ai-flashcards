@@ -44,8 +44,8 @@ namespace My1kWordsEe
             builder.Services.AddSingleton((p) => new OpenAiService(p.GetRequiredService<ILogger<OpenAiService>>(), openAiKey));
             builder.Services.AddSingleton(new AzureBlobService(azureBlobConnectionString));
             builder.Services.AddSingleton(new TartuNlpService());
-            builder.Services.AddSingleton<EnsureWordCommand>();
-            builder.Services.AddSingleton<CreateSampleCommand>();
+            builder.Services.AddSingleton<GetOrAddSampleWordCommand>();
+            builder.Services.AddSingleton<AddSampleSentenceCommand>();
 
             // Add services to the container.
             builder.Services.AddRazorComponents()

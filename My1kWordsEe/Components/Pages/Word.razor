@@ -8,12 +8,10 @@
 @using My1kWordsEe.Services.Cqs;
 
 @inject IJSRuntime JS
-@inject EnsureWordCommand EnsureWordCommand
-@inject CreateSampleCommand CreateSampleCommand
+@inject GetOrAddSampleWordCommand EnsureWordCommand
+@inject AddSampleSentenceCommand CreateSampleCommand
 
 @code {
-    const string audioBlobRoot = "https://my1kee.blob.core.windows.net/audio";
-
     [Parameter]
     public string EeWord { get; set; }
 
