@@ -9,18 +9,18 @@ namespace My1kWordsEe.Services.Cqs
     {
         private readonly AzureBlobService azureBlobService;
         private readonly OpenAiService openAiService;
-        private readonly TartuNlpService tartuNlpService;
+        private readonly AddAudioCommand addAudioCommand;
         private readonly StabilityAiService stabilityAiService;
 
         public AddSampleSentenceCommand(
             AzureBlobService azureBlobService,
             OpenAiService openAiService,
-            TartuNlpService tartuNlpService,
+            AddAudioCommand createAudioCommand,
             StabilityAiService stabilityAiService)
         {
             this.azureBlobService = azureBlobService;
             this.openAiService = openAiService;
-            this.tartuNlpService = tartuNlpService;
+            this.addAudioCommand = createAudioCommand;
             this.stabilityAiService = stabilityAiService;
         }
 
@@ -64,12 +64,11 @@ namespace My1kWordsEe.Services.Cqs
         }
 
         private Task<Result<Uri>> GenerateImage(Sentence sentence) =>
-            this.openAiService.GetDallEPrompt(sentence.En)
-                .Bind(this.stabilityAiService.GenerateImage)
-                .Bind(image => Result.Of(this.azureBlobService.SaveImage(image)));
+            this.openAiService.GetDallEPrompt(sentence.En).Bind(
+            this.stabilityAiService.GenerateImage).Bind(
+            this.azureBlobService.SaveImage);
 
         private Task<Result<Uri>> GenerateSpeech(Sentence sentence) =>
-            this.tartuNlpService.GetSpeech(sentence.Ee)
-                .Bind(speech => Result.Of(this.azureBlobService.SaveAudio(speech)));
+            this.addAudioCommand.Invoke(sentence.Ee);
     }
 }

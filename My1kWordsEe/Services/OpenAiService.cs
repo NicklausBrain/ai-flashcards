@@ -180,28 +180,28 @@ namespace My1kWordsEe.Services
             return Result.Failure<SampleWord>("Empty response");
         }
     }
-}
 
-public class Sentence
-{
-    [JsonPropertyName("ee_sentence")]
-    public string Ee { get; set; }
+    public class Sentence
+    {
+        [JsonPropertyName("ee_sentence")]
+        public string Ee { get; set; }
 
-    [JsonPropertyName("en_sentence")]
-    public string En { get; set; }
-}
+        [JsonPropertyName("en_sentence")]
+        public string En { get; set; }
+    }
 
-public class WordMetadata
-{
-    [JsonPropertyName("ee_word")]
-    public string EeWord { get; set; }
+    public class WordMetadata
+    {
+        [JsonPropertyName("ee_word")]
+        public string EeWord { get; set; }
 
-    [JsonPropertyName("en_word")]
-    public string EnWord { get; set; }
+        [JsonPropertyName("en_word")]
+        public string EnWord { get; set; }
 
-    [JsonPropertyName("en_explanation")]
-    public string EnExplanation { get; set; }
+        [JsonPropertyName("en_explanation")]
+        public string EnExplanation { get; set; }
 
-    [JsonPropertyName("en_words")]
-    public string[] EnWords { get; set; }
+        [JsonPropertyName("en_words")]
+        public string[] EnWords { get; set; }
+    }
 }

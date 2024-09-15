@@ -4,6 +4,9 @@ using System.Text.Json;
 
 namespace My1kWordsEe.Models
 {
+    /// <summary>
+    /// Represents a collection of 1k most common Estonian words.
+    /// </summary>
     public class Ee1kWords
     {
         public Ee1kWords()
@@ -32,7 +35,7 @@ namespace My1kWordsEe.Models
                     Search = search,
                     SelectedWords = AllWords
                         .Where(w => w.Value.Contains(search, StringComparison.InvariantCultureIgnoreCase)
-                            || _allWordsDiacriticsFree[w.Value].Contains(search, StringComparison.InvariantCultureIgnoreCase))
+                            || AllWordsDiacriticsFree[w.Value].Contains(search, StringComparison.InvariantCultureIgnoreCase))
                         .ToArray()
                 };
             }
@@ -56,10 +59,10 @@ namespace My1kWordsEe.Models
 
         public static readonly EeWord[] AllWords = Load1kEeWords();
 
-        private static readonly IReadOnlyDictionary<string, string> _allWordsDiacriticsFree =
+        private static readonly IReadOnlyDictionary<string, string> AllWordsDiacriticsFree =
             AllWords.ToDictionary(w => w.Value, q => RemoveDiacritics(q.Value));
 
-        static string RemoveDiacritics(string stIn)
+        private static string RemoveDiacritics(string stIn)
         {
             string stFormD = stIn.Normalize(NormalizationForm.FormD);
             StringBuilder sb = new StringBuilder();

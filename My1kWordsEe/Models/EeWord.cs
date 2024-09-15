@@ -2,6 +2,10 @@ using System.Text.Json.Serialization;
 
 namespace My1kWordsEe.Models
 {
+    /// <summary>
+    /// currently serves as view model for the 1k words page
+    /// todo: must be unified with <see cref="SampleWord"/>
+    /// </summary>
     [JsonSourceGenerationOptions(UseStringEnumConverter = true)]
     [JsonSerializable(typeof(EePartOfSpeech))]
     public record EeWord

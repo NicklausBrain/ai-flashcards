@@ -8,34 +8,35 @@ namespace My1kWordsEe.Services.Cqs
     public class GetOrAddSampleWordCommand
     {
         private readonly AzureBlobService azureBlobService;
-        private readonly OpenAiService openAiService;
+        private readonly AddSampleWordCommand addSampleWordCommand;
 
         public GetOrAddSampleWordCommand(
             AzureBlobService azureBlobService,
-            OpenAiService openAiService)
+            AddSampleWordCommand addSampleWordCommand)
         {
             this.azureBlobService = azureBlobService;
-            this.openAiService = openAiService;
+            this.addSampleWordCommand = addSampleWordCommand;
         }
 
         public async Task<Result<SampleWord>> Invoke(string eeWord)
         {
-            var existingRecord = await azureBlobService.GetWordData(eeWord);
+            (await azureBlobService.GetWordData(eeWord)).Deconstruct(
+                out bool _,
+                out bool isBlobAccessFailure,
+                out Maybe<SampleWord> savedWord,
+                out string blobAccessError);
 
-            if (existingRecord.IsSuccess)
+            if (isBlobAccessFailure)
             {
-                return existingRecord;
+                return Result.Failure<SampleWord>(blobAccessError);
             }
 
-            var sampleWord = await openAiService.GetWordMetadata(eeWord);
-
-            if (sampleWord.IsSuccess)
+            if (savedWord.HasValue)
             {
-                // generate audio
-                await azureBlobService.SaveWordData(sampleWord.Value);
+                return savedWord.Value;
             }
 
-            return sampleWord;
+            return await this.addSampleWordCommand.Invoke(eeWord);
         }
     }
 }
