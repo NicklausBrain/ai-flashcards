@@ -7,6 +7,9 @@ using CSharpFunctionalExtensions;
 
 namespace My1kWordsEe.Services
 {
+    /// <summary>
+    /// Facade for https://platform.stability.ai/docs/getting-started/stable-image
+    /// </summary>
     public class StabilityAiService
     {
         public const string ApiHost = "https://api.stability.ai";

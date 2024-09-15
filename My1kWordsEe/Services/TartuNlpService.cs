@@ -1,10 +1,21 @@
 ﻿using System.Net.Http.Headers;
+
 using CSharpFunctionalExtensions;
 
 namespace My1kWordsEe.Services
 {
+    /// <summary>
+    /// Facade for https://neurokone.ee/.
+    /// </summary>
     public class TartuNlpService
     {
+        private readonly ILogger<TartuNlpService> logger;
+
+        public TartuNlpService(ILogger<TartuNlpService> logger)
+        {
+            this.logger = logger;
+        }
+
         public async Task<Result<Stream>> GetSpeech(string text)
         {
             using HttpClient client = new HttpClient();
@@ -13,20 +24,33 @@ namespace My1kWordsEe.Services
 
             request.Headers.Add("accept", "audio/wav");
 
-            request.Content = new StringContent($"{{\n\"text\": \"{text}\",\n\"speaker\": \"mari\",\n\"speed\": 0.64\n}}");
+            request.Content = new StringContent(
+                $"{{\n\"text\": \"{text}\",\n\"speaker\": \"mari\",\n\"speed\": 0.64\n}}");
             request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
 
-            HttpResponseMessage response = await client.SendAsync(request);
+            try
+            {
+                HttpResponseMessage response = await client.SendAsync(request);
 
-            if (response.IsSuccessStatusCode)
-            {
-                var stream = await response.Content.ReadAsStreamAsync();
-                return Result.Success(stream);
+                if (response.IsSuccessStatusCode)
+                {
+                    var stream = await response.Content.ReadAsStreamAsync();
+                    return Result.Success(stream);
+                }
+                else
+                {
+                    var errorStr = await response.Content.ReadAsStringAsync();
+                    this.logger.LogError(
+                        "Tartu NLP HTTP error. Reason phrase: {reason}. Content: {content}",
+                        response.ReasonPhrase,
+                        errorStr);
+                    return Result.Failure<Stream>($"Tartu NLP HTTP error. {response.ReasonPhrase}. {errorStr}");
+                }
             }
-            else
+            catch (HttpRequestException httpException)
             {
-                var errorStr = await response.Content.ReadAsStringAsync();
-                return Result.Failure<Stream>($"{response.ReasonPhrase}: {errorStr}");
+                this.logger.LogError(httpException, "Tartu NLP HTTP exception");
+                return Result.Failure<Stream>($"Tartu NLP HTTP exception");
             }
         }
     }

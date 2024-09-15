@@ -54,6 +54,9 @@ namespace My1kWordsEe.Models
         Kaassõna
     }
 
+    /// <summary>
+    /// Standard English parts of speech
+    /// </summary>
     public enum EnPartOfSpeech
     {
         Noun,

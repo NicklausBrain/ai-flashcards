@@ -1,15 +1,33 @@
 namespace My1kWordsEe.Models
 {
-    public class SampleSentence
+    /// <summary>
+    /// Sample sentence illustrating the use of a give Estonian word
+    /// </summary>
+    public record SampleSentence
     {
-        public string EeWord { get; set; }
+        /// <summary>
+        /// Target Estonian word
+        /// </summary>
+        public string EeWord { get; init; }
 
-        public string EeSentence { get; set; }
+        /// <summary>
+        /// Illustrative sentence in Estonian
+        /// </summary>
+        public string EeSentence { get; init; }
 
-        public string EnSentence { get; set; }
+        /// <summary>
+        /// Translation of the illustrative sentence in English
+        /// </summary>
+        public string EnSentence { get; init; }
 
-        public Uri EeAudioUrl { get; set; }
+        /// <summary>
+        /// Sentence spoken in Estonian
+        /// </summary>
+        public Uri EeAudioUrl { get; init; }
 
-        public Uri ImageUrl { get; set; }
+        /// <summary>
+        /// Image associated with the sentence
+        /// </summary>
+        public Uri ImageUrl { get; init; }
     }
 }

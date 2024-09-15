@@ -41,11 +41,16 @@ namespace My1kWordsEe
             }
 
             builder.Services.AddSingleton(new StabilityAiService(stabilityAiKey));
-            builder.Services.AddSingleton((p) => new OpenAiService(p.GetRequiredService<ILogger<OpenAiService>>(), openAiKey));
-            builder.Services.AddSingleton(new AzureBlobService(azureBlobConnectionString));
-            builder.Services.AddSingleton(new TartuNlpService());
-            builder.Services.AddSingleton<EnsureWordCommand>();
-            builder.Services.AddSingleton<CreateSampleCommand>();
+            builder.Services.AddSingleton((p) => new OpenAiService(
+                p.GetRequiredService<ILogger<OpenAiService>>(), openAiKey));
+            builder.Services.AddSingleton((p) => new AzureBlobService(
+                p.GetRequiredService<ILogger<AzureBlobService>>(), azureBlobConnectionString));
+            builder.Services.AddSingleton((p) => new TartuNlpService(
+                p.GetRequiredService<ILogger<TartuNlpService>>()));
+            builder.Services.AddSingleton<GetOrAddSampleWordCommand>();
+            builder.Services.AddSingleton<AddSampleSentenceCommand>();
+            builder.Services.AddSingleton<AddSampleWordCommand>();
+            builder.Services.AddSingleton<AddAudioCommand>();
 
             // Add services to the container.
             builder.Services.AddRazorComponents()

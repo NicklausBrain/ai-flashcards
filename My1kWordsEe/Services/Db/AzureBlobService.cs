@@ -1,5 +1,6 @@
 using System.Text.Json;
 
+using Azure;
 using Azure.Storage.Blobs;
 
 using CSharpFunctionalExtensions;
@@ -8,82 +9,119 @@ using My1kWordsEe.Models;
 
 namespace My1kWordsEe.Services.Db
 {
+    /// <summary>
+    /// Facade for Azure blob storage API
+    /// </summary>
     public class AzureBlobService
     {
+        private readonly ILogger logger;
         private readonly string connectionString;
 
-        public AzureBlobService(string connectionString)
+        public AzureBlobService(
+            ILogger<AzureBlobService> logger,
+            string connectionString)
         {
+            this.logger = logger;
             this.connectionString = connectionString;
         }
 
-        public async Task<Result<SampleWord>> GetWordData(string word)
+        public async Task<Result<Maybe<SampleWord>>> GetWordData(string word)
         {
-            BlobContainerClient container = await GetWordsContainer();
-            BlobClient blob = container.GetBlobClient(JsonBlobName(word));
+            var container = await GetWordsContainer();
 
-            if (await blob.ExistsAsync())
+            if (container.IsFailure)
+            {
+                return Result.Failure<Maybe<SampleWord>>(container.Error);
+            }
+
+            BlobClient blob = container.Value.GetBlobClient(JsonBlobName(word));
+
+            if (!await blob.ExistsAsync())
+            {
+                return Maybe<SampleWord>.None;
+            }
+
+            try
             {
                 var response = await blob.DownloadContentAsync();
                 if (response != null && response.HasValue)
                 {
                     var sampleWord = JsonSerializer.Deserialize<SampleWord>(response.Value.Content);
-
-                    if (sampleWord != null)
-                    {
-                        return Result.Success(sampleWord);
-                    }
+                    return Maybe<SampleWord>.From(sampleWord);
+                }
+                else
+                {
+                    return Maybe<SampleWord>.None;
                 }
             }
-
-            return Result.Failure<SampleWord>($"Word '{word}' is not recorded");
+            catch (RequestFailedException ex)
+            {
+                this.logger.LogError(ex, "Failure to download data from blob {name}", blob.Name);
+                return Result.Failure<Maybe<SampleWord>>("Failure to download data from blob");
+            }
+            catch (Exception ex) when (ex is JsonException || ex is NotSupportedException)
+            {
+                this.logger.LogError(ex, "Failure to parse JSON from blob {name}", blob.Name);
+                return Result.Failure<Maybe<SampleWord>>("Failure to parse JSON data from blob");
+            }
         }
 
-        public async Task SaveWordData(SampleWord word)
+        public Task<Result<Uri>> SaveWordData(SampleWord word) =>
+            this.GetWordsContainer().Bind(container =>
+            this.UploadStreamAsync(
+                container.GetBlobClient(JsonBlobName(word.EeWord)),
+                new MemoryStream(JsonSerializer.SerializeToUtf8Bytes(word))));
+
+        public Task<Result<Uri>> SaveAudio(Stream audioStream, string blobName) =>
+            this.GetAudioContainer().Bind((container) =>
+            this.UploadStreamAsync(
+                container.GetBlobClient(blobName),
+                audioStream));
+
+        public Task<Result<Uri>> SaveAudio(Stream audioStream) =>
+            this.SaveAudio(audioStream, WavBlobName());
+
+        public Task<Result<Uri>> SaveImage(Stream imageStream) =>
+            this.GetImageContainer().Bind((container) =>
+            this.UploadStreamAsync(
+                container.GetBlobClient(JpgBlobName()),
+                imageStream));
+
+        private Task<Result<BlobContainerClient>> GetWordsContainer() => this.GetOrCreateContainer("words");
+
+        private Task<Result<BlobContainerClient>> GetAudioContainer() => this.GetOrCreateContainer("audio");
+
+        private Task<Result<BlobContainerClient>> GetImageContainer() => this.GetOrCreateContainer("image");
+
+        private async Task<Result<BlobContainerClient>> GetOrCreateContainer(string containerId)
         {
-            BlobContainerClient container = await GetWordsContainer();
-
-            // Get a reference to a blob
-            BlobClient blob = container.GetBlobClient(JsonBlobName(word.EeWord));
-
-            // Upload file data
-            await blob.UploadAsync(
-                new MemoryStream(JsonSerializer.SerializeToUtf8Bytes(word)),
-                overwrite: true);
+            try
+            {
+                var container = new BlobContainerClient(
+                    this.connectionString,
+                    containerId);
+                await container.CreateIfNotExistsAsync();
+                return container;
+            }
+            catch (RequestFailedException exception)
+            {
+                this.logger.LogError(exception, "Failure to get or create container {ContainerId}", containerId);
+                return Result.Failure<BlobContainerClient>("Azure storage access error");
+            }
         }
 
-        public async Task<Uri> SaveAudio(Stream audioStream, string blobName)
+        private async Task<Result<Uri>> UploadStreamAsync(BlobClient blob, Stream stream)
         {
-            BlobContainerClient container = await GetAudioContainer();
-            BlobClient blob = container.GetBlobClient(blobName);
-            await blob.UploadAsync(audioStream, overwrite: true);
-            return blob.Uri;
-        }
-
-        public Task<Uri> SaveAudio(Stream audioStream) => SaveAudio(audioStream, WavBlobName());
-
-        public async Task<Uri> SaveImage(Stream imageStream)
-        {
-            BlobContainerClient container = await GetImageContainer();
-            BlobClient blob = container.GetBlobClient(JpgBlobName());
-            await blob.UploadAsync(imageStream);
-            return blob.Uri;
-        }
-
-
-        private async Task<BlobContainerClient> GetWordsContainer() => await this.GetContainer("words");
-
-        private async Task<BlobContainerClient> GetAudioContainer() => await this.GetContainer("audio");
-
-        private async Task<BlobContainerClient> GetImageContainer() => await this.GetContainer("image");
-
-        private async Task<BlobContainerClient> GetContainer(string containerId)
-        {
-            BlobContainerClient container = new BlobContainerClient(
-                            this.connectionString,
-                            containerId);
-            await container.CreateIfNotExistsAsync();
-            return container;
+            try
+            {
+                await blob.UploadAsync(stream, overwrite: true);
+                return blob.Uri;
+            }
+            catch (RequestFailedException exception)
+            {
+                this.logger.LogError(exception, "Failure to upload data to blob {name}", blob.Name);
+                return Result.Failure<Uri>("Azure storage upload error");
+            }
         }
 
         static string JsonBlobName(string word) => word.ToLower() + ".json";
