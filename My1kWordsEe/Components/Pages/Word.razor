@@ -27,16 +27,16 @@
         await base.OnParametersSetAsync();
     }
 
-    private bool isGenerationInProgress = false;
+    private bool IsSampleGenerationInProgress = false;
 
     private async Task GenerateSample(MouseEventArgs e)
     {
-        this.isGenerationInProgress = true;
-        if (WordMetadata.HasValue && WordMetadata.Value.IsSuccess)
+        this.IsSampleGenerationInProgress = true;
+        if (IsDataLoadedOk)
         {
             this.WordMetadata = await this.CreateSampleCommand.Invoke(WordMetadata.Value.Value);
         }
-        this.isGenerationInProgress = false;
+        this.IsSampleGenerationInProgress = false;
     }
 
     private async Task SpeakWord(MouseEventArgs e)
@@ -45,6 +45,8 @@
     }
 
     private bool IsDataLoadedOk => WordMetadata.HasValue && WordMetadata.Value.IsSuccess;
+
+    private bool HasError => WordMetadata.HasValue && WordMetadata.Value.IsFailure;
 
     private static bool ValidateEeWord(string value)
     {
@@ -78,23 +80,20 @@
             }
         </h1>
 
-        @if (WordMetadata.HasValue)
+        @if (IsDataLoadedOk)
         {
-            if (WordMetadata.Value.IsSuccess)
-            {
-                <h3>[@WordMetadata.Value.Value.EnWord]</h3>
+            <h3>[@WordMetadata.Value.Value.EnWord]</h3>
 
-                @if (WordMetadata.Value.Value.EnWords.Any())
-                {
-                    <h4>[@string.Join(" / ", WordMetadata.Value.Value.EnWords)]</h4>
-                }
-
-                <h3>@WordMetadata.Value.Value.EnExplanation</h3>
-            }
-            else
+            @if (WordMetadata.Value.Value.EnWords.Any())
             {
-                <h3>@WordMetadata.Value.Error</h3>
+                <h4>[@string.Join(" / ", WordMetadata.Value.Value.EnWords)]</h4>
             }
+
+            <h3>@WordMetadata.Value.Value.EnExplanation</h3>
+        }
+        else if (HasError)
+        {
+            <h3>@WordMetadata.Value.Error</h3>
         }
         else
         {
@@ -106,7 +105,7 @@
         }
     </div>
 
-    @if (this.WordMetadata.HasValue && this.WordMetadata.Value.IsSuccess)
+    @if (IsDataLoadedOk)
     {
         <div class="row">
             @foreach (var sample in this.WordMetadata.Value.Value.Samples)
@@ -116,7 +115,7 @@
             }
 
             <div class="col-sm-6">
-                @if (this.isGenerationInProgress)
+                @if (this.IsSampleGenerationInProgress)
                 {
                     <div class="d-flex justify-content-center">
                         <div class="spinner-border" role="status">
