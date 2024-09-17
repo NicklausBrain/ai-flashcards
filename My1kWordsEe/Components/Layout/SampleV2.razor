@@ -11,10 +11,6 @@
     [Parameter]
     public SampleSentence Sample { get; set; }
 
-    protected override async Task OnInitializedAsync()
-    {
-    }
-
     private async Task PlaySample(MouseEventArgs e)
     {
         await JS.InvokeVoidAsync("playAudioSample", Sample.EeAudioUrl);
