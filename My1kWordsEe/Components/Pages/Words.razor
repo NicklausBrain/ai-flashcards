@@ -15,10 +15,7 @@
 
     private void SelectWord(MouseEventArgs e, string word)
     {
-        NavigationManager.NavigateTo($"/word/{word}", new NavigationOptions
-            {
-                ForceLoad = true
-            });
+        NavigationManager.NavigateTo($"/word/{word}");
     }
 
     private void OnSearchInput(ChangeEventArgs e)
