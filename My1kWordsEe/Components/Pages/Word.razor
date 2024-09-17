@@ -15,7 +15,7 @@
 
 @code {
     [Parameter]
-    public string EeWord { get; init; } = string.Empty;
+    public required string EeWord { get; init; }
 
     private Maybe<Result<SampleWord>> WordMetadata;
 
