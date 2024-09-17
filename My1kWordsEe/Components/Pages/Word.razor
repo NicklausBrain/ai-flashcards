@@ -6,6 +6,8 @@
 @using My1kWordsEe.Models;
 @using My1kWordsEe.Components.Layout;
 @using My1kWordsEe.Services.Cqs;
+@using System.Text.RegularExpressions;
+@using System.ComponentModel.DataAnnotations
 
 @inject IJSRuntime JS
 @inject GetOrAddSampleWordCommand EnsureWordCommand
@@ -13,13 +15,16 @@
 
 @code {
     [Parameter]
-    public string EeWord { get; set; }
+    public string EeWord { get; init; } = string.Empty;
 
-    private Result<SampleWord>? WordMetadata;
+    private Maybe<Result<SampleWord>> WordMetadata;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        WordMetadata = await this.EnsureWordCommand.Invoke(EeWord);
+        WordMetadata = ValidateEeWord(EeWord)
+            ? await this.EnsureWordCommand.Invoke(EeWord)
+            : Result.Failure<SampleWord>("Invalid word");
+        await base.OnParametersSetAsync();
     }
 
     private bool isGenerationInProgress = false;
@@ -40,6 +45,17 @@
     }
 
     private bool IsDataLoadedOk => WordMetadata.HasValue && WordMetadata.Value.IsSuccess;
+
+    private static bool ValidateEeWord(string value)
+    {
+        var reg = new Regex(@"\p{L}+", RegexOptions.Compiled);
+
+        Match m = reg.Match(value);
+
+        // We are looking for an exact match, not just a search hit. This matches what
+        // the RegularExpressionValidator control does
+        return (m.Success && m.Index == 0 && m.Length == value.Length);
+    }
 }
 
 <script>
@@ -115,7 +131,6 @@
                         Generate sample sentence
                     </button>
                 }
-
             </div>
         </div>
     }
