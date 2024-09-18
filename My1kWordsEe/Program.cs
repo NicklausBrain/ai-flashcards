@@ -10,23 +10,6 @@ namespace My1kWordsEe
         public static async Task Main(string[] args)
         {
             var app = BuildWebHost(args);
-
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
-            {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseStaticFiles();
-            app.UseAntiforgery();
-
-            app.MapRazorComponents<App>()
-                .AddInteractiveServerRenderMode();
-
             await app.RunAsync();
         }
 
@@ -35,7 +18,7 @@ namespace My1kWordsEe
             // default log: Console, Debug, EventSource
             var builder = WebApplication.CreateBuilder(args);
             builder.Configuration.AddEnvironmentVariables();
-            //builder.Configuration.AddUserSecrets();
+            builder.Configuration.AddUserSecrets<Program>();
 
             var openAiKey =
                 builder.Configuration["Secrets:OpenAiKey"];
@@ -78,7 +61,25 @@ namespace My1kWordsEe
                 .AddRazorComponents()
                 .AddInteractiveServerComponents();
 
-            return builder.Build();
+            var app = builder.Build();
+
+            // Configure the HTTP request pipeline.
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseExceptionHandler("/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
+
+            app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
+            app.UseAntiforgery();
+
+            app.MapRazorComponents<App>()
+                .AddInteractiveServerRenderMode();
+
+            return app;
         }
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Playwright.NUnit;
 
-namespace My1kWordsEe.Tests.E2E;
+namespace My1kWordsEe.Tests.E2E.Infra;
 
 public class BlazorTest : PageTest
 {
@@ -19,6 +19,10 @@ public class BlazorTest : PageTest
         _host = Program.BuildWebHost(new string[] { });
 
         await _host.StartAsync();
+
+        var addrs = _host.Services.GetRequiredService<IServer>().Features
+            .GetRequiredFeature<IServerAddressesFeature>()
+            .Addresses;
 
         RootUri = new(_host.Services.GetRequiredService<IServer>().Features
             .GetRequiredFeature<IServerAddressesFeature>()
