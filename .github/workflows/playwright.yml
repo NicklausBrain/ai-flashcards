@@ -24,4 +24,8 @@ jobs:
       - name: Ensure browsers are installed
         run: pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps
       - name: Run your tests
+        env:
+          Secrets__OpenAiKey: ${{ secrets.Secrets__OpenAiKey }}
+          Secrets__StabilityAiKey: ${{ secrets.Secrets__StabilityAiKey }}
+          Secrets__AzureBlobConnectionString: ${{ secrets.Secrets__AzureBlobConnectionString }}
         run: dotnet test
