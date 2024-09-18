@@ -14,8 +14,7 @@ namespace My1kWordsEe
             builder.Configuration.AddEnvironmentVariables();
 
             var openAiKey =
-                builder.Configuration["Secrets:OpenAiKey"] ??
-                Environment.GetEnvironmentVariable("Secrets_OpenAiKey");
+                builder.Configuration["Secrets:OpenAiKey"];
 
             if (string.IsNullOrWhiteSpace(openAiKey))
             {
@@ -23,8 +22,7 @@ namespace My1kWordsEe
             }
 
             var stabilityAiKey =
-                builder.Configuration["Secrets:StabilityAiKey"] ??
-                Environment.GetEnvironmentVariable("Secrets_StabilityAiKey");
+                builder.Configuration["Secrets:StabilityAiKey"];
 
             if (string.IsNullOrWhiteSpace(stabilityAiKey))
             {
@@ -32,8 +30,7 @@ namespace My1kWordsEe
             }
 
             var azureBlobConnectionString =
-                builder.Configuration["Secrets:AzureBlobConnectionString"] ??
-                Environment.GetEnvironmentVariable("Secrets_AzureBlobConnectionString");
+                builder.Configuration["Secrets:AzureBlobConnectionString"];
 
             if (string.IsNullOrWhiteSpace(azureBlobConnectionString))
             {
