@@ -1,0 +1,31 @@
+name: Playwright Tests - my-1k-ee
+
+defaults:
+  run:
+    working-directory: ./My1kWordsEe.Tests.E2E
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Build & Install
+        run: dotnet build
+      - name: Ensure browsers are installed
+        run: pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps
+      - name: Run your tests
+        env:
+          Secrets__OpenAiKey: ${{ secrets.Secrets__OpenAiKey }}
+          Secrets__StabilityAiKey: ${{ secrets.Secrets__StabilityAiKey }}
+          Secrets__AzureBlobConnectionString: ${{ secrets.Secrets__AzureBlobConnectionString }}
+        run: dotnet test

@@ -9,7 +9,7 @@
 
 @code {
     [Parameter]
-    public SampleSentence Sample { get; set; }
+    public required SampleSentence Sample { get; init; }
 
     private async Task PlaySample(MouseEventArgs e)
     {

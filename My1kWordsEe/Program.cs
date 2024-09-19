@@ -7,11 +7,18 @@ namespace My1kWordsEe
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
+        {
+            var app = BuildWebHost(args);
+            await app.RunAsync();
+        }
+
+        public static WebApplication BuildWebHost(string[] args)
         {
             // default log: Console, Debug, EventSource
             var builder = WebApplication.CreateBuilder(args);
             builder.Configuration.AddEnvironmentVariables();
+            builder.Configuration.AddUserSecrets<Program>();
 
             var openAiKey =
                 builder.Configuration["Secrets:OpenAiKey"];
@@ -49,8 +56,9 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<AddSampleWordCommand>();
             builder.Services.AddSingleton<AddAudioCommand>();
 
-            // Add services to the container.
-            builder.Services.AddRazorComponents()
+            // Blazor-specific services
+            builder.Services
+                .AddRazorComponents()
                 .AddInteractiveServerComponents();
 
             var app = builder.Build();
@@ -71,7 +79,7 @@ namespace My1kWordsEe
             app.MapRazorComponents<App>()
                 .AddInteractiveServerRenderMode();
 
-            app.Run();
+            return app;
         }
     }
 }
