@@ -20,7 +20,7 @@ public class AppRenderingTests : BlazorTest
     [TestCase("kutus", "[fuel]")]
     public async Task WordPage(string eeWord, string enWord)
     {
-        await Page.GotoAsync(RootUri.AbsoluteUri + $"word/{eeWord}", new() { WaitUntil = WaitUntilState.NetworkIdle });
+        await Page.GotoAsync(RootUri.AbsoluteUri + $"wordss/{eeWord}", new() { WaitUntil = WaitUntilState.NetworkIdle });
 
         await Expect(Page.GetByText(enWord)).ToBeVisibleAsync();
     }
