@@ -12,19 +12,22 @@ namespace My1kWordsEe.Services
 {
     public class OpenAiService
     {
+        public const string ApiSecretKey = "Secrets:OpenAiKey";
+
+        private readonly IConfiguration config;
         private readonly ILogger logger;
 
-        public OpenAiService(ILogger<OpenAiService> logger, string apiKey)
+        public OpenAiService(
+            IConfiguration config,
+            ILogger<OpenAiService> logger)
         {
+            this.config = config;
             this.logger = logger;
-            this.ApiKey = apiKey;
         }
-
-        private string ApiKey { get; }
 
         public async Task<Result<string>> CompleteAsync(string instructions, string input)
         {
-            ChatClient client = new(model: "gpt-4o-mini", ApiKey);
+            ChatClient client = new(model: "gpt-4o-mini", this.config[ApiSecretKey]);
 
             try
             {
@@ -41,7 +44,7 @@ namespace My1kWordsEe.Services
 
         public async Task<Result<string>> GetDallEPrompt(string sentence)
         {
-            ChatClient client = new(model: "gpt-4o-mini", ApiKey);
+            ChatClient client = new(model: "gpt-4o-mini", config[ApiSecretKey]);
 
             try
             {
@@ -63,7 +66,7 @@ namespace My1kWordsEe.Services
 
         public async Task<Result<Uri>> GetSampleImageUri(string sentence)
         {
-            ImageClient client = new(model: "dall-e-3", ApiKey);
+            ImageClient client = new(model: "dall-e-3", this.config[ApiSecretKey]);
             var prompt = await this.GetDallEPrompt(sentence);
 
             if (prompt.IsFailure)
@@ -91,7 +94,7 @@ namespace My1kWordsEe.Services
 
         public async Task<Result<Sentence>> GetSampleSentence(string eeWord)
         {
-            ChatClient client = new(model: "gpt-4o-mini", ApiKey);
+            ChatClient client = new(model: "gpt-4o-mini", this.config[ApiSecretKey]);
 
             ChatCompletion chatCompletion = await client.CompleteChatAsync(
                 [
@@ -126,7 +129,7 @@ namespace My1kWordsEe.Services
 
         public async Task<Result<SampleWord>> GetWordMetadata(string word)
         {
-            ChatClient client = new(model: "gpt-4o-mini", ApiKey);
+            ChatClient client = new(model: "gpt-4o-mini", this.config[ApiSecretKey]);
 
             ChatCompletion chatCompletion = await client.CompleteChatAsync(
                 [

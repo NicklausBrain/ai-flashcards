@@ -9,18 +9,22 @@ namespace My1kWordsEe.Services
     /// </summary>
     public class TartuNlpService
     {
+        private readonly IHttpClientFactory httpClientFactory;
         private readonly ILogger<TartuNlpService> logger;
 
-        public TartuNlpService(ILogger<TartuNlpService> logger)
+        public TartuNlpService(
+            IHttpClientFactory httpClientFactory,
+            ILogger<TartuNlpService> logger)
         {
+            this.httpClientFactory = httpClientFactory;
             this.logger = logger;
         }
 
         public async Task<Result<Stream>> GetSpeech(string text)
         {
-            using HttpClient client = new HttpClient();
+            using HttpClient client = this.httpClientFactory.CreateClient(nameof(TartuNlpService));
 
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "https://api.tartunlp.ai/text-to-speech/v2");
+            HttpRequestMessage request = new(HttpMethod.Post, "https://api.tartunlp.ai/text-to-speech/v2");
 
             request.Headers.Add("accept", "audio/wav");
 

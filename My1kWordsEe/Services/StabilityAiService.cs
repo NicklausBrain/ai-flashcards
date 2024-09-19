@@ -13,24 +13,34 @@ namespace My1kWordsEe.Services
     public class StabilityAiService
     {
         public const string ApiHost = "https://api.stability.ai";
-        private readonly string engineId = "stable-diffusion-v1-6";
-        private readonly string apiKey;
+        public const string ApiSecretKey = "Secrets:StabilityAiKey";
 
-        public StabilityAiService(string apiKey)
+        private const string EngineId = "stable-diffusion-v1-6";
+
+        private readonly IConfiguration config;
+        private readonly IHttpClientFactory httpClientFactory;
+        private readonly ILogger<StabilityAiService> logger;
+
+        public StabilityAiService(
+            IConfiguration config,
+            IHttpClientFactory httpClientFactory,
+            ILogger<StabilityAiService> logger)
         {
-            this.apiKey = apiKey;
+            this.config = config;
+            this.httpClientFactory = httpClientFactory;
+            this.logger = logger;
         }
 
         public async Task<Result<MemoryStream>> GenerateImage(string prompt)
         {
-            if (string.IsNullOrEmpty(apiKey))
+            if (string.IsNullOrEmpty(this.config[ApiSecretKey]))
             {
-                return Result.Failure<MemoryStream>("API key is missing");
+                return Result.Failure<MemoryStream>("Stability AI API key is missing");
             };
 
-            using HttpClient client = new HttpClient();
+            using HttpClient client = httpClientFactory.CreateClient(nameof(StabilityAiService));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", this.config[ApiSecretKey]);
 
             var requestBody = new
             {
@@ -46,7 +56,7 @@ namespace My1kWordsEe.Services
             };
 
             var response = await client.PostAsync(
-                $"{ApiHost}/v1/generation/{engineId}/text-to-image",
+                $"{ApiHost}/v1/generation/{EngineId}/text-to-image",
                 new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json")
             );
 
@@ -60,7 +70,7 @@ namespace My1kWordsEe.Services
 
             if (generationResponse?.Artifacts != null)
             {
-                for (int index = 0; index < generationResponse.Artifacts.Count; index++)
+                for (int index = 0; index < generationResponse.Artifacts.Count;)
                 {
                     var image = generationResponse.Artifacts[index];
 
