@@ -20,35 +20,13 @@ namespace My1kWordsEe
             builder.Configuration.AddEnvironmentVariables();
             builder.Configuration.AddUserSecrets<Program>();
 
-            var openAiKey =
-                builder.Configuration["Secrets:OpenAiKey"];
+            var secrets = RequireSecrets(builder);
 
-            if (string.IsNullOrWhiteSpace(openAiKey))
-            {
-                throw new ApplicationException("Secrets:OpenAiKey is missing");
-            }
-
-            var stabilityAiKey =
-                builder.Configuration["Secrets:StabilityAiKey"];
-
-            if (string.IsNullOrWhiteSpace(stabilityAiKey))
-            {
-                throw new ApplicationException("Secrets:StabilityAiKey is missing");
-            }
-
-            var azureBlobConnectionString =
-                builder.Configuration["Secrets:AzureBlobConnectionString"];
-
-            if (string.IsNullOrWhiteSpace(azureBlobConnectionString))
-            {
-                throw new ApplicationException("Secrets:AzureBlobConnectionString is missing");
-            }
-
-            builder.Services.AddSingleton(new StabilityAiService(stabilityAiKey));
+            builder.Services.AddSingleton(new StabilityAiService(secrets.stabilityAiKey));
             builder.Services.AddSingleton((p) => new OpenAiService(
-                p.GetRequiredService<ILogger<OpenAiService>>(), openAiKey));
+                p.GetRequiredService<ILogger<OpenAiService>>(), secrets.openAiKey));
             builder.Services.AddSingleton((p) => new AzureBlobService(
-                p.GetRequiredService<ILogger<AzureBlobService>>(), azureBlobConnectionString));
+                p.GetRequiredService<ILogger<AzureBlobService>>(), secrets.azureBlobConnectionString));
             builder.Services.AddSingleton((p) => new TartuNlpService(
                 p.GetRequiredService<ILogger<TartuNlpService>>()));
             builder.Services.AddSingleton<GetOrAddSampleWordCommand>();
@@ -80,6 +58,39 @@ namespace My1kWordsEe
                 .AddInteractiveServerRenderMode();
 
             return app;
+        }
+
+        private static (
+           string openAiKey,
+           string stabilityAiKey,
+           string azureBlobConnectionString) RequireSecrets(
+           WebApplicationBuilder builder)
+        {
+            var openAiKey =
+               builder.Configuration["Secrets:OpenAiKey"];
+
+            if (string.IsNullOrWhiteSpace(openAiKey))
+            {
+                throw new ApplicationException("Secrets:OpenAiKey is missing");
+            }
+
+            var stabilityAiKey =
+                builder.Configuration["Secrets:StabilityAiKey"];
+
+            if (string.IsNullOrWhiteSpace(stabilityAiKey))
+            {
+                throw new ApplicationException("Secrets:StabilityAiKey is missing");
+            }
+
+            var azureBlobConnectionString =
+                builder.Configuration["Secrets:AzureBlobConnectionString"];
+
+            if (string.IsNullOrWhiteSpace(azureBlobConnectionString))
+            {
+                throw new ApplicationException("Secrets:AzureBlobConnectionString is missing");
+            }
+
+            return (openAiKey, stabilityAiKey, azureBlobConnectionString);
         }
     }
 }
