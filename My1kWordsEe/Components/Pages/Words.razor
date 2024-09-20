@@ -20,7 +20,7 @@
 
     private void OnSearchInput(ChangeEventArgs e)
     {
-        var searchTerm = e.Value?.ToString() ?? string.Empty;
+        var searchTerm = e.Value?.ToString()?.Trim() ?? string.Empty;
         Ee1KWords = Ee1KWords.WithSearch(searchTerm);
     }
 }
