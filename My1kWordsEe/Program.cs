@@ -48,11 +48,18 @@ namespace My1kWordsEe
             // Blazor-specific services
             builder.Services
                 .AddRazorComponents()
-                .AddInteractiveServerComponents()
+                .AddInteractiveServerComponents(options =>
+                {
+                    options.DisconnectedCircuitMaxRetained = 10;
+                    options.DisconnectedCircuitRetentionPeriod = TimeSpan.FromMinutes(1);
+                    options.JSInteropDefaultCallTimeout = TimeSpan.FromMinutes(1);
+                    options.MaxBufferedUnacknowledgedRenderBatches = 10;
+                })
                 .AddHubOptions(options =>
                 {
-                    options.ClientTimeoutInterval = TimeSpan.FromSeconds(7);
-                    options.HandshakeTimeout = TimeSpan.FromSeconds(14);
+                    options.ClientTimeoutInterval = TimeSpan.FromSeconds(15);
+                    options.HandshakeTimeout = TimeSpan.FromSeconds(10);
+                    options.MaximumReceiveMessageSize = 16 * 1024;
                 });
 
             var app = builder.Build();
@@ -67,7 +74,6 @@ namespace My1kWordsEe
             }
 
             app.UseHttpsRedirection();
-
             app.UseStaticFiles();
             app.UseAntiforgery();
 
