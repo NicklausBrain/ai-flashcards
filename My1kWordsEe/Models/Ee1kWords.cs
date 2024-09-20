@@ -18,7 +18,7 @@ namespace My1kWordsEe.Models
 
         public Ee1kWords WithSearch(string search)
         {
-            if (string.IsNullOrWhiteSpace(search))
+            if (search.ValidateWord())
             {
                 return new Ee1kWords
                 {

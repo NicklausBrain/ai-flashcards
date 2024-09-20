@@ -21,7 +21,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        WordMetadata = ValidateEeWord(EeWord)
+        WordMetadata = EeWord.ValidateWord()
             ? await this.EnsureWordCommand.Invoke(EeWord)
             : Result.Failure<SampleWord>("Invalid word");
         await base.OnParametersSetAsync();
@@ -51,17 +51,6 @@
     private SampleWord Value => WordMetadata.Value.Value;
 
     private string Error => WordMetadata.Value.Error;
-
-    private static bool ValidateEeWord(string value)
-    {
-        var reg = new Regex(@"\p{L}+", RegexOptions.Compiled);
-
-        Match m = reg.Match(value);
-
-        // We are looking for an exact match, not just a search hit. This matches what
-        // the RegularExpressionValidator control does
-        return (m.Success && m.Index == 0 && m.Length == value.Length);
-    }
 }
 
 <script>
