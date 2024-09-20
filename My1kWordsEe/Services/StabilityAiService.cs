@@ -55,27 +55,35 @@ namespace My1kWordsEe.Services
                 samples = 1
             };
 
-            var response = await client.PostAsync(
-                $"{ApiHost}/v1/generation/{EngineId}/text-to-image",
-                new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json")
-            );
-
-            if (!response.IsSuccessStatusCode)
+            try
             {
-                return Result.Failure<MemoryStream>($"Non-200 response: {await response.Content.ReadAsStringAsync()}");
-            }
+                var response = await client.PostAsync(
+                    $"{ApiHost}/v1/generation/{EngineId}/text-to-image",
+                    new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json")
+                );
 
-            var responseContent = await response.Content.ReadAsStringAsync();
-            var generationResponse = JsonSerializer.Deserialize<GenerationResponse>(responseContent);
-
-            if (generationResponse?.Artifacts != null)
-            {
-                for (int index = 0; index < generationResponse.Artifacts.Count;)
+                if (!response.IsSuccessStatusCode)
                 {
-                    var image = generationResponse.Artifacts[index];
-
-                    return Result.Success(new MemoryStream(Convert.FromBase64String(image.Base64)));
+                    return Result.Failure<MemoryStream>($"Non-200 response: {await response.Content.ReadAsStringAsync()}");
                 }
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+                var generationResponse = JsonSerializer.Deserialize<GenerationResponse>(responseContent);
+
+                if (generationResponse?.Artifacts != null)
+                {
+                    for (int index = 0; index < generationResponse.Artifacts.Count;)
+                    {
+                        var image = generationResponse.Artifacts[index];
+
+                        return Result.Success(new MemoryStream(Convert.FromBase64String(image.Base64)));
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError(exception, "Error calling Stability AI API");
+                return Result.Failure<MemoryStream>(exception.Message);
             }
 
             return Result.Failure<MemoryStream>("No artifacts found in response");

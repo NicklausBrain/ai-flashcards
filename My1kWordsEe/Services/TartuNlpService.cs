@@ -51,10 +51,10 @@ namespace My1kWordsEe.Services
                     return Result.Failure<Stream>($"Tartu NLP HTTP error. {response.ReasonPhrase}. {errorStr}");
                 }
             }
-            catch (HttpRequestException httpException)
+            catch (Exception httpException)
             {
                 this.logger.LogError(httpException, "Tartu NLP HTTP exception");
-                return Result.Failure<Stream>($"Tartu NLP HTTP exception");
+                return Result.Failure<Stream>(httpException.Message);
             }
         }
     }

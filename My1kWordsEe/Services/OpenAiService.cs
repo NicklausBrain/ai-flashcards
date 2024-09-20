@@ -187,24 +187,24 @@ namespace My1kWordsEe.Services
     public class Sentence
     {
         [JsonPropertyName("ee_sentence")]
-        public string Ee { get; set; }
+        public required string Ee { get; set; }
 
         [JsonPropertyName("en_sentence")]
-        public string En { get; set; }
+        public required string En { get; set; }
     }
 
     public class WordMetadata
     {
         [JsonPropertyName("ee_word")]
-        public string EeWord { get; set; }
+        public required string EeWord { get; set; }
 
         [JsonPropertyName("en_word")]
-        public string EnWord { get; set; }
+        public required string EnWord { get; set; }
 
         [JsonPropertyName("en_explanation")]
-        public string EnExplanation { get; set; }
+        public required string EnExplanation { get; set; }
 
         [JsonPropertyName("en_words")]
-        public string[] EnWords { get; set; }
+        public required string[] EnWords { get; set; } = Array.Empty<string>();
     }
 }

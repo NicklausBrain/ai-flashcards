@@ -25,14 +25,14 @@ namespace My1kWordsEe
             builder.Services.AddHttpClient(nameof(StabilityAiService))
                 .AddStandardResilienceHandler(options =>
                 {
-                    options.RateLimiter.DefaultRateLimiterOptions.PermitLimit = 1;
+                    options.RateLimiter.DefaultRateLimiterOptions.PermitLimit = 100;
                     options.RateLimiter.DefaultRateLimiterOptions.QueueLimit = 0;
                 });
 
             builder.Services.AddHttpClient(nameof(TartuNlpService))
                 .AddStandardResilienceHandler(options =>
                 {
-                    options.RateLimiter.DefaultRateLimiterOptions.PermitLimit = 1;
+                    options.RateLimiter.DefaultRateLimiterOptions.PermitLimit = 100;
                     options.RateLimiter.DefaultRateLimiterOptions.QueueLimit = 0;
                 });
 
