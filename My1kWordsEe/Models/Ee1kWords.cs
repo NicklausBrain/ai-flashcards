@@ -11,51 +11,41 @@ namespace My1kWordsEe.Models
     {
         public Ee1kWords()
         {
-            this.SelectedWord = null;
             this.Search = null;
             this.SelectedWords = AllWords;
         }
 
+        /// <summary>
+        /// Modifies SelectedWords to contain only words that contain the search string.
+        /// </summary>
         public Ee1kWords WithSearch(string search)
         {
-            if (string.IsNullOrWhiteSpace(search))
+            if (search.ValidateWord())
             {
-                return new Ee1kWords
-                {
-                    SelectedWord = this.SelectedWord,
-                    Search = search,
-                    SelectedWords = AllWords
-                };
+                Search = search;
+                SelectedWords = AllWords.Where(w =>
+                    AllWordsDiacriticsFree[w.Value].Contains(search, StringComparison.InvariantCultureIgnoreCase));
             }
             else
             {
-                return new Ee1kWords
-                {
-                    SelectedWord = this.SelectedWord,
-                    Search = search,
-                    SelectedWords = AllWords
-                        .Where(w => w.Value.Contains(search, StringComparison.InvariantCultureIgnoreCase)
-                            || AllWordsDiacriticsFree[w.Value].Contains(search, StringComparison.InvariantCultureIgnoreCase))
-                        .ToArray()
-                };
+                Search = search;
+                SelectedWords = AllWords;
             }
+            return this;
         }
 
         public Ee1kWords WithSelectedWord(string selectedWord)
         {
             return new Ee1kWords
             {
-                SelectedWord = selectedWord,
                 Search = this.Search,
                 SelectedWords = this.SelectedWords
             };
         }
 
-        public EeWord[] SelectedWords { get; private set; }
+        public IEnumerable<EeWord> SelectedWords { get; private set; }
 
         public string? Search { get; private set; }
-
-        public string? SelectedWord { get; private set; }
 
         public static readonly EeWord[] AllWords = Load1kEeWords();
 

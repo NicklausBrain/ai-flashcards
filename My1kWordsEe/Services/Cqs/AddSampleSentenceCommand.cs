@@ -7,6 +7,8 @@ namespace My1kWordsEe.Services.Cqs
 {
     public class AddSampleSentenceCommand
     {
+        public const int MaxSamples = 6;
+
         private readonly AzureBlobService azureBlobService;
         private readonly OpenAiService openAiService;
         private readonly AddAudioCommand addAudioCommand;
@@ -26,6 +28,11 @@ namespace My1kWordsEe.Services.Cqs
 
         public async Task<Result<SampleWord>> Invoke(SampleWord word)
         {
+            if (word.Samples.Length >= MaxSamples)
+            {
+                return Result.Failure<SampleWord>($"Too many samples. {MaxSamples} is a maximum");
+            }
+
             var sentence = await this.openAiService.GetSampleSentence(word.EeWord);
             if (sentence.IsFailure)
             {

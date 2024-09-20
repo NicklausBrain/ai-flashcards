@@ -14,15 +14,17 @@ namespace My1kWordsEe.Services.Db
     /// </summary>
     public class AzureBlobService
     {
+        public const string ApiSecretKey = "Secrets:AzureBlobConnectionString";
+
+        private readonly IConfiguration config;
         private readonly ILogger logger;
-        private readonly string connectionString;
 
         public AzureBlobService(
-            ILogger<AzureBlobService> logger,
-            string connectionString)
+            IConfiguration config,
+            ILogger<AzureBlobService> logger)
         {
+            this.config = config;
             this.logger = logger;
-            this.connectionString = connectionString;
         }
 
         public async Task<Result<Maybe<SampleWord>>> GetWordData(string word)
@@ -98,7 +100,7 @@ namespace My1kWordsEe.Services.Db
             try
             {
                 var container = new BlobContainerClient(
-                    this.connectionString,
+                    this.config[ApiSecretKey],
                     containerId);
                 await container.CreateIfNotExistsAsync();
                 return container;

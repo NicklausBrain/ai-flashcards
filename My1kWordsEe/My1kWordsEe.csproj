@@ -14,6 +14,11 @@
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" Version="12.21.2" />
     <PackageReference Include="CSharpFunctionalExtensions" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="8.9.1" />
     <PackageReference Include="OpenAI" Version="2.0.0-beta.1" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <ServerGarbageCollection>false</ServerGarbageCollection>
+  </PropertyGroup>
 </Project>
