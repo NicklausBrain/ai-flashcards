@@ -40,7 +40,7 @@ namespace My1kWordsEe.Models
         /// <summary>
         /// Sample pronunciation of the word
         /// </summary>
-        public required Uri EeAudioUrl { get; init; }
+        public Uri? EeAudioUrl { get; init; }
 
         /// <summary>
         /// Word usage examples
