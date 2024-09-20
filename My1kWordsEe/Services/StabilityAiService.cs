@@ -92,16 +92,16 @@ namespace My1kWordsEe.Services
         private class GenerationResponse
         {
             [JsonPropertyName("artifacts")]
-            public List<Artifact> Artifacts { get; set; }
+            public required List<Artifact> Artifacts { get; set; } = new List<Artifact>();
         }
 
         private class Artifact
         {
             [JsonPropertyName("base64")]
-            public string Base64 { get; set; }
+            public required string Base64 { get; set; }
 
             [JsonPropertyName("finishReason")]
-            public string FinishReason { get; set; }
+            public required string FinishReason { get; set; }
         }
     }
 }

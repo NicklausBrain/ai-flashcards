@@ -21,7 +21,7 @@ namespace My1kWordsEe.Models
         /// <summary>
         /// Default translation to English
         /// </summary>
-        public string EnWord { get; init; }
+        public required string EnWord { get; init; }
 
         /// <summary>
         /// Alternative translations to English
@@ -35,12 +35,12 @@ namespace My1kWordsEe.Models
         /// <summary>
         /// Explaining the word in English
         /// </summary>
-        public string EnExplanation { get; init; }
+        public required string EnExplanation { get; init; }
 
         /// <summary>
         /// Sample pronunciation of the word
         /// </summary>
-        public Uri EeAudioUrl { get; init; }
+        public required Uri EeAudioUrl { get; init; }
 
         /// <summary>
         /// Word usage examples

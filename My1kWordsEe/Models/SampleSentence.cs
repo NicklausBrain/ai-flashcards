@@ -8,26 +8,26 @@ namespace My1kWordsEe.Models
         /// <summary>
         /// Target Estonian word
         /// </summary>
-        public string EeWord { get; init; }
+        public required string EeWord { get; init; }
 
         /// <summary>
         /// Illustrative sentence in Estonian
         /// </summary>
-        public string EeSentence { get; init; }
+        public required string EeSentence { get; init; }
 
         /// <summary>
         /// Translation of the illustrative sentence in English
         /// </summary>
-        public string EnSentence { get; init; }
+        public required string EnSentence { get; init; }
 
         /// <summary>
         /// Sentence spoken in Estonian
         /// </summary>
-        public Uri EeAudioUrl { get; init; }
+        public required Uri EeAudioUrl { get; init; }
 
         /// <summary>
         /// Image associated with the sentence
         /// </summary>
-        public Uri ImageUrl { get; init; }
+        public required Uri ImageUrl { get; init; }
     }
 }

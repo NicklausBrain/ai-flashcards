@@ -44,7 +44,7 @@ namespace My1kWordsEe.Services
 
         public async Task<Result<string>> GetDallEPrompt(string sentence)
         {
-            ChatClient client = new(model: "gpt-4o-mini", config[ApiSecretKey]);
+            ChatClient client = new(model: "gpt-4o-mini", this.config[ApiSecretKey]);
 
             try
             {
