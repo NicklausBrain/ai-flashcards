@@ -15,6 +15,9 @@
         .ToDictionary(p => p.w, p => p.i + 1);
 
     private Ee1kWords Ee1KWords = new Ee1kWords();
+    private string? SearchTerm;
+    private bool IsCheckInProgress = false;
+    private Maybe<Result<SampleWord>> CheckWordResult;
 
     private void SelectWord(MouseEventArgs e, string word)
     {
@@ -23,32 +26,28 @@
 
     private void OnSearchInput(ChangeEventArgs e)
     {
-        checkWordResult = default;
-        var searchTerm = e.Value?.ToString()?.Trim() ?? string.Empty;
-        this.Ee1KWords = Ee1KWords.WithSearch(searchTerm);
+        this.CheckWordResult = default;
+        this.SearchTerm = e.Value?.ToString()?.Trim() ?? string.Empty;
+        this.Ee1KWords = Ee1KWords.WithSearch(this.SearchTerm);
     }
-
-    private string? SearchTerm;
-    private bool isCheckInProgress = false;
-    private Maybe<Result<SampleWord>> checkWordResult;
 
     private async Task CheckWord(MouseEventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(SearchTerm))
+        if (string.IsNullOrWhiteSpace(this.SearchTerm))
         {
             return;
         }
 
-        this.isCheckInProgress = true;
+        this.IsCheckInProgress = true;
 
-        this.checkWordResult = await GetOrAddSampleWordCommand.Invoke(SearchTerm);
+        this.CheckWordResult = await GetOrAddSampleWordCommand.Invoke(this.SearchTerm);
 
-        if (this.checkWordResult.Value.IsSuccess)
+        if (this.CheckWordResult.Value.IsSuccess)
         {
-            this.NavigationManager.NavigateTo($"/word/{SearchTerm}");
+            this.NavigationManager.NavigateTo($"/word/{this.SearchTerm}");
         }
 
-        this.isCheckInProgress = false;
+        this.IsCheckInProgress = false;
     }
 }
 
@@ -91,14 +90,14 @@
                     <th scope="row">#</th>
                     <td>
                         <div class="d-grid gap-2">
-                            @if (checkWordResult.HasValue && checkWordResult.Value.IsFailure)
+                            @if (CheckWordResult.HasValue && CheckWordResult.Value.IsFailure)
                             {
-                                @checkWordResult.Value.Error
+                                @CheckWordResult.Value.Error
                             }
                             else
                             {
                                 <button @onclick="CheckWord" type="button" class="btn btn-primary btn-block btn-sm">
-                                    @if (isCheckInProgress)
+                                    @if (IsCheckInProgress)
                                     {
                                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
                                     }
