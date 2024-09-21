@@ -27,8 +27,8 @@
     private void OnSearchInput(ChangeEventArgs e)
     {
         this.CheckWordResult = default;
-        this.SearchTerm = e.Value?.ToString()?.Trim() ?? string.Empty;
-        this.Ee1KWords = Ee1KWords.WithSearch(this.SearchTerm);
+        var searchTerm = e.Value?.ToString()?.Trim() ?? string.Empty;
+        this.Ee1KWords = Ee1KWords.WithSearch(searchTerm);
     }
 
     private async Task CheckWord(MouseEventArgs e)
