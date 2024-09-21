@@ -1,27 +1,53 @@
 ﻿@page "/"
 @rendermode InteractiveServer
 
-@using My1kWordsEe.Services;
+@using CSharpFunctionalExtensions
 @using My1kWordsEe.Models;
 @using My1kWordsEe.Components.Layout;
+@using My1kWordsEe.Services.Cqs
 
 @inject NavigationManager NavigationManager
-@inject OpenAiService OpenAiService
+@inject GetOrAddSampleWordCommand GetOrAddSampleWordCommand;
 
 @code {
-    public Ee1kWords Ee1KWords { get; private set; } = new Ee1kWords();
+    private static readonly Dictionary<EeWord, int> WordIndex = Ee1kWords.AllWords
+        .Select((w, i) => (w, i))
+        .ToDictionary(p => p.w, p => p.i + 1);
 
-    public static readonly Dictionary<EeWord, int> WordIndex = Ee1kWords.AllWords.Select((w, i) => (w,i)).ToDictionary(p => p.w, p=>p.i+1);
+    private Ee1kWords Ee1KWords = new Ee1kWords();
+    private string? SearchTerm;
+    private bool IsCheckInProgress = false;
+    private Maybe<Result<SampleWord>> CheckWordResult;
 
     private void SelectWord(MouseEventArgs e, string word)
     {
-        NavigationManager.NavigateTo($"/word/{word}");
+        this.NavigationManager.NavigateTo($"/word/{word}");
     }
 
     private void OnSearchInput(ChangeEventArgs e)
     {
-        var searchTerm = e.Value?.ToString()?.Trim() ?? string.Empty;
-        Ee1KWords = Ee1KWords.WithSearch(searchTerm);
+        this.CheckWordResult = default;
+        this.SearchTerm = e.Value?.ToString()?.Trim() ?? string.Empty;
+        this.Ee1KWords = Ee1KWords.WithSearch(this.SearchTerm);
+    }
+
+    private async Task CheckWord(MouseEventArgs e)
+    {
+        if (string.IsNullOrWhiteSpace(this.SearchTerm))
+        {
+            return;
+        }
+
+        this.IsCheckInProgress = true;
+
+        this.CheckWordResult = await GetOrAddSampleWordCommand.Invoke(this.SearchTerm);
+
+        if (this.CheckWordResult.Value.IsSuccess)
+        {
+            this.NavigationManager.NavigateTo($"/word/{this.SearchTerm}");
+        }
+
+        this.IsCheckInProgress = false;
     }
 }
 
@@ -33,8 +59,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroup-sizing-default">Search</span>
             </div>
-            <input type="text" class="form-control " aria-label="Search" aria-describedby="inputGroup-sizing-default"
-                @oninput="OnSearchInput" />
+            <InputText @bind-Value="SearchTerm" @oninput="OnSearchInput" class="form-control" aria-label="Search" aria-describedby="inputGroup-sizing-default" />
         </div>
     </div>
     <div class="row">
@@ -60,6 +85,31 @@
                         </tr>
                     }
                 }
+
+                <tr>
+                    <th scope="row">#</th>
+                    <td>
+                        <div class="d-grid gap-2">
+                            @if (CheckWordResult.HasValue && CheckWordResult.Value.IsFailure)
+                            {
+                                @CheckWordResult.Value.Error
+                            }
+                            else
+                            {
+                                <button @onclick="CheckWord" type="button" class="btn btn-primary btn-block btn-sm">
+                                    @if (IsCheckInProgress)
+                                    {
+                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
+                                    }
+                                    else
+                                    {
+                                        <span>Check the word</span>
+                                    }
+                                </button>
+                            }
+                        </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

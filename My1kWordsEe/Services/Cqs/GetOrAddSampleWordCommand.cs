@@ -20,6 +20,11 @@ namespace My1kWordsEe.Services.Cqs
 
         public async Task<Result<SampleWord>> Invoke(string eeWord)
         {
+            if (!eeWord.ValidateWord())
+            {
+                return Result.Failure<SampleWord>("Not an Estonian word");
+            }
+
             (await azureBlobService.GetWordData(eeWord)).Deconstruct(
                 out bool _,
                 out bool isBlobAccessFailure,
