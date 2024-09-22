@@ -7,11 +7,11 @@ namespace My1kWordsEe.Services.Cqs
     public class AddAudioCommand
     {
         private readonly TartuNlpClient tartuNlpService;
-        private readonly AzureStorageService azureBlobService;
+        private readonly AzureStorageClient azureBlobService;
 
         public AddAudioCommand(
             TartuNlpClient tartuNlpService,
-            AzureStorageService azureBlobService)
+            AzureStorageClient azureBlobService)
         {
             this.tartuNlpService = tartuNlpService;
             this.azureBlobService = azureBlobService;
