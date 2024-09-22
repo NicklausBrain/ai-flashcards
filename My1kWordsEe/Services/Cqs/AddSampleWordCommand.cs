@@ -7,13 +7,13 @@ namespace My1kWordsEe.Services.Cqs
 {
     public class AddSampleWordCommand
     {
-        private readonly OpenAiService openAiService;
-        private readonly AzureBlobService azureBlobService;
+        private readonly OpenAiClient openAiService;
+        private readonly AzureStorageService azureBlobService;
         private readonly AddAudioCommand addAudioCommand;
 
         public AddSampleWordCommand(
-            OpenAiService openAiService,
-            AzureBlobService azureBlobService,
+            OpenAiClient openAiService,
+            AzureStorageService azureBlobService,
             AddAudioCommand createAudioCommand)
         {
             this.azureBlobService = azureBlobService;

@@ -10,16 +10,16 @@ using OpenAI.Images;
 
 namespace My1kWordsEe.Services
 {
-    public class OpenAiService
+    public class OpenAiClient
     {
         public const string ApiSecretKey = "Secrets:OpenAiKey";
 
         private readonly IConfiguration config;
         private readonly ILogger logger;
 
-        public OpenAiService(
+        public OpenAiClient(
             IConfiguration config,
-            ILogger<OpenAiService> logger)
+            ILogger<OpenAiClient> logger)
         {
             this.config = config;
             this.logger = logger;

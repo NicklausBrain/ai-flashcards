@@ -9,16 +9,16 @@ namespace My1kWordsEe.Services.Cqs
     {
         public const int MaxSamples = 6;
 
-        private readonly AzureBlobService azureBlobService;
-        private readonly OpenAiService openAiService;
+        private readonly AzureStorageService azureBlobService;
+        private readonly OpenAiClient openAiService;
         private readonly AddAudioCommand addAudioCommand;
-        private readonly StabilityAiService stabilityAiService;
+        private readonly StabilityAiClient stabilityAiService;
 
         public AddSampleSentenceCommand(
-            AzureBlobService azureBlobService,
-            OpenAiService openAiService,
+            AzureStorageService azureBlobService,
+            OpenAiClient openAiService,
             AddAudioCommand createAudioCommand,
-            StabilityAiService stabilityAiService)
+            StabilityAiClient stabilityAiService)
         {
             this.azureBlobService = azureBlobService;
             this.openAiService = openAiService;

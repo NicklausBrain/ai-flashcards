@@ -10,7 +10,7 @@ namespace My1kWordsEe.Services
     /// <summary>
     /// Facade for https://platform.stability.ai/docs/getting-started/stable-image
     /// </summary>
-    public class StabilityAiService
+    public class StabilityAiClient
     {
         public const string ApiHost = "https://api.stability.ai";
         public const string ApiSecretKey = "Secrets:StabilityAiKey";
@@ -19,12 +19,12 @@ namespace My1kWordsEe.Services
 
         private readonly IConfiguration config;
         private readonly IHttpClientFactory httpClientFactory;
-        private readonly ILogger<StabilityAiService> logger;
+        private readonly ILogger<StabilityAiClient> logger;
 
-        public StabilityAiService(
+        public StabilityAiClient(
             IConfiguration config,
             IHttpClientFactory httpClientFactory,
-            ILogger<StabilityAiService> logger)
+            ILogger<StabilityAiClient> logger)
         {
             this.config = config;
             this.httpClientFactory = httpClientFactory;
@@ -38,7 +38,7 @@ namespace My1kWordsEe.Services
                 return Result.Failure<MemoryStream>("Stability AI API key is missing");
             };
 
-            using HttpClient client = httpClientFactory.CreateClient(nameof(StabilityAiService));
+            using HttpClient client = httpClientFactory.CreateClient(nameof(StabilityAiClient));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", this.config[ApiSecretKey]);
 

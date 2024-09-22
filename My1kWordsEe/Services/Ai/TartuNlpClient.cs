@@ -7,14 +7,14 @@ namespace My1kWordsEe.Services
     /// <summary>
     /// Facade for https://neurokone.ee/.
     /// </summary>
-    public class TartuNlpService
+    public class TartuNlpClient
     {
         private readonly IHttpClientFactory httpClientFactory;
-        private readonly ILogger<TartuNlpService> logger;
+        private readonly ILogger<TartuNlpClient> logger;
 
-        public TartuNlpService(
+        public TartuNlpClient(
             IHttpClientFactory httpClientFactory,
-            ILogger<TartuNlpService> logger)
+            ILogger<TartuNlpClient> logger)
         {
             this.httpClientFactory = httpClientFactory;
             this.logger = logger;
@@ -22,7 +22,7 @@ namespace My1kWordsEe.Services
 
         public async Task<Result<Stream>> GetSpeech(string text)
         {
-            using HttpClient client = this.httpClientFactory.CreateClient(nameof(TartuNlpService));
+            using HttpClient client = this.httpClientFactory.CreateClient(nameof(TartuNlpClient));
 
             HttpRequestMessage request = new(HttpMethod.Post, "https://api.tartunlp.ai/text-to-speech/v2");
 

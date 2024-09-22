@@ -12,16 +12,16 @@ namespace My1kWordsEe.Services.Db
     /// <summary>
     /// Facade for Azure blob storage API
     /// </summary>
-    public class AzureBlobService
+    public class AzureStorageService
     {
         public const string ApiSecretKey = "Secrets:AzureBlobConnectionString";
 
         private readonly IConfiguration config;
         private readonly ILogger logger;
 
-        public AzureBlobService(
+        public AzureStorageService(
             IConfiguration config,
-            ILogger<AzureBlobService> logger)
+            ILogger<AzureStorageService> logger)
         {
             this.config = config;
             this.logger = logger;
