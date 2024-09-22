@@ -669,11 +669,9 @@
   },
   {
     "value": "seal",
-    "part_of_speech": "Nimisõna",
+    "part_of_speech": "Määrsõna",
     "en_words": [
-      "seal",
-      "marquee",
-      "sign"
+      "there"
     ]
   },
   {
@@ -3554,7 +3552,11 @@
   {
     "value": "kõiki",
     "part_of_speech": "Asesõna",
-    "en_words": [ "everyone", "all", "everything" ]
+    "en_words": [
+      "everyone",
+      "all",
+      "everything"
+    ]
   },
   {
     "value": "sajandi",
