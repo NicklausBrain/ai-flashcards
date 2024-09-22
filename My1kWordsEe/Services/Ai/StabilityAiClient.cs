@@ -33,7 +33,7 @@ namespace My1kWordsEe.Services
 
         public async Task<Result<MemoryStream>> GenerateImage(string prompt)
         {
-            if (string.IsNullOrEmpty(this.config[ApiSecretKey]))
+            if (string.IsNullOrWhiteSpace(this.config[ApiSecretKey]))
             {
                 return Result.Failure<MemoryStream>("Stability AI API key is missing");
             };
