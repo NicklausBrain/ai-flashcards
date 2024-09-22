@@ -6,7 +6,6 @@ using CSharpFunctionalExtensions;
 using My1kWordsEe.Models;
 
 using OpenAI.Chat;
-using OpenAI.Images;
 
 namespace My1kWordsEe.Services
 {
@@ -61,34 +60,6 @@ namespace My1kWordsEe.Services
             catch (Exception e)
             {
                 return Result.Failure<string>(e.Message);
-            }
-        }
-
-        public async Task<Result<Uri>> GetSampleImageUri(string sentence)
-        {
-            ImageClient client = new(model: "dall-e-3", this.config[ApiSecretKey]);
-            var prompt = await this.GetDallEPrompt(sentence);
-
-            if (prompt.IsFailure)
-            {
-                return Result.Failure<Uri>(prompt.Error);
-            }
-
-            try
-            {
-                var imageResponse = await client.GenerateImageAsync(prompt.Value, new ImageGenerationOptions
-                {
-                    Quality = GeneratedImageQuality.Standard,
-                    Size = GeneratedImageSize.W1024xH1024,
-                    Style = GeneratedImageStyle.Natural,
-                    ResponseFormat = GeneratedImageFormat.Uri,
-                });
-
-                return Result.Success(imageResponse.Value.ImageUri);
-            }
-            catch (Exception e)
-            {
-                return Result.Failure<Uri>(e.Message);
             }
         }
 
