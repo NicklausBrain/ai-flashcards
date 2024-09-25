@@ -21,7 +21,14 @@
     };
 </script>
 
-<div class="col-sm-6">
+<style>
+    .img-max-w-256 {
+        max-width: 256px;
+        width: 100%;
+    }
+</style>
+
+<div class="col-6 p-1">
 
     <ul class="list-group">
         <li class="list-group-item">
@@ -35,7 +42,7 @@
             @Sample.EnSentence
         </li>
         <li class="list-group-item">
-            <img id="sampleImage" width="256" height="256" src="@Sample.ImageUrl" />
+            <img id="sampleImage" class="img-fluid rounded img-max-w-256" src="@Sample.ImageUrl" />
         </li>
     </ul>
 
