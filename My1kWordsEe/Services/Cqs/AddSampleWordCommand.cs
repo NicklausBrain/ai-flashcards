@@ -7,13 +7,13 @@ namespace My1kWordsEe.Services.Cqs
 {
     public class AddSampleWordCommand
     {
-        private readonly OpenAiService openAiService;
-        private readonly AzureBlobService azureBlobService;
+        private readonly OpenAiClient openAiService;
+        private readonly AzureStorageClient azureBlobService;
         private readonly AddAudioCommand addAudioCommand;
 
         public AddSampleWordCommand(
-            OpenAiService openAiService,
-            AzureBlobService azureBlobService,
+            OpenAiClient openAiService,
+            AzureStorageClient azureBlobService,
             AddAudioCommand createAudioCommand)
         {
             this.azureBlobService = azureBlobService;
@@ -23,6 +23,11 @@ namespace My1kWordsEe.Services.Cqs
 
         public async Task<Result<SampleWord>> Invoke(string eeWord)
         {
+            if (!eeWord.ValidateWord())
+            {
+                return Result.Failure<SampleWord>("Not an Estonian word");
+            }
+
             (await openAiService.GetWordMetadata(eeWord)).Deconstruct(
                 out bool _,
                 out bool isAiFailure,

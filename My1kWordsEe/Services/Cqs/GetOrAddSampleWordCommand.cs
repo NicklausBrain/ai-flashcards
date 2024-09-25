@@ -7,11 +7,11 @@ namespace My1kWordsEe.Services.Cqs
 {
     public class GetOrAddSampleWordCommand
     {
-        private readonly AzureBlobService azureBlobService;
+        private readonly AzureStorageClient azureBlobService;
         private readonly AddSampleWordCommand addSampleWordCommand;
 
         public GetOrAddSampleWordCommand(
-            AzureBlobService azureBlobService,
+            AzureStorageClient azureBlobService,
             AddSampleWordCommand addSampleWordCommand)
         {
             this.azureBlobService = azureBlobService;

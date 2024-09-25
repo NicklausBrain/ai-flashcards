@@ -22,24 +22,24 @@ namespace My1kWordsEe
 
             var secrets = RequireSecrets(builder);
 
-            builder.Services.AddHttpClient(nameof(StabilityAiService))
+            builder.Services.AddHttpClient(nameof(StabilityAiClient))
                 .AddStandardResilienceHandler(options =>
                 {
                     options.RateLimiter.DefaultRateLimiterOptions.PermitLimit = 100;
                     options.RateLimiter.DefaultRateLimiterOptions.QueueLimit = 0;
                 });
 
-            builder.Services.AddHttpClient(nameof(TartuNlpService))
+            builder.Services.AddHttpClient(nameof(TartuNlpClient))
                 .AddStandardResilienceHandler(options =>
                 {
                     options.RateLimiter.DefaultRateLimiterOptions.PermitLimit = 100;
                     options.RateLimiter.DefaultRateLimiterOptions.QueueLimit = 0;
                 });
 
-            builder.Services.AddSingleton<StabilityAiService>();
-            builder.Services.AddSingleton<OpenAiService>();
-            builder.Services.AddSingleton<AzureBlobService>();
-            builder.Services.AddSingleton<TartuNlpService>();
+            builder.Services.AddSingleton<StabilityAiClient>();
+            builder.Services.AddSingleton<OpenAiClient>();
+            builder.Services.AddSingleton<AzureStorageClient>();
+            builder.Services.AddSingleton<TartuNlpClient>();
             builder.Services.AddSingleton<GetOrAddSampleWordCommand>();
             builder.Services.AddSingleton<AddSampleSentenceCommand>();
             builder.Services.AddSingleton<AddSampleWordCommand>();
@@ -89,26 +89,26 @@ namespace My1kWordsEe
            WebApplicationBuilder builder)
         {
             var openAiKey =
-               builder.Configuration[OpenAiService.ApiSecretKey];
+               builder.Configuration[OpenAiClient.ApiSecretKey];
 
             if (string.IsNullOrWhiteSpace(openAiKey))
             {
-                throw new ApplicationException($"{OpenAiService.ApiSecretKey} is missing");
+                throw new ApplicationException($"{OpenAiClient.ApiSecretKey} is missing");
             }
 
             var stabilityAiKey =
-                builder.Configuration[StabilityAiService.ApiSecretKey];
+                builder.Configuration[StabilityAiClient.ApiSecretKey];
 
             if (string.IsNullOrWhiteSpace(stabilityAiKey))
             {
-                throw new ApplicationException($"{StabilityAiService.ApiSecretKey} is missing");
+                throw new ApplicationException($"{StabilityAiClient.ApiSecretKey} is missing");
             }
 
-            var azureBlobConnectionString = builder.Configuration[AzureBlobService.ApiSecretKey];
+            var azureBlobConnectionString = builder.Configuration[AzureStorageClient.ApiSecretKey];
 
             if (string.IsNullOrWhiteSpace(azureBlobConnectionString))
             {
-                throw new ApplicationException($"{AzureBlobService.ApiSecretKey} is missing");
+                throw new ApplicationException($"{AzureStorageClient.ApiSecretKey} is missing");
             }
 
             return (openAiKey, stabilityAiKey, azureBlobConnectionString);
