@@ -24,135 +24,154 @@ namespace My1kWordsEe.Services
             this.logger = logger;
         }
 
-        public async Task<Result<string>> CompleteAsync(string instructions, string input)
+        public async Task<Result<string>> CompleteAsync(string instructions, string input, ChatCompletionOptions? options = null)
         {
+            if (string.IsNullOrWhiteSpace(this.config[ApiSecretKey]))
+            {
+                return Result.Failure<string>("Open AI API key is missing");
+            };
+
             ChatClient client = new(model: "gpt-4o-mini", this.config[ApiSecretKey]);
 
             try
             {
                 ChatCompletion chatCompletion = await client.CompleteChatAsync([
                     new SystemChatMessage(instructions),
-                    new UserChatMessage(input)]);
+                    new UserChatMessage(input)],
+                    options);
                 return Result.Success(chatCompletion.Content[0].Text);
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                return Result.Failure<string>(e.Message);
+                this.logger.LogError(exception, "Error calling Open AI API");
+                return Result.Failure<string>(exception.Message);
             }
         }
 
-        public async Task<Result<string>> GetDallEPrompt(string sentence)
+        public async Task<Result<T>> CompleteJsonAsync<T>(string instructions, string input)
         {
-            ChatClient client = new(model: "gpt-4o-mini", this.config[ApiSecretKey]);
+            var response = await this.CompleteAsync(instructions, input, new ChatCompletionOptions
+            {
+                ResponseFormat = ChatResponseFormat.JsonObject,
+            });
+
+            if (response.IsFailure)
+            {
+                return Result.Failure<T>(response.Error);
+            }
+
+            return this.ParseJsonResponse<T>(response);
+        }
+
+        public Result<T> ParseJsonResponse<T>(Result<string> textResult)
+        {
+            if (textResult.IsFailure)
+            {
+                return Result.Failure<T>(textResult.Error);
+            }
+
+            var jsonStr = SanitizeJson(textResult.Value);
 
             try
             {
-                ChatCompletion chatCompletion = await client.CompleteChatAsync(
-                    [
-                        new SystemChatMessage(
-                        "You are part of the language learning system.\n" +
-                        "Your task is to generate a DALL-E prompt so that it will create a picture to illustrate the sentence provided by the user.\n" +
-                        "The image should be sketchy, mostly shades of blue, black, and white.\n" +
-                        "Your response is a DALL-E prompt as a plain string.\n"),
-                    new UserChatMessage(sentence)]);
-                return Result.Success(chatCompletion.Content[0].Text);
+                var result = JsonSerializer.Deserialize<T>(jsonStr);
+
+                if (result == null)
+                {
+                    return Result.Failure<T>("Empty response");
+                }
+
+                return result;
             }
-            catch (Exception e)
+            catch (Exception jsonException)
             {
-                return Result.Failure<string>(e.Message);
+                this.logger.LogError(jsonException, "Failed to deserialize JSON: {jsonStr}", jsonStr);
+                return Result.Failure<T>("Unexpected data returned by AI");
             }
         }
 
-        public async Task<Result<Sentence>> GetSampleSentence(string eeWord)
+        private static string SanitizeJson(string jsonStr) => jsonStr
+            .Replace("json", string.Empty, StringComparison.OrdinalIgnoreCase)
+            .Trim('`', ' ', '\'', '"');
+    }
+
+    public static class OpenAiClientExtensions
+    {
+        public static async Task<Result<string>> GetDallEPrompt(this OpenAiClient openAiClient, string sentence)
         {
-            ChatClient client = new(model: "gpt-4o-mini", this.config[ApiSecretKey]);
+            const string prompt =
+                "You are part of the language learning system.\n" +
+                "Your task is to generate a DALL-E prompt so that it will create a picture to illustrate the sentence provided by the user.\n" +
+                "The image should be sketchy, mostly shades of blue, black, and white.\n" +
+                "Your response is a DALL-E prompt as a plain string.\n";
 
-            ChatCompletion chatCompletion = await client.CompleteChatAsync(
-                [
-                    new SystemChatMessage(
-                        "Sa oled keeleõppe süsteemi abiline, mis aitab õppida enim levinud eesti keele sõnu.\n" +
-                        "Sinu sisend on üks sõna eesti keeles.\n" +
-                        "Sinu ülesanne on kirjutada selle kasutamise kohta lihtne lühike näitelause, kasutades seda sõna.\n" +
-                        "Lauses kasuta kõige levinuimaid ja lihtsamaid sõnu eesti keeles et toetada keeleõpet.\n" +
-                        "Teie väljundiks on JSON-objekt koos eestikeelse näidislausega ja sellele vastav tõlge inglise keelde vastavalt lepingule:\n" +
-                        "```\n{\n" +
-                        "\"ee_sentence\": \"<näide eesti keeles>\", \"en_sentence\": \"<näide inglise keeles>\"" +
-                        "\n}\n```"),
-                    new UserChatMessage(eeWord),
-                ]);
-
-            foreach (var c in chatCompletion.Content)
+            return await openAiClient.CompleteAsync(prompt, sentence, new ChatCompletionOptions
             {
-                var jsonStr = c.Text.Replace("json", "", StringComparison.OrdinalIgnoreCase).Trim('`', ' ', '\'', '"');
-                var sentence = JsonSerializer.Deserialize<Sentence>(jsonStr);
-                if (sentence == null)
-                {
-                    break;
-                }
-                else
-                {
-                    return Result.Success(sentence);
-                }
-            }
-
-            return Result.Failure<Sentence>("Empty response");
+                ResponseFormat = ChatResponseFormat.Text,
+                Temperature = (float)Math.PI / 2
+            });
         }
 
-        public async Task<Result<SampleWord>> GetWordMetadata(string word)
+        public static async Task<Result<SampleWord>> GetWordMetadata(this OpenAiClient openAiClient, string eeWord)
         {
-            ChatClient client = new(model: "gpt-4o-mini", this.config[ApiSecretKey]);
+            const string prompt =
+                "Sinu sisend on eestikeelne sõna.\n" +
+                "Kui antud sõna ei ole eestikeelne, tagasta 404\n" +
+                "Teie väljund on sõna metaandmed JSON-is vastavalt antud lepingule:\n" +
+                "```\n{\n" +
+                "\"ee_word\": \"<antud sõna>\",\n" +
+                "\"en_word\": \"<english translation>\"\n" +
+                "\"en_words\": [<array of alternative english translations if applicable>]\n" +
+                "\"en_explanation\": \"<explanation of the word meaning in english>\"\n" +
+                "}\n```\n";
 
-            ChatCompletion chatCompletion = await client.CompleteChatAsync(
-                [
-                    new SystemChatMessage(
-                        "Sinu sisend on eestikeelne sõna.\n" +
-                        "Kui antud sõna ei ole eestikeelne, tagasta 404\n"+
-                        "Teie väljund on sõna metaandmed JSON-is vastavalt antud lepingule:\n" +
-                        "```\n{\n" +
-                        "\"ee_word\": \"<antud sõna>\",\n" +
-                        "\"en_word\": \"<english translation>\"\n" +
-                        "\"en_words\": [<array of alternative english translations if applicable>]\n" +
-                        "\"en_explanation\": \"<explanation of the word meaning in english>\"\n" +
-                        "}\n```\n"),
-                    new UserChatMessage(word),
-                ]);
-
-            foreach (var c in chatCompletion.Content)
+            var response = await openAiClient.CompleteAsync(prompt, eeWord);
+            if (response.IsFailure)
             {
-                var jsonStr = c.Text.Replace("json", "", StringComparison.OrdinalIgnoreCase).Trim('`', ' ', '\'', '"');
-
-                if (jsonStr.Contains("404"))
-                {
-                    return Result.Failure<SampleWord>("Not an Estonian word");
-                }
-
-                try
-                {
-                    var wordMetadata = JsonSerializer.Deserialize<WordMetadata>(jsonStr);
-                    if (wordMetadata == null)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        return Result.Success(new SampleWord
-                        {
-                            EeWord = wordMetadata.EeWord,
-                            EnWord = wordMetadata.EnWord,
-                            EnWords = wordMetadata.EnWords,
-                            EnExplanation = wordMetadata.EnExplanation,
-                        });
-                    }
-                }
-                catch (JsonException jsonException)
-                {
-                    this.logger.LogError(jsonException, "Failed to deserialize JSON: {jsonStr}", jsonStr);
-                    return Result.Failure<SampleWord>("Unexpected data returned by AI");
-                }
+                return Result.Failure<SampleWord>(response.Error);
             }
 
-            return Result.Failure<SampleWord>("Empty response");
+            if (response.Value.Contains("404"))
+            {
+                return Result.Failure<SampleWord>("Not an Estonian word");
+            }
+
+            openAiClient.ParseJsonResponse<WordMetadata>(response).Deconstruct(
+                out bool _,
+                out bool isParsingError,
+                out WordMetadata wordMetadata,
+                out string parsingError);
+
+            if (isParsingError)
+            {
+                return Result.Failure<SampleWord>(parsingError);
+            }
+
+            return Result.Success(new SampleWord
+            {
+                EeWord = wordMetadata.EeWord,
+                EnWord = wordMetadata.EnWord,
+                EnWords = wordMetadata.EnWords,
+                EnExplanation = wordMetadata.EnExplanation,
+            });
         }
+
+        public static async Task<Result<Sentence>> GetSampleSentence(this OpenAiClient openAiClient, string eeWord)
+        {
+            const string prompt =
+                "Sa oled keeleõppe süsteemi abiline, mis aitab õppida enim levinud eesti keele sõnu.\n" +
+                "Sinu sisend on üks sõna eesti keeles.\n" +
+                "Sinu ülesanne on kirjutada selle kasutamise kohta lihtne lühike näitelause, kasutades seda sõna.\n" +
+                "Lauses kasuta kõige levinuimaid ja lihtsamaid sõnu eesti keeles et toetada keeleõpet.\n" +
+                "Teie väljundiks on JSON-objekt koos eestikeelse näidislausega ja sellele vastav tõlge inglise keelde vastavalt lepingule:\n" +
+                "```\n{\n" +
+                "\"ee_sentence\": \"<näide eesti keeles>\", \"en_sentence\": \"<näide inglise keeles>\"" +
+                "\n}\n```";
+
+            return await openAiClient.CompleteJsonAsync<Sentence>(prompt, eeWord);
+        }
+
+
     }
 
     public class Sentence
