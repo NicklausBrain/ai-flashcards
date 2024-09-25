@@ -23,7 +23,7 @@ namespace My1kWordsEe.Models
             GetOrAddSampleWordCommand getOrAddSampleWordCommand,
             AddSampleSentenceCommand addSampleSentenceCommand)
         {
-            var rn = new Random(1); // Environment.TickCount
+            var rn = new Random(2); // Environment.TickCount
 
             var eeWords = new List<EeWord>
             {
