@@ -70,7 +70,7 @@ namespace My1kWordsEe.Services
                 return Result.Failure<T>(textResult.Error);
             }
 
-            var jsonStr = SanitizeJson(textResult.Value);
+            var jsonStr = textResult.Value;
 
             try
             {
@@ -89,10 +89,6 @@ namespace My1kWordsEe.Services
                 return Result.Failure<T>("Unexpected data returned by AI");
             }
         }
-
-        private static string SanitizeJson(string jsonStr) => jsonStr
-            .Replace("json", string.Empty, StringComparison.OrdinalIgnoreCase)
-            .Trim('`', ' ', '\'', '"');
     }
 
     public static class OpenAiClientExtensions
@@ -125,12 +121,18 @@ namespace My1kWordsEe.Services
                 "\"en_explanation\": \"<explanation of the word meaning in english>\"\n" +
                 "}\n```\n";
 
-            var response = await openAiClient.CompleteAsync(prompt, eeWord);
+            var response = await openAiClient.CompleteAsync(prompt, eeWord, new ChatCompletionOptions
+            {
+                ResponseFormat = ChatResponseFormat.JsonObject,
+                Temperature = 0.333f
+            });
+
             if (response.IsFailure)
             {
                 return Result.Failure<SampleWord>(response.Error);
             }
 
+            // could be ommited if we integrate an EE dictionary within the app
             if (response.Value.Contains("404"))
             {
                 return Result.Failure<SampleWord>("Not an Estonian word");
@@ -171,7 +173,20 @@ namespace My1kWordsEe.Services
             return await openAiClient.CompleteJsonAsync<Sentence>(prompt, eeWord);
         }
 
+        private class WordMetadata
+        {
+            [JsonPropertyName("ee_word")]
+            public required string EeWord { get; set; }
 
+            [JsonPropertyName("en_word")]
+            public required string EnWord { get; set; }
+
+            [JsonPropertyName("en_explanation")]
+            public required string EnExplanation { get; set; }
+
+            [JsonPropertyName("en_words")]
+            public required string[] EnWords { get; set; } = Array.Empty<string>();
+        }
     }
 
     public class Sentence
@@ -181,20 +196,5 @@ namespace My1kWordsEe.Services
 
         [JsonPropertyName("en_sentence")]
         public required string En { get; set; }
-    }
-
-    public class WordMetadata
-    {
-        [JsonPropertyName("ee_word")]
-        public required string EeWord { get; set; }
-
-        [JsonPropertyName("en_word")]
-        public required string EnWord { get; set; }
-
-        [JsonPropertyName("en_explanation")]
-        public required string EnExplanation { get; set; }
-
-        [JsonPropertyName("en_words")]
-        public required string[] EnWords { get; set; } = Array.Empty<string>();
     }
 }
