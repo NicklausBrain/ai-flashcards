@@ -27,5 +27,20 @@ namespace My1kWordsEe.Models
             // the RegularExpressionValidator control does
             return (m.Success && m.Index == 0 && m.Length == word.Length);
         }
+
+        public static bool ValidateSentence(this string sentence)
+        {
+            if (string.IsNullOrWhiteSpace(sentence))
+            {
+                return false;
+            }
+
+            if (sentence.Length > 1024)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }
