@@ -1,6 +1,7 @@
 ﻿@page "/"
 @rendermode InteractiveServer
 
+@using BlazorBootstrap
 @using CSharpFunctionalExtensions
 @using My1kWordsEe.Models;
 @using My1kWordsEe.Components.Layout;
@@ -99,7 +100,7 @@
                                 <button @onclick="CheckWord" type="button" class="btn btn-primary btn-block btn-sm">
                                     @if (IsCheckInProgress)
                                     {
-                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
+                                        <Spinner Size="SpinnerSize.Small" />
                                     }
                                     else
                                     {
