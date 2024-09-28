@@ -82,7 +82,7 @@ namespace My1kWordsEe.Models
 
         public GameSlide(SampleWord sampleWord)
         {
-            sampleSentence = sampleWord.Samples[0];
+            this.sampleSentence = sampleWord.Samples[0];
         }
 
         public string EeSentence => sampleSentence.EeSentence;
@@ -91,19 +91,28 @@ namespace My1kWordsEe.Models
 
         public string UserTranslation { get; set; }
 
-        public Maybe<ushort> Mark { get; private set; }
+        public Maybe<Result<EnTranslationCheckResult>> CheckResult { get; private set; }
 
-        public async Task Submit()
+        public async Task Submit(CheckEnTranslationCommand checkEnTranslationCommand)
         {
+            var userInput = UserTranslation.Trim('.', ' ');
+            var defaultEnTranslation = sampleSentence.EnSentence.Trim('.', ' ');
+
             if (string.Equals(
-                UserTranslation.Trim('.', ' '),
-                sampleSentence.EnSentence.Trim('.', ' '),
+                userInput,
+                defaultEnTranslation,
                 StringComparison.InvariantCultureIgnoreCase))
             {
-                Mark = 5;
+                CheckResult = Result.Success(EnTranslationCheckResult.Success(
+                    eeSentence: EeSentence,
+                    enSentence: defaultEnTranslation));
             }
-
-            //....
+            else
+            {
+                CheckResult = await checkEnTranslationCommand.Invoke(
+                    eeSentence: EeSentence,
+                    enSentence: userInput);
+            }
         }
     }
 }

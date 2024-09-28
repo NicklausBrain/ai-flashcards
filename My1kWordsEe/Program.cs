@@ -44,6 +44,7 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<AddSampleSentenceCommand>();
             builder.Services.AddSingleton<AddSampleWordCommand>();
             builder.Services.AddSingleton<AddAudioCommand>();
+            builder.Services.AddSingleton<CheckEnTranslationCommand>();
 
             // Blazor-specific services
             builder.Services

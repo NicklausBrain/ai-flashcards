@@ -6,6 +6,7 @@
 
 @inject GetOrAddSampleWordCommand EnsureWordCommand;
 @inject AddSampleSentenceCommand CreateSampleCommand;
+@inject CheckEnTranslationCommand CheckEnTranslationCommand;
 
 @code {
     TranslateToEnGame Game = new TranslateToEnGame(Array.Empty<SampleWord>());
@@ -22,7 +23,7 @@
 
     private void OnSelectSlide(ushort index) => Game.GoToSlide(index);
 
-    private Task OnSubmit() => Game.CurrentSlide.Submit();
+    private Task OnSubmit() => Game.CurrentSlide.Submit(CheckEnTranslationCommand);
 }
 
 <script>
