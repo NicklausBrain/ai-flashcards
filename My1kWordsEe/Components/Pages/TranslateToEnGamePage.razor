@@ -59,7 +59,7 @@
                         {
                             var ii = i;
                             <li @onclick="@(()=> OnSelectSlide(ii))" class="page-item @(Game.CurrentSlideIndex == i ? "active" : "") " role="button">
-                                <a class="page-link">@(i+1)</a>
+                                <a class="page-link">@(i + 1)</a>
                             </li>
                         }
                         <li class="page-item" role="button" @onclick="@OnNext">
@@ -68,19 +68,66 @@
                     </ul>
                 </nav>
             </div>
-            
+
             <div class="row">
                 <div class="card text-center">
                     <div class="card-body">
                         <h5 class="card-title">@Game.CurrentSlide.EeSentence</h5>
                         <img id="sampleImage" class="img-fluid rounded img-max-w-256 p-1" src="@Game.CurrentSlide.ImageUrl" />
 
-                        <div class="input-group input-group-sm">
-                                <span class="input-group-text">Your translation</span>
+                        @if (Game.CurrentSlide.CheckResult.HasValue)
+                        {
+                            <ul class="list-group">
+                                @if (Game.CurrentSlide.CheckResult.Value.IsSuccess)
+                                {
+                                    var checkResult = Game.CurrentSlide.CheckResult.Value.Value;
+
+                                    if (checkResult.IsMaxMatch)
+                                    {
+                                        <li @onclick="@OnNext" type="button" class="list-group-item list-group-item-success list-group-item-action">
+                                            @checkResult.EnUserSentence
+                                            <i class="bi bi-arrow-right-circle-fill text-end"></i>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li @onclick="@OnNext" type="button" class="list-group-item list-group-item-warning list-group-item-action">
+                                            @checkResult.EnUserSentence
+                                            (@checkResult.Match / 5)
+                                            <i class="bi bi-arrow-right-circle-fill text-end"></i>
+                                        </li>
+                                        <li class="list-group-item list-group-item-success">
+                                            @checkResult.EnExpectedSentence
+                                        </li>
+                                        <li class="list-group-item list-group-item-info">
+                                            @checkResult.EnComment
+                                        </li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li class="list-group-item list-group-item-warning">
+                                        @Game.CurrentSlide.CheckResult.Value.Error
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else if (@Game.CurrentSlide.IsCheckInProgress)
+                        {
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-border" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text btn-success">Your translation</span>
                                 <InputText @bind-Value="@Game.CurrentSlide.UserTranslation" class="form-control" />
                                 <button @onclick="@OnSubmit" class="btn btn-outline-primary" type="button">Submit</button>
-                        </div>
-
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

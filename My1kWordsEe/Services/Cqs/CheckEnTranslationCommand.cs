@@ -16,6 +16,7 @@ namespace My1kWordsEe.Services.Cqs
         public async Task<Result<EnTranslationCheckResult>> Invoke(string eeSentence, string enSentence)
         {
             var prompt = "Your task is to check user's translation from Estonian into English.\n" +
+                         "Ignore the capital letters and termination symbols.\n" +
                          $"Your input is JSON object:\n" +
                          "```\n{\n" +
                          "\"ee_sentence\": \"<eestikeelne lause>\", \"en_user_sentence\": \"<user translation to English>\n" +
@@ -53,6 +54,8 @@ namespace My1kWordsEe.Services.Cqs
 
         [JsonPropertyName("match_level")]
         public required ushort Match { get; init; }
+
+        public bool IsMaxMatch => this.Match == 5;
 
         public static EnTranslationCheckResult Success(string eeSentence, string enSentence) => new EnTranslationCheckResult
         {

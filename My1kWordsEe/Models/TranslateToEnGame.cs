@@ -93,6 +93,8 @@ namespace My1kWordsEe.Models
 
         public Maybe<Result<EnTranslationCheckResult>> CheckResult { get; private set; }
 
+        public bool IsCheckInProgress { get; private set; }
+
         public async Task Submit(CheckEnTranslationCommand checkEnTranslationCommand)
         {
             var userInput = UserTranslation.Trim('.', ' ');
@@ -109,9 +111,11 @@ namespace My1kWordsEe.Models
             }
             else
             {
+                IsCheckInProgress = true;
                 CheckResult = await checkEnTranslationCommand.Invoke(
                     eeSentence: EeSentence,
                     enSentence: userInput);
+                IsCheckInProgress = false;
             }
         }
     }
