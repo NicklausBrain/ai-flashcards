@@ -15,6 +15,14 @@
         Game = await TranslateToEnGame.Generate(EnsureWordCommand, CreateSampleCommand);
         await base.OnParametersSetAsync();
     }
+
+    private void OnNext() => Game.NextSlide();
+
+    private void OnPrevious() => Game.PrevSlide();
+
+    private void OnSelectSlide(ushort index) => Game.GoToSlide(index);
+
+    private Task OnSubmit() => Game.CurrentSlide.Submit();
 }
 
 <script>
@@ -35,37 +43,45 @@
 
 <div class="text-left">
     <div class="row">
-        <h3>Translation game</h3>
+        <h3>Translate to English</h3>
     </div>
     <div class="row">
-        @if (Game.Slides.Length == 3)
+        @if (Game.Slides.Length > 0)
         {
-            <div id="carouselExampleDark" class="carousel carousel-dark slide">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                </div>
-                <div class="carousel-inner">
-                    @foreach(var slide in Game.Slides)
-                    {
-                        <div class="carousel-item @(slide == Game.Slides[0] ? "active" : "")">
-                            <img src="@slide.ImageUrl" class="d-block w-100 img-max-w-256" alt="...">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h5>@slide.EeSentence</h5>
-                                <InputText @bind-Value="Game.Slides[0].UserTranslation"></InputText>
-                            </div>
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" role="button" @onclick="@OnPrevious">
+                            <a class="page-link">Previous</a>
+                        </li>
+                        @for (ushort i = 0; i < Game.Slides.Length; i++)
+                        {
+                            var ii = i;
+                            <li @onclick="@(()=> OnSelectSlide(ii))" class="page-item @(Game.CurrentSlideIndex == i ? "active" : "") " role="button">
+                                <a class="page-link">@(i+1)</a>
+                            </li>
+                        }
+                        <li class="page-item" role="button" @onclick="@OnNext">
+                            <a class="page-link">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            
+            <div class="row">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">@Game.CurrentSlide.EeSentence</h5>
+                        <img id="sampleImage" class="img-fluid rounded img-max-w-256 p-1" src="@Game.CurrentSlide.ImageUrl" />
+
+                        <div class="input-group input-group-sm">
+                                <span class="input-group-text">Your translation</span>
+                                <InputText @bind-Value="@Game.CurrentSlide.UserTranslation" class="form-control" />
+                                <button @onclick="@OnSubmit" class="btn btn-outline-primary" type="button">Submit</button>
                         </div>
-                    }
+
+                    </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
             </div>
         }
         else
@@ -76,6 +92,5 @@
                 </div>
             </div>
         }
-
     </div>
 </div>

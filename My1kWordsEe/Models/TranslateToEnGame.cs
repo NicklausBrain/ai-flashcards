@@ -19,6 +19,32 @@ namespace My1kWordsEe.Models
 
         public ushort CurrentSlideIndex { get; private set; } = 0;
 
+        public GameSlide CurrentSlide => Slides[CurrentSlideIndex];
+
+        public void NextSlide()
+        {
+            if (CurrentSlideIndex < gameSlides.Length - 1)
+            {
+                CurrentSlideIndex++;
+            }
+        }
+
+        public void PrevSlide()
+        {
+            if (CurrentSlideIndex > 0)
+            {
+                CurrentSlideIndex--;
+            }
+        }
+
+        public void GoToSlide(ushort index)
+        {
+            if (index < gameSlides.Length && index >= 0)
+            {
+                CurrentSlideIndex = index;
+            }
+        }
+
         public static async Task<TranslateToEnGame> Generate(
             GetOrAddSampleWordCommand getOrAddSampleWordCommand,
             AddSampleSentenceCommand addSampleSentenceCommand)
@@ -69,7 +95,10 @@ namespace My1kWordsEe.Models
 
         public async Task Submit()
         {
-            if (string.Equals(UserTranslation, sampleSentence.EnSentence, StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(
+                UserTranslation.Trim('.', ' '),
+                sampleSentence.EnSentence.Trim('.', ' '),
+                StringComparison.InvariantCultureIgnoreCase))
             {
                 Mark = 5;
             }
