@@ -57,7 +57,7 @@ namespace My1kWordsEe.Models
             GetOrAddSampleWordCommand getOrAddSampleWordCommand,
             AddSampleSentenceCommand addSampleSentenceCommand)
         {
-            var rn = new Random(Environment.TickCount);
+            var rn = new Random(7);
 
             var eeWords = new List<EeWord>
             {
@@ -86,16 +86,16 @@ namespace My1kWordsEe.Models
 
     public class GameSlide
     {
-        private readonly SampleSentence sampleSentence;
-
         public GameSlide(SampleWord sampleWord)
         {
-            this.sampleSentence = sampleWord.Samples[0];
+            this.SampleSentence = sampleWord.Samples[0];
         }
 
-        public string EeSentence => sampleSentence.EeSentence;
+        public SampleSentence SampleSentence { get; init; }
 
-        public Uri ImageUrl => sampleSentence.ImageUrl;
+        public string EeSentence => SampleSentence.EeSentence;
+
+        public Uri ImageUrl => SampleSentence.ImageUrl;
 
         public string UserTranslation { get; set; }
 
@@ -111,7 +111,7 @@ namespace My1kWordsEe.Models
             }
 
             var userInput = UserTranslation.Trim('.', ' ');
-            var defaultEnTranslation = sampleSentence.EnSentence.Trim('.', ' ');
+            var defaultEnTranslation = SampleSentence.EnSentence.Trim('.', ' ');
 
             if (string.Equals(
                 userInput,

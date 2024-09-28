@@ -28,22 +28,18 @@
     }
 </style>
 
-<div class="col-6 p-1">
-
-    <ul class="list-group">
-        <li class="list-group-item">
-            @Sample.EeSentence
-            <button type="button" class="btn btn-primary" @onclick="PlaySample">
-                <i class="bi bi-volume-down-fill"></i>
-            </button>
-            <audio id="@Sample.EeAudioUrl" src="@Sample.EeAudioUrl"></audio>
-        </li>
-        <li class="list-group-item">
-            @Sample.EnSentence
-        </li>
-        <li class="list-group-item">
-            <img id="sampleImage" class="img-fluid rounded img-max-w-256" src="@Sample.ImageUrl" />
-        </li>
-    </ul>
-
-</div>
+<ul class="list-group">
+    <li class="list-group-item">
+        @Sample.EeSentence
+        <button type="button" class="btn btn-primary" @onclick="PlaySample">
+            <i class="bi bi-volume-down-fill"></i>
+        </button>
+        <audio id="@Sample.EeAudioUrl" src="@Sample.EeAudioUrl"></audio>
+    </li>
+    <li class="list-group-item">
+        @Sample.EnSentence
+    </li>
+    <li class="list-group-item">
+        <img id="sampleImage" class="img-fluid rounded img-max-w-256" src="@Sample.ImageUrl" />
+    </li>
+</ul>
