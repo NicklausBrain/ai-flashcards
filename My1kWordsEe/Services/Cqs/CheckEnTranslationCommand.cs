@@ -16,7 +16,7 @@ namespace My1kWordsEe.Services.Cqs
         public async Task<Result<EnTranslationCheckResult>> Invoke(string eeSentence, string enSentence)
         {
             var prompt = "Your task is to check user's translation from Estonian into English.\n" +
-                         "Ignore the capital letters and termination symbols.\n" +
+                         "Ignore the capital letters and termination symbols in your check.\n" +
                          $"Your input is JSON object:\n" +
                          "```\n{\n" +
                          "\"ee_sentence\": \"<eestikeelne lause>\", \"en_user_sentence\": \"<user translation to English>\n" +
@@ -26,7 +26,7 @@ namespace My1kWordsEe.Services.Cqs
                          "\"ee_sentence\": \"<eestikeelne lause>\",\n" +
                          "\"en_user_sentence\": \"<user translation to English>\",\n" +
                          "\"en_expected_sentence\": \"<expected translation to English>\",\n" +
-                         "\"en_comment\": \"<comment explaining the mistake (if any)>\",\n" +
+                         "\"en_comment\": \"<comment explaining to the student his mistake (if any)>\",\n" +
                          "\"match_level\": <correctes level in integer from 0 to 5>\n" +
                          "}\n```\n";
 

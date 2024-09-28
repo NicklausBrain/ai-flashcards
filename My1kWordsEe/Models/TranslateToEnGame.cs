@@ -57,7 +57,7 @@ namespace My1kWordsEe.Models
             GetOrAddSampleWordCommand getOrAddSampleWordCommand,
             AddSampleSentenceCommand addSampleSentenceCommand)
         {
-            var rn = new Random(2); // Environment.TickCount
+            var rn = new Random(Environment.TickCount);
 
             var eeWords = new List<EeWord>
             {
@@ -105,8 +105,7 @@ namespace My1kWordsEe.Models
 
         public async Task Submit(CheckEnTranslationCommand checkEnTranslationCommand)
         {
-            // todo: whitelist user input
-            if (string.IsNullOrWhiteSpace(UserTranslation))
+            if (!UserTranslation.ValidateSentence())
             {
                 return;
             }
