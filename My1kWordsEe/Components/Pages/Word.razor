@@ -1,6 +1,7 @@
 @page "/word/{eeWord}"
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
+@using BlazorBootstrap
 @using CSharpFunctionalExtensions
 @using My1kWordsEe.Services;
 @using My1kWordsEe.Models;
@@ -90,10 +91,8 @@
         }
         else
         {
-            <div class="d-flex justify-content-center">
-                <div class="spinner-border" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
+            <div class="text-center">
+                <Spinner />
             </div>
         }
     </div>
@@ -110,10 +109,8 @@
             <div class="col-6 text-center p-1">
                 @if (IsSampleGenerationInProgress)
                 {
-                    <div class="d-flex justify-content-center">
-                        <div class="spinner-border" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
+                    <div class="text-center">
+                        <Spinner />
                     </div>
                 }
                 else

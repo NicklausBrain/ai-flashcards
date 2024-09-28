@@ -1,6 +1,7 @@
 ﻿@page "/"
 @rendermode InteractiveServer
 
+@using BlazorBootstrap
 @using CSharpFunctionalExtensions
 @using My1kWordsEe.Models;
 @using My1kWordsEe.Components.Layout;
@@ -19,7 +20,7 @@
     private bool IsCheckInProgress = false;
     private Maybe<Result<SampleWord>> CheckWordResult;
 
-    private void SelectWord(MouseEventArgs e, string word)
+    private void SelectWord(string word)
     {
         this.NavigationManager.NavigateTo($"/word/{word}");
     }
@@ -56,61 +57,68 @@
 <div class="text-center">
     <div class="row sticky-top">
         <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroup-sizing-default">Search</span>
-            </div>
+            <span class="input-group-text">Search</span>
             <InputText @bind-Value="SearchTerm" @oninput="OnSearchInput" class="form-control" aria-label="Search" aria-describedby="inputGroup-sizing-default" />
+            
+            @if (IsCheckInProgress)
+            {
+                <button class="btn btn-outline-primary" type="button">
+                    <Spinner Size="SpinnerSize.Small" />
+                </button>
+            }
+            else
+            {
+                <button  @onclick="CheckWord" class="btn btn-outline-primary" type="button">Check the word</button>
+            }
         </div>
     </div>
     <div class="row">
-        <table class="table table-striped table-hover ">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Eestikeelne sõna</th>
-                    <th scope="col">English word(s)</th>
-                    <th scope="col">Part of speech</th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    foreach (var word in Ee1KWords.SelectedWords)
-                    {
-                        <tr role="button" @onclick="@(e => SelectWord(e, word.Value))">
-                            <th scope="row">@WordIndex[word]</th>
-                            <td>@word.Value</td>
-                            <td>@string.Join(" / ",word.EnWords)
-                            </td>
-                            <td>@word.EePartOfSpeech.ToEnPartOfSpeech() / @word.EePartOfSpeech</td>
-                        </tr>
-                    }
-                }
-
-                <tr>
-                    <th scope="row">#</th>
-                    <td>
-                        <div class="d-grid gap-2">
-                            @if (CheckWordResult.HasValue && CheckWordResult.Value.IsFailure)
-                            {
-                                @CheckWordResult.Value.Error
-                            }
-                            else
-                            {
-                                <button @onclick="CheckWord" type="button" class="btn btn-primary btn-block btn-sm">
-                                    @if (IsCheckInProgress)
-                                    {
-                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
-                                    }
-                                    else
-                                    {
-                                        <span>Check the word</span>
-                                    }
-                                </button>
-                            }
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <Grid TItem="EeWord"
+              Class="table table-hover table-bordered table-striped"
+              Data="Ee1KWords.SelectedWords"
+              PageSize="10"
+              AllowPaging="true"
+              AllowSorting="true"
+              Responsive="true"
+              AllowRowClick="true"
+              OnRowClick="@(args => SelectWord(args.Item.Value))">
+            <GridColumns>
+                <GridColumn TItem="EeWord" HeaderText="#" PropertyName="Id" SortKeySelector="item => WordIndex[item]">
+                    @WordIndex[context]
+                </GridColumn>
+                <GridColumn TItem="EeWord" HeaderText="Eestikeelne sõna" PropertyName="Value" SortKeySelector="item => item.Value">
+                    @context.Value
+                </GridColumn>
+                <GridColumn TItem="EeWord" HeaderText="English word(s)" PropertyName="EnWord" SortKeySelector="item => item.EnWord">
+                    @string.Join(" / ", context.EnWords)
+                </GridColumn>
+                <GridColumn TItem="EeWord" HeaderText="Part of speech" PropertyName="EePartOfSpeech" SortKeySelector="item => item.EePartOfSpeech">
+                    @context.EePartOfSpeech.ToEnPartOfSpeech() / @context.EePartOfSpeech
+                </GridColumn>
+            </GridColumns>
+            <GridTemplates>
+                <GridEmptyDataTemplate TItem="EeWord">
+                    <div class="d-grid gap-2">
+                        @if (CheckWordResult.HasValue && CheckWordResult.Value.IsFailure)
+                        {
+                            @CheckWordResult.Value.Error
+                        }
+                        else
+                        {
+                            <button @onclick="CheckWord" type="button" class="btn btn-primary btn-block btn-sm">
+                                @if (IsCheckInProgress)
+                                {
+                                    <Spinner Size="SpinnerSize.Small" />
+                                }
+                                else
+                                {
+                                    <span>Check the word</span>
+                                }
+                            </button>
+                        }
+                    </div>
+                </GridEmptyDataTemplate>
+            </GridTemplates>
+        </Grid>
     </div>
 </div>
