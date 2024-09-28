@@ -9,7 +9,7 @@
 @inject CheckEnTranslationCommand CheckEnTranslationCommand;
 
 @code {
-    TranslateToEnGame Game = new TranslateToEnGame(Array.Empty<SampleWord>());
+    TranslateToEnGame Game = new (Array.Empty<SampleWord>());
 
     protected override async Task OnParametersSetAsync()
     {
@@ -44,10 +44,22 @@
 
 <div class="text-left">
     <div class="row">
-        <h3>Translate to English</h3>
+        <div class="col-4">
+            <h3>Translate to English</h3>
+        </div>
+        <div class="col-8">
+            @if (Game.IsFinished)
+            {
+                var result = Game.CalcResuls();
+                <div class="progress m-2" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar" style="width: @result%">@result%</div>
+                </div>
+            }
+        </div>
     </div>
     <div class="row">
-        @if (Game.Slides.Length > 0)
+        
+        @if (Game.Slides.Any())
         {
             <div class="row">
                 <nav aria-label="Page navigation example">

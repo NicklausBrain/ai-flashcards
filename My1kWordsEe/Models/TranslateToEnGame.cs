@@ -21,6 +21,14 @@ namespace My1kWordsEe.Models
 
         public GameSlide CurrentSlide => Slides[CurrentSlideIndex];
 
+        public bool IsFinished => Slides.Any() && Slides.All(s => s.CheckResult.HasValue);
+
+        public ushort CalcResuls()
+        {
+            var prog = 100 * ((float)this.Slides.Sum(s => s.CheckResult.Value.Value.Match) / (float)(this.Slides.Length * 5));
+            return (ushort)Math.Round(prog, 0);
+        }
+
         public void NextSlide()
         {
             if (CurrentSlideIndex < gameSlides.Length - 1)
@@ -97,6 +105,12 @@ namespace My1kWordsEe.Models
 
         public async Task Submit(CheckEnTranslationCommand checkEnTranslationCommand)
         {
+            // todo: whitelist user input
+            if (string.IsNullOrWhiteSpace(UserTranslation))
+            {
+                return;
+            }
+
             var userInput = UserTranslation.Trim('.', ' ');
             var defaultEnTranslation = sampleSentence.EnSentence.Trim('.', ' ');
 
