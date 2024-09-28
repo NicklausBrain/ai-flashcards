@@ -22,8 +22,8 @@
     protected override async Task OnParametersSetAsync()
     {
         WordMetadata = EeWord.ValidateWord()
-            ? await this.EnsureWordCommand.Invoke(EeWord)
-            : Result.Failure<SampleWord>("Invalid word");
+        ? await this.EnsureWordCommand.Invoke(EeWord)
+        : Result.Failure<SampleWord>("Invalid word");
         await base.OnParametersSetAsync();
     }
 
@@ -103,8 +103,10 @@
         <div class="row">
             @foreach (var sample in Value.Samples)
             {
-                <SampleV2 Sample="@sample">
-                </SampleV2>
+                <div class="col-6 p-1">
+                    <SampleV2 Sample="@sample">
+                    </SampleV2>
+                </div>
             }
 
             <div class="col-6 text-center p-1">
