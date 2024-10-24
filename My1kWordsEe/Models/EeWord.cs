@@ -10,7 +10,6 @@ namespace My1kWordsEe.Models
     [JsonSerializable(typeof(EePartOfSpeech))]
     public record EeWord
     {
-        private readonly EePartOfSpeech[] partsOfSpeech = [];
         private readonly string[] enWords = [];
 
         [JsonPropertyName("value")]
