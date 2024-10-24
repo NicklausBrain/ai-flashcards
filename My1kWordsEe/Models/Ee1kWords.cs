@@ -25,7 +25,8 @@ namespace My1kWordsEe.Models
                 Search = search;
                 SelectedWords = AllWords.Where(w =>
                     AllWordsDiacriticsFree[w.Value].Contains(search, StringComparison.InvariantCultureIgnoreCase) ||
-                    w.EnWords.Any(en => en.Contains(search, StringComparison.InvariantCultureIgnoreCase)));
+                    w.EnWords.Any(en => en.Contains(search, StringComparison.InvariantCultureIgnoreCase)) ||
+                    w.Value.Contains(search, StringComparison.InvariantCultureIgnoreCase));
             }
             else
             {
