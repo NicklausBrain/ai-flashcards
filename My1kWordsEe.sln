@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "My1kWordsEe", "My1kWordsEe\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "My1kWordsEe.Tests.E2E", "My1kWordsEe.Tests.E2E\My1kWordsEe.Tests.E2E.csproj", "{E75AC254-1096-42BF-9902-8BE26FC68E8B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "My1kWordsEe.Cmd", "My1kWordsEe.Cmd\My1kWordsEe.Cmd.csproj", "{F2145ECE-3BD2-41B6-B831-A82D42B3DF74}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{E75AC254-1096-42BF-9902-8BE26FC68E8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E75AC254-1096-42BF-9902-8BE26FC68E8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E75AC254-1096-42BF-9902-8BE26FC68E8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2145ECE-3BD2-41B6-B831-A82D42B3DF74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2145ECE-3BD2-41B6-B831-A82D42B3DF74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2145ECE-3BD2-41B6-B831-A82D42B3DF74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2145ECE-3BD2-41B6-B831-A82D42B3DF74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -116,8 +116,7 @@ namespace My1kWordsEe.Services
                 "Teie väljund on sõna metaandmed JSON-is vastavalt antud lepingule:\n" +
                 "```\n{\n" +
                 "\"ee_word\": \"<antud sõna>\",\n" +
-                "\"en_word\": \"<english translation>\"\n" +
-                "\"en_words\": [<array of alternative english translations if applicable>]\n" +
+                "\"en_words\": [<array of alternative english translations ordered by priority>]\n" +
                 "\"en_explanation\": \"<explanation of the word meaning in english>\"\n" +
                 "}\n```\n";
 
@@ -152,7 +151,6 @@ namespace My1kWordsEe.Services
             return Result.Success(new SampleWord
             {
                 EeWord = wordMetadata.EeWord,
-                EnWord = wordMetadata.EnWord,
                 EnWords = wordMetadata.EnWords,
                 EnExplanation = wordMetadata.EnExplanation,
             });
@@ -177,9 +175,6 @@ namespace My1kWordsEe.Services
         {
             [JsonPropertyName("ee_word")]
             public required string EeWord { get; set; }
-
-            [JsonPropertyName("en_word")]
-            public required string EnWord { get; set; }
 
             [JsonPropertyName("en_explanation")]
             public required string EnExplanation { get; set; }

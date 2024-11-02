@@ -21,7 +21,7 @@ namespace My1kWordsEe.Models
         /// <summary>
         /// Default translation to English
         /// </summary>
-        public string EnWord => EnWords.First();
+        public required string EnWord { get; init; }
 
         /// <summary>
         /// Alternative translations to English
