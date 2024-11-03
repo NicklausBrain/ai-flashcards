@@ -11,7 +11,7 @@
 @inject GetOrAddSampleWordCommand GetOrAddSampleWordCommand;
 
 @code {
-    private static readonly Dictionary<EeWord, int> WordIndex = Ee1kWords.AllWords
+    private static readonly Dictionary<SampleWord, int> WordIndex = Ee1kWords.AllWords
         .Select((w, i) => (w, i))
         .ToDictionary(p => p.w, p => p.i + 1);
 
@@ -73,7 +73,7 @@
         </div>
     </div>
     <div class="row">
-        <Grid TItem="EeWord"
+        <Grid TItem="SampleWord"
               Class="table table-hover table-bordered table-striped"
               Data="Ee1KWords.SelectedWords"
               PageSize="10"
@@ -81,23 +81,23 @@
               AllowSorting="true"
               Responsive="true"
               AllowRowClick="true"
-              OnRowClick="@(args => SelectWord(args.Item.Value))">
+              OnRowClick="@(args => SelectWord(args.Item.EeWord))">
             <GridColumns>
-                <GridColumn TItem="EeWord" HeaderText="#" PropertyName="Id" SortKeySelector="item => WordIndex[item]">
+                <GridColumn TItem="SampleWord" HeaderText="#" PropertyName="Id" SortKeySelector="item => WordIndex[item]">
                     @WordIndex[context]
                 </GridColumn>
-                <GridColumn TItem="EeWord" HeaderText="Eestikeelne sõna" PropertyName="Value" SortKeySelector="item => item.Value">
-                    @context.Value
+                <GridColumn TItem="SampleWord" HeaderText="Eestikeelne sõna" PropertyName="Value" SortKeySelector="item => item.EeWord">
+                    @context.EeWord
                 </GridColumn>
-                <GridColumn TItem="EeWord" HeaderText="English word(s)" PropertyName="EnWord" SortKeySelector="item => item.EnWord">
+                <GridColumn TItem="SampleWord" HeaderText="English word(s)" PropertyName="EnWord" SortKeySelector="item => item.EnWord">
                     @string.Join(" / ", context.EnWords)
                 </GridColumn>
-                <GridColumn TItem="EeWord" HeaderText="Part of speech" PropertyName="EePartOfSpeech" SortKeySelector="item => item.EePartOfSpeech">
-                    @context.EePartOfSpeech.ToEnPartOfSpeech() / @context.EePartOfSpeech
+                <GridColumn TItem="SampleWord" HeaderText="Part of speech" PropertyName="EePartOfSpeech" SortKeySelector="item => item.EePartOfSpeech">
+                    @context.EePartOfSpeech?.ToEnPartOfSpeech() / @context.EePartOfSpeech
                 </GridColumn>
             </GridColumns>
             <GridTemplates>
-                <GridEmptyDataTemplate TItem="EeWord">
+                <GridEmptyDataTemplate TItem="SampleWord">
                     <div class="d-grid gap-2">
                         @if (CheckWordResult.HasValue && CheckWordResult.Value.IsFailure)
                         {

@@ -1,8 +1,12 @@
+using System.Text.Json.Serialization;
+
 namespace My1kWordsEe.Models
 {
     /// <summary>
     /// A word of the Estonian language with the respective translations and usage examples
     /// </summary>
+    [JsonSourceGenerationOptions(UseStringEnumConverter = true)]
+    [JsonSerializable(typeof(EePartOfSpeech))]
     public record SampleWord
     {
         private readonly string eeWord = "";
@@ -17,6 +21,8 @@ namespace My1kWordsEe.Models
             get => this.eeWord;
             init => this.eeWord = value?.ToLower() ?? "";
         }
+
+        public EePartOfSpeech? EePartOfSpeech { get; init; }
 
         /// <summary>
         /// Default translation to English
@@ -35,7 +41,7 @@ namespace My1kWordsEe.Models
         /// <summary>
         /// Explaining the word in English
         /// </summary>
-        public required string EnExplanation { get; init; }
+        public string? EnExplanation { get; init; }
 
         /// <summary>
         /// Sample pronunciation of the word

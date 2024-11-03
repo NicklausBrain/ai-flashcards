@@ -59,16 +59,16 @@ namespace My1kWordsEe.Models
         {
             var rn = new Random(Environment.TickCount);
 
-            var eeWords = new List<EeWord>
+            var eeWords = new List<SampleWord>
             {
                 Ee1kWords.AllWords[rn.Next(0,Ee1kWords.AllWords.Length)],
                 Ee1kWords.AllWords[rn.Next(0,Ee1kWords.AllWords.Length)],
                 Ee1kWords.AllWords[rn.Next(0,Ee1kWords.AllWords.Length)],
             };
 
-            var sampleWords = await Task.WhenAll(eeWords.AsParallel().Select(async eeWord =>
+            var sampleWords = await Task.WhenAll(eeWords.AsParallel().Select(async word =>
             {
-                var sampleWord = await getOrAddSampleWordCommand.Invoke(eeWord.Value);
+                var sampleWord = await getOrAddSampleWordCommand.Invoke(word.EeWord);
                 if (sampleWord.Value.Samples.Any())
                 {
                     return sampleWord.Value;
