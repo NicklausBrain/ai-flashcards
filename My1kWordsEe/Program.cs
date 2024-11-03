@@ -152,6 +152,7 @@ namespace My1kWordsEe
 
             builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
+            builder.Services.BuildServiceProvider().GetRequiredService<ApplicationDbContext>().Database.Migrate();
         }
     }
 }
