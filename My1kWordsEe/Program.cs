@@ -1,4 +1,10 @@
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 using My1kWordsEe.Components;
+using My1kWordsEe.Components.Account;
+using My1kWordsEe.Data;
 using My1kWordsEe.Services;
 using My1kWordsEe.Services.Cqs;
 using My1kWordsEe.Services.Db;
@@ -63,6 +69,8 @@ namespace My1kWordsEe
                     options.MaximumReceiveMessageSize = 16 * 1024;
                 });
 
+            AddAuth(builder);
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -77,8 +85,12 @@ namespace My1kWordsEe
             app.UseStaticFiles();
             app.UseAntiforgery();
 
+
             app.MapRazorComponents<App>()
                 .AddInteractiveServerRenderMode();
+
+            // Add additional endpoints required by the Identity /Account Razor components.
+            app.MapAdditionalIdentityEndpoints();
 
             return app;
         }
@@ -113,6 +125,33 @@ namespace My1kWordsEe
             }
 
             return (openAiKey, stabilityAiKey, azureBlobConnectionString);
+        }
+
+        private static void AddAuth(WebApplicationBuilder builder)
+        {
+            builder.Services.AddCascadingAuthenticationState();
+            builder.Services.AddScoped<IdentityUserAccessor>();
+            builder.Services.AddScoped<IdentityRedirectManager>();
+            builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = IdentityConstants.ApplicationScheme;
+                options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+            })
+                .AddIdentityCookies();
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlite("Data Source=My1kWordsEe.Auth.sqlite"));
+            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+            builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddSignInManager()
+                .AddDefaultTokenProviders();
+
+            builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+
         }
     }
 }
