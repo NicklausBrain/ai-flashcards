@@ -69,7 +69,7 @@ namespace My1kWordsEe
                     options.MaximumReceiveMessageSize = 16 * 1024;
                 });
 
-            AddAuth(builder);
+            AddAuth(builder, secrets.azureCosmosConnectionString);
 
             var app = builder.Build();
 
@@ -98,7 +98,8 @@ namespace My1kWordsEe
         private static (
            string openAiKey,
            string stabilityAiKey,
-           string azureBlobConnectionString) RequireSecrets(
+           string azureBlobConnectionString,
+           string azureCosmosConnectionString) RequireSecrets(
            WebApplicationBuilder builder)
         {
             var openAiKey =
@@ -124,10 +125,17 @@ namespace My1kWordsEe
                 throw new ApplicationException($"{AzureStorageClient.ApiSecretKey} is missing");
             }
 
-            return (openAiKey, stabilityAiKey, azureBlobConnectionString);
+            const string CosmosSecretKey = "Secrets:AzureCosmosConnectionString";
+            var azureCosmosConnectionString = builder.Configuration[CosmosSecretKey];
+            if (string.IsNullOrWhiteSpace(azureCosmosConnectionString))
+            {
+                throw new ApplicationException($"{CosmosSecretKey} is missing");
+            }
+
+            return (openAiKey, stabilityAiKey, azureBlobConnectionString, azureCosmosConnectionString);
         }
 
-        private static void AddAuth(WebApplicationBuilder builder)
+        private static void AddAuth(WebApplicationBuilder builder, string azureCosmosConnectionString)
         {
             builder.Services.AddCascadingAuthenticationState();
             builder.Services.AddScoped<IdentityUserAccessor>();
@@ -142,7 +150,11 @@ namespace My1kWordsEe
                 .AddIdentityCookies();
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite("Data Source=My1kWordsEe.Auth.sqlite"));
+            {
+                options.UseCosmos(azureCosmosConnectionString, "Auth");
+            });
+
+            // 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -152,7 +164,8 @@ namespace My1kWordsEe
 
             builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
-            builder.Services.BuildServiceProvider().GetRequiredService<ApplicationDbContext>().Database.Migrate();
+
+            builder.Services.BuildServiceProvider().GetRequiredService<ApplicationDbContext>().Database.EnsureCreated();
         }
     }
 }

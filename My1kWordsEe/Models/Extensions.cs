@@ -42,5 +42,15 @@ namespace My1kWordsEe.Models
 
             return true;
         }
+
+        public static bool IsRegistrationEnabled(this IConfiguration configuration)
+        {
+            var isRegistrationEnabled = configuration["IsRegistrationEnabled"];
+            if (string.IsNullOrWhiteSpace(isRegistrationEnabled))
+            {
+                return false;
+            }
+            return bool.Parse(isRegistrationEnabled);
+        }
     }
 }
