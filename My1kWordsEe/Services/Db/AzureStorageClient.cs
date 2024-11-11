@@ -27,6 +27,22 @@ namespace My1kWordsEe.Services.Db
             this.logger = logger;
         }
 
+        public async Task<Result> DeleteIfExistsAsync(Uri blobUrl)
+        {
+            try
+            {
+                var client = new BlobClient(blobUrl);
+                var result = await client.DeleteIfExistsAsync();
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex, "Failure to delete a blob {blobUrl}", blobUrl);
+                return Result.Failure("Failure to delete a blob " + blobUrl);
+            }
+
+            return Result.Success();
+        }
+
         public async Task<Result<Maybe<SampleWord>>> GetWordData(string word)
         {
             var container = await GetWordsContainer();
