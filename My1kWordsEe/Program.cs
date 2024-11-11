@@ -154,7 +154,6 @@ namespace My1kWordsEe
                 options.UseCosmos(azureCosmosConnectionString, "Auth");
             });
 
-            // 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
