@@ -4,6 +4,7 @@
 @using My1kWordsEe.Components.Account
 @using My1kWordsEe.Data
 @using My1kWordsEe.Services;
+@using My1kWordsEe.Services.Cqs
 @using My1kWordsEe.Models;
 @using CSharpFunctionalExtensions;
 @using System.Security.Claims
@@ -11,13 +12,17 @@
 @inject IdentityUserAccessor UserAccessor
 @inject UserManager<ApplicationUser> UserManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject DeleteSampleSentenceCommand DeleteSampleSentenceCommand
+@inject NavigationManager NavigationManager
 @inject IJSRuntime JS
 
 @code {
     [Parameter]
     public required SampleSentence Sample { get; init; }
 
-    private ConfirmDialog dialog = default!;
+    private ConfirmDialog DeleteSampleDialog = default!;
+
+    [Inject] protected ToastService ToastService { get; set; } = default!;
 
     private bool IsAdmin { get; set; } = false;
 
@@ -37,25 +42,33 @@
 
     private async Task ShowDeleteConfirmationAsync()
     {
-        var options = new ConfirmDialogOptions {
-            IsScrollable = true,
-            Dismissable=true,
-            IsVerticallyCentered= true,
-            AutoFocusYesButton = false,
-        };
+        var options = new ConfirmDialogOptions
+            {
+                IsScrollable = true,
+                Dismissable = true,
+                IsVerticallyCentered = true,
+                AutoFocusYesButton = false,
+            };
 
-        var confirmation = await dialog.ShowAsync(
+        var confirmation = await DeleteSampleDialog.ShowAsync(
             title: "Are you sure you want to delete this?",
             message1: "This will delete the record. Once deleted can not be rolled back.",
             message2: "Do you want to proceed?", options);
 
         if (confirmation)
         {
-            // do something
+            var deletionResult = await this.DeleteSampleSentenceCommand.Invoke(Sample);
+            if(deletionResult.IsSuccess){
+                this.NavigationManager.Refresh(true);
+            }
+            else
+            {
+                ToastService.Notify(new ToastMessage(ToastType.Warning, deletionResult.Error));
+            }
         }
         else
         {
-            // do something
+            ToastService.Notify(new ToastMessage(ToastType.Secondary, $"Delete action canceled."));
         }
     }
 }
@@ -101,4 +114,5 @@
 </div>
 
 
-<ConfirmDialog @ref="dialog" />
+<ConfirmDialog @ref="DeleteSampleDialog" />
+<Toasts class="p-3" AutoHide="true" StackLength="3" Placement="ToastsPlacement.TopRight" />
