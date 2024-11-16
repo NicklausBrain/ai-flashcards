@@ -1,6 +1,6 @@
 ﻿@page "/word-2-word-match-game/en"
 
-@rendermode InteractiveServer
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
 
 @using BlazorBootstrap
 @using My1kWordsEe.Models
