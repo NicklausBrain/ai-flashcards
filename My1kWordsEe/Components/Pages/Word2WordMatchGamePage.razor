@@ -12,6 +12,9 @@
     string[] EeWords = Array.Empty<string>();
     string[] EnWords = Array.Empty<string>();
 
+    string SelectedEeWord = string.Empty;
+    string SelectedEnWord = string.Empty;
+
     protected override async Task OnParametersSetAsync()
     {
         Game = await Word2WordMatchGame.Generate();
@@ -21,8 +24,37 @@
         Random.Shared.Shuffle(EnWords);
         await base.OnParametersSetAsync();
     }
-}
 
+    private void SelectEnWord(string enWord)
+    {
+        SelectedEnWord = enWord;
+    }
+
+    private void SelectEeWord(string eeWord)
+    {
+        SelectedEeWord = eeWord;
+    }
+
+    private CardColor GetEnCardColor(string enWord)
+    {
+        if(SelectedEnWord == enWord)
+        {
+            return CardColor.Warning;
+        }
+
+        return CardColor.Light;
+    }
+
+    private CardColor GetEeCardColor(string eeWord)
+    {
+        if(SelectedEeWord == eeWord)
+        {
+            return CardColor.Warning;
+        }
+
+        return CardColor.Light;
+    }
+}
 
 <div class="text-left">
     <div class="row">
@@ -41,11 +73,9 @@
             <div class="col-6">
                 @foreach (var enWord in this.EnWords)
                 {
-                    <Card Color="CardColor.Light" Class="mb-4" Style="width:18rem;">
-                        @* <CardHeader>Header</CardHeader> *@
+                    <Card Color="@GetEnCardColor(enWord)" Class="mb-4" Style="width:18rem;" role="button" @onclick="@(e => SelectEnWord(enWord))">
                         <CardBody>
                             <CardTitle>@enWord</CardTitle>
-                            @* <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText> *@
                         </CardBody>
                     </Card>
                 }
@@ -54,11 +84,9 @@
             <div class="col-6">
                 @foreach (var eeWord in this.EeWords)
                 {
-                    <Card Color="CardColor.Light" Class="mb-4" Style="width:18rem;">
-                        @* <CardHeader>Header</CardHeader> *@
+                    <Card Color="@GetEeCardColor(eeWord)" Class="mb-4" Style="width:18rem;" role="button" @onclick="@(e => SelectEeWord(eeWord))">
                         <CardBody>
                             <CardTitle>@eeWord</CardTitle>
-                            @* <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText> *@
                         </CardBody>
                     </Card>
                 }
