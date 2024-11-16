@@ -20,8 +20,8 @@
 
         public bool TryMatch(string eeWord, string enWord)
         {
-            var pair = this.pairs.FirstOrDefault(p => p.EeWord == eeWord && p.EnWord == enWord);
-            if (pair != null)
+            var pair = this.eeWords[eeWord];
+            if (pair.EnWord == enWord)
             {
                 pair.IsMatched = true;
                 return true;
