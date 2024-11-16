@@ -40,8 +40,18 @@
         public static Task<Word2WordMatchGame> Generate()
         {
             // todo: possible bug: what if 1 ee word correspond to 2 en words? or vice versa?
-            var pairs = Ee1kWords.AllWords
-                .TakeLast(5)
+            var rn = new Random(Environment.TickCount);
+
+            var eeWords = new List<EeWord>
+            {
+                Ee1kWords.AllWords[rn.Next(0,Ee1kWords.AllWords.Length)],
+                Ee1kWords.AllWords[rn.Next(0,Ee1kWords.AllWords.Length)],
+                Ee1kWords.AllWords[rn.Next(0,Ee1kWords.AllWords.Length)],
+                Ee1kWords.AllWords[rn.Next(0,Ee1kWords.AllWords.Length)],
+                Ee1kWords.AllWords[rn.Next(0,Ee1kWords.AllWords.Length)],
+            };
+
+            var pairs = eeWords
                 .Select(w => new Pair
                 {
                     EeWord = w.Value,
