@@ -7,6 +7,9 @@
 @using My1kWordsEe.Models.Games
 @using My1kWordsEe.Services.Cqs
 
+@inject IJSRuntime JS
+@inject GetOrAddSampleWordCommand EnsureWordCommand;
+
 @code {
     [Inject] protected ToastService ToastService { get; set; } = default!;
 
@@ -20,7 +23,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        Game = await Word2WordMatchGame.Generate();
+        Game = await Word2WordMatchGame.Generate(EnsureWordCommand);
         this.EeWords = Game.EeWords.Keys.ToArray();
         this.EnWords = Game.EnWords.Keys.ToArray();
         Random.Shared.Shuffle(EeWords);
@@ -50,7 +53,7 @@
 
     private CardColor GetEnCardColor(string enWord)
     {
-        if(SelectedEnWord == enWord)
+        if (SelectedEnWord == enWord)
         {
             return CardColor.Warning;
         }
@@ -65,7 +68,7 @@
 
     private CardColor GetEeCardColor(string eeWord)
     {
-        if(SelectedEeWord == eeWord)
+        if (SelectedEeWord == eeWord)
         {
             return CardColor.Warning;
         }
@@ -80,7 +83,7 @@
 
     private void TryMatch()
     {
-        if(string.IsNullOrEmpty(SelectedEeWord) || string.IsNullOrEmpty(SelectedEnWord))
+        if (string.IsNullOrEmpty(SelectedEeWord) || string.IsNullOrEmpty(SelectedEnWord))
         {
             return;
         }
@@ -90,6 +93,7 @@
         if (hasMatch)
         {
             ToastService.Notify(new ToastMessage(ToastType.Success, "Great match!"));
+            SpeakWord(SelectedEeWord);
         }
         else
         {
@@ -99,7 +103,19 @@
         SelectedEeWord = string.Empty;
         SelectedEnWord = string.Empty;
     }
+
+    private async Task SpeakWord(string eeWord)
+    {
+        await JS.InvokeVoidAsync("speakWordMatch", eeWord);
+    }
 }
+
+<script>
+    window.speakWordMatch = async (audioId) => {
+        const audio = document.getElementById(audioId);
+        await audio.play();
+    };
+</script>
 
 <div class="text-left">
     <div class="row">
@@ -136,6 +152,7 @@
                     <Card Color="@GetEeCardColor(eeWord)" Class="mb-4" role="button" @onclick="@(e => SelectEeWord(eeWord))">
                         <CardBody>
                             <CardTitle>@eeWord</CardTitle>
+                            <audio id="@eeWord" src="@Game.EeWords[eeWord].EeAudioUrl"></audio>
                         </CardBody>
                     </Card>
                 }
