@@ -15,8 +15,9 @@
 
     Word2WordMatchGame Game = new(Array.Empty<Word2WordMatchGame.Pair>());
 
-    string[] EeWords = Array.Empty<string>();
-    string[] EnWords = Array.Empty<string>();
+    // move it to game class
+    HashSet<string> EeWords2Match = new HashSet<string>();
+    HashSet<string> EnWords2Match = new HashSet<string>();
 
     string SelectedEeWord = string.Empty;
     string SelectedEnWord = string.Empty;
@@ -24,10 +25,15 @@
     protected override async Task OnParametersSetAsync()
     {
         Game = await Word2WordMatchGame.Generate(EnsureWordCommand);
-        this.EeWords = Game.EeWords.Keys.ToArray();
-        this.EnWords = Game.EnWords.Keys.ToArray();
-        Random.Shared.Shuffle(EeWords);
-        Random.Shared.Shuffle(EnWords);
+
+        // move it to game class
+        var eeWords2MatchArray = Game.EeWords.Keys.ToArray();
+        var enWords2MatchArray = Game.EnWords.Keys.ToArray();
+        Random.Shared.Shuffle(eeWords2MatchArray);
+        Random.Shared.Shuffle(enWords2MatchArray);
+        this.EeWords2Match = eeWords2MatchArray.ToHashSet();
+        this.EnWords2Match = enWords2MatchArray.ToHashSet();
+        
         await base.OnParametersSetAsync();
     }
 
@@ -94,6 +100,9 @@
 
         if (hasMatch)
         {
+            EeWords2Match.Remove(SelectedEeWord);
+            EnWords2Match.Remove(SelectedEnWord);
+
             ToastService.Notify(new ToastMessage(ToastType.Success, "Great match!"));
             await SpeakWord(SelectedEeWord);
         }
@@ -138,7 +147,7 @@
         @if (Game.Pairs.Any())
         {
             <div class="col-6 p-1">
-                @foreach (var enWord in this.EnWords)
+                @foreach (var enWord in this.EnWords2Match.Concat(Game.Matches.Select(m=>m.EnWord)))
                 {
                     <Card Color="@GetEnCardColor(enWord)" Class="mb-4" role="button" @onclick="@(e => SelectEnWord(enWord))">
                         <CardBody>
@@ -149,7 +158,7 @@
             </div>
 
             <div class="col-6 p-1">
-                @foreach (var eeWord in this.EeWords)
+                @foreach (var eeWord in this.EeWords2Match.Concat(Game.Matches.Select(m => m.EeWord)))
                 {
                     <Card Color="@GetEeCardColor(eeWord)" Class="mb-4" role="button" @onclick="@(e => SelectEeWord(eeWord))">
                         <CardBody>

@@ -8,17 +8,26 @@ namespace My1kWordsEe.Models.Games
     public class Word2WordMatchGame
     {
         private readonly Pair[] pairs;
-
         private readonly Dictionary<string, Pair> eeWords;
         private readonly Dictionary<string, Pair> enWords;
+        private readonly List<Pair> matches = new List<Pair>();
 
         public Word2WordMatchGame(Pair[] pairs)
         {
             this.pairs = pairs;
-
             eeWords = this.pairs.ToDictionary(p => p.EeWord);
             enWords = this.pairs.ToDictionary(p => p.EnWord);
         }
+
+        public IEnumerable<Pair> Pairs => this.pairs;
+
+        public IEnumerable<Pair> Matches => this.matches;
+
+        public IReadOnlyDictionary<string, Pair> EeWords => this.eeWords;
+
+        public IReadOnlyDictionary<string, Pair> EnWords => this.enWords;
+
+        public bool IsFinished => this.pairs.Any() && this.pairs.All(p => p.IsMatched);
 
         public bool TryMatch(string eeWord, string enWord)
         {
@@ -26,18 +35,11 @@ namespace My1kWordsEe.Models.Games
             if (pair.EnWord == enWord)
             {
                 pair.IsMatched = true;
+                this.matches.Add(pair);
                 return true;
             }
             return false;
         }
-
-        public IEnumerable<Pair> Pairs => this.pairs;
-
-        public IReadOnlyDictionary<string, Pair> EeWords => this.eeWords;
-
-        public IReadOnlyDictionary<string, Pair> EnWords => this.enWords;
-
-        public bool IsFinished => this.pairs.Any() && this.pairs.All(p => p.IsMatched);
 
         public static Task<Word2WordMatchGame> Generate(GetOrAddSampleWordCommand ensureWordCommand) => Task.Run(async () =>
         {
@@ -71,6 +73,7 @@ namespace My1kWordsEe.Models.Games
 
             public required string EnWord { get; init; }
 
+            // might be not needed if use ''matches''
             public bool IsMatched { get; set; }
 
             public Uri? EeAudioUrl { get; init; }
