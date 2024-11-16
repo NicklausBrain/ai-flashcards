@@ -2,7 +2,7 @@
 
 using My1kWordsEe.Services.Cqs;
 
-namespace My1kWordsEe.Models
+namespace My1kWordsEe.Models.Games
 {
     public class TranslateToEnGame
     {
