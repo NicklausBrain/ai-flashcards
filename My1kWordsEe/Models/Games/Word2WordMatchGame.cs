@@ -1,4 +1,6 @@
-﻿namespace My1kWordsEe.Models.Games
+﻿using My1kWordsEe.Services.Cqs;
+
+namespace My1kWordsEe.Models.Games
 {
     // should we have a 'base' game
     // so that we can combine different games?
@@ -35,14 +37,14 @@
 
         public IReadOnlyDictionary<string, Pair> EnWords => this.enWords;
 
-        public bool IsFinished => this.pairs.All(p => p.IsMatched);
+        public bool IsFinished => this.pairs.Any() && this.pairs.All(p => p.IsMatched);
 
-        public static Task<Word2WordMatchGame> Generate()
+        public static Task<Word2WordMatchGame> Generate(GetOrAddSampleWordCommand ensureWordCommand) => Task.Run(async () =>
         {
             // todo: possible bug: what if 1 ee word correspond to 2 en words? or vice versa?
             var rn = new Random(Environment.TickCount);
 
-            var eeWords = new List<EeWord>
+            var eeWords = new EeWord[]
             {
                 Ee1kWords.AllWords[rn.Next(0,Ee1kWords.AllWords.Length)],
                 Ee1kWords.AllWords[rn.Next(0,Ee1kWords.AllWords.Length)],
@@ -51,22 +53,27 @@
                 Ee1kWords.AllWords[rn.Next(0,Ee1kWords.AllWords.Length)],
             };
 
-            var pairs = eeWords
-                .Select(w => new Pair
+            var pairs = await Task.WhenAll(eeWords
+                .AsParallel()
+                .Select(async w => new Pair
                 {
+                    EeAudioUrl = (await ensureWordCommand.Invoke(w.Value)).Value.EeAudioUrl,
                     EeWord = w.Value,
                     EnWord = w.EnWord
-                }).ToArray();
+                }));
 
-            return Task.FromResult(new Word2WordMatchGame(pairs));
-        }
+            return new Word2WordMatchGame(pairs);
+        });
 
         public class Pair
         {
             public required string EeWord { get; init; }
+
             public required string EnWord { get; init; }
 
             public bool IsMatched { get; set; }
+
+            public Uri? EeAudioUrl { get; init; }
         }
     }
 }
