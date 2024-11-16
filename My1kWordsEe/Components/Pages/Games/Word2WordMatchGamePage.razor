@@ -31,24 +31,26 @@
         await base.OnParametersSetAsync();
     }
 
-    private void SelectEnWord(string enWord)
+    private Task SelectEnWord(string enWord)
     {
         if (Game.EnWords[enWord].IsMatched)
         {
-            return;
+            // ignore already matched words
+            return Task.CompletedTask;
         }
         SelectedEnWord = enWord;
-        this.TryMatch();
+        return this.TryMatch();
     }
 
-    private void SelectEeWord(string eeWord)
+    private Task SelectEeWord(string eeWord)
     {
         if (Game.EeWords[eeWord].IsMatched)
         {
-            return;
+            // ignore already matched words
+            return Task.CompletedTask;
         }
         SelectedEeWord = eeWord;
-        this.TryMatch();
+        return this.TryMatch();
     }
 
     private CardColor GetEnCardColor(string enWord)
@@ -81,7 +83,7 @@
         return CardColor.Light;
     }
 
-    private void TryMatch()
+    private async Task TryMatch()
     {
         if (string.IsNullOrEmpty(SelectedEeWord) || string.IsNullOrEmpty(SelectedEnWord))
         {
@@ -93,7 +95,7 @@
         if (hasMatch)
         {
             ToastService.Notify(new ToastMessage(ToastType.Success, "Great match!"));
-            SpeakWord(SelectedEeWord);
+            await SpeakWord(SelectedEeWord);
         }
         else
         {
