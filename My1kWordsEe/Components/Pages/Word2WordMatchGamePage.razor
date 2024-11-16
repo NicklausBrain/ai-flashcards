@@ -1,12 +1,15 @@
 ﻿@page "/word-2-word-match-game/en"
+
+@rendermode InteractiveServer
+
 @using BlazorBootstrap
 @using My1kWordsEe.Models
 @using My1kWordsEe.Models.Games
 @using My1kWordsEe.Services.Cqs
 
-@rendermode @(new InteractiveServerRenderMode(prerender: false))
-
 @code {
+    [Inject] protected ToastService ToastService { get; set; } = default!;
+
     Word2WordMatchGame Game = new(Array.Empty<Word2WordMatchGame.Pair>());
 
     string[] EeWords = Array.Empty<string>();
@@ -27,12 +30,22 @@
 
     private void SelectEnWord(string enWord)
     {
+        if (Game.EnWords[enWord].IsMatched)
+        {
+            return;
+        }
         SelectedEnWord = enWord;
+        this.TryMatch();
     }
 
     private void SelectEeWord(string eeWord)
     {
+        if (Game.EeWords[eeWord].IsMatched)
+        {
+            return;
+        }
         SelectedEeWord = eeWord;
+        this.TryMatch();
     }
 
     private CardColor GetEnCardColor(string enWord)
@@ -40,6 +53,11 @@
         if(SelectedEnWord == enWord)
         {
             return CardColor.Warning;
+        }
+
+        if (Game.EnWords[enWord].IsMatched)
+        {
+            return CardColor.Success;
         }
 
         return CardColor.Light;
@@ -52,7 +70,34 @@
             return CardColor.Warning;
         }
 
+        if (Game.EeWords[eeWord].IsMatched)
+        {
+            return CardColor.Success;
+        }
+
         return CardColor.Light;
+    }
+
+    private void TryMatch()
+    {
+        if(string.IsNullOrEmpty(SelectedEeWord) || string.IsNullOrEmpty(SelectedEnWord))
+        {
+            return;
+        }
+
+        var hasMatch = Game.TryMatch(SelectedEeWord, SelectedEnWord);
+
+        if (hasMatch)
+        {
+            ToastService.Notify(new ToastMessage(ToastType.Success, "Great match!"));
+        }
+        else
+        {
+            ToastService.Notify(new ToastMessage(ToastType.Danger, "Try again!"));
+        }
+
+        SelectedEeWord = string.Empty;
+        SelectedEnWord = string.Empty;
     }
 }
 
@@ -64,16 +109,20 @@
         <div class="col-8">
             @if (Game.IsFinished)
             {
+                <Button Color="ButtonColor.Primary" Type="ButtonType.Reset" @onclick="@OnParametersSetAsync">
+                    <i class="bi bi-arrow-repeat"></i>
+                    Try again!
+                </Button>
             }
         </div>
     </div>
     <div class="row">
         @if (Game.Pairs.Any())
         {
-            <div class="col-6">
+            <div class="col-6 p-1">
                 @foreach (var enWord in this.EnWords)
                 {
-                    <Card Color="@GetEnCardColor(enWord)" Class="mb-4" Style="width:18rem;" role="button" @onclick="@(e => SelectEnWord(enWord))">
+                    <Card Color="@GetEnCardColor(enWord)" Class="mb-4" role="button" @onclick="@(e => SelectEnWord(enWord))">
                         <CardBody>
                             <CardTitle>@enWord</CardTitle>
                         </CardBody>
@@ -81,10 +130,10 @@
                 }
             </div>
 
-            <div class="col-6">
+            <div class="col-6 p-1">
                 @foreach (var eeWord in this.EeWords)
                 {
-                    <Card Color="@GetEeCardColor(eeWord)" Class="mb-4" Style="width:18rem;" role="button" @onclick="@(e => SelectEeWord(eeWord))">
+                    <Card Color="@GetEeCardColor(eeWord)" Class="mb-4" role="button" @onclick="@(e => SelectEeWord(eeWord))">
                         <CardBody>
                             <CardTitle>@eeWord</CardTitle>
                         </CardBody>
@@ -100,3 +149,5 @@
         }
     </div>
 </div>
+
+<Toasts class="p-3" AutoHide="true" StackLength="5" Placement="ToastsPlacement.TopRight" />
