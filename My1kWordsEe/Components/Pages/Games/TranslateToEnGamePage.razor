@@ -1,9 +1,11 @@
 ﻿@page "/translate-game/en"
-@using BlazorBootstrap
-@using My1kWordsEe.Models
-@using My1kWordsEe.Services.Cqs
 
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
+
+@using BlazorBootstrap
+@using My1kWordsEe.Models
+@using My1kWordsEe.Models.Games
+@using My1kWordsEe.Services.Cqs
 
 @inject GetOrAddSampleWordCommand EnsureWordCommand;
 @inject AddSampleSentenceCommand CreateSampleCommand;
@@ -17,6 +19,8 @@
         Game = await TranslateToEnGame.Generate(EnsureWordCommand, CreateSampleCommand);
         await base.OnParametersSetAsync();
     }
+
+    // todo: mb slides should be part of a 'parent' game session or something
 
     private void OnNext() => Game.NextSlide();
 
