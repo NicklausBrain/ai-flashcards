@@ -18,6 +18,8 @@
         await base.OnParametersSetAsync();
     }
 
+    // todo: mb slides should be part of a 'parent' game session or something
+
     private void OnNext() => Game.NextSlide();
 
     private void OnPrevious() => Game.PrevSlide();

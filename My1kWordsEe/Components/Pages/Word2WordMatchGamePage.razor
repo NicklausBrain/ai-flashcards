@@ -1,0 +1,74 @@
+﻿@page "/word-2-word-match-game/en"
+@using BlazorBootstrap
+@using My1kWordsEe.Models
+@using My1kWordsEe.Models.Games
+@using My1kWordsEe.Services.Cqs
+
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+
+@code {
+    Word2WordMatchGame Game = new(Array.Empty<Word2WordMatchGame.Pair>());
+
+    string[] EeWords = Array.Empty<string>();
+    string[] EnWords = Array.Empty<string>();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Game = await Word2WordMatchGame.Generate();
+        this.EeWords = Game.EeWords.Keys.ToArray();
+        this.EnWords = Game.EnWords.Keys.ToArray();
+        Random.Shared.Shuffle(EeWords);
+        Random.Shared.Shuffle(EnWords);
+        await base.OnParametersSetAsync();
+    }
+}
+
+
+<div class="text-left">
+    <div class="row">
+        <div class="col-4">
+            <h3>Match word pairs</h3>
+        </div>
+        <div class="col-8">
+            @if (Game.IsFinished)
+            {
+            }
+        </div>
+    </div>
+    <div class="row">
+        @if (Game.Pairs.Any())
+        {
+            <div class="col-6">
+                @foreach (var enWord in this.EnWords)
+                {
+                    <Card Color="CardColor.Light" Class="mb-4" Style="width:18rem;">
+                        @* <CardHeader>Header</CardHeader> *@
+                        <CardBody>
+                            <CardTitle>@enWord</CardTitle>
+                            @* <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText> *@
+                        </CardBody>
+                    </Card>
+                }
+            </div>
+
+            <div class="col-6">
+                @foreach (var eeWord in this.EeWords)
+                {
+                    <Card Color="CardColor.Light" Class="mb-4" Style="width:18rem;">
+                        @* <CardHeader>Header</CardHeader> *@
+                        <CardBody>
+                            <CardTitle>@eeWord</CardTitle>
+                            @* <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText> *@
+                        </CardBody>
+                    </Card>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="d-flex justify-content-center">
+                <Spinner />
+            </div>
+        }
+    </div>
+</div>
