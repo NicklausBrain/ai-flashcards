@@ -1,16 +1,77 @@
-﻿@using My1kWordsEe.Services;
+﻿@using BlazorBootstrap
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Identity
+@using My1kWordsEe.Components.Account
+@using My1kWordsEe.Data
+@using My1kWordsEe.Services;
+@using My1kWordsEe.Services.Cqs
 @using My1kWordsEe.Models;
 @using CSharpFunctionalExtensions;
+@using System.Security.Claims
 
+@rendermode InteractiveServer
+
+@inject IdentityUserAccessor UserAccessor
+@inject UserManager<ApplicationUser> UserManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject DeleteSampleSentenceCommand DeleteSampleSentenceCommand
+@inject NavigationManager NavigationManager
 @inject IJSRuntime JS
 
 @code {
     [Parameter]
     public required SampleSentence Sample { get; init; }
 
+    private ConfirmDialog DeleteSampleDialog = default!;
+
+    [Inject] protected ToastService ToastService { get; set; } = default!;
+
+    private bool IsAdmin { get; set; } = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        if (authState != null)
+        {
+            IsAdmin = authState.User.HasClaim(c => c.Type == ClaimTypes.Role && c.Value == "admin");
+        }
+    }
+
     private async Task PlaySample(MouseEventArgs e)
     {
         await JS.InvokeVoidAsync("playAudioSample", Sample.EeAudioUrl);
+    }
+
+    private async Task ShowDeleteConfirmationAsync()
+    {
+        var options = new ConfirmDialogOptions
+            {
+                IsScrollable = true,
+                Dismissable = true,
+                IsVerticallyCentered = true,
+                AutoFocusYesButton = false,
+            };
+
+        var confirmation = await DeleteSampleDialog.ShowAsync(
+            title: "Are you sure you want to delete this?",
+            message1: "This will delete the record. Once deleted can not be rolled back.",
+            message2: "Do you want to proceed?", options);
+
+        if (confirmation)
+        {
+            var deletionResult = await this.DeleteSampleSentenceCommand.Invoke(Sample);
+            if(deletionResult.IsSuccess){
+                this.NavigationManager.Refresh(true);
+            }
+            else
+            {
+                ToastService.Notify(new ToastMessage(ToastType.Warning, deletionResult.Error));
+            }
+        }
+        else
+        {
+            ToastService.Notify(new ToastMessage(ToastType.Secondary, $"Delete action canceled."));
+        }
     }
 }
 
@@ -37,6 +98,12 @@
                 <i class="bi bi-volume-down-fill"></i>
             </button>
             <audio id="@Sample.EeAudioUrl" src="@Sample.EeAudioUrl"></audio>
+            @if (IsAdmin)
+            {
+                <button type="button" class="btn btn-danger" @onclick="ShowDeleteConfirmationAsync">
+                    <i class="bi bi-trash3-fill"></i>
+                </button>
+            }
         </li>
         <li class="list-group-item">
             @Sample.EnSentence
@@ -47,3 +114,7 @@
     </ul>
 
 </div>
+
+
+<ConfirmDialog @ref="DeleteSampleDialog" />
+<Toasts class="p-3" AutoHide="true" StackLength="3" Placement="ToastsPlacement.TopRight" />

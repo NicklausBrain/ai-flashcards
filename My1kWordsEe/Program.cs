@@ -51,9 +51,11 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<AddSampleWordCommand>();
             builder.Services.AddSingleton<AddAudioCommand>();
             builder.Services.AddSingleton<CheckEnTranslationCommand>();
+            builder.Services.AddSingleton<DeleteSampleSentenceCommand>();
 
             // Blazor-specific services
             builder.Services
+                .AddBlazorBootstrap()
                 .AddRazorComponents()
                 .AddInteractiveServerComponents(options =>
                 {
@@ -154,7 +156,6 @@ namespace My1kWordsEe
                 options.UseCosmos(azureCosmosConnectionString, "Auth");
             });
 
-            // 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
