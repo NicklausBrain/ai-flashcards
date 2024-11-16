@@ -17,8 +17,8 @@ namespace My1kWordsEe.Services.Cqs
 
         public async Task<Result> Invoke(SampleSentence sampleToRemove)
         {
-            var imageRemoval = this.azureBlobService.DeleteIfExistsAsync(sampleToRemove.ImageUrl);
-            var audioRemoval = this.azureBlobService.DeleteIfExistsAsync(sampleToRemove.EeAudioUrl);
+            var imageRemoval = this.azureBlobService.DeleteImage(sampleToRemove.ImageUrl.Segments.Last());
+            var audioRemoval = this.azureBlobService.DeleteAudio(sampleToRemove.EeAudioUrl.Segments.Last());
 
             await Task.WhenAll(imageRemoval, audioRemoval);
 

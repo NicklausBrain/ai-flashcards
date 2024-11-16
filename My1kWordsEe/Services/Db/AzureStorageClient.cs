@@ -27,21 +27,13 @@ namespace My1kWordsEe.Services.Db
             this.logger = logger;
         }
 
-        public async Task<Result> DeleteIfExistsAsync(Uri blobUrl)
-        {
-            try
-            {
-                var client = new BlobClient(blobUrl);
-                var result = await client.DeleteIfExistsAsync();
-            }
-            catch (Exception ex)
-            {
-                this.logger.LogError(ex, "Failure to delete a blob {blobUrl}", blobUrl);
-                return Result.Failure("Failure to delete a blob " + blobUrl);
-            }
+        public Task<Result<bool>> DeleteAudio(string blobName) =>
+            this.GetAudioContainer().Bind((container) =>
+            this.DeleteIfExistsAsync(container.GetBlobClient(blobName)));
 
-            return Result.Success();
-        }
+        public Task<Result<bool>> DeleteImage(string blobName) =>
+            this.GetImageContainer().Bind((container) =>
+            this.DeleteIfExistsAsync(container.GetBlobClient(blobName)));
 
         public async Task<Result<Maybe<SampleWord>>> GetWordData(string word)
         {
@@ -139,6 +131,20 @@ namespace My1kWordsEe.Services.Db
             {
                 this.logger.LogError(exception, "Failure to upload data to blob {name}", blob.Name);
                 return Result.Failure<Uri>("Azure storage upload error");
+            }
+        }
+
+        private async Task<Result<bool>> DeleteIfExistsAsync(BlobClient blob)
+        {
+            try
+            {
+                var response = await blob.DeleteIfExistsAsync();
+                return response.Value;
+            }
+            catch (RequestFailedException exception)
+            {
+                this.logger.LogError(exception, "Failure to delete blob {name}", blob.Name);
+                return Result.Failure<bool>("Failure to delete blob {name}");
             }
         }
 
