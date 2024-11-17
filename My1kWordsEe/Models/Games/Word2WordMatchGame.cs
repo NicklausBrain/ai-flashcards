@@ -10,7 +10,7 @@ namespace My1kWordsEe.Models.Games
         private readonly Pair[] pairs;
         private readonly Dictionary<string, Pair> eeWords;
         private readonly Dictionary<string, Pair> enWords;
-        private readonly List<Pair> matches = new List<Pair>();
+        private readonly Stack<Pair> matches = new Stack<Pair>();
 
         public Word2WordMatchGame(Pair[] pairs)
         {
@@ -35,7 +35,7 @@ namespace My1kWordsEe.Models.Games
             if (pair.EnWord == enWord)
             {
                 pair.IsMatched = true;
-                this.matches.Add(pair);
+                this.matches.Push(pair);
                 return true;
             }
             return false;
