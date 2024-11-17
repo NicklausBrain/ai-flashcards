@@ -4,7 +4,6 @@ namespace My1kWordsEe.Models.Games
 {
     // should we have a 'base' game
     // so that we can combine different games?
-
     public class Word2WordMatchGame
     {
         private readonly Pair[] pairs;
