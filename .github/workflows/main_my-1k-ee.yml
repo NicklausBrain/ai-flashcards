@@ -3,22 +3,15 @@
 
 name: Build and deploy ASP.Net Core app to Azure Web App - my-1k-ee
 
-defaults:
-  run:
-    working-directory: ./My1kWordsEe
-
 on:
-  workflow_run:
-    workflows: [Playwright Tests - my-1k-ee]
-    types: [completed]
-    branches: [main]
-
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - uses: actions/checkout@v4
@@ -26,7 +19,7 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "8.x"
+          dotnet-version: '8.x'
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
@@ -42,10 +35,9 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     needs: build
     environment:
-      name: "Production"
+      name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write #This is required for requesting the JWT
@@ -55,18 +47,19 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: .net-app
-
+      
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D991B47EC0104DB09ACE4717F8BE9F1E }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_47E10473692C43C5AEEEF025A9BB8596 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_86CF491FF410466C920238CFF15337D6 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_0ECC8F76933049539E2B37FB8DBBA66D }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_FD5F0A22C7FD4B6CA6B65DD4DC5059D4 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F93A7C9DE61D4DD2B52E842AC41F931E }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: "my-1k-ee"
-          slot-name: "Production"
+          app-name: 'my-1k-ee'
+          slot-name: 'Production'
           package: .
+          
