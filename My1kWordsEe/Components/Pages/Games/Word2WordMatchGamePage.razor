@@ -128,7 +128,7 @@
         </div>
     </div>
     <div class="row">
-        @if (Game.Pairs.Any())
+        @if (Game.IsReady)
         {
             <div class="col-6 p-1">
                 @foreach (var enWord in Game.EnWords2Match.Concat(Game.Matches.Select(m=>m.EnWord)))
