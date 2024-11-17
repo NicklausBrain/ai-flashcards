@@ -15,19 +15,12 @@
 
     Word2WordMatchGame Game = new(Array.Empty<Word2WordMatchGame.Pair>());
 
-    string[] EeWords = Array.Empty<string>();
-    string[] EnWords = Array.Empty<string>();
-
     string SelectedEeWord = string.Empty;
     string SelectedEnWord = string.Empty;
 
     protected override async Task OnParametersSetAsync()
     {
         Game = await Word2WordMatchGame.Generate(EnsureWordCommand);
-        this.EeWords = Game.EeWords.Keys.ToArray();
-        this.EnWords = Game.EnWords.Keys.ToArray();
-        Random.Shared.Shuffle(EeWords);
-        Random.Shared.Shuffle(EnWords);
         await base.OnParametersSetAsync();
     }
 
@@ -135,10 +128,10 @@
         </div>
     </div>
     <div class="row">
-        @if (Game.Pairs.Any())
+        @if (Game.IsReady)
         {
             <div class="col-6 p-1">
-                @foreach (var enWord in this.EnWords)
+                @foreach (var enWord in Game.EnWords2Match.Concat(Game.Matches.Select(m=>m.EnWord)))
                 {
                     <Card Color="@GetEnCardColor(enWord)" Class="mb-4" role="button" @onclick="@(e => SelectEnWord(enWord))">
                         <CardBody>
@@ -149,7 +142,7 @@
             </div>
 
             <div class="col-6 p-1">
-                @foreach (var eeWord in this.EeWords)
+                @foreach (var eeWord in Game.EeWords2Match.Concat(Game.Matches.Select(m => m.EeWord)))
                 {
                     <Card Color="@GetEeCardColor(eeWord)" Class="mb-4" role="button" @onclick="@(e => SelectEeWord(eeWord))">
                         <CardBody>
