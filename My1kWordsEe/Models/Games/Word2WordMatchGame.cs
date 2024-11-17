@@ -4,12 +4,13 @@ namespace My1kWordsEe.Models.Games
 {
     // should we have a 'base' game
     // so that we can combine different games?
-
     public class Word2WordMatchGame
     {
         private readonly Pair[] pairs;
         private readonly Dictionary<string, Pair> eeWords;
         private readonly Dictionary<string, Pair> enWords;
+        private readonly HashSet<string> eeWords2Match = new HashSet<string>();
+        private readonly HashSet<string> enWords2Match = new HashSet<string>();
         private readonly Stack<Pair> matches = new Stack<Pair>();
 
         public Word2WordMatchGame(Pair[] pairs)
@@ -17,6 +18,12 @@ namespace My1kWordsEe.Models.Games
             this.pairs = pairs;
             eeWords = this.pairs.ToDictionary(p => p.EeWord);
             enWords = this.pairs.ToDictionary(p => p.EnWord);
+            var eeWords2MatchArray = eeWords.Keys.ToArray();
+            var enWords2MatchArray = enWords.Keys.ToArray();
+            Random.Shared.Shuffle(eeWords2MatchArray);
+            Random.Shared.Shuffle(enWords2MatchArray);
+            this.eeWords2Match = eeWords2MatchArray.ToHashSet();
+            this.enWords2Match = enWords2MatchArray.ToHashSet();
         }
 
         public IEnumerable<Pair> Pairs => this.pairs;
@@ -27,6 +34,10 @@ namespace My1kWordsEe.Models.Games
 
         public IReadOnlyDictionary<string, Pair> EnWords => this.enWords;
 
+        public IEnumerable<string> EnWords2Match => this.enWords2Match;
+
+        public IEnumerable<string> EeWords2Match => this.eeWords2Match;
+
         public bool IsFinished => this.pairs.Any() && this.pairs.All(p => p.IsMatched);
 
         public bool TryMatch(string eeWord, string enWord)
@@ -34,9 +45,10 @@ namespace My1kWordsEe.Models.Games
             var pair = this.eeWords[eeWord];
             if (pair.EnWord == enWord)
             {
-                pair.IsMatched = true;
                 this.matches.Push(pair);
-                return true;
+                this.eeWords2Match.Remove(pair.EeWord);
+                this.enWords2Match.Remove(pair.EnWord);
+                return pair.IsMatched = true;
             }
             return false;
         }
