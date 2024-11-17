@@ -3,15 +3,22 @@
 
 name: Build and deploy ASP.Net Core app to Azure Web App - my-1k-ee
 
+defaults:
+  run:
+    working-directory: ./My1kWordsEe
+
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: [Playwright Tests - my-1k-ee]
+    types: [completed]
+    branches: [main]
+
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - uses: actions/checkout@v4
@@ -35,6 +42,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     needs: build
     environment:
       name: 'Production'
