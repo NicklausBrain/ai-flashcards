@@ -6,102 +6,42 @@ namespace My1kWordsEe.Models.Games
 {
     public class TranslateToEnGame
     {
-        private readonly SampleWord[] sampleWords;
-        private readonly GameSlide[] gameSlides;
+        private readonly SampleSentence sampleSentence;
 
-        public TranslateToEnGame(SampleWord[] sampleWords)
+        public TranslateToEnGame(SampleSentence sampleSentence)
         {
-            this.sampleWords = sampleWords;
-            this.gameSlides = sampleWords.Select(sw => new GameSlide(sw)).ToArray();
+            this.sampleSentence = sampleSentence;
         }
 
-        public GameSlide[] Slides => this.gameSlides;
+        public Maybe<Result<EnTranslationCheckResult>> CheckResult { get; private set; }
 
-        public ushort CurrentSlideIndex { get; private set; } = 0;
+        public bool IsFinished => CheckResult.HasValue;
 
-        public GameSlide CurrentSlide => Slides[CurrentSlideIndex];
+        public string EeSentence => sampleSentence.EeSentence;
 
-        public bool IsFinished => Slides.Any() && Slides.All(s => s.CheckResult.HasValue);
+        public Uri ImageUrl => sampleSentence.ImageUrl;
 
-        public ushort CalcResuls()
-        {
-            var prog = 100 * ((float)this.Slides.Sum(s => s.CheckResult.Value.Value.Match) / (float)(this.Slides.Length * 5));
-            return (ushort)Math.Round(prog, 0);
-        }
+        public string UserTranslation { get; set; } = string.Empty;
 
-        public void NextSlide()
-        {
-            if (CurrentSlideIndex < gameSlides.Length - 1)
-            {
-                CurrentSlideIndex++;
-            }
-        }
-
-        public void PrevSlide()
-        {
-            if (CurrentSlideIndex > 0)
-            {
-                CurrentSlideIndex--;
-            }
-        }
-
-        public void GoToSlide(ushort index)
-        {
-            if (index < gameSlides.Length && index >= 0)
-            {
-                CurrentSlideIndex = index;
-            }
-        }
+        public bool IsCheckInProgress { get; private set; }
 
         public static async Task<TranslateToEnGame> Generate(
             GetOrAddSampleWordCommand getOrAddSampleWordCommand,
             AddSampleSentenceCommand addSampleSentenceCommand)
         {
             var rn = new Random(Environment.TickCount);
+            var eeWord = Ee1kWords.AllWords[rn.Next(0, Ee1kWords.AllWords.Length)];
+            var sampleWord = await getOrAddSampleWordCommand.Invoke(eeWord.Value);
 
-            var eeWords = new List<EeWord>
+            if (sampleWord.Value.Samples.Any())
             {
-                Ee1kWords.AllWords[rn.Next(0,Ee1kWords.AllWords.Length)],
-                Ee1kWords.AllWords[rn.Next(0,Ee1kWords.AllWords.Length)],
-                Ee1kWords.AllWords[rn.Next(0,Ee1kWords.AllWords.Length)],
-            };
-
-            var sampleWords = await Task.WhenAll(eeWords.AsParallel().Select(async eeWord =>
+                return new TranslateToEnGame(sampleWord.Value.Samples.First());
+            }
+            else
             {
-                var sampleWord = await getOrAddSampleWordCommand.Invoke(eeWord.Value);
-                if (sampleWord.Value.Samples.Any())
-                {
-                    return sampleWord.Value;
-                }
-                else
-                {
-                    return (await addSampleSentenceCommand.Invoke(sampleWord.Value)).Value;
-                }
-
-            }));
-
-            return new TranslateToEnGame(sampleWords);
+                return new TranslateToEnGame((await addSampleSentenceCommand.Invoke(sampleWord.Value)).Value.Samples.First());
+            }
         }
-    }
-
-    public class GameSlide
-    {
-        private readonly SampleSentence sampleSentence;
-
-        public GameSlide(SampleWord sampleWord)
-        {
-            this.sampleSentence = sampleWord.Samples[0];
-        }
-
-        public string EeSentence => sampleSentence.EeSentence;
-
-        public Uri ImageUrl => sampleSentence.ImageUrl;
-
-        public string UserTranslation { get; set; }
-
-        public Maybe<Result<EnTranslationCheckResult>> CheckResult { get; private set; }
-
-        public bool IsCheckInProgress { get; private set; }
 
         public async Task Submit(CheckEnTranslationCommand checkEnTranslationCommand)
         {

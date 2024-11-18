@@ -44,9 +44,12 @@ namespace My1kWordsEe.Services.Cqs
                 out bool _,
                 out Uri audioUri);
 
-            sampleWord = isAudioSaved ? sampleWord with { EeAudioUrl = audioUri } : sampleWord;
+            sampleWord = isAudioSaved
+                ? sampleWord with { EeAudioUrl = audioUri }
+                : sampleWord;
 
-            return (await azureBlobService.SaveWordData(sampleWord)).Bind(_ => Result.Of(sampleWord));
+            return (await azureBlobService.SaveWordData(sampleWord))
+                .Bind(_ => Result.Of(sampleWord));
         }
     }
 }
