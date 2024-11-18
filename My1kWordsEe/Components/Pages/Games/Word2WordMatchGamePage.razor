@@ -106,9 +106,11 @@
 }
 
 <script>
-    window.speakWordMatch = async (audioId) => {
-        const audio = document.getElementById(audioId);
-        await audio.play();
+    window.speakWordMatch = (audioId) => {
+        setTimeout(() => {
+            const audio = document.getElementById(audioId);
+            audio.play();
+        }, 0);
     };
 </script>
 
@@ -131,7 +133,7 @@
         @if (Game.IsReady)
         {
             <div class="col-6 p-1">
-                @foreach (var enWord in Game.EnWords2Match.Concat(Game.Matches.Select(m=>m.EnWord)))
+                @foreach (var enWord in Game.EnWords2Match.Concat(Game.Matches.Select(m => m.EnWord)))
                 {
                     <Card Color="@GetEnCardColor(enWord)" Class="mb-4" role="button" @onclick="@(e => SelectEnWord(enWord))">
                         <CardBody>
@@ -142,7 +144,7 @@
             </div>
 
             <div class="col-6 p-1">
-                @foreach (var eeWord in Game.EeWords2Match.Concat(Game.Matches.Select(m => m.EeWord)))
+            @foreach (var eeWord in Game.EeWords2Match.Concat(Game.Matches.Select(m => m.EeWord)))
                 {
                     <Card Color="@GetEeCardColor(eeWord)" Class="mb-4" role="button" @onclick="@(e => SelectEeWord(eeWord))">
                         <CardBody>
