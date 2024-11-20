@@ -64,16 +64,15 @@
 
                                     if (checkResult.IsMaxMatch)
                                     {
-                                        <li class="list-group-item list-group-item-success list-group-item-action">
-                                            <i class="bi bi-arrow-right-circle-fill text-end"></i>
+                                        <li class="list-group-item list-group-item-success">
+                                            @checkResult.EnUserSentence
                                         </li>
                                     }
                                     else
                                     {
-                                        <li class="list-group-item list-group-item-warning list-group-item-action">
+                                        <li class="list-group-item list-group-item-warning">
                                             @checkResult.EnUserSentence
                                             (@checkResult.Match / 5)
-                                            <i class="bi bi-arrow-right-circle-fill text-end"></i>
                                         </li>
                                         <li class="list-group-item list-group-item-success">
                                             @checkResult.EnExpectedSentence
