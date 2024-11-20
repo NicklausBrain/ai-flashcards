@@ -10,6 +10,7 @@
 @inject GetOrAddSampleWordCommand EnsureWordCommand;
 @inject AddSampleSentenceCommand CreateSampleCommand;
 @inject CheckEnTranslationCommand CheckEnTranslationCommand;
+@inject IJSRuntime JS;
 
 @code {
     TranslateToEnGame Game = TranslateToEnGame.Empty;
@@ -23,7 +24,19 @@
 
     // todo add succes/fail sound
     private Task OnSubmit() => Game.Submit(CheckEnTranslationCommand);
+
+    private async Task PlaySample(MouseEventArgs e)
+    {
+        await JS.InvokeVoidAsync("playAudioSample", Game.AudioUrl);
+    }
 }
+
+<script>
+    window.playAudioSample = async (audioId) => {
+        const audio = document.getElementById(audioId);
+        await audio.play();
+    };
+</script>
 
 <style>
     .img-max-w-256 {
@@ -54,7 +67,13 @@
             <div class="row">
                 <div class="card text-center">
                     <div class="card-body">
-                        <h5 class="card-title">@Game.EeSentence</h5>
+                        <h5 class="card-title">
+                            @Game.EeSentence
+                            <button type="button" class="btn btn-primary btn-sm" @onclick="PlaySample">
+                                <i class="bi bi-volume-down-fill"></i>
+                            </button>
+                            <audio id="@Game.AudioUrl" src="@Game.AudioUrl"></audio>
+                        </h5>
                         <img id="sampleImage" class="img-fluid rounded img-max-w-256 p-1" src="@Game.ImageUrl" />
 
                         @if (Game.CheckResult.HasValue)

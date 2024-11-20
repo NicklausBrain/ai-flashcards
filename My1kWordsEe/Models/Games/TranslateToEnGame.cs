@@ -23,6 +23,8 @@ namespace My1kWordsEe.Models.Games
 
         public Uri ImageUrl => sampleSentence.ImageUrl;
 
+        public Uri AudioUrl => sampleSentence.EeAudioUrl;
+
         public string UserTranslation { get; set; } = string.Empty;
 
         public bool IsCheckInProgress { get; private set; }
