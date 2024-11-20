@@ -6,8 +6,6 @@ namespace My1kWordsEe.Models.Games
 {
     public class TranslateToEnGame
     {
-        public static readonly TranslateToEnGame Empty = new TranslateToEnGame(SampleSentence.Empty);
-
         private readonly SampleSentence sampleSentence;
 
         public TranslateToEnGame(SampleSentence sampleSentence)
@@ -28,24 +26,6 @@ namespace My1kWordsEe.Models.Games
         public string UserTranslation { get; set; } = string.Empty;
 
         public bool IsCheckInProgress { get; private set; }
-
-        public static async Task<TranslateToEnGame> Generate(
-            GetOrAddSampleWordCommand getOrAddSampleWordCommand,
-            AddSampleSentenceCommand addSampleSentenceCommand)
-        {
-            var rn = new Random(Environment.TickCount);
-            var eeWord = Ee1kWords.AllWords[rn.Next(0, Ee1kWords.AllWords.Length)];
-            var sampleWord = await getOrAddSampleWordCommand.Invoke(eeWord.Value);
-
-            if (sampleWord.Value.Samples.Any())
-            {
-                return new TranslateToEnGame(sampleWord.Value.Samples.First());
-            }
-            else
-            {
-                return new TranslateToEnGame((await addSampleSentenceCommand.Invoke(sampleWord.Value)).Value.Samples.First());
-            }
-        }
 
         public async Task Submit(CheckEnTranslationCommand checkEnTranslationCommand)
         {
@@ -76,5 +56,28 @@ namespace My1kWordsEe.Models.Games
                 IsCheckInProgress = false;
             }
         }
+
+        public static async Task<TranslateToEnGame> Generate(
+            GetOrAddSampleWordCommand getOrAddSampleWordCommand,
+            AddSampleSentenceCommand addSampleSentenceCommand)
+        {
+            var rn = new Random(Environment.TickCount);
+            var eeWord = Ee1kWords.AllWords[rn.Next(0, Ee1kWords.AllWords.Length)];
+            var sampleWord = await getOrAddSampleWordCommand.Invoke(eeWord.Value);
+
+            if (sampleWord.Value.Samples.Any())
+            {
+                return new TranslateToEnGame(sampleWord.Value.Samples.First());
+            }
+            else
+            {
+                return new TranslateToEnGame((await addSampleSentenceCommand.Invoke(sampleWord.Value)).Value.Samples.First());
+            }
+        }
+
+        /// <summary>
+        /// Null object pattern.
+        /// </summary>
+        public static readonly TranslateToEnGame Empty = new TranslateToEnGame(SampleSentence.Empty);
     }
 }

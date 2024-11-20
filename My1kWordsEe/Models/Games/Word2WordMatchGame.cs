@@ -1,23 +1,22 @@
-﻿using My1kWordsEe.Services.Cqs;
-
-namespace My1kWordsEe.Models.Games
+﻿namespace My1kWordsEe.Models.Games
 {
     public class Word2WordMatchGame
     {
-        public static readonly Word2WordMatchGame Empty = new Word2WordMatchGame(Array.Empty<Pair>());
-
-        private readonly Pair[] pairs;
+        private readonly IEnumerable<Pair> pairs;
         private readonly IReadOnlyDictionary<string, Pair> eeWords;
         private readonly IReadOnlyDictionary<string, Pair> enWords;
         private readonly ISet<string> eeWords2Match = new HashSet<string>();
         private readonly ISet<string> enWords2Match = new HashSet<string>();
         private readonly Stack<Pair> matches = new Stack<Pair>();
 
-        public Word2WordMatchGame(Pair[] pairs)
+        private Word2WordMatchGame(
+            IEnumerable<Pair> pairs,
+            IReadOnlyDictionary<string, Pair> eeWords,
+            IReadOnlyDictionary<string, Pair> enWords)
         {
             this.pairs = pairs;
-            eeWords = this.pairs.ToDictionary(p => p.EeWord);
-            enWords = this.pairs.ToDictionary(p => p.EnWord);
+            this.eeWords = eeWords;
+            this.enWords = enWords;
             var eeWords2MatchArray = eeWords.Keys.ToArray();
             var enWords2MatchArray = enWords.Keys.ToArray();
             Random.Shared.Shuffle(eeWords2MatchArray);
@@ -81,31 +80,43 @@ namespace My1kWordsEe.Models.Games
         /// <summary>
         /// Generate a new game.
         /// </summary>
-        public static Task<Word2WordMatchGame> Generate(GetOrAddSampleWordCommand ensureWordCommand) => Task.Run(async () =>
+        public static Task<Word2WordMatchGame> Generate() => Task.Run(() =>
         {
-            // todo: possible bug: what if 1 ee word correspond to 2 en words? or vice versa?
             var rn = new Random(Environment.TickCount);
+            var eeWords = new Dictionary<string, Pair>();
+            var enWords = new Dictionary<string, Pair>();
+            var pairs = new List<Pair>();
 
-            var eeWords = new EeWord[]
+            while (eeWords.Count < 5)
             {
-                Ee1kWords.AllWords[rn.Next(0,Ee1kWords.AllWords.Length)],
-                Ee1kWords.AllWords[rn.Next(0,Ee1kWords.AllWords.Length)],
-                Ee1kWords.AllWords[rn.Next(0,Ee1kWords.AllWords.Length)],
-                Ee1kWords.AllWords[rn.Next(0,Ee1kWords.AllWords.Length)],
-                Ee1kWords.AllWords[rn.Next(0,Ee1kWords.AllWords.Length)],
-            };
+                var nextWord = Ee1kWords.AllWords[rn.Next(0, Ee1kWords.AllWords.Length)];
 
-            var pairs = await Task.WhenAll(eeWords
-                .AsParallel()
-                .Select(async w => new Pair
+                if (eeWords.ContainsKey(nextWord.Value) || enWords.ContainsKey(nextWord.EnWord))
                 {
-                    EeAudioUrl = (await ensureWordCommand.Invoke(w.Value)).Value.EeAudioUrl,
-                    EeWord = w.Value,
-                    EnWord = w.EnWord
-                }));
+                    continue;
+                }
 
-            return new Word2WordMatchGame(pairs);
+                var pair = new Pair
+                {
+                    EeWord = nextWord.Value,
+                    EnWord = nextWord.EnWord
+                };
+
+                eeWords.Add(pair.EeWord, pair);
+                enWords.Add(pair.EnWord, pair);
+                pairs.Add(pair);
+            }
+
+            return new Word2WordMatchGame(pairs, eeWords, enWords);
         });
+
+        /// <summary>
+        /// Null object pattern.
+        /// </summary>
+        public static readonly Word2WordMatchGame Empty = new Word2WordMatchGame(
+            Array.Empty<Pair>(),
+            new Dictionary<string, Pair>(),
+            new Dictionary<string, Pair>());
 
         /// <summary>
         /// Pair of words to match.
