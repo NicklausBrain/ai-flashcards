@@ -5,6 +5,15 @@ namespace My1kWordsEe.Models
     /// </summary>
     public record SampleSentence
     {
+        public static readonly SampleSentence Empty = new SampleSentence
+        {
+            EeWord = string.Empty,
+            EeSentence = string.Empty,
+            EnSentence = string.Empty,
+            EeAudioUrl = new Uri("about:blank"),
+            ImageUrl = new Uri("about:blank")
+        };
+
         /// <summary>
         /// Target Estonian word
         /// </summary>

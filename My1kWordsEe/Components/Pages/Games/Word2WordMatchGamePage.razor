@@ -8,19 +8,19 @@
 @using My1kWordsEe.Services.Cqs
 
 @inject IJSRuntime JS
-@inject GetOrAddSampleWordCommand EnsureWordCommand;
 
 @code {
     [Inject] protected ToastService ToastService { get; set; } = default!;
 
-    Word2WordMatchGame Game = new(Array.Empty<Word2WordMatchGame.Pair>());
+    Word2WordMatchGame Game = Word2WordMatchGame.Empty;
 
     string SelectedEeWord = string.Empty;
     string SelectedEnWord = string.Empty;
 
     protected override async Task OnParametersSetAsync()
     {
-        Game = await Word2WordMatchGame.Generate(EnsureWordCommand);
+        Game = Word2WordMatchGame.Empty;
+        Game = await Word2WordMatchGame.Generate();
         await base.OnParametersSetAsync();
     }
 

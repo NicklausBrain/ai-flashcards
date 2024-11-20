@@ -12,33 +12,18 @@
 @inject CheckEnTranslationCommand CheckEnTranslationCommand;
 
 @code {
-    TranslateToEnGame Game = new (Array.Empty<SampleWord>());
+    TranslateToEnGame Game = TranslateToEnGame.Empty;
 
     protected override async Task OnParametersSetAsync()
     {
+        Game = TranslateToEnGame.Empty;
         Game = await TranslateToEnGame.Generate(EnsureWordCommand, CreateSampleCommand);
         await base.OnParametersSetAsync();
     }
 
-    // todo: mb slides should be part of a 'parent' game session or something
-
-    private void OnNext() => Game.NextSlide();
-
-    private void OnPrevious() => Game.PrevSlide();
-
-    private void OnSelectSlide(ushort index) => Game.GoToSlide(index);
-
-    private Task OnSubmit() => Game.CurrentSlide.Submit(CheckEnTranslationCommand);
+    // todo add succes/fail sound
+    private Task OnSubmit() => Game.Submit(CheckEnTranslationCommand);
 }
-
-<script>
-    const myCarouselElement = document.querySelector('#carouselExampleDark')
-
-    const carousel = new bootstrap.Carousel(myCarouselElement, {
-        interval: 2000,
-        touch: false
-    })
-</script>
 
 <style>
     .img-max-w-256 {
@@ -55,63 +40,41 @@
         <div class="col-8">
             @if (Game.IsFinished)
             {
-                var result = Game.CalcResuls();
-                <div class="progress m-2" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                    <div class="progress-bar" style="width: @result%">@result%</div>
-                </div>
+                <Button Color="ButtonColor.Primary" Type="ButtonType.Reset" @onclick="@OnParametersSetAsync">
+                    <i class="bi bi-arrow-repeat"></i>
+                    Try again!
+                </Button>
             }
         </div>
     </div>
     <div class="row">
         
-        @if (Game.Slides.Any())
+        @if (Game.IsReady)
         {
-            <div class="row">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item" role="button" @onclick="@OnPrevious">
-                            <a class="page-link">Previous</a>
-                        </li>
-                        @for (ushort i = 0; i < Game.Slides.Length; i++)
-                        {
-                            var ii = i;
-                            <li @onclick="@(()=> OnSelectSlide(ii))" class="page-item @(Game.CurrentSlideIndex == i ? "active" : "") " role="button">
-                                <a class="page-link">@(i + 1)</a>
-                            </li>
-                        }
-                        <li class="page-item" role="button" @onclick="@OnNext">
-                            <a class="page-link">Next</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-
             <div class="row">
                 <div class="card text-center">
                     <div class="card-body">
-                        <h5 class="card-title">@Game.CurrentSlide.EeSentence</h5>
-                        <img id="sampleImage" class="img-fluid rounded img-max-w-256 p-1" src="@Game.CurrentSlide.ImageUrl" />
+                        <h5 class="card-title">@Game.EeSentence</h5>
+                        <img id="sampleImage" class="img-fluid rounded img-max-w-256 p-1" src="@Game.ImageUrl" />
 
-                        @if (Game.CurrentSlide.CheckResult.HasValue)
+                        @if (Game.CheckResult.HasValue)
                         {
                             <ul class="list-group">
-                                @if (Game.CurrentSlide.CheckResult.Value.IsSuccess)
+                                @if (Game.CheckResult.Value.IsSuccess)
                                 {
-                                    var checkResult = Game.CurrentSlide.CheckResult.Value.Value;
+                                    var checkResult = Game.CheckResult.Value.Value;
 
                                     if (checkResult.IsMaxMatch)
                                     {
-                                        <li @onclick="@OnNext" type="button" class="list-group-item list-group-item-success list-group-item-action">
+                                        <li class="list-group-item list-group-item-success">
                                             @checkResult.EnUserSentence
-                                            <i class="bi bi-arrow-right-circle-fill text-end"></i>
                                         </li>
                                     }
                                     else
                                     {
-                                        <li @onclick="@OnNext" type="button" class="list-group-item list-group-item-warning list-group-item-action">
+                                        <li class="list-group-item list-group-item-warning">
                                             @checkResult.EnUserSentence
                                             (@checkResult.Match / 5)
-                                            <i class="bi bi-arrow-right-circle-fill text-end"></i>
                                         </li>
                                         <li class="list-group-item list-group-item-success">
                                             @checkResult.EnExpectedSentence
@@ -121,15 +84,15 @@
                                         </li>
                                     }
                                 }
-                                else
+                                @if (Game.CheckResult.Value.IsFailure)
                                 {
                                     <li class="list-group-item list-group-item-warning">
-                                        @Game.CurrentSlide.CheckResult.Value.Error
+                                        @Game.CheckResult.Value.Error
                                     </li>
                                 }
                             </ul>
                         }
-                        else if (@Game.CurrentSlide.IsCheckInProgress)
+                        else if (@Game.IsCheckInProgress)
                         {
                             <div class="text-center">
                                 <Spinner />
@@ -139,7 +102,7 @@
                         {
                             <div class="input-group input-group-sm">
                                 <span class="input-group-text btn-success">Your translation:</span>
-                                <InputText @bind-Value="@Game.CurrentSlide.UserTranslation" class="form-control" autocomplete="off" />
+                                <InputText @bind-Value="@Game.UserTranslation" class="form-control" autocomplete="off" />
                                 <button @onclick="@OnSubmit" class="btn btn-outline-primary" type="button">Submit</button>
                             </div>
                         }
