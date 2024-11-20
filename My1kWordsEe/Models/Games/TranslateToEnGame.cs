@@ -6,6 +6,8 @@ namespace My1kWordsEe.Models.Games
 {
     public class TranslateToEnGame
     {
+        public static readonly TranslateToEnGame Empty = new TranslateToEnGame(SampleSentence.Empty);
+
         private readonly SampleSentence sampleSentence;
 
         public TranslateToEnGame(SampleSentence sampleSentence)
@@ -14,6 +16,8 @@ namespace My1kWordsEe.Models.Games
         }
 
         public Maybe<Result<EnTranslationCheckResult>> CheckResult { get; private set; }
+
+        public bool IsReady => this != Empty;
 
         public bool IsFinished => CheckResult.HasValue;
 
@@ -47,6 +51,7 @@ namespace My1kWordsEe.Models.Games
         {
             if (!UserTranslation.ValidateSentence())
             {
+                // todo: add error message
                 return;
             }
 

@@ -13,13 +13,14 @@
 @code {
     [Inject] protected ToastService ToastService { get; set; } = default!;
 
-    Word2WordMatchGame Game = new(Array.Empty<Word2WordMatchGame.Pair>());
+    Word2WordMatchGame Game = Word2WordMatchGame.Empty;
 
     string SelectedEeWord = string.Empty;
     string SelectedEnWord = string.Empty;
 
     protected override async Task OnParametersSetAsync()
     {
+        Game = Word2WordMatchGame.Empty;
         Game = await Word2WordMatchGame.Generate(EnsureWordCommand);
         await base.OnParametersSetAsync();
     }

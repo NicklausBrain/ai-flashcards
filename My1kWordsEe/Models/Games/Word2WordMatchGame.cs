@@ -4,6 +4,8 @@ namespace My1kWordsEe.Models.Games
 {
     public class Word2WordMatchGame
     {
+        public static readonly Word2WordMatchGame Empty = new Word2WordMatchGame(Array.Empty<Pair>());
+
         private readonly Pair[] pairs;
         private readonly IReadOnlyDictionary<string, Pair> eeWords;
         private readonly IReadOnlyDictionary<string, Pair> enWords;
