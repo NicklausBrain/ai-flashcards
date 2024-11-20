@@ -21,6 +21,7 @@
         await base.OnParametersSetAsync();
     }
 
+    // todo add succes/fail sound
     private Task OnSubmit() => Game.Submit(CheckEnTranslationCommand);
 }
 
@@ -83,7 +84,7 @@
                                         </li>
                                     }
                                 }
-                                else
+                                @if (Game.CheckResult.Value.IsFailure)
                                 {
                                     <li class="list-group-item list-group-item-warning">
                                         @Game.CheckResult.Value.Error
