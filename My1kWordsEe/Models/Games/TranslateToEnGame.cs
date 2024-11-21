@@ -33,7 +33,7 @@ namespace My1kWordsEe.Models.Games
         {
             if (!UserTranslation.ValidateSentence())
             {
-                // todo: add error message
+                CheckResult = Result.Failure<EnTranslationCheckResult>("Bad input");
                 return;
             }
 
