@@ -132,7 +132,7 @@
     <div class="row">
         @if (Game.IsReady)
         {
-            <div class="col-6 p-1">
+            <div class="col-5 p-1">
                 @foreach (var enWord in Game.EnWords2Match.Concat(Game.Matches.Select(m => m.EnWord)))
                 {
                     <Card Color="@GetEnCardColor(enWord)" Class="mb-4" role="button" @onclick="@(e => SelectEnWord(enWord))">
@@ -144,12 +144,24 @@
             </div>
 
             <div class="col-6 p-1">
-            @foreach (var eeWord in Game.EeWords2Match.Concat(Game.Matches.Select(m => m.EeWord)))
+                @foreach (var eeWord in Game.EeWords2Match.Concat(Game.Matches.Select(m => m.EeWord)))
                 {
                     <Card Color="@GetEeCardColor(eeWord)" Class="mb-4" role="button" @onclick="@(e => SelectEeWord(eeWord))">
                         <CardBody>
                             <CardTitle>@eeWord</CardTitle>
-                            <audio id="@eeWord" src="@Game.EeWords[eeWord].EeAudioUrl"></audio>
+                        </CardBody>
+                    </Card>
+                }
+            </div>
+
+            <div class="col-1 p-1">
+                @foreach (var eeWord in Game.EeWords2Match.Concat(Game.Matches.Select(m => m.EeWord)))
+                {
+                    <Card Class="mb-4">
+                        <CardBody>
+                            <CardTitle>
+                                <i class="bi bi-box-arrow-up-right"></i>
+                            </CardTitle>
                         </CardBody>
                     </Card>
                 }
