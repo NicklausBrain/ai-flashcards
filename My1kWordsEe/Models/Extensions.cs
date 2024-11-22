@@ -41,7 +41,9 @@ namespace My1kWordsEe.Models
                 return false;
             }
 
-            var areWordsValid = sentence.Split(' ', StringSplitOptions.RemoveEmptyEntries).All(w => w.ValidateWord());
+            var areWordsValid = sentence
+                .Split(new char[] { ' ', ',', '.', '?', '!', '-' }, StringSplitOptions.RemoveEmptyEntries)
+                .All(w => w.ValidateWord());
 
             return areWordsValid;
         }
