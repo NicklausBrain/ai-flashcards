@@ -102,8 +102,10 @@
         <div class="row">
             @foreach (var sample in Value.Samples)
             {
-                <SampleV2 Sample="@sample">
-                </SampleV2>
+                <div class="col-6 p-1">
+                    <SampleV2 Sample="@sample">
+                    </SampleV2>
+                </div>
             }
 
             <div class="col-6 text-center p-1">

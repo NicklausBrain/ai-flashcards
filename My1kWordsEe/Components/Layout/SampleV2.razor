@@ -93,49 +93,60 @@
     }
 </style>
 
-<div class="col-6 p-1">
-    <Card>
-        <CardBody>
-            <div class="row">
-                <div class="col-10">
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            @Sample.EeSentence
-                        </li>
-                        <li class="list-group-item">
-                            @Sample.EnSentence
-                        </li>
-                        <li class="list-group-item">
-                            <img id="sampleImage" class="img-fluid rounded img-max-w-256" src="@Sample.ImageUrl" />
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-2">
-                    <Button Color="ButtonColor.Primary" Size="ButtonSize.Small" @onclick="PlaySample">
-                        <i class="bi bi-volume-down-fill"></i>
-                    </Button>
-                    <audio id="@Sample.EeAudioUrl" src="@Sample.EeAudioUrl"></audio>
-                    @if (IsAdmin)
-                    {
-                        <Button Color="ButtonColor.Danger" Size="ButtonSize.Small" @onclick="ShowDeleteConfirmationAsync">
-                            <i class="bi bi-trash3-fill"></i>
-                        </Button>
-                    }
-                    @if (IsLoggedIn)
-                    {
-                        <Button Color="ButtonColor.Secondary" Size="ButtonSize.Small">
-                            <i class="bi bi-star"></i>
-                        </Button>
-                        <Button Color="ButtonColor.Secondary" Size="ButtonSize.Small">
-                            <i class="bi bi-star-fill"></i>
-                        </Button>
-                    }
-                </div>
-            </div>
-        </CardBody>
-    </Card>
-</div>
-
+<Card>
+    <CardBody>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>
+                        @Sample.EeSentence
+                    </td>
+                    <td rowspan="3">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item border-0">
+                                <Button Color="ButtonColor.Primary" Size="ButtonSize.Small" @onclick="PlaySample">
+                                    <i class="bi bi-volume-down-fill"></i>
+                                </Button>
+                                <audio id="@Sample.EeAudioUrl" src="@Sample.EeAudioUrl"></audio>
+                            </li>
+                            @if (IsAdmin)
+                            {
+                                <li class="list-group-item border-0">
+                                    <Button Color="ButtonColor.Danger" Size="ButtonSize.Small" @onclick="ShowDeleteConfirmationAsync">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </Button>
+                                </li>
+                            }
+                            @if (IsLoggedIn)
+                            {
+                                <li class="list-group-item border-0">
+                                    <Button Color="ButtonColor.Secondary" Size="ButtonSize.Small">
+                                        <i class="bi bi-star"></i>
+                                    </Button>
+                                </li>
+                                <li class="list-group-item border-0">
+                                    <Button Color="ButtonColor.Secondary" Size="ButtonSize.Small">
+                                        <i class="bi bi-star-fill"></i>
+                                    </Button>
+                                </li>
+                            }
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Sample.EnSentence
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <img id="sampleImage" class="img-fluid rounded img-max-w-256" src="@Sample.ImageUrl" />
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+    </CardBody>
+</Card>
 
 <ConfirmDialog @ref="DeleteSampleDialog" />
 <Toasts class="p-3" AutoHide="true" StackLength="3" Placement="ToastsPlacement.TopRight" />
