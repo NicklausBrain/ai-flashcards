@@ -94,38 +94,46 @@
 </style>
 
 <div class="col-6 p-1">
-
-    <ul class="list-group">
-        <li class="list-group-item">
-            @Sample.EeSentence
-            <Button Color="ButtonColor.Primary" @onclick="PlaySample">
-                <i class="bi bi-volume-down-fill"></i>
-            </Button>
-            <audio id="@Sample.EeAudioUrl" src="@Sample.EeAudioUrl"></audio>
-            @if (IsAdmin)
-            {
-                <Button Color="ButtonColor.Danger" @onclick="ShowDeleteConfirmationAsync">
-                    <i class="bi bi-trash3-fill"></i>
-                </Button>
-            }
-            @if (IsLoggedIn)
-            {
-                <Button Color="ButtonColor.Secondary">
-                    <i class="bi bi-star"></i>
-                </Button>
-                <Button Color="ButtonColor.Secondary">
-                    <i class="bi bi-star-fill"></i>
-                </Button>
-            }
-        </li>
-        <li class="list-group-item">
-            @Sample.EnSentence
-        </li>
-        <li class="list-group-item">
-            <img id="sampleImage" class="img-fluid rounded img-max-w-256" src="@Sample.ImageUrl" />
-        </li>
-    </ul>
-
+    <Card>
+        <CardBody>
+            <div class="row">
+                <div class="col-10">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            @Sample.EeSentence
+                        </li>
+                        <li class="list-group-item">
+                            @Sample.EnSentence
+                        </li>
+                        <li class="list-group-item">
+                            <img id="sampleImage" class="img-fluid rounded img-max-w-256" src="@Sample.ImageUrl" />
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-2">
+                    <Button Color="ButtonColor.Primary" Size="ButtonSize.Small" @onclick="PlaySample">
+                        <i class="bi bi-volume-down-fill"></i>
+                    </Button>
+                    <audio id="@Sample.EeAudioUrl" src="@Sample.EeAudioUrl"></audio>
+                    @if (IsAdmin)
+                    {
+                        <Button Color="ButtonColor.Danger" Size="ButtonSize.Small" @onclick="ShowDeleteConfirmationAsync">
+                            <i class="bi bi-trash3-fill"></i>
+                        </Button>
+                    }
+                    @if (IsLoggedIn)
+                    {
+                        <Button Color="ButtonColor.Secondary" Size="ButtonSize.Small">
+                            <i class="bi bi-star"></i>
+                        </Button>
+                        <Button Color="ButtonColor.Secondary" Size="ButtonSize.Small">
+                            <i class="bi bi-star-fill"></i>
+                        </Button>
+                    }
+                </div>
+            </div>
+        </CardBody>
+    </Card>
 </div>
 
 
