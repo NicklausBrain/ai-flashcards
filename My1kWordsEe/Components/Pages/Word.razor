@@ -102,13 +102,13 @@
         <div class="row">
             @foreach (var sample in Value.Samples)
             {
-                <div class="col-6 p-1">
+                <div class="col col-12 col-sm-6 p-1">
                     <SampleV2 Sample="@sample">
                     </SampleV2>
                 </div>
             }
 
-            <div class="col-6 text-center p-1">
+            <div class="col col-12 col-sm-6 p-1 text-center">
                 @if (IsSampleGenerationInProgress)
                 {
                     <div class="text-center">
