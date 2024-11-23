@@ -5,11 +5,11 @@ using My1kWordsEe.Services.Db;
 
 namespace My1kWordsEe.Services.Cqs
 {
-    public class GetFavoritesCommand
+    public class GetFavoritesQuery
     {
         private readonly AzureStorageClient azureBlobService;
 
-        public GetFavoritesCommand(
+        public GetFavoritesQuery(
             AzureStorageClient azureBlobService)
         {
             this.azureBlobService = azureBlobService;

@@ -7,11 +7,11 @@ namespace My1kWordsEe.Services.Cqs
 {
     public class AddToFavoritesCommand
     {
-        private readonly GetFavoritesCommand getFavoritesCommand;
+        private readonly GetFavoritesQuery getFavoritesCommand;
         private readonly AzureStorageClient azureBlobService;
 
         public AddToFavoritesCommand(
-            GetFavoritesCommand getFavoritesCommand,
+            GetFavoritesQuery getFavoritesCommand,
             AzureStorageClient azureBlobService)
         {
             this.getFavoritesCommand = getFavoritesCommand;
