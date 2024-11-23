@@ -28,11 +28,14 @@
 
     private bool IsAdmin { get; set; } = false;
 
+    private bool IsLoggedIn { get; set; } = false;
+
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         if (authState != null)
         {
+            IsLoggedIn = authState.User.Identity?.IsAuthenticated ?? false;
             IsAdmin = authState.User.HasClaim(c => c.Type == ClaimTypes.Role && c.Value == "admin");
         }
     }
@@ -95,15 +98,24 @@
     <ul class="list-group">
         <li class="list-group-item">
             @Sample.EeSentence
-            <button type="button" class="btn btn-primary" @onclick="PlaySample">
+            <Button Color="ButtonColor.Primary" @onclick="PlaySample">
                 <i class="bi bi-volume-down-fill"></i>
-            </button>
+            </Button>
             <audio id="@Sample.EeAudioUrl" src="@Sample.EeAudioUrl"></audio>
             @if (IsAdmin)
             {
-                <button type="button" class="btn btn-danger" @onclick="ShowDeleteConfirmationAsync">
+                <Button Color="ButtonColor.Danger" @onclick="ShowDeleteConfirmationAsync">
                     <i class="bi bi-trash3-fill"></i>
-                </button>
+                </Button>
+            }
+            @if (IsLoggedIn)
+            {
+                <Button Color="ButtonColor.Secondary">
+                    <i class="bi bi-star"></i>
+                </Button>
+                <Button Color="ButtonColor.Secondary">
+                    <i class="bi bi-star-fill"></i>
+                </Button>
             }
         </li>
         <li class="list-group-item">
