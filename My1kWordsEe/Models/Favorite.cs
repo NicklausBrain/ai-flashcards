@@ -2,16 +2,16 @@
 {
     public class FavoriteWord
     {
-        public required string EeWord { get; set; }
+        public required string EeWord { get; init; }
 
         public required string EnWord { get; init; }
     }
 
     public class Favorites
     {
-        public required string UserId { get; set; }
+        public required string UserId { get; init; }
 
-        public List<FavoriteWord> Words { get; set; } = new List<FavoriteWord>();
+        public required IList<FavoriteWord> Words { get; init; }
 
         // to be added: Phrases
     }
