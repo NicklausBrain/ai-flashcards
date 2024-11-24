@@ -158,9 +158,9 @@ namespace My1kWordsEe.Services
             });
         }
 
-        public static async Task<Result<Sentence>> GetSampleSentence(this OpenAiClient openAiClient, string eeWord)
+        public static async Task<Result<Sentence>> GetSampleSentence(this OpenAiClient openAiClient, string eeWord, string[]? existingSamples = null)
         {
-            const string prompt =
+            var prompt =
                 "Sa oled keeleõppe süsteemi abiline, mis aitab õppida enim levinud eesti keele sõnu.\n" +
                 "Sinu sisend on üks sõna eesti keeles.\n" +
                 "Sinu ülesanne on kirjutada selle kasutamise kohta lihtne lühike näitelause, kasutades seda sõna.\n" +
@@ -168,7 +168,10 @@ namespace My1kWordsEe.Services
                 "Teie väljundiks on JSON-objekt koos eestikeelse näidislausega ja sellele vastav tõlge inglise keelde vastavalt lepingule:\n" +
                 "```\n{\n" +
                 "\"ee_sentence\": \"<näide eesti keeles>\", \"en_sentence\": \"<näide inglise keeles>\"" +
-                "\n}\n```";
+                "\n}\n```\n" +
+                ((existingSamples != null && existingSamples.Any())
+                 ? "PS: Ärge korrake järgmisi näidiseid, olge erinevad:\n" + string.Join(",", existingSamples.Select(s => $"'{s}'"))
+                 : string.Empty);
 
             return await openAiClient.CompleteJsonAsync<Sentence>(prompt, eeWord);
         }
