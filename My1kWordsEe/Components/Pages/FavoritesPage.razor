@@ -43,9 +43,24 @@
 
             @if (favorites.Words.Any())
             {
-                foreach (var word in favorites.Words)
+                foreach (var wordPair in favorites.Words)
                 {
-                    <div>@word.Key</div>
+                    var word = wordPair.Value;
+                    <div class="col-4">
+                        <Card>
+                            <CardBody>
+                                <CardTitle>
+                                    @word.EeWord
+                                </CardTitle>
+                                <CardSubTitle>@word.EnWord</CardSubTitle>
+                                <CardText>@word.EnExplanation</CardText>
+                                <CardLink To="@($"/word/{word.EeWord}")">
+                                    <i role="link" class="bi bi-box-arrow-up-right"></i>
+                                </CardLink>
+                            </CardBody>
+                        </Card>
+                    </div>
+                    
                 }
             }
             else

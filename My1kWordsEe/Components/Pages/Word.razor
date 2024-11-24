@@ -72,24 +72,18 @@
 
     private async Task AddToFavorites()
     {
-        //SpinnerColor.Light, "Saving data..."
-        PreloadService.Show();
+        PreloadService.Show(SpinnerColor.Light, "Saving data...");
         var user = await UserAccessor.GetRequiredUserAsync(User);
-        // await AddToFavoritesCommand.Invoke(user.Id, Value);
-        await Task.Delay(5000); // call the service/api
-
+        await AddToFavoritesCommand.Invoke(user.Id, Value);
         await OnParametersSetAsync();
         PreloadService.Hide();
     }
 
     private async Task RemoveFromFavorites()
     {
-        //SpinnerColor.Light, "Saving data..."
-        PreloadService.Show();
+        PreloadService.Show(SpinnerColor.Light, "Saving data...");
         var user = await UserAccessor.GetRequiredUserAsync(User);
-        await Task.Delay(5000); // call the service/api
-
-        // await RemoveFromFavoritesCommand.Invoke(user.Id, Value.EeWord);
+        await RemoveFromFavoritesCommand.Invoke(user.Id, Value.EeWord);
         await OnParametersSetAsync();
         PreloadService.Hide();
     }
@@ -205,4 +199,5 @@
             </div>
         </div>
     }
+    <Preload LoadingText="Loading..." />
 </div>
