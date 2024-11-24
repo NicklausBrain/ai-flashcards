@@ -28,6 +28,7 @@ namespace My1kWordsEe.Models
             return (m.Success && m.Index == 0 && m.Length == word.Length);
         }
 
+        // todo: return Result with the error message explaining the error
         public static bool ValidateSentence(this string sentence)
         {
             if (string.IsNullOrWhiteSpace(sentence))
@@ -40,7 +41,11 @@ namespace My1kWordsEe.Models
                 return false;
             }
 
-            return true;
+            var areWordsValid = sentence
+                .Split(new char[] { ' ', ',', '.', '?', '!', '-' }, StringSplitOptions.RemoveEmptyEntries)
+                .All(w => w.ValidateWord());
+
+            return areWordsValid;
         }
 
         public static bool IsRegistrationEnabled(this IConfiguration configuration)

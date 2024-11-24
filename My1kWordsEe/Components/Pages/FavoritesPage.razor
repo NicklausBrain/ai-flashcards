@@ -1,0 +1,84 @@
+﻿@page "/favorites"
+@rendermode InteractiveServer
+
+@using BlazorBootstrap
+@using CSharpFunctionalExtensions
+@using Microsoft.AspNetCore.Components.Authorization
+@using My1kWordsEe.Components.Account
+@using My1kWordsEe.Models;
+@using My1kWordsEe.Components.Layout;
+@using My1kWordsEe.Services.Cqs
+@using System.Security.Claims
+
+@inject NavigationManager NavigationManager
+@inject GetFavoritesQuery GetFavoritesQuery
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IdentityUserAccessor UserAccessor
+
+@code {
+    private Maybe<Result<Favorites>> Favorites;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        if (authState != null)
+        {
+            var user = await UserAccessor.GetRequiredUserAsync(authState.User);
+            Favorites = await GetFavoritesQuery.Invoke(user.Id);
+        }
+
+        await base.OnParametersSetAsync();
+    }
+}
+
+<PageTitle>Favorites | Lemmikud</PageTitle>
+
+<h1>Favorites | Lemmikud</h1>
+
+<div class="text-center">
+    <div class="row">
+        @if (Favorites.HasValue && Favorites.Value.IsSuccess)
+        {
+            var favorites = Favorites.Value.Value;
+
+            @if (favorites.Words.Any())
+            {
+                foreach (var wordPair in favorites.Words)
+                {
+                    var word = wordPair.Value;
+                    <div class="col-4">
+                        <Card>
+                            <CardBody>
+                                <CardTitle>
+                                    @word.EeWord
+                                </CardTitle>
+                                <CardSubTitle>@word.EnWord</CardSubTitle>
+                                <CardText>@word.EnExplanation</CardText>
+                                <CardLink To="@($"/word/{word.EeWord}")">
+                                    <i role="link" class="bi bi-box-arrow-up-right"></i>
+                                </CardLink>
+                            </CardBody>
+                        </Card>
+                    </div>
+                    
+                }
+            }
+            else
+            {
+                <h3>No favorites yet!</h3>
+            }
+        }
+
+        @if (Favorites.HasNoValue)
+        {
+            <div class="text-center">
+                <Spinner />
+            </div>
+        }
+
+        @if (Favorites.HasValue && Favorites.Value.IsFailure)
+        {
+            <h3 class="alert-warning">@Favorites.Value.Error</h3>
+        }
+    </div>
+</div>

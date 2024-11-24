@@ -41,7 +41,7 @@
 
         this.IsCheckInProgress = true;
 
-        this.CheckWordResult = await GetOrAddSampleWordCommand.Invoke(this.SearchTerm);
+        this.CheckWordResult = await GetOrAddSampleWordCommand.Invoke(this.SearchTerm?.Trim() ?? string.Empty);
 
         if (this.CheckWordResult.Value.IsSuccess)
         {
