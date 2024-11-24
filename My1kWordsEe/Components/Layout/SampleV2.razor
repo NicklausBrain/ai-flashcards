@@ -12,7 +12,6 @@
 @rendermode InteractiveServer
 
 @inject IdentityUserAccessor UserAccessor
-@inject UserManager<ApplicationUser> UserManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject DeleteSampleSentenceCommand DeleteSampleSentenceCommand
 @inject NavigationManager NavigationManager
@@ -28,11 +27,14 @@
 
     private bool IsAdmin { get; set; } = false;
 
+    private bool IsLoggedIn { get; set; } = false;
+
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         if (authState != null)
         {
+            IsLoggedIn = authState.User.Identity?.IsAuthenticated ?? false;
             IsAdmin = authState.User.HasClaim(c => c.Type == ClaimTypes.Role && c.Value == "admin");
         }
     }
@@ -90,32 +92,61 @@
     }
 </style>
 
-<div class="col-6 p-1">
-
-    <ul class="list-group">
-        <li class="list-group-item">
-            @Sample.EeSentence
-            <button type="button" class="btn btn-primary" @onclick="PlaySample">
-                <i class="bi bi-volume-down-fill"></i>
-            </button>
-            <audio id="@Sample.EeAudioUrl" src="@Sample.EeAudioUrl"></audio>
-            @if (IsAdmin)
-            {
-                <button type="button" class="btn btn-danger" @onclick="ShowDeleteConfirmationAsync">
-                    <i class="bi bi-trash3-fill"></i>
-                </button>
-            }
-        </li>
-        <li class="list-group-item">
-            @Sample.EnSentence
-        </li>
-        <li class="list-group-item">
-            <img id="sampleImage" class="img-fluid rounded img-max-w-256" src="@Sample.ImageUrl" />
-        </li>
-    </ul>
-
-</div>
-
+<Card>
+    <CardBody>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>
+                        @Sample.EeSentence
+                    </td>
+                    <td rowspan="3">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item border-0">
+                                <Button Color="ButtonColor.Primary" Size="ButtonSize.Small" @onclick="PlaySample">
+                                    <i class="bi bi-volume-down-fill"></i>
+                                </Button>
+                                <audio id="@Sample.EeAudioUrl" src="@Sample.EeAudioUrl"></audio>
+                            </li>
+                            @if (IsAdmin)
+                            {
+                                <li class="list-group-item border-0">
+                                    <Button Color="ButtonColor.Danger" Size="ButtonSize.Small" @onclick="ShowDeleteConfirmationAsync">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </Button>
+                                </li>
+                            }
+                            @if (IsLoggedIn)
+                            {
+                                // todo add phrase to favorites
+                               @*  <li class="list-group-item border-0">
+                                    <Button Color="ButtonColor.Secondary" Size="ButtonSize.Small">
+                                        <i class="bi bi-star"></i>
+                                    </Button>
+                                </li>
+                                <li class="list-group-item border-0">
+                                    <Button Color="ButtonColor.Secondary" Size="ButtonSize.Small">
+                                        <i class="bi bi-star-fill"></i>
+                                    </Button>
+                                </li> *@
+                            }
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Sample.EnSentence
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <img id="sampleImage" class="img-fluid rounded img-max-w-256" src="@Sample.ImageUrl" />
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+    </CardBody>
+</Card>
 
 <ConfirmDialog @ref="DeleteSampleDialog" />
 <Toasts class="p-3" AutoHide="true" StackLength="3" Placement="ToastsPlacement.TopRight" />

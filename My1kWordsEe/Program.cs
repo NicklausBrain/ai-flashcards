@@ -52,6 +52,9 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<AddAudioCommand>();
             builder.Services.AddSingleton<CheckEnTranslationCommand>();
             builder.Services.AddSingleton<DeleteSampleSentenceCommand>();
+            builder.Services.AddSingleton<GetFavoritesQuery>();
+            builder.Services.AddSingleton<AddToFavoritesCommand>();
+            builder.Services.AddSingleton<RemoveFromFavoritesCommand>();
 
             // Blazor-specific services
             builder.Services
@@ -158,7 +161,7 @@ namespace My1kWordsEe
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddSignInManager()
                 .AddDefaultTokenProviders();

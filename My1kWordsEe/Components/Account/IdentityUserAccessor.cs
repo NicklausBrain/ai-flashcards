@@ -1,6 +1,8 @@
-using My1kWordsEe.Data;
+using System.Security.Claims;
 
 using Microsoft.AspNetCore.Identity;
+
+using My1kWordsEe.Data;
 
 namespace My1kWordsEe.Components.Account
 {
@@ -16,6 +18,18 @@ namespace My1kWordsEe.Components.Account
             }
 
             return user;
+        }
+
+        public async Task<ApplicationUser> GetRequiredUserAsync(ClaimsPrincipal user)
+        {
+            var appUser = await userManager.GetUserAsync(user);
+
+            if (appUser is null)
+            {
+                redirectManager.RedirectTo("Account/Login");
+            }
+
+            return appUser;
         }
     }
 }
