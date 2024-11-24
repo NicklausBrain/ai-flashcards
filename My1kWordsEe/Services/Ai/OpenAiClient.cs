@@ -31,7 +31,7 @@ namespace My1kWordsEe.Services
                 return Result.Failure<string>("Open AI API key is missing");
             };
 
-            ChatClient client = new(model: "gpt-4o-mini", this.config[ApiSecretKey]);
+            ChatClient client = new(model: "gpt-4o", this.config[ApiSecretKey]);
 
             try
             {

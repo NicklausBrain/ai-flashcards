@@ -593,7 +593,7 @@
     "value": "me",
     "part_of_speech": "Asesõna",
     "en_words": [
-      "me",
+      "we",
       "us"
     ]
   },
@@ -1532,9 +1532,9 @@
     "value": "aru",
     "part_of_speech": "Nimisõna",
     "en_words": [
-      "forest",
-      "wood",
-      "glade"
+      "understanding",
+      "sense",
+      "reason"
     ]
   },
   {
@@ -3536,8 +3536,8 @@
     "value": "too",
     "part_of_speech": "Määrsõna",
     "en_words": [
-      "also",
-      "too"
+      "that",
+      "those"
     ]
   },
   {
@@ -4637,8 +4637,9 @@
     "value": "no",
     "part_of_speech": "Määrsõna",
     "en_words": [
-      "no",
-      "not"
+      "well",
+      "so",
+      "okay"
     ]
   },
   {
