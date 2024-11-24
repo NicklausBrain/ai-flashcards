@@ -38,7 +38,7 @@ namespace My1kWordsEe.Services.Cqs
                 return favorites.Value;
             }
 
-            return new Favorites { UserId = userId, Words = new List<FavoriteWord>() };
+            return new Favorites { UserId = userId, Words = new Dictionary<string, SampleWord>() };
         }
     }
 }

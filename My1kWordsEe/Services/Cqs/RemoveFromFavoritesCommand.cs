@@ -1,16 +1,15 @@
 ﻿using CSharpFunctionalExtensions;
 
-using My1kWordsEe.Models;
 using My1kWordsEe.Services.Db;
 
 namespace My1kWordsEe.Services.Cqs
 {
-    public class AddToFavoritesCommand
+    public class RemoveFromFavoritesCommand
     {
         private readonly GetFavoritesQuery getFavoritesCommand;
         private readonly AzureStorageClient azureBlobService;
 
-        public AddToFavoritesCommand(
+        public RemoveFromFavoritesCommand(
             GetFavoritesQuery getFavoritesCommand,
             AzureStorageClient azureBlobService)
         {
@@ -18,11 +17,11 @@ namespace My1kWordsEe.Services.Cqs
             this.azureBlobService = azureBlobService;
         }
 
-        public async Task<Result> Invoke(string userId, SampleWord sampleWord)
+        public async Task<Result> Invoke(string userId, string eeWord)
         {
             return await this.getFavoritesCommand.Invoke(userId).Bind(async favorites =>
             {
-                favorites.Words.Add(sampleWord.EeWord.ToLower(), sampleWord);
+                favorites.Words.Remove(eeWord.ToLower());
                 return await this.azureBlobService.SaveFavorites(favorites);
             });
         }

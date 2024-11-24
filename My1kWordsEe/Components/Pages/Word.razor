@@ -3,29 +3,95 @@
 
 @using BlazorBootstrap
 @using CSharpFunctionalExtensions
+@using Microsoft.AspNetCore.Components.Authorization
+@using My1kWordsEe.Components.Account
 @using My1kWordsEe.Services;
 @using My1kWordsEe.Models;
 @using My1kWordsEe.Components.Layout;
 @using My1kWordsEe.Services.Cqs;
 @using System.Text.RegularExpressions;
 @using System.ComponentModel.DataAnnotations
+@using System.Security.Claims
 
 @inject IJSRuntime JS
 @inject GetOrAddSampleWordCommand EnsureWordCommand
+@inject GetFavoritesQuery GetFavoritesQuery
 @inject AddSampleSentenceCommand CreateSampleCommand
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IdentityUserAccessor UserAccessor
+@inject AddToFavoritesCommand AddToFavoritesCommand
+@inject RemoveFromFavoritesCommand RemoveFromFavoritesCommand
 
 @code {
+    [Inject] protected PreloadService PreloadService { get; set; } = default!;
+
     [Parameter]
     public required string EeWord { get; init; }
 
     private Maybe<Result<SampleWord>> WordMetadata;
+    private Maybe<Result<Favorites>> Favorites;
+    private ClaimsPrincipal? User;
 
     protected override async Task OnParametersSetAsync()
     {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        if (authState != null)
+        {
+            User = authState.User;
+        }
+
         WordMetadata = EeWord.ValidateWord()
-            ? await this.EnsureWordCommand.Invoke(EeWord)
+            ? await ResolveSample()
             : Result.Failure<SampleWord>("Invalid word");
+
         await base.OnParametersSetAsync();
+    }
+
+    private async Task<Result<SampleWord>> ResolveSample()
+    {
+        var commonSample = this.EnsureWordCommand.Invoke(EeWord);
+        if (IsLoggedIn)
+        {
+            var user = await UserAccessor.GetRequiredUserAsync(User);
+            var favorites = GetFavoritesQuery.Invoke(user.Id);
+            await Task.WhenAll(commonSample, favorites);
+
+            if (favorites.Result.IsSuccess)
+            {
+                Favorites = favorites.Result;
+                var favoriteWords = favorites.Result.Value.Words;
+                if (favoriteWords.ContainsKey(EeWord))
+                {
+                    return favoriteWords[EeWord];
+                }
+            }
+        }
+
+        return await commonSample;
+    }
+
+    private async Task AddToFavorites()
+    {
+        //SpinnerColor.Light, "Saving data..."
+        PreloadService.Show();
+        var user = await UserAccessor.GetRequiredUserAsync(User);
+        // await AddToFavoritesCommand.Invoke(user.Id, Value);
+        await Task.Delay(5000); // call the service/api
+
+        await OnParametersSetAsync();
+        PreloadService.Hide();
+    }
+
+    private async Task RemoveFromFavorites()
+    {
+        //SpinnerColor.Light, "Saving data..."
+        PreloadService.Show();
+        var user = await UserAccessor.GetRequiredUserAsync(User);
+        await Task.Delay(5000); // call the service/api
+
+        // await RemoveFromFavoritesCommand.Invoke(user.Id, Value.EeWord);
+        await OnParametersSetAsync();
+        PreloadService.Hide();
     }
 
     private bool IsSampleGenerationInProgress = false;
@@ -52,6 +118,8 @@
     private SampleWord Value => WordMetadata.Value.Value;
 
     private string Error => WordMetadata.Value.Error;
+
+    private bool IsLoggedIn => User?.Identity?.IsAuthenticated ?? false;
 }
 
 <script>
@@ -66,9 +134,21 @@
         <h1>
             @EeWord
 
+            @if (IsDataLoadedOk && IsLoggedIn)
+            {
+                @if (Favorites.Value.Value.Words.ContainsKey(EeWord.ToLower()))
+                {
+                    <i role="button" class="bi bi-star-fill" @onclick="RemoveFromFavorites"></i>
+                }
+                else
+                {
+                    <i role="button" class="bi bi-star" @onclick="AddToFavorites"></i>
+                }
+            }
+
             @if (IsDataLoadedOk && Value.EeAudioUrl != null)
             {
-                <i class="bi bi-volume-down-fill small" @onclick="SpeakWord">
+                <i role="button" class="bi bi-volume-down-fill small" @onclick="SpeakWord">
                     <audio id="@EeWord" src="@Value.EeAudioUrl"></audio>
                 </i>
             }

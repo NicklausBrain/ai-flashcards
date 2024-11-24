@@ -1,17 +1,10 @@
 ﻿namespace My1kWordsEe.Models
 {
-    public class FavoriteWord
-    {
-        public required string EeWord { get; init; }
-
-        public required string EnWord { get; init; }
-    }
-
     public class Favorites
     {
         public required string UserId { get; init; }
 
-        public required IList<FavoriteWord> Words { get; init; }
+        public required IDictionary<string, SampleWord> Words { get; init; }
 
         // to be added: Phrases
     }
