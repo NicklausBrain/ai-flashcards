@@ -33,7 +33,9 @@ namespace My1kWordsEe.Services.Cqs
                 return Result.Failure<SampleWord>($"Too many samples. {MaxSamples} is a maximum");
             }
 
-            var sentence = await this.openAiService.GetSampleSentence(word.EeWord);
+            var sentence = await this.openAiService.GetSampleSentence(
+                eeWord: word.EeWord,
+                existingSamples: word.Samples.Select(s => s.EeSentence).ToArray());
             if (sentence.IsFailure)
             {
                 return Result.Failure<SampleWord>($"Sentence generation failed: {sentence.Error}");
