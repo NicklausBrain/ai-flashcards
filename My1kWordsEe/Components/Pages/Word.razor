@@ -59,11 +59,6 @@
             if (favorites.Result.IsSuccess)
             {
                 Favorites = favorites.Result;
-                var favoriteWords = favorites.Result.Value.Words;
-                if (favoriteWords.ContainsKey(EeWord))
-                {
-                    return favoriteWords[EeWord];
-                }
             }
         }
 
@@ -114,6 +109,8 @@
     private string Error => WordMetadata.Value.Error;
 
     private bool IsLoggedIn => User?.Identity?.IsAuthenticated ?? false;
+
+    private bool IsFavorite => IsDataLoadedOk && IsLoggedIn && Favorites.HasValue && Favorites.Value.IsSuccess && Favorites.Value.Value.Words.ContainsKey(EeWord.ToLower());
 }
 
 <script>
@@ -128,16 +125,13 @@
         <h1>
             @EeWord
 
-            @if (IsDataLoadedOk && IsLoggedIn)
+            @if (IsFavorite)
             {
-                @if (Favorites.Value.Value.Words.ContainsKey(EeWord.ToLower()))
-                {
-                    <i role="button" class="bi bi-star-fill" @onclick="RemoveFromFavorites"></i>
-                }
-                else
-                {
-                    <i role="button" class="bi bi-star" @onclick="AddToFavorites"></i>
-                }
+                <i role="button" class="bi bi-star-fill" @onclick="RemoveFromFavorites"></i>
+            }
+            else
+            {
+                <i role="button" class="bi bi-star" @onclick="AddToFavorites"></i>
             }
 
             @if (IsDataLoadedOk && Value.EeAudioUrl != null)

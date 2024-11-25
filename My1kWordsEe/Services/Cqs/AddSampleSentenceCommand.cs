@@ -67,9 +67,9 @@ namespace My1kWordsEe.Services.Cqs
                 }).ToArray()
             };
 
-            await this.azureBlobService.SaveWordData(updatedWordData);
-
-            return Result.Success(updatedWordData);
+            return (await this.azureBlobService
+                .SaveWordData(updatedWordData))
+                .Bind(r => Result.Success(updatedWordData));
         }
 
         private Task<Result<Uri>> GenerateImage(Sentence sentence) =>
