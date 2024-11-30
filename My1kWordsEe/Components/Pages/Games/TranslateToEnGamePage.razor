@@ -3,6 +3,7 @@
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
 @using BlazorBootstrap
+@using CSharpFunctionalExtensions
 @using My1kWordsEe.Models
 @using My1kWordsEe.Models.Games
 @using My1kWordsEe.Services.Cqs
@@ -13,12 +14,21 @@
 @inject IJSRuntime JS;
 
 @code {
-    TranslateToEnGame Game = TranslateToEnGame.Empty;
+    TranslateToEnGame Game;
+    Maybe<string> GameGenerationError;
 
     protected override async Task OnParametersSetAsync()
     {
         Game = TranslateToEnGame.Empty;
-        Game = await TranslateToEnGame.Generate(EnsureWordCommand, CreateSampleCommand);
+        var gameGen = await TranslateToEnGame.Generate(EnsureWordCommand, CreateSampleCommand);
+        if (gameGen.IsSuccess)
+        {
+            Game = gameGen.Value;
+        }
+        else
+        {
+            GameGenerationError = gameGen.Error;
+        }
         await base.OnParametersSetAsync();
     }
 
@@ -77,48 +87,45 @@
                         </h5>
                         <img id="sampleImage" class="img-fluid rounded img-max-w-256 p-1" src="@Game.ImageUrl" />
 
-                        @if (Game.CheckResult.HasValue)
+                        @if (Game.CheckResult.HasValue && Game.CheckResult.Value.IsSuccess)
                         {
-                            <ul class="list-group">
-                                @if (Game.CheckResult.Value.IsSuccess)
-                                {
-                                    var checkResult = Game.CheckResult.Value.Value;
+                            var checkResult = Game.CheckResult.Value.Value;
 
-                                    if (checkResult.IsMaxMatch)
-                                    {
-                                        <li class="list-group-item list-group-item-success">
-                                            @checkResult.EnUserSentence
-                                        </li>
-                                    }
-                                    else
-                                    {
-                                        <li class="list-group-item list-group-item-warning">
-                                            @checkResult.EnUserSentence
-                                            (@checkResult.Match / 5)
-                                        </li>
-                                        <li class="list-group-item list-group-item-success">
-                                            @checkResult.EnExpectedSentence
-                                        </li>
-                                        <li class="list-group-item list-group-item-info">
-                                            @checkResult.EnComment
-                                        </li>
-                                    }
+                            <ul class="list-group">
+                                @if (checkResult.IsMaxMatch)
+                                {
+                                    <li class="list-group-item list-group-item-success">
+                                        @checkResult.EnUserSentence
+                                    </li>
                                 }
-                                @if (Game.CheckResult.Value.IsFailure)
+                                else
                                 {
                                     <li class="list-group-item list-group-item-warning">
-                                        @Game.CheckResult.Value.Error
+                                        @checkResult.EnUserSentence
+                                        (@checkResult.Match / 5)
+                                    </li>
+                                    <li class="list-group-item list-group-item-success">
+                                        @checkResult.EnExpectedSentence
+                                    </li>
+                                    <li class="list-group-item list-group-item-info">
+                                        @checkResult.EnComment
                                     </li>
                                 }
                             </ul>
                         }
-                        else if (@Game.IsCheckInProgress)
+                        @if (Game.CheckResult.HasValue && Game.CheckResult.Value.IsFailure)
+                        {
+                            <p class="text-danger">
+                                @Game.CheckResult.Value.Error
+                            </p>
+                        }
+                        @if (Game.IsCheckInProgress)
                         {
                             <div class="text-center">
                                 <Spinner />
                             </div>
                         }
-                        else
+                        else if (Game.CheckResult.HasNoValue)
                         {
                             <div class="input-group input-group-sm">
                                 <span class="input-group-text btn-success">Your translation:</span>
@@ -130,11 +137,18 @@
                 </div>
             </div>
         }
-        else
+        else if (GameGenerationError.HasNoValue)
         {
             <div class="d-flex justify-content-center">
                 <Spinner />
             </div>
+        }
+
+        @if (GameGenerationError.HasValue)
+        {
+            <p class="text-danger">
+                @GameGenerationError
+            </p>
         }
     </div>
 </div>

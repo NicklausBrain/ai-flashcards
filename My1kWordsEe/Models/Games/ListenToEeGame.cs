@@ -40,7 +40,7 @@ namespace My1kWordsEe.Models.Games
             }
 
             var userInput = UserInput.Trim('.', ' ');
-            var eeSampleSentence = sampleSentence.EnSentence.Trim('.', ' ');
+            var eeSampleSentence = sampleSentence.EeSentence.Trim('.', ' ');
 
             if (string.Equals(
                 userInput,
@@ -48,20 +48,22 @@ namespace My1kWordsEe.Models.Games
                 StringComparison.InvariantCultureIgnoreCase))
             {
                 CheckResult = Result.Success(EeListeningCheckResult.Success(
-                    eeSentence: eeSampleSentence,
+                    eeSentence: sampleSentence.EeSentence,
+                    enSentence: sampleSentence.EnSentence,
                     eeUserSentence: userInput));
             }
             else
             {
                 //IsCheckInProgress = true;
                 CheckResult = Result.Success(EeListeningCheckResult.Failure(
-                     eeSentence: eeSampleSentence,
+                     eeSentence: sampleSentence.EeSentence,
+                     enSentence: sampleSentence.EnSentence,
                      eeUserSentence: userInput));
                 //IsCheckInProgress = false;
             }
         }
 
-        public static async Task<TranslateToEnGame> Generate(
+        public static async Task<Result<ListenToEeGame>> Generate(
             GetOrAddSampleWordCommand getOrAddSampleWordCommand,
             AddSampleSentenceCommand addSampleSentenceCommand)
         {
@@ -69,13 +71,25 @@ namespace My1kWordsEe.Models.Games
             var eeWord = Ee1kWords.AllWords[rn.Next(0, Ee1kWords.AllWords.Length)];
             var sampleWord = await getOrAddSampleWordCommand.Invoke(eeWord.Value);
 
+            if (sampleWord.IsFailure)
+            {
+                return Result.Failure<ListenToEeGame>(sampleWord.Error);
+            }
+
             if (sampleWord.Value.Samples.Any())
             {
-                return new TranslateToEnGame(sampleWord.Value.Samples.First());
+                return new ListenToEeGame(sampleWord.Value.Samples.First());
             }
             else
             {
-                return new TranslateToEnGame((await addSampleSentenceCommand.Invoke(sampleWord.Value)).Value.Samples.First());
+                var addSampleResult = await addSampleSentenceCommand.Invoke(sampleWord.Value);
+
+                if (addSampleResult.IsSuccess)
+                {
+                    return new ListenToEeGame(addSampleResult.Value.Samples.First());
+                }
+
+                return Result.Failure<ListenToEeGame>(addSampleResult.Error);
             }
         }
 
@@ -92,6 +106,9 @@ public record EeListeningCheckResult
     [JsonPropertyName("ee_sentence")]
     public required string EeSentence { get; init; }
 
+    [JsonPropertyName("en_sentence")]
+    public required string EnSentence { get; init; }
+
     [JsonPropertyName("ee_user_sentence")]
     public required string EeUserSentence { get; init; }
 
@@ -103,19 +120,27 @@ public record EeListeningCheckResult
 
     public bool IsMaxMatch => this.Match == 5;
 
-    public static EeListeningCheckResult Success(string eeSentence, string eeUserSentence) =>
+    public static EeListeningCheckResult Success(
+        string eeSentence,
+        string enSentence,
+        string eeUserSentence) =>
         new EeListeningCheckResult
         {
             EeSentence = eeSentence,
+            EnSentence = enSentence,
             EeUserSentence = eeUserSentence,
             Match = 5,
             EnComment = string.Empty
         };
 
-    public static EeListeningCheckResult Failure(string eeSentence, string eeUserSentence) =>
+    public static EeListeningCheckResult Failure(
+        string eeSentence,
+        string enSentence,
+        string eeUserSentence) =>
         new EeListeningCheckResult
         {
             EeSentence = eeSentence,
+            EnSentence = enSentence,
             EeUserSentence = eeUserSentence,
             Match = 0,
             EnComment = string.Empty

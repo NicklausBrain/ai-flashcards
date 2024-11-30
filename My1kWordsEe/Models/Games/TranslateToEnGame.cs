@@ -59,7 +59,7 @@ namespace My1kWordsEe.Models.Games
             }
         }
 
-        public static async Task<TranslateToEnGame> Generate(
+        public static async Task<Result<TranslateToEnGame>> Generate(
             GetOrAddSampleWordCommand getOrAddSampleWordCommand,
             AddSampleSentenceCommand addSampleSentenceCommand)
         {
@@ -67,13 +67,25 @@ namespace My1kWordsEe.Models.Games
             var eeWord = Ee1kWords.AllWords[rn.Next(0, Ee1kWords.AllWords.Length)];
             var sampleWord = await getOrAddSampleWordCommand.Invoke(eeWord.Value);
 
+            if (sampleWord.IsFailure)
+            {
+                return Result.Failure<TranslateToEnGame>(sampleWord.Error);
+            }
+
             if (sampleWord.Value.Samples.Any())
             {
                 return new TranslateToEnGame(sampleWord.Value.Samples.First());
             }
             else
             {
-                return new TranslateToEnGame((await addSampleSentenceCommand.Invoke(sampleWord.Value)).Value.Samples.First());
+                var addSampleResult = await addSampleSentenceCommand.Invoke(sampleWord.Value);
+
+                if (addSampleResult.IsSuccess)
+                {
+                    return new TranslateToEnGame(addSampleResult.Value.Samples.First());
+                }
+
+                return Result.Failure<TranslateToEnGame>(addSampleResult.Error);
             }
         }
 

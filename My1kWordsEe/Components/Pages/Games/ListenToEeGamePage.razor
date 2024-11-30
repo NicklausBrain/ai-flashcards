@@ -3,6 +3,7 @@
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
 @using BlazorBootstrap
+@using CSharpFunctionalExtensions
 @using My1kWordsEe.Models
 @using My1kWordsEe.Models.Games
 @using My1kWordsEe.Services.Cqs
@@ -13,12 +14,21 @@
 @inject IJSRuntime JS;
 
 @code {
-    TranslateToEnGame Game = TranslateToEnGame.Empty;
+    ListenToEeGame Game = ListenToEeGame.Empty;
+    Maybe<string> GameGenerationError;
 
     protected override async Task OnParametersSetAsync()
     {
-        Game = TranslateToEnGame.Empty;
-        Game = await TranslateToEnGame.Generate(EnsureWordCommand, CreateSampleCommand);
+        Game = ListenToEeGame.Empty;
+        var gameGen = await ListenToEeGame.Generate(EnsureWordCommand, CreateSampleCommand);
+        if (gameGen.IsSuccess)
+        {
+            Game = gameGen.Value;
+        }
+        else
+        {
+            GameGenerationError = gameGen.Error;
+        }
         await base.OnParametersSetAsync();
     }
 
@@ -69,7 +79,7 @@
                 <div class="card text-center">
                     <div class="card-body">
                         <h5 class="card-title">
-                            @Game.EeSentence
+                            @* @Game.EeSentence *@
                             <button type="button" class="btn btn-primary btn-sm" @onclick="PlaySample">
                                 <i class="bi bi-volume-down-fill"></i>
                             </button>
@@ -87,17 +97,17 @@
                                     if (checkResult.IsMaxMatch)
                                     {
                                         <li class="list-group-item list-group-item-success">
-                                            @checkResult.EnUserSentence
+                                            @checkResult.EeSentence
                                         </li>
                                     }
                                     else
                                     {
                                         <li class="list-group-item list-group-item-warning">
-                                            @checkResult.EnUserSentence
+                                            @checkResult.EeUserSentence
                                             (@checkResult.Match / 5)
                                         </li>
                                         <li class="list-group-item list-group-item-success">
-                                            @checkResult.EnExpectedSentence
+                                            @checkResult.EeSentence
                                         </li>
                                         <li class="list-group-item list-group-item-info">
                                             @checkResult.EnComment
@@ -121,8 +131,8 @@
                         else
                         {
                             <div class="input-group input-group-sm">
-                                <span class="input-group-text btn-success">Your translation:</span>
-                                <InputText @bind-Value="@Game.UserTranslation" class="form-control" autocomplete="off" />
+                                <span class="input-group-text btn-success">You hear:</span>
+                                <InputText @bind-Value="@Game.UserInput" class="form-control" autocomplete="off" />
                                 <button @onclick="@OnSubmit" class="btn btn-outline-primary" type="button">Submit</button>
                             </div>
                         }
@@ -130,11 +140,18 @@
                 </div>
             </div>
         }
-        else
+        else if (GameGenerationError.HasNoValue)
         {
             <div class="d-flex justify-content-center">
                 <Spinner />
             </div>
+        }
+
+        @if (GameGenerationError.HasValue)
+        {
+            <p class="text-danger">
+                @GameGenerationError
+            </p>
         }
     </div>
 </div>
