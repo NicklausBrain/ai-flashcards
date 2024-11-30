@@ -4,16 +4,16 @@ using My1kWordsEe.Services.Cqs;
 
 namespace My1kWordsEe.Models.Games
 {
-    public class TranslateToEnGame
+    public class ListenToEeGame
     {
         private readonly SampleSentence sampleSentence;
 
-        public TranslateToEnGame(SampleSentence sampleSentence)
+        public ListenToEeGame(SampleSentence sampleSentence)
         {
             this.sampleSentence = sampleSentence;
         }
 
-        public Maybe<Result<EnTranslationCheckResult>> CheckResult { get; private set; }
+        public Maybe<Result<EeListeningCheckResult>> CheckResult { get; private set; }
 
         public bool IsReady => this != Empty;
 
@@ -25,41 +25,42 @@ namespace My1kWordsEe.Models.Games
 
         public Uri AudioUrl => sampleSentence.EeAudioUrl;
 
-        public string UserTranslation { get; set; } = string.Empty;
+        public string UserInput { get; set; } = string.Empty;
 
         public bool IsCheckInProgress { get; private set; }
 
-        public async Task Submit(CheckEnTranslationCommand checkEnTranslationCommand)
+        public async Task Submit(CheckEeListeningCommand checkEeListeningCommand)
         {
-            if (!UserTranslation.ValidateSentence())
+            if (!UserInput.ValidateSentence())
             {
-                CheckResult = Result.Failure<EnTranslationCheckResult>("Bad input");
+                CheckResult = Result.Failure<EeListeningCheckResult>("Bad input");
                 return;
             }
 
-            var userInput = UserTranslation.Trim('.', ' ');
-            var defaultEnTranslation = sampleSentence.EnSentence.Trim('.', ' ');
+            var userInput = UserInput.Trim('.', ' ');
+            var eeSampleSentence = sampleSentence.EeSentence.Trim('.', ' ');
 
             if (string.Equals(
                 userInput,
-                defaultEnTranslation,
+                eeSampleSentence,
                 StringComparison.InvariantCultureIgnoreCase))
             {
-                CheckResult = Result.Success(EnTranslationCheckResult.Success(
-                    eeSentence: EeSentence,
-                    enSentence: defaultEnTranslation));
+                CheckResult = Result.Success(EeListeningCheckResult.Success(
+                    eeSentence: sampleSentence.EeSentence,
+                    enSentence: sampleSentence.EnSentence,
+                    eeUserSentence: userInput));
             }
             else
             {
                 IsCheckInProgress = true;
-                CheckResult = await checkEnTranslationCommand.Invoke(
-                    eeSentence: EeSentence,
-                    enSentence: userInput);
+                CheckResult = await checkEeListeningCommand.Invoke(
+                    eeSentence: eeSampleSentence,
+                    userInput: userInput);
                 IsCheckInProgress = false;
             }
         }
 
-        public static async Task<Result<TranslateToEnGame>> Generate(
+        public static async Task<Result<ListenToEeGame>> Generate(
             GetOrAddSampleWordCommand getOrAddSampleWordCommand,
             AddSampleSentenceCommand addSampleSentenceCommand)
         {
@@ -69,12 +70,12 @@ namespace My1kWordsEe.Models.Games
 
             if (sampleWord.IsFailure)
             {
-                return Result.Failure<TranslateToEnGame>(sampleWord.Error);
+                return Result.Failure<ListenToEeGame>(sampleWord.Error);
             }
 
             if (sampleWord.Value.Samples.Any())
             {
-                return new TranslateToEnGame(sampleWord.Value.Samples.First());
+                return new ListenToEeGame(sampleWord.Value.Samples.First());
             }
             else
             {
@@ -82,16 +83,16 @@ namespace My1kWordsEe.Models.Games
 
                 if (addSampleResult.IsSuccess)
                 {
-                    return new TranslateToEnGame(addSampleResult.Value.Samples.First());
+                    return new ListenToEeGame(addSampleResult.Value.Samples.First());
                 }
 
-                return Result.Failure<TranslateToEnGame>(addSampleResult.Error);
+                return Result.Failure<ListenToEeGame>(addSampleResult.Error);
             }
         }
 
         /// <summary>
         /// Null object pattern.
         /// </summary>
-        public static readonly TranslateToEnGame Empty = new TranslateToEnGame(SampleSentence.Empty);
+        public static readonly ListenToEeGame Empty = new ListenToEeGame(SampleSentence.Empty);
     }
 }

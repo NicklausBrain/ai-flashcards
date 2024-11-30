@@ -1,4 +1,4 @@
-﻿@page "/translate-game/en"
+﻿@page "/listen-game/ee"
 
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
@@ -10,17 +10,17 @@
 
 @inject GetOrAddSampleWordCommand EnsureWordCommand;
 @inject AddSampleSentenceCommand CreateSampleCommand;
-@inject CheckEnTranslationCommand CheckEnTranslationCommand;
+@inject CheckEeListeningCommand CheckEeListeningCommand;
 @inject IJSRuntime JS;
 
 @code {
-    TranslateToEnGame Game;
+    ListenToEeGame Game = ListenToEeGame.Empty;
     Maybe<string> GameGenerationError;
 
     protected override async Task OnParametersSetAsync()
     {
-        Game = TranslateToEnGame.Empty;
-        var gameGen = await TranslateToEnGame.Generate(EnsureWordCommand, CreateSampleCommand);
+        Game = ListenToEeGame.Empty;
+        var gameGen = await ListenToEeGame.Generate(EnsureWordCommand, CreateSampleCommand);
         if (gameGen.IsSuccess)
         {
             Game = gameGen.Value;
@@ -33,9 +33,9 @@
     }
 
     // todo add succes/fail sound
-    private Task OnSubmit() => Game.Submit(CheckEnTranslationCommand);
+    private Task OnSubmit() => Game.Submit(CheckEeListeningCommand);
 
-    private async Task PlaySample(MouseEventArgs e)
+    private async Task PlaySample()
     {
         await JS.InvokeVoidAsync("playAudioSample", Game.AudioUrl);
     }
@@ -59,7 +59,7 @@
 <div class="text-left">
     <div class="row">
         <div class="col-7">
-            <h3>Translate to English</h3>
+            <h3>Listen and catch Estonian speech</h3>
         </div>
         <div class="col-5">
             @if (Game.IsFinished)
@@ -79,7 +79,6 @@
                 <div class="card text-center">
                     <div class="card-body">
                         <h5 class="card-title">
-                            @Game.EeSentence
                             <button type="button" class="btn btn-primary btn-sm" @onclick="PlaySample">
                                 <i class="bi bi-volume-down-fill"></i>
                             </button>
@@ -95,22 +94,23 @@
                                 @if (checkResult.IsMaxMatch)
                                 {
                                     <li class="list-group-item list-group-item-success">
-                                        @checkResult.EnUserSentence
+                                        @checkResult.EeSentence
                                     </li>
                                 }
                                 else
                                 {
                                     <li class="list-group-item list-group-item-warning">
-                                        @checkResult.EnUserSentence
+                                        @checkResult.EeUserSentence
                                         (@checkResult.Match / 5)
                                     </li>
                                     <li class="list-group-item list-group-item-success">
-                                        @checkResult.EnExpectedSentence
+                                        @checkResult.EeSentence
                                     </li>
                                     <li class="list-group-item list-group-item-info">
                                         @checkResult.EnComment
                                     </li>
                                 }
+
                             </ul>
                         }
                         @if (Game.CheckResult.HasValue && Game.CheckResult.Value.IsFailure)
@@ -119,7 +119,7 @@
                                 @Game.CheckResult.Value.Error
                             </p>
                         }
-                        @if (Game.IsCheckInProgress)
+                        @if (@Game.IsCheckInProgress)
                         {
                             <div class="text-center">
                                 <Spinner />
@@ -128,8 +128,8 @@
                         else if (Game.CheckResult.HasNoValue)
                         {
                             <div class="input-group input-group-sm">
-                                <span class="input-group-text btn-success">Your translation:</span>
-                                <InputText @bind-Value="@Game.UserTranslation" class="form-control" autocomplete="off" />
+                                <span class="input-group-text btn-success">You hear:</span>
+                                <InputText @bind-Value="@Game.UserInput" class="form-control" autocomplete="off" />
                                 <button @onclick="@OnSubmit" class="btn btn-outline-primary" type="button">Submit</button>
                             </div>
                         }
