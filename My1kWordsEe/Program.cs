@@ -51,6 +51,7 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<AddSampleWordCommand>();
             builder.Services.AddSingleton<AddAudioCommand>();
             builder.Services.AddSingleton<CheckEnTranslationCommand>();
+            builder.Services.AddSingleton<CheckEeListeningCommand>();
             builder.Services.AddSingleton<DeleteSampleSentenceCommand>();
             builder.Services.AddSingleton<GetFavoritesQuery>();
             builder.Services.AddSingleton<AddToFavoritesCommand>();

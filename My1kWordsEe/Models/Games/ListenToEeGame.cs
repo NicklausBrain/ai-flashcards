@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-using CSharpFunctionalExtensions;
+﻿using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Services.Cqs;
 
@@ -31,7 +29,7 @@ namespace My1kWordsEe.Models.Games
 
         public bool IsCheckInProgress { get; private set; }
 
-        public async Task Submit(CheckEnTranslationCommand checkEnTranslationCommand)
+        public async Task Submit(CheckEeListeningCommand checkEeListeningCommand)
         {
             if (!UserInput.ValidateSentence())
             {
@@ -54,12 +52,11 @@ namespace My1kWordsEe.Models.Games
             }
             else
             {
-                //IsCheckInProgress = true;
-                CheckResult = Result.Success(EeListeningCheckResult.Failure(
-                     eeSentence: sampleSentence.EeSentence,
-                     enSentence: sampleSentence.EnSentence,
-                     eeUserSentence: userInput));
-                //IsCheckInProgress = false;
+                IsCheckInProgress = true;
+                CheckResult = await checkEeListeningCommand.Invoke(
+                    eeSentence: eeSampleSentence,
+                    userInput: userInput);
+                IsCheckInProgress = false;
             }
         }
 
@@ -98,51 +95,4 @@ namespace My1kWordsEe.Models.Games
         /// </summary>
         public static readonly ListenToEeGame Empty = new ListenToEeGame(SampleSentence.Empty);
     }
-}
-
-
-public record EeListeningCheckResult
-{
-    [JsonPropertyName("ee_sentence")]
-    public required string EeSentence { get; init; }
-
-    [JsonPropertyName("en_sentence")]
-    public required string EnSentence { get; init; }
-
-    [JsonPropertyName("ee_user_sentence")]
-    public required string EeUserSentence { get; init; }
-
-    [JsonPropertyName("en_comment")]
-    public required string EnComment { get; init; } = string.Empty;
-
-    [JsonPropertyName("match_level")]
-    public required ushort Match { get; init; }
-
-    public bool IsMaxMatch => this.Match == 5;
-
-    public static EeListeningCheckResult Success(
-        string eeSentence,
-        string enSentence,
-        string eeUserSentence) =>
-        new EeListeningCheckResult
-        {
-            EeSentence = eeSentence,
-            EnSentence = enSentence,
-            EeUserSentence = eeUserSentence,
-            Match = 5,
-            EnComment = string.Empty
-        };
-
-    public static EeListeningCheckResult Failure(
-        string eeSentence,
-        string enSentence,
-        string eeUserSentence) =>
-        new EeListeningCheckResult
-        {
-            EeSentence = eeSentence,
-            EnSentence = enSentence,
-            EeUserSentence = eeUserSentence,
-            Match = 0,
-            EnComment = string.Empty
-        };
 }

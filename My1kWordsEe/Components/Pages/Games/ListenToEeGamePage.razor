@@ -1,4 +1,4 @@
-﻿@page "/listen-game/en"
+﻿@page "/listen-game/ee"
 
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
@@ -10,7 +10,7 @@
 
 @inject GetOrAddSampleWordCommand EnsureWordCommand;
 @inject AddSampleSentenceCommand CreateSampleCommand;
-@inject CheckEnTranslationCommand CheckEnTranslationCommand;
+@inject CheckEeListeningCommand CheckEeListeningCommand;
 @inject IJSRuntime JS;
 
 @code {
@@ -33,9 +33,9 @@
     }
 
     // todo add succes/fail sound
-    private Task OnSubmit() => Game.Submit(CheckEnTranslationCommand);
+    private Task OnSubmit() => Game.Submit(CheckEeListeningCommand);
 
-    private async Task PlaySample(MouseEventArgs e)
+    private async Task PlaySample()
     {
         await JS.InvokeVoidAsync("playAudioSample", Game.AudioUrl);
     }
@@ -79,7 +79,6 @@
                 <div class="card text-center">
                     <div class="card-body">
                         <h5 class="card-title">
-                            @* @Game.EeSentence *@
                             <button type="button" class="btn btn-primary btn-sm" @onclick="PlaySample">
                                 <i class="bi bi-volume-down-fill"></i>
                             </button>
@@ -87,48 +86,46 @@
                         </h5>
                         <img id="sampleImage" class="img-fluid rounded img-max-w-256 p-1" src="@Game.ImageUrl" />
 
-                        @if (Game.CheckResult.HasValue)
+                        @if (Game.CheckResult.HasValue && Game.CheckResult.Value.IsSuccess)
                         {
-                            <ul class="list-group">
-                                @if (Game.CheckResult.Value.IsSuccess)
-                                {
-                                    var checkResult = Game.CheckResult.Value.Value;
+                            var checkResult = Game.CheckResult.Value.Value;
 
-                                    if (checkResult.IsMaxMatch)
-                                    {
-                                        <li class="list-group-item list-group-item-success">
-                                            @checkResult.EeSentence
-                                        </li>
-                                    }
-                                    else
-                                    {
-                                        <li class="list-group-item list-group-item-warning">
-                                            @checkResult.EeUserSentence
-                                            (@checkResult.Match / 5)
-                                        </li>
-                                        <li class="list-group-item list-group-item-success">
-                                            @checkResult.EeSentence
-                                        </li>
-                                        <li class="list-group-item list-group-item-info">
-                                            @checkResult.EnComment
-                                        </li>
-                                    }
-                                }
-                                @if (Game.CheckResult.Value.IsFailure)
+                            <ul class="list-group">
+                                @if (checkResult.IsMaxMatch)
                                 {
-                                    <li class="list-group-item list-group-item-warning">
-                                        @Game.CheckResult.Value.Error
+                                    <li class="list-group-item list-group-item-success">
+                                        @checkResult.EeSentence
                                     </li>
                                 }
+                                else
+                                {
+                                    <li class="list-group-item list-group-item-warning">
+                                        @checkResult.EeUserSentence
+                                        (@checkResult.Match / 5)
+                                    </li>
+                                    <li class="list-group-item list-group-item-success">
+                                        @checkResult.EeSentence
+                                    </li>
+                                    <li class="list-group-item list-group-item-info">
+                                        @checkResult.EnComment
+                                    </li>
+                                }
+
                             </ul>
                         }
-                        else if (@Game.IsCheckInProgress)
+                        @if (Game.CheckResult.HasValue && Game.CheckResult.Value.IsFailure)
+                        {
+                            <p class="text-danger">
+                                @Game.CheckResult.Value.Error
+                            </p>
+                        }
+                        @if (@Game.IsCheckInProgress)
                         {
                             <div class="text-center">
                                 <Spinner />
                             </div>
                         }
-                        else
+                        else if (Game.CheckResult.HasNoValue)
                         {
                             <div class="input-group input-group-sm">
                                 <span class="input-group-text btn-success">You hear:</span>
