@@ -75,6 +75,7 @@
         PreloadService.Show(SpinnerColor.Light, "Saving data...");
         var user = await UserAccessor.GetRequiredUserAsync(User);
         Favorites = await AddToFavoritesCommand.Invoke(user.Id, favorite);
+        await Task.Delay(300);
         PreloadService.Hide();
         StateHasChanged();
     }
@@ -85,6 +86,7 @@
         var user = await UserAccessor.GetRequiredUserAsync(User);
         Favorites = await RemoveFromFavoritesCommand.Invoke(user.Id, favorite);
         PreloadService.Hide();
+        await Task.Delay(300);
         StateHasChanged();
     }
 
