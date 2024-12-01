@@ -80,13 +80,13 @@
                                 <li class="list-group-item border-0">
                                     @if (IsFavorite && RemoveFromFavorites != null)
                                     {
-                                        <Button Color="ButtonColor.Primary" Size="ButtonSize.Small" @onclick="() => RemoveFromFavorites(Sample)">
+                                        <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" @onclick="() => RemoveFromFavorites(Sample)">
                                             <i role="button" class="bi bi-star-fill"></i>
                                         </Button>
                                     }
                                     else if (AddToFavorites != null)
                                     {
-                                        <Button Color="ButtonColor.Primary" Size="ButtonSize.Small" @onclick="() => AddToFavorites(Sample)">
+                                        <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" @onclick="() => AddToFavorites(Sample)">
                                             <i role="button" class="bi bi-star"></i>
                                         </Button>
                                     }
