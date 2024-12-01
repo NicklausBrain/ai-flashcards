@@ -18,12 +18,23 @@ namespace My1kWordsEe.Services.Cqs
             this.azureBlobService = azureBlobService;
         }
 
-        public async Task<Result> Invoke(string userId, SampleWord sampleWord)
+        public async Task<Result<Favorites>> Invoke(string userId, SampleWord sampleWord)
         {
             return await this.getFavoritesCommand.Invoke(userId).Bind(async favorites =>
             {
                 favorites.Words.Add(sampleWord.EeWord.ToLower(), sampleWord);
-                return await this.azureBlobService.SaveFavorites(favorites);
+                return await this.azureBlobService.SaveFavorites(favorites).Bind(_ =>
+                    Result.Success(favorites));
+            });
+        }
+
+        public async Task<Result<Favorites>> Invoke(string userId, SampleSentence sampleSentence)
+        {
+            return await this.getFavoritesCommand.Invoke(userId).Bind(async favorites =>
+            {
+                favorites.Sentences.Add(sampleSentence.EeSentence.ToLower(), sampleSentence);
+                return await this.azureBlobService.SaveFavorites(favorites).Bind(_ =>
+                    Result.Success(favorites));
             });
         }
     }
