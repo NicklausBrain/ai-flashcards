@@ -1,5 +1,5 @@
 ﻿@page "/favorites"
-@rendermode InteractiveServer
+@rendermode @(new InteractiveServerRenderMode(prerender: true))
 
 @using BlazorBootstrap
 @using CSharpFunctionalExtensions
@@ -36,49 +36,59 @@
 <h1>Favorites | Lemmikud</h1>
 
 <div class="text-center">
-    <div class="row">
-        @if (Favorites.HasValue && Favorites.Value.IsSuccess)
-        {
-            var favorites = Favorites.Value.Value;
+    @if (Favorites.HasValue && Favorites.Value.IsSuccess)
+    {
+        var favorites = Favorites.Value.Value;
 
-            @if (favorites.Words.Any())
-            {
-                foreach (var wordPair in favorites.Words)
-                {
-                    var word = wordPair.Value;
-                    <div class="col col-12 col-sm-6 p-1">
-                        <Card>
-                            <CardBody>
-                                <CardTitle>
-                                    @word.EeWord
-                                </CardTitle>
-                                <CardSubTitle>@word.EnWord</CardSubTitle>
-                                <CardText>@word.EnExplanation</CardText>
-                                <CardLink To="@($"/word/{word.EeWord}")">
-                                    <i role="link" class="bi bi-box-arrow-up-right"></i>
-                                </CardLink>
-                            </CardBody>
-                        </Card>
+        <Tabs EnableFadeEffect="true">
+            <Tab Title="Words" Active="true">
+                <Content>
+                    <div class="row">
+                        @if (favorites.Words.Any())
+                        {
+                            foreach (var wordPair in favorites.Words)
+                            {
+                                var word = wordPair.Value;
+                                <div class="col col-12 col-sm-4 p-1">
+                                    <Card>
+                                        <CardBody>
+                                            <CardTitle>
+                                                @word.EeWord
+                                            </CardTitle>
+                                            <CardSubTitle>@word.EnWord</CardSubTitle>
+                                            <CardText>@word.EnExplanation</CardText>
+                                            <CardLink To="@($"/word/{word.EeWord}")">
+                                                <i role="link" class="bi bi-box-arrow-up-right"></i>
+                                            </CardLink>
+                                        </CardBody>
+                                    </Card>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <h3>No favorites yet!</h3>
+                        }
                     </div>
+                </Content>
+            </Tab>
+            <Tab Title="Sentences">
+                <Content>
+                    <p class="mt-3">No sentences yet</p>
+                </Content>
+            </Tab>
+        </Tabs>
+    }
 
-                }
-            }
-            else
-            {
-                <h3>No favorites yet!</h3>
-            }
-        }
+    @if (Favorites.HasNoValue)
+    {
+        <div class="text-center">
+            <Spinner />
+        </div>
+    }
 
-        @if (Favorites.HasNoValue)
-        {
-            <div class="text-center">
-                <Spinner />
-            </div>
-        }
-
-        @if (Favorites.HasValue && Favorites.Value.IsFailure)
-        {
-            <h3 class="alert-warning">@Favorites.Value.Error</h3>
-        }
-    </div>
+    @if (Favorites.HasValue && Favorites.Value.IsFailure)
+    {
+        <h3 class="alert-warning">@Favorites.Value.Error</h3>
+    }
 </div>
