@@ -22,10 +22,10 @@
     public required SampleSentence Sample { get; init; }
 
     [Parameter]
-    public required Func<SampleSentence, Task> AddToFavorites { get; init; }
+    public Func<SampleSentence, Task>? AddToFavorites { get; init; }
 
     [Parameter]
-    public required Func<SampleSentence, Task> RemoveFromFavorites { get; init; }
+    public Func<SampleSentence, Task>? RemoveFromFavorites { get; init; }
 
     [Parameter]
     public bool IsFavorite { get; init; }
@@ -94,13 +94,6 @@
     };
 </script>
 
-<style>
-    .img-max-w-256 {
-        max-width: 256px;
-        width: 100%;
-    }
-</style>
-
 <Card>
     <CardBody>
         <table class="table">
@@ -120,13 +113,13 @@
                             @if (IsLoggedIn)
                             {
                                 <li class="list-group-item border-0">
-                                    @if (IsFavorite)
+                                    @if (IsFavorite && RemoveFromFavorites != null)
                                     {
                                         <Button Color="ButtonColor.Primary" Size="ButtonSize.Small" @onclick="() => RemoveFromFavorites(Sample)">
                                             <i role="button" class="bi bi-star-fill"></i>
                                         </Button>
                                     }
-                                    else
+                                    else if (AddToFavorites != null)
                                     {
                                         <Button Color="ButtonColor.Primary" Size="ButtonSize.Small" @onclick="() => AddToFavorites(Sample)">
                                             <i role="button" class="bi bi-star"></i>

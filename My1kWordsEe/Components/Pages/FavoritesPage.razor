@@ -67,14 +67,29 @@
                         }
                         else
                         {
-                            <h3>No favorites yet!</h3>
+                            <p class="mt-3">No favorite words yet</p>
                         }
                     </div>
                 </Content>
             </Tab>
             <Tab Title="Sentences">
                 <Content>
-                    <p class="mt-3">No sentences yet</p>
+                    <div class="row">
+                        @if (favorites.Words.Any())
+                        {
+                            @foreach (var sentencePair in favorites.Sentences)
+                            {
+                                var sentence = sentencePair.Value;
+                                <div class="col col-12 col-sm-6 p-1">
+                                    <SampleV2 Sample="sentence"></SampleV2>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="mt-3">No favorite sentences yet</p>
+                        }
+                    </div>
                 </Content>
             </Tab>
         </Tabs>
