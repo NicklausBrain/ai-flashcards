@@ -27,5 +27,15 @@ namespace My1kWordsEe.Services.Cqs
                     Result.Success(favorites));
             });
         }
+
+        public async Task<Result<Favorites>> Invoke(string userId, SampleSentence sample)
+        {
+            return await this.getFavoritesCommand.Invoke(userId).Bind(async favorites =>
+            {
+                favorites.Sentences.Remove(sample.EeSentence.ToLower());
+                return await this.azureBlobService.SaveFavorites(favorites).Bind(_ =>
+                    Result.Success(favorites));
+            });
+        }
     }
 }

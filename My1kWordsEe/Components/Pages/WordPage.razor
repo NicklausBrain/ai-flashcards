@@ -65,20 +65,22 @@
         return await commonSample;
     }
 
-    private async Task AddToFavorites()
+    private async Task AddToFavorites(dynamic favorite)
     {
         PreloadService.Show(SpinnerColor.Light, "Saving data...");
         var user = await UserAccessor.GetRequiredUserAsync(User);
-        Favorites = await AddToFavoritesCommand.Invoke(user.Id, Value);
+        Favorites = await AddToFavoritesCommand.Invoke(user.Id, favorite);
         PreloadService.Hide();
+        StateHasChanged();
     }
 
-    private async Task RemoveFromFavorites()
+    private async Task RemoveFromFavorites(dynamic favorite)
     {
         PreloadService.Show(SpinnerColor.Light, "Saving data...");
         var user = await UserAccessor.GetRequiredUserAsync(User);
-        Favorites = await RemoveFromFavoritesCommand.Invoke(user.Id, Value);
+        Favorites = await RemoveFromFavoritesCommand.Invoke(user.Id, favorite);
         PreloadService.Hide();
+        StateHasChanged();
     }
 
     private bool IsSampleGenerationInProgress = false;
@@ -108,7 +110,9 @@
 
     private bool IsLoggedIn => User?.Identity?.IsAuthenticated ?? false;
 
-    private bool IsFavorite => IsDataLoadedOk && IsLoggedIn && Favorites.HasValue && Favorites.Value.IsSuccess && Favorites.Value.Value.Words.ContainsKey(EeWord.ToLower());
+    private bool IsFavorite() => IsDataLoadedOk && IsLoggedIn && Favorites.HasValue && Favorites.Value.IsSuccess && Favorites.Value.Value.Words.ContainsKey(EeWord.ToLower());
+
+    private bool IsFavorite(SampleSentence sentence) => IsDataLoadedOk && IsLoggedIn && Favorites.HasValue && Favorites.Value.IsSuccess && Favorites.Value.Value.Sentences.ContainsKey(sentence.EeSentence.ToLower());
 }
 
 <script>
@@ -123,13 +127,13 @@
         <h1>
             @EeWord
 
-            @if (IsFavorite)
+            @if (IsFavorite())
             {
-                <i role="button" class="bi bi-star-fill" style="color: rebeccapurple" @onclick="RemoveFromFavorites"></i>
+                <i role="button" class="bi bi-star-fill favorite-active" @onclick="() => RemoveFromFavorites(Value)"></i>
             }
             else
             {
-                <i role="button" class="bi bi-star" @onclick="AddToFavorites"></i>
+                <i role="button" class="bi bi-star" @onclick="() => AddToFavorites(Value)"></i>
             }
 
             @if (IsDataLoadedOk && Value.EeAudioUrl != null)
@@ -169,7 +173,10 @@
             @foreach (var sample in Value.Samples)
             {
                 <div class="col col-12 col-sm-6 p-1">
-                    <SampleV2 Sample="@sample">
+                    <SampleV2 Sample="@sample"
+                        AddToFavorites="AddToFavorites"
+                        RemoveFromFavorites="RemoveFromFavorites"
+                        IsFavorite="IsFavorite(sample)" >
                     </SampleV2>
                 </div>
             }

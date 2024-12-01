@@ -21,6 +21,15 @@
     [Parameter]
     public required SampleSentence Sample { get; init; }
 
+    [Parameter]
+    public required Func<SampleSentence, Task> AddToFavorites { get; init; }
+
+    [Parameter]
+    public required Func<SampleSentence, Task> RemoveFromFavorites { get; init; }
+
+    [Parameter]
+    public bool IsFavorite { get; init; }
+
     private ConfirmDialog DeleteSampleDialog = default!;
 
     [Inject] protected ToastService ToastService { get; set; } = default!;
@@ -108,6 +117,23 @@
                                 </Button>
                                 <audio id="@Sample.EeAudioUrl" src="@Sample.EeAudioUrl"></audio>
                             </li>
+                            @if (IsLoggedIn)
+                            {
+                                <li class="list-group-item border-0">
+                                    @if (IsFavorite)
+                                    {
+                                        <Button Color="ButtonColor.Primary" Size="ButtonSize.Small" @onclick="() => RemoveFromFavorites(Sample)">
+                                            <i role="button" class="bi bi-star-fill"></i>
+                                        </Button>
+                                    }
+                                    else
+                                    {
+                                        <Button Color="ButtonColor.Primary" Size="ButtonSize.Small" @onclick="() => AddToFavorites(Sample)">
+                                            <i role="button" class="bi bi-star"></i>
+                                        </Button>
+                                    }
+                                </li>
+                            }
                             @if (IsAdmin)
                             {
                                 <li class="list-group-item border-0">
@@ -115,20 +141,6 @@
                                         <i class="bi bi-trash3-fill"></i>
                                     </Button>
                                 </li>
-                            }
-                            @if (IsLoggedIn)
-                            {
-                                // todo add phrase to favorites
-                               @*  <li class="list-group-item border-0">
-                                    <Button Color="ButtonColor.Secondary" Size="ButtonSize.Small">
-                                        <i class="bi bi-star"></i>
-                                    </Button>
-                                </li>
-                                <li class="list-group-item border-0">
-                                    <Button Color="ButtonColor.Secondary" Size="ButtonSize.Small">
-                                        <i class="bi bi-star-fill"></i>
-                                    </Button>
-                                </li> *@
                             }
                         </ul>
                     </td>
