@@ -14,8 +14,14 @@
 @inject GetFavoritesQuery GetFavoritesQuery
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IdentityUserAccessor UserAccessor
+@inject AddToFavoritesCommand AddToFavoritesCommand
+@inject RemoveFromFavoritesCommand RemoveFromFavoritesCommand
 
 @code {
+    [Inject] protected PreloadService PreloadService { get; set; } = default!;
+
+    private ClaimsPrincipal? User;
+
     private Maybe<Result<Favorites>> Favorites;
 
     protected override async Task OnParametersSetAsync()
@@ -23,12 +29,35 @@
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         if (authState != null)
         {
+            User = authState.User;
             var user = await UserAccessor.GetRequiredUserAsync(authState.User);
             Favorites = await GetFavoritesQuery.Invoke(user.Id);
         }
 
         await base.OnParametersSetAsync();
     }
+
+    private async Task AddToFavorites(dynamic favorite)
+    {
+        PreloadService.Show(SpinnerColor.Light, "Saving data...");
+        var user = await UserAccessor.GetRequiredUserAsync(User);
+        Favorites = await AddToFavoritesCommand.Invoke(user.Id, favorite);
+        PreloadService.Hide();
+        StateHasChanged();
+    }
+
+    private async Task RemoveFromFavorites(dynamic favorite)
+    {
+        PreloadService.Show(SpinnerColor.Light, "Saving data...");
+        var user = await UserAccessor.GetRequiredUserAsync(User);
+        Favorites = await RemoveFromFavoritesCommand.Invoke(user.Id, favorite);
+        PreloadService.Hide();
+        StateHasChanged();
+    }
+
+    private IDictionary<string, SampleWord> FavoriteWords => Favorites.Value.Value.Words;
+
+    private IDictionary<string, SampleSentence> FavoriteSentences => Favorites.Value.Value.Sentences;
 }
 
 <PageTitle>Favorites | Lemmikud</PageTitle>
@@ -38,15 +67,13 @@
 <div class="text-center">
     @if (Favorites.HasValue && Favorites.Value.IsSuccess)
     {
-        var favorites = Favorites.Value.Value;
-
         <Tabs EnableFadeEffect="true">
             <Tab Title="Words" Active="true">
                 <Content>
                     <div class="row">
-                        @if (favorites.Words.Any())
+                        @if (FavoriteWords.Any())
                         {
-                            foreach (var wordPair in favorites.Words)
+                            foreach (var wordPair in FavoriteWords)
                             {
                                 var word = wordPair.Value;
                                 <div class="col col-12 col-sm-4 p-1">
@@ -75,13 +102,17 @@
             <Tab Title="Sentences">
                 <Content>
                     <div class="row">
-                        @if (favorites.Words.Any())
+                        @if (FavoriteSentences.Any())
                         {
-                            @foreach (var sentencePair in favorites.Sentences)
+                            @foreach (var sentencePair in FavoriteSentences)
                             {
                                 var sentence = sentencePair.Value;
                                 <div class="col col-12 col-sm-6 p-1">
-                                    <SampleV2 Sample="sentence"></SampleV2>
+                                    <SampleV2 Sample="sentence"
+                                              AddToFavorites="AddToFavorites"
+                                              RemoveFromFavorites="RemoveFromFavorites"
+                                              IsFavorite="true">
+                                    </SampleV2>
                                 </div>
                             }
                         }
@@ -107,3 +138,6 @@
         <h3 class="alert-warning">@Favorites.Value.Error</h3>
     }
 </div>
+
+
+<Preload LoadingText="Loading..." />
