@@ -12,6 +12,7 @@ namespace My1kWordsEe.Services
     public class OpenAiClient
     {
         public const string ApiSecretKey = "Secrets:OpenAiKey";
+        public const string Model = "gpt-4o-mini";
 
         private readonly IConfiguration config;
         private readonly ILogger logger;
@@ -31,7 +32,7 @@ namespace My1kWordsEe.Services
                 return Result.Failure<string>("Open AI API key is missing");
             };
 
-            ChatClient client = new(model: "gpt-4o", this.config[ApiSecretKey]);
+            ChatClient client = new(model: Model, this.config[ApiSecretKey]);
 
             try
             {
@@ -104,7 +105,9 @@ namespace My1kWordsEe.Services
             return await openAiClient.CompleteAsync(prompt, sentence, new ChatCompletionOptions
             {
                 ResponseFormat = ChatResponseFormat.Text,
-                Temperature = (float)Math.PI / 2
+                Temperature = (float)Math.PI / 2,
+                // limit the number of tokens to avoid long prompts that crush stability ai
+                MaxTokens = 400,
             });
         }
 
