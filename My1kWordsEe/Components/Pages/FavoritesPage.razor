@@ -1,5 +1,5 @@
 ﻿@page "/favorites"
-@rendermode InteractiveServer
+@rendermode @(new InteractiveServerRenderMode(prerender: true))
 
 @using BlazorBootstrap
 @using CSharpFunctionalExtensions
@@ -14,8 +14,14 @@
 @inject GetFavoritesQuery GetFavoritesQuery
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IdentityUserAccessor UserAccessor
+@inject AddToFavoritesCommand AddToFavoritesCommand
+@inject RemoveFromFavoritesCommand RemoveFromFavoritesCommand
 
 @code {
+    [Inject] protected PreloadService PreloadService { get; set; } = default!;
+
+    private ClaimsPrincipal? User;
+
     private Maybe<Result<Favorites>> Favorites;
 
     protected override async Task OnParametersSetAsync()
@@ -23,12 +29,35 @@
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         if (authState != null)
         {
+            User = authState.User;
             var user = await UserAccessor.GetRequiredUserAsync(authState.User);
             Favorites = await GetFavoritesQuery.Invoke(user.Id);
         }
 
         await base.OnParametersSetAsync();
     }
+
+    private async Task AddToFavorites(dynamic favorite)
+    {
+        PreloadService.Show(SpinnerColor.Light, "Saving data...");
+        var user = await UserAccessor.GetRequiredUserAsync(User);
+        Favorites = await AddToFavoritesCommand.Invoke(user.Id, favorite);
+        PreloadService.Hide();
+        StateHasChanged();
+    }
+
+    private async Task RemoveFromFavorites(dynamic favorite)
+    {
+        PreloadService.Show(SpinnerColor.Light, "Saving data...");
+        var user = await UserAccessor.GetRequiredUserAsync(User);
+        Favorites = await RemoveFromFavoritesCommand.Invoke(user.Id, favorite);
+        PreloadService.Hide();
+        StateHasChanged();
+    }
+
+    private IDictionary<string, SampleWord> FavoriteWords => Favorites.Value.Value.Words;
+
+    private IDictionary<string, SampleSentence> FavoriteSentences => Favorites.Value.Value.Sentences;
 }
 
 <PageTitle>Favorites | Lemmikud</PageTitle>
@@ -36,49 +65,79 @@
 <h1>Favorites | Lemmikud</h1>
 
 <div class="text-center">
-    <div class="row">
-        @if (Favorites.HasValue && Favorites.Value.IsSuccess)
-        {
-            var favorites = Favorites.Value.Value;
-
-            @if (favorites.Words.Any())
-            {
-                foreach (var wordPair in favorites.Words)
-                {
-                    var word = wordPair.Value;
-                    <div class="col col-12 col-sm-6 p-1">
-                        <Card>
-                            <CardBody>
-                                <CardTitle>
-                                    @word.EeWord
-                                </CardTitle>
-                                <CardSubTitle>@word.EnWord</CardSubTitle>
-                                <CardText>@word.EnExplanation</CardText>
-                                <CardLink To="@($"/word/{word.EeWord}")">
-                                    <i role="link" class="bi bi-box-arrow-up-right"></i>
-                                </CardLink>
-                            </CardBody>
-                        </Card>
+    @if (Favorites.HasValue && Favorites.Value.IsSuccess)
+    {
+        <Tabs EnableFadeEffect="true">
+            <Tab Title="Words" Active="true">
+                <Content>
+                    <div class="row">
+                        @if (FavoriteWords.Any())
+                        {
+                            foreach (var wordPair in FavoriteWords)
+                            {
+                                var word = wordPair.Value;
+                                <div class="col col-12 col-sm-4 p-1">
+                                    <Card>
+                                        <CardBody>
+                                            <CardTitle>
+                                                @word.EeWord
+                                            </CardTitle>
+                                            <CardSubTitle>@word.EnWord</CardSubTitle>
+                                            <CardText>@word.EnExplanation</CardText>
+                                            <CardLink To="@($"/word/{word.EeWord}")">
+                                                <i role="link" class="bi bi-box-arrow-up-right"></i>
+                                            </CardLink>
+                                        </CardBody>
+                                    </Card>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="mt-3">No favorite words yet</p>
+                        }
                     </div>
+                </Content>
+            </Tab>
+            <Tab Title="Sentences">
+                <Content>
+                    <div class="row">
+                        @if (FavoriteSentences.Any())
+                        {
+                            @foreach (var sentencePair in FavoriteSentences)
+                            {
+                                var sentence = sentencePair.Value;
+                                <div class="col col-12 col-sm-6 p-1">
+                                    <SampleV2 Sample="sentence"
+                                              AddToFavorites="AddToFavorites"
+                                              RemoveFromFavorites="RemoveFromFavorites"
+                                              IsFavorite="true">
+                                    </SampleV2>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="mt-3">No favorite sentences yet</p>
+                        }
+                    </div>
+                </Content>
+            </Tab>
+        </Tabs>
+    }
 
-                }
-            }
-            else
-            {
-                <h3>No favorites yet!</h3>
-            }
-        }
+    @if (Favorites.HasNoValue)
+    {
+        <div class="text-center">
+            <Spinner />
+        </div>
+    }
 
-        @if (Favorites.HasNoValue)
-        {
-            <div class="text-center">
-                <Spinner />
-            </div>
-        }
-
-        @if (Favorites.HasValue && Favorites.Value.IsFailure)
-        {
-            <h3 class="alert-warning">@Favorites.Value.Error</h3>
-        }
-    </div>
+    @if (Favorites.HasValue && Favorites.Value.IsFailure)
+    {
+        <h3 class="alert-warning">@Favorites.Value.Error</h3>
+    }
 </div>
+
+
+<Preload LoadingText="Loading..." />

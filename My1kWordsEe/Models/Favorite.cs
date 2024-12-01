@@ -2,10 +2,20 @@
 {
     public class Favorites
     {
-        public required string UserId { get; init; }
+        public Favorites(
+            string userId,
+            IDictionary<string, SampleWord>? words = null,
+            IDictionary<string, SampleSentence>? sentences = null)
+        {
+            UserId = userId;
+            Words = words ?? new Dictionary<string, SampleWord>();
+            Sentences = sentences ?? new Dictionary<string, SampleSentence>();
+        }
 
-        public required IDictionary<string, SampleWord> Words { get; init; }
+        public string UserId { get; }
 
-        // to be added: Phrases
+        public IDictionary<string, SampleWord> Words { get; }
+
+        public IDictionary<string, SampleSentence> Sentences { get; }
     }
 }

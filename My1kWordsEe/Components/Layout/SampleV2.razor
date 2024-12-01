@@ -13,7 +13,6 @@
 
 @inject IdentityUserAccessor UserAccessor
 @inject AuthenticationStateProvider AuthenticationStateProvider
-@inject DeleteSampleSentenceCommand DeleteSampleSentenceCommand
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JS
 
@@ -21,9 +20,17 @@
     [Parameter]
     public required SampleSentence Sample { get; init; }
 
-    private ConfirmDialog DeleteSampleDialog = default!;
+    [Parameter]
+    public Func<SampleSentence, Task>? AddToFavorites { get; init; }
 
-    [Inject] protected ToastService ToastService { get; set; } = default!;
+    [Parameter]
+    public Func<SampleSentence, Task>? RemoveFromFavorites { get; init; }
+
+    [Parameter]
+    public Func<SampleSentence, Task>? DeleteSample { get; init; }
+
+    [Parameter]
+    public bool IsFavorite { get; init; }
 
     private bool IsAdmin { get; set; } = false;
 
@@ -43,39 +50,6 @@
     {
         await JS.InvokeVoidAsync("playAudioSample", Sample.EeAudioUrl);
     }
-
-    private async Task ShowDeleteConfirmationAsync()
-    {
-        var options = new ConfirmDialogOptions
-            {
-                IsScrollable = true,
-                Dismissable = true,
-                IsVerticallyCentered = true,
-                AutoFocusYesButton = false,
-            };
-
-        var confirmation = await DeleteSampleDialog.ShowAsync(
-            title: "Are you sure you want to delete this?",
-            message1: "This will delete the record. Once deleted can not be rolled back.",
-            message2: "Do you want to proceed?", options);
-
-        if (confirmation)
-        {
-            var deletionResult = await this.DeleteSampleSentenceCommand.Invoke(Sample);
-            if (deletionResult.IsSuccess)
-            {
-                this.NavigationManager.Refresh(true);
-            }
-            else
-            {
-                ToastService.Notify(new ToastMessage(ToastType.Warning, deletionResult.Error));
-            }
-        }
-        else
-        {
-            ToastService.Notify(new ToastMessage(ToastType.Secondary, $"Delete action canceled."));
-        }
-    }
 }
 
 <script>
@@ -84,13 +58,6 @@
         await audio.play();
     };
 </script>
-
-<style>
-    .img-max-w-256 {
-        max-width: 256px;
-        width: 100%;
-    }
-</style>
 
 <Card>
     <CardBody>
@@ -108,27 +75,30 @@
                                 </Button>
                                 <audio id="@Sample.EeAudioUrl" src="@Sample.EeAudioUrl"></audio>
                             </li>
-                            @if (IsAdmin)
+                            @if (IsLoggedIn)
                             {
                                 <li class="list-group-item border-0">
-                                    <Button Color="ButtonColor.Danger" Size="ButtonSize.Small" @onclick="ShowDeleteConfirmationAsync">
+                                    @if (IsFavorite && RemoveFromFavorites != null)
+                                    {
+                                        <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" @onclick="() => RemoveFromFavorites(Sample)">
+                                            <i role="button" class="bi bi-star-fill"></i>
+                                        </Button>
+                                    }
+                                    else if (AddToFavorites != null)
+                                    {
+                                        <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" @onclick="() => AddToFavorites(Sample)">
+                                            <i role="button" class="bi bi-star"></i>
+                                        </Button>
+                                    }
+                                </li>
+                            }
+                            @if (IsAdmin && DeleteSample != null)
+                            {
+                                <li class="list-group-item border-0">
+                                    <Button Color="ButtonColor.Danger" Size="ButtonSize.Small" @onclick="() => DeleteSample(Sample)">
                                         <i class="bi bi-trash3-fill"></i>
                                     </Button>
                                 </li>
-                            }
-                            @if (IsLoggedIn)
-                            {
-                                // todo add phrase to favorites
-                               @*  <li class="list-group-item border-0">
-                                    <Button Color="ButtonColor.Secondary" Size="ButtonSize.Small">
-                                        <i class="bi bi-star"></i>
-                                    </Button>
-                                </li>
-                                <li class="list-group-item border-0">
-                                    <Button Color="ButtonColor.Secondary" Size="ButtonSize.Small">
-                                        <i class="bi bi-star-fill"></i>
-                                    </Button>
-                                </li> *@
                             }
                         </ul>
                     </td>
@@ -147,6 +117,3 @@
         </table>
     </CardBody>
 </Card>
-
-<ConfirmDialog @ref="DeleteSampleDialog" />
-<Toasts class="p-3" AutoHide="true" StackLength="3" Placement="ToastsPlacement.TopRight" />

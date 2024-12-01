@@ -16,6 +16,7 @@
     {
         public string Title { get; set; }
     }
+
     class GameCompositeModel
     {
         public Slide[] Slides { get; set; } = new Slide[] { };
@@ -24,9 +25,10 @@
 
         public Slide CurrentSlide { get; set; }
     }
+
     GameCompositeModel Game = new();
 
-    private void OnNext() { }// Game.NextSlide();
+    private void OnNext() { } // Game.NextSlide();
 
     private void OnPrevious() { } //Game.PrevSlide();
 
@@ -34,9 +36,8 @@
 
     private Task OnSubmit()
     {
-
         return Task.CompletedTask;
-    } //=> { }; Game.CurrentSlide.Submit(CheckEnTranslationCommand);
+    }
 }
 
 
@@ -48,13 +49,6 @@
         touch: false
     })
 </script>
-
-<style>
-    .img-max-w-256 {
-        max-width: 256px;
-        width: 100%;
-    }
-</style>
 
 <h3>GameComposite</h3>
 
