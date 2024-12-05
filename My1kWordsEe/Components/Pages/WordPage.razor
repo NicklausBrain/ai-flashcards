@@ -46,8 +46,8 @@
         }
 
         WordMetadata = EeWord.ValidateWord()
-            ? await ResolveSample()
-            : Result.Failure<SampleWord>("Invalid word");
+        ? await ResolveSample()
+        : Result.Failure<SampleWord>("Invalid word");
 
         await base.OnParametersSetAsync();
     }
@@ -101,9 +101,9 @@
             };
 
         var confirmation = await DeleteSampleDialog.ShowAsync(
-            title: "Are you sure you want to delete this?",
-            message1: "This will delete the record. Once deleted can not be rolled back.",
-            message2: "Do you want to proceed?", options);
+        title: "Are you sure you want to delete this?",
+        message1: "This will delete the record. Once deleted can not be rolled back.",
+        message2: "Do you want to proceed?", options);
 
         if (confirmation)
         {
@@ -153,9 +153,11 @@
 
     private bool IsLoggedIn => User?.Identity?.IsAuthenticated ?? false;
 
-    private bool IsFavorite() => IsDataLoadedOk && IsLoggedIn && Favorites.HasValue && Favorites.Value.IsSuccess && Favorites.Value.Value.Words.ContainsKey(EeWord.ToLower());
+    private bool IsFavorite() => IsDataLoadedOk && IsLoggedIn && Favorites.HasValue && Favorites.Value.IsSuccess &&
+    Favorites.Value.Value.Words.ContainsKey(EeWord.ToLower());
 
-    private bool IsFavorite(SampleSentence sentence) => IsDataLoadedOk && IsLoggedIn && Favorites.HasValue && Favorites.Value.IsSuccess && Favorites.Value.Value.Sentences.ContainsKey(sentence.EeSentence.ToLower());
+    private bool IsFavorite(SampleSentence sentence) => IsDataLoadedOk && IsLoggedIn && Favorites.HasValue &&
+    Favorites.Value.IsSuccess && Favorites.Value.Value.Sentences.ContainsKey(sentence.EeSentence.ToLower());
 }
 
 <script>
@@ -184,6 +186,11 @@
                 <i role="button" class="bi bi-volume-down-fill small" @onclick="SpeakWord">
                     <audio id="@EeWord" src="@Value.EeAudioUrl"></audio>
                 </i>
+            }
+
+            @if (IsLoggedIn)
+            {
+                <i role="button" class="bi bi-arrow-clockwise float-end"></i>
             }
         </h1>
 
@@ -216,11 +223,8 @@
             @foreach (var sample in Value.Samples)
             {
                 <div class="col col-12 col-sm-6 p-1">
-                    <SampleV2 Sample="@sample"
-                        AddToFavorites="AddToFavorites"
-                        RemoveFromFavorites="RemoveFromFavorites"
-                        DeleteSample="DeleteSample"
-                        IsFavorite="IsFavorite(sample)" >
+                    <SampleV2 Sample="@sample" AddToFavorites="AddToFavorites" RemoveFromFavorites="RemoveFromFavorites"
+                        DeleteSample="DeleteSample" IsFavorite="IsFavorite(sample)">
                     </SampleV2>
                 </div>
             }
