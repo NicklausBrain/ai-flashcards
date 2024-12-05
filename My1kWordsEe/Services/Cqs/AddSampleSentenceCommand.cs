@@ -35,6 +35,7 @@ namespace My1kWordsEe.Services.Cqs
 
             var sentence = await this.openAiService.GetSampleSentence(
                 eeWord: word.EeWord,
+                explanation: word.EeExplanation ?? word.EnExplanation,
                 existingSamples: word.Samples.Select(s => s.EeSentence).ToArray());
             if (sentence.IsFailure)
             {

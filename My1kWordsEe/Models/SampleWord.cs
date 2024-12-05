@@ -37,6 +37,12 @@ namespace My1kWordsEe.Models
         /// </summary>
         public required string EnExplanation { get; init; }
 
+
+        /// <summary>
+        /// Explaining the word in Estonian
+        /// </summary>
+        public string? EeExplanation { get; init; }
+
         /// <summary>
         /// Sample pronunciation of the word
         /// </summary>
