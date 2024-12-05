@@ -22,13 +22,14 @@
 @inject AddToFavoritesCommand AddToFavoritesCommand
 @inject RemoveFromFavoritesCommand RemoveFromFavoritesCommand
 @inject DeleteSampleSentenceCommand DeleteSampleSentenceCommand
+@inject RedoSampleWordCommand RedoSampleWordCommand
 
 
 @code {
     [Inject] protected PreloadService PreloadService { get; set; } = default!;
     [Inject] protected ToastService ToastService { get; set; } = default!;
 
-    private ConfirmDialog DeleteSampleDialog = default!;
+    private ConfirmDialog ConfirmDialog = default!;
 
     [Parameter]
     public required string EeWord { get; init; }
@@ -46,8 +47,8 @@
         }
 
         WordMetadata = EeWord.ValidateWord()
-            ? await ResolveSample()
-            : Result.Failure<SampleWord>("Invalid word");
+        ? await ResolveSample()
+        : Result.Failure<SampleWord>("Invalid word");
 
         await base.OnParametersSetAsync();
     }
@@ -90,7 +91,7 @@
         StateHasChanged();
     }
 
-    private async Task DeleteSample(SampleSentence sampleSentence)
+    private async Task DeleteSampleSentence(SampleSentence sampleSentence)
     {
         var options = new ConfirmDialogOptions
             {
@@ -100,10 +101,10 @@
                 AutoFocusYesButton = false,
             };
 
-        var confirmation = await DeleteSampleDialog.ShowAsync(
-            title: "Are you sure you want to delete this?",
-            message1: "This will delete the record. Once deleted can not be rolled back.",
-            message2: "Do you want to proceed?", options);
+        var confirmation = await ConfirmDialog.ShowAsync(
+        title: "Are you sure you want to delete this?",
+        message1: "This will delete the record. Once deleted can not be rolled back.",
+        message2: "Do you want to proceed?", options);
 
         if (confirmation)
         {
@@ -123,6 +124,42 @@
         else
         {
             ToastService.Notify(new ToastMessage(ToastType.Secondary, $"Delete action canceled."));
+        }
+    }
+
+    private async Task RedoSample()
+    {
+        var options = new ConfirmDialogOptions
+            {
+                IsScrollable = true,
+                Dismissable = true,
+                IsVerticallyCentered = true,
+                AutoFocusYesButton = false,
+            };
+
+        var confirmation = await ConfirmDialog.ShowAsync(
+            title: "Is this word described inadequately?",
+            message1: "This will regenerate the word explanation and all the samples will removed.",
+            message2: "Do you want to proceed?", options);
+
+        if (confirmation)
+        {
+            PreloadService.Show(SpinnerColor.Light, "Saving data...");
+            var redoResult = await this.RedoSampleWordCommand.Invoke(Value.EeWord);
+            if (redoResult.IsSuccess)
+            {
+                WordMetadata = redoResult;
+                StateHasChanged();
+            }
+            else
+            {
+                ToastService.Notify(new ToastMessage(ToastType.Warning, redoResult.Error));
+            }
+            PreloadService.Hide();
+        }
+        else
+        {
+            ToastService.Notify(new ToastMessage(ToastType.Secondary, $"Redo action canceled."));
         }
     }
 
@@ -153,9 +190,11 @@
 
     private bool IsLoggedIn => User?.Identity?.IsAuthenticated ?? false;
 
-    private bool IsFavorite() => IsDataLoadedOk && IsLoggedIn && Favorites.HasValue && Favorites.Value.IsSuccess && Favorites.Value.Value.Words.ContainsKey(EeWord.ToLower());
+    private bool IsFavorite() => IsDataLoadedOk && IsLoggedIn && Favorites.HasValue && Favorites.Value.IsSuccess &&
+    Favorites.Value.Value.Words.ContainsKey(EeWord.ToLower());
 
-    private bool IsFavorite(SampleSentence sentence) => IsDataLoadedOk && IsLoggedIn && Favorites.HasValue && Favorites.Value.IsSuccess && Favorites.Value.Value.Sentences.ContainsKey(sentence.EeSentence.ToLower());
+    private bool IsFavorite(SampleSentence sentence) => IsDataLoadedOk && IsLoggedIn && Favorites.HasValue &&
+    Favorites.Value.IsSuccess && Favorites.Value.Value.Sentences.ContainsKey(sentence.EeSentence.ToLower());
 }
 
 <script>
@@ -184,6 +223,11 @@
                 <i role="button" class="bi bi-volume-down-fill small" @onclick="SpeakWord">
                     <audio id="@EeWord" src="@Value.EeAudioUrl"></audio>
                 </i>
+            }
+
+            @if (IsLoggedIn)
+            {
+                <i role="button" class="bi bi-arrow-clockwise float-end" @onclick="RedoSample"></i>
             }
         </h1>
 
@@ -216,11 +260,8 @@
             @foreach (var sample in Value.Samples)
             {
                 <div class="col col-12 col-sm-6 p-1">
-                    <SampleV2 Sample="@sample"
-                        AddToFavorites="AddToFavorites"
-                        RemoveFromFavorites="RemoveFromFavorites"
-                        DeleteSample="DeleteSample"
-                        IsFavorite="IsFavorite(sample)" >
+                    <SampleV2 Sample="@sample" AddToFavorites="AddToFavorites" RemoveFromFavorites="RemoveFromFavorites"
+                              DeleteSample="DeleteSampleSentence" IsFavorite="IsFavorite(sample)">
                     </SampleV2>
                 </div>
             }
@@ -245,5 +286,5 @@
 </div>
 
 <Preload LoadingText="Loading..." />
-<ConfirmDialog @ref="DeleteSampleDialog" />
+<ConfirmDialog @ref="ConfirmDialog" />
 <Toasts class="p-3" AutoHide="true" StackLength="3" Placement="ToastsPlacement.TopRight" />

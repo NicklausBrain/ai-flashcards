@@ -56,6 +56,7 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<GetFavoritesQuery>();
             builder.Services.AddSingleton<AddToFavoritesCommand>();
             builder.Services.AddSingleton<RemoveFromFavoritesCommand>();
+            builder.Services.AddSingleton<RedoSampleWordCommand>();
 
             // Blazor-specific services
             builder.Services

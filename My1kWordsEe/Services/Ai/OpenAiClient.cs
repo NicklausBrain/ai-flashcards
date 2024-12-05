@@ -12,7 +12,7 @@ namespace My1kWordsEe.Services
     public class OpenAiClient
     {
         public const string ApiSecretKey = "Secrets:OpenAiKey";
-        public const string Model = "gpt-4o-mini";
+        public const string Model = "gpt-4o";
 
         private readonly IConfiguration config;
         private readonly ILogger logger;
@@ -169,6 +169,7 @@ namespace My1kWordsEe.Services
                 "Sinu ülesanne on kirjutada selle kasutamise kohta lihtne lühike näitelause, kasutades seda sõna.\n" +
                 "Lauses kasuta kõige levinuimaid ja lihtsamaid sõnu eesti keeles et toetada keeleõpet.\n" +
                 "Eelistan SVO-lausete sõnajärge, kus esikohal on subjekt (S), seejärel tegusõna (V) ja objekt (O)\n" +
+                "Lausel peaks olema praktiline tegelik elu mõte\n" +
                 "Teie väljundiks on JSON-objekt koos eestikeelse näidislausega ja sellele vastav tõlge inglise keelde vastavalt lepingule:\n" +
                 "```\n{\n" +
                 "\"ee_sentence\": \"<näide eesti keeles>\", \"en_sentence\": \"<näide inglise keeles>\"" +
