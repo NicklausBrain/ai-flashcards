@@ -119,9 +119,10 @@ namespace My1kWordsEe.Services
                 "Teie väljund on sõna metaandmed JSON-is vastavalt antud lepingule:\n" +
                 "```\n{\n" +
                 "\"ee_word\": \"<antud sõna>\",\n" +
-                "\"en_word\": \"<english translation>\"\n" +
-                "\"en_words\": [<array of alternative english translations if applicable>]\n" +
-                "\"en_explanation\": \"<explanation of the word meaning in english>\"\n" +
+                "\"en_word\": \"<english translation>\",\n" +
+                "\"en_words\": [<array of alternative english translations if applicable>],\n" +
+                "\"en_explanation\": \"<explanation of the word meaning in english>\",\n" +
+                "\"ee_explanation\": \"<sõna tähenduse seletus eesti keeles>\"\n" +
                 "}\n```\n";
 
             var response = await openAiClient.CompleteAsync(prompt, eeWord, new ChatCompletionOptions
@@ -158,14 +159,15 @@ namespace My1kWordsEe.Services
                 EnWord = wordMetadata.EnWord,
                 EnWords = wordMetadata.EnWords,
                 EnExplanation = wordMetadata.EnExplanation,
+                EeExplanation = wordMetadata.EeExplanation,
             });
         }
 
-        public static async Task<Result<Sentence>> GetSampleSentence(this OpenAiClient openAiClient, string eeWord, string[]? existingSamples = null)
+        public static async Task<Result<Sentence>> GetSampleSentence(this OpenAiClient openAiClient, string eeWord, string explanation, string[]? existingSamples = null)
         {
             var prompt =
                 "Sa oled keeleõppe süsteemi abiline, mis aitab õppida enim levinud eesti keele sõnu.\n" +
-                "Sinu sisend on üks sõna eesti keeles.\n" +
+                "Sinu sisend on üks eestikeelne sõna ja selle rakenduse kontekst: <sõna> (<kontekst>).\n" +
                 "Sinu ülesanne on kirjutada selle kasutamise kohta lihtne lühike näitelause, kasutades seda sõna.\n" +
                 "Lauses kasuta kõige levinuimaid ja lihtsamaid sõnu eesti keeles et toetada keeleõpet.\n" +
                 "Eelistan SVO-lausete sõnajärge, kus esikohal on subjekt (S), seejärel tegusõna (V) ja objekt (O)\n" +
@@ -178,7 +180,7 @@ namespace My1kWordsEe.Services
                  ? "PS: Ärge korrake järgmisi näidiseid, olge erinevad:\n" + string.Join(",", existingSamples.Select(s => $"'{s}'"))
                  : string.Empty);
 
-            return await openAiClient.CompleteJsonAsync<Sentence>(prompt, eeWord);
+            return await openAiClient.CompleteJsonAsync<Sentence>(prompt, $"{eeWord} (${explanation})");
         }
 
         private class WordMetadata
@@ -191,6 +193,9 @@ namespace My1kWordsEe.Services
 
             [JsonPropertyName("en_explanation")]
             public required string EnExplanation { get; set; }
+
+            [JsonPropertyName("ee_explanation")]
+            public required string EeExplanation { get; set; }
 
             [JsonPropertyName("en_words")]
             public required string[] EnWords { get; set; } = Array.Empty<string>();
