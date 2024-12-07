@@ -12,10 +12,10 @@ namespace My1kWordsEe.Services.Cqs
     {
         public const int MaxSamples = 6;
 
-        private readonly AzureStorageClient azureBlobService;
-        private readonly OpenAiClient openAiService;
+        private readonly AzureStorageClient azureBlobClient;
+        private readonly OpenAiClient openAiClient;
         private readonly AddAudioCommand addAudioCommand;
-        private readonly StabilityAiClient stabilityAiService;
+        private readonly StabilityAiClient stabilityAiClient;
 
         public AddSampleSentenceCommand(
             AzureStorageClient azureBlobService,
@@ -23,10 +23,10 @@ namespace My1kWordsEe.Services.Cqs
             AddAudioCommand createAudioCommand,
             StabilityAiClient stabilityAiService)
         {
-            this.azureBlobService = azureBlobService;
-            this.openAiService = openAiService;
+            this.azureBlobClient = azureBlobService;
+            this.openAiClient = openAiService;
             this.addAudioCommand = createAudioCommand;
-            this.stabilityAiService = stabilityAiService;
+            this.stabilityAiClient = stabilityAiService;
         }
 
         public async Task<Result<SampleWord>> Invoke(SampleWord word)
@@ -69,15 +69,15 @@ namespace My1kWordsEe.Services.Cqs
                 }).ToArray()
             };
 
-            return (await this.azureBlobService
+            return (await this.azureBlobClient
                 .SaveWordData(updatedWordData))
                 .Bind(r => Result.Success(updatedWordData));
         }
 
         private Task<Result<Uri>> GenerateImage(Sentence sentence) =>
-            this.openAiService.GetDallEPrompt(sentence.En).Bind(
-            this.stabilityAiService.GenerateImage).Bind(
-            this.azureBlobService.SaveImage);
+            this.openAiClient.GetDallEPrompt(sentence.En).Bind(
+            this.stabilityAiClient.GenerateImage).Bind(
+            this.azureBlobClient.SaveImage);
 
         private Task<Result<Uri>> GenerateSpeech(Sentence sentence) =>
             this.addAudioCommand.Invoke(sentence.Ee);
@@ -111,7 +111,7 @@ namespace My1kWordsEe.Services.Cqs
                 word.EnExplanation
             });
 
-            var result = await this.openAiService.CompleteJsonAsync<Sentence>(prompt, input, temperature: 0.7f);
+            var result = await this.openAiClient.CompleteJsonAsync<Sentence>(prompt, input, temperature: 0.7f);
 
             return result;
         }

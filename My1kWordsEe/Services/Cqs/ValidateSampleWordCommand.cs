@@ -1,4 +1,6 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System.Text.Json;
+
+using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Models;
 
@@ -34,12 +36,12 @@ namespace My1kWordsEe.Services.Cqs
                 "\"EeExplanationMessage\": \"<selgitus oma otsuse kohta>\"\n" +
                 "}\n```\n";
 
-            var input =
-                "{" +
-                " \"EeWord\": \"" + sample.EeWord + "\"," +
-                " \"EnWord\": \"" + sample.EnWord + "\"," +
-                " \"EnExplanation\": \"" + sample.EnExplanation + "\"" +
-                "}";
+            var input = JsonSerializer.Serialize(new
+            {
+                sample.EeWord,
+                sample.EnWord,
+                sample.EnExplanation
+            });
 
             var result = await this.openAiClient.CompleteJsonAsync<ValidationResult>(prompt, input);
 
