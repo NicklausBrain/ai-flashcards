@@ -24,9 +24,10 @@ namespace My1kWordsEe.Models
             {
                 Search = search;
                 SelectedWords = AllWords.Where(w =>
-                    AllWordsDiacriticsFree[w.Value].Contains(search, StringComparison.InvariantCultureIgnoreCase) ||
+                    AllWordsDiacriticsFree[w.EeWord].Contains(search, StringComparison.InvariantCultureIgnoreCase) ||
+                    w.EnWord.Contains(search, StringComparison.InvariantCultureIgnoreCase) ||
                     w.EnWords.Any(en => en.Contains(search, StringComparison.InvariantCultureIgnoreCase)) ||
-                    w.Value.Contains(search, StringComparison.InvariantCultureIgnoreCase));
+                    w.EeWord.Contains(search, StringComparison.InvariantCultureIgnoreCase));
             }
             else
             {
@@ -45,14 +46,14 @@ namespace My1kWordsEe.Models
             };
         }
 
-        public IEnumerable<EeWord> SelectedWords { get; private set; }
+        public IEnumerable<SampleWord> SelectedWords { get; private set; }
 
         public string? Search { get; private set; }
 
-        public static readonly EeWord[] AllWords = Load1kEeWords();
+        public static readonly SampleWord[] AllWords = Load1kEeWords();
 
         private static readonly IReadOnlyDictionary<string, string> AllWordsDiacriticsFree =
-            AllWords.ToDictionary(w => w.Value, q => RemoveDiacritics(q.Value));
+            AllWords.ToDictionary(w => w.EeWord, q => RemoveDiacritics(q.EeWord));
 
         private static string RemoveDiacritics(string stIn)
         {
@@ -71,12 +72,12 @@ namespace My1kWordsEe.Models
             return (sb.ToString().Normalize(NormalizationForm.FormC));
         }
 
-        private static EeWord[] Load1kEeWords()
+        private static SampleWord[] Load1kEeWords()
         {
-            var assembly = typeof(EeWord).Assembly;
+            var assembly = typeof(SampleWord).Assembly;
             var resourceName = "My1kWordsEe.ee1k.json";
             using Stream stream = assembly.GetManifestResourceStream(resourceName);
-            return JsonSerializer.Deserialize<EeWord[]>(stream);
+            return JsonSerializer.Deserialize<SampleWord[]>(stream);
         }
     }
 }
