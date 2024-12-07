@@ -31,7 +31,7 @@ namespace My1kWordsEe.Services.Cqs
             (await azureBlobService.GetWordData(eeWord)).Deconstruct(
                 out bool _,
                 out bool isBlobAccessFailure,
-                out Maybe<SampleWord> savedWord,
+                out Maybe<SampleWord> existingWordData,
                 out string blobAccessError);
 
             if (isBlobAccessFailure)
@@ -41,9 +41,9 @@ namespace My1kWordsEe.Services.Cqs
 
             var redoTask = this.addSampleWordCommand.Invoke(eeWord, comment);
 
-            if (savedWord.HasValue)
+            if (existingWordData.HasValue)
             {
-                await Parallel.ForEachAsync(savedWord.Value.Samples, async (sample, ct) =>
+                await Parallel.ForEachAsync(existingWordData.Value.Samples, async (sample, ct) =>
                 {
                     if (ct.IsCancellationRequested) { return; }
                     await deleteSampleSentenceCommand.Invoke(sample);

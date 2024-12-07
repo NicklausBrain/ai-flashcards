@@ -23,6 +23,7 @@
 @inject RemoveFromFavoritesCommand RemoveFromFavoritesCommand
 @inject DeleteSampleSentenceCommand DeleteSampleSentenceCommand
 @inject RedoSampleWordCommand RedoSampleWordCommand
+@inject ValidateSampleWordCommand ValidateSampleWordCommand
 
 
 @code {
@@ -145,7 +146,10 @@
         if (confirmation)
         {
             PreloadService.Show(SpinnerColor.Light, "Saving data...");
-            var redoResult = await this.RedoSampleWordCommand.Invoke(Value.EeWord);
+            
+            var redoResult = await this.ValidateSampleWordCommand.Invoke(Value).Bind(r =>
+                this.RedoSampleWordCommand.Invoke(Value.EeWord, r.EeExplanationMessage));
+
             if (redoResult.IsSuccess)
             {
                 WordMetadata = redoResult;
