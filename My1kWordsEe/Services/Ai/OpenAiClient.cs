@@ -1,9 +1,6 @@
 ﻿using System.Text.Json;
-using System.Text.Json.Serialization;
 
 using CSharpFunctionalExtensions;
-
-using My1kWordsEe.Models;
 
 using OpenAI.Chat;
 
@@ -49,11 +46,12 @@ namespace My1kWordsEe.Services
             }
         }
 
-        public async Task<Result<T>> CompleteJsonAsync<T>(string instructions, string input)
+        public async Task<Result<T>> CompleteJsonAsync<T>(string instructions, string input, float? temperature = null)
         {
             var response = await this.CompleteAsync(instructions, input, new ChatCompletionOptions
             {
                 ResponseFormat = ChatResponseFormat.JsonObject,
+                Temperature = temperature
             });
 
             if (response.IsFailure)
@@ -110,112 +108,5 @@ namespace My1kWordsEe.Services
                 MaxTokens = 400,
             });
         }
-
-        public static async Task<Result<SampleWord>> GetWordMetadata(
-            this OpenAiClient openAiClient,
-            string eeWord,
-            string? comment = null)
-        {
-            const string prompt =
-                "Teie sisend on eestikeelne sõna (ja selle sõna valikuline selgitus).\n" +
-                "Kui antud sõna ei ole eestikeelne, tagasta 404\n" +
-                "Teie väljund on sõna metaandmed JSON-is vastavalt antud lepingule:\n" +
-                "```\n{\n" +
-                "\"ee_word\": \"<antud sõna>\",\n" +
-                "\"en_word\": \"<english translation>\",\n" +
-                "\"en_words\": [<array of alternative english translations if applicable>],\n" +
-                "\"en_explanation\": \"<explanation of the word meaning in english>\",\n" +
-                "\"ee_explanation\": \"<sõna tähenduse seletus eesti keeles>\"\n" +
-                "}\n```\n";
-
-            var response = await openAiClient.CompleteAsync(
-                prompt,
-                string.IsNullOrEmpty(comment)
-                    ? eeWord
-                    : $"{eeWord} ({comment})",
-                new ChatCompletionOptions
-                {
-                    ResponseFormat = ChatResponseFormat.JsonObject,
-                    Temperature = 0.333f
-                });
-
-            if (response.IsFailure)
-            {
-                return Result.Failure<SampleWord>(response.Error);
-            }
-
-            // could be ommited if we integrate an EE dictionary within the app
-            if (response.Value.Contains("404"))
-            {
-                return Result.Failure<SampleWord>("Not an Estonian word");
-            }
-
-            openAiClient.ParseJsonResponse<WordMetadata>(response).Deconstruct(
-                out bool _,
-                out bool isParsingError,
-                out WordMetadata wordMetadata,
-                out string parsingError);
-
-            if (isParsingError)
-            {
-                return Result.Failure<SampleWord>(parsingError);
-            }
-
-            return Result.Success(new SampleWord
-            {
-                EeWord = wordMetadata.EeWord,
-                EnWord = wordMetadata.EnWord,
-                EnWords = wordMetadata.EnWords,
-                EnExplanation = wordMetadata.EnExplanation,
-                EeExplanation = wordMetadata.EeExplanation,
-            });
-        }
-
-        public static async Task<Result<Sentence>> GetSampleSentence(this OpenAiClient openAiClient, string eeWord, string explanation, string[]? existingSamples = null)
-        {
-            var prompt =
-                "Sa oled keeleõppe süsteemi abiline, mis aitab õppida enim levinud eesti keele sõnu.\n" +
-                "Sinu sisend on üks eestikeelne sõna ja selle rakenduse kontekst: <sõna> (<kontekst>).\n" +
-                "Sinu ülesanne on kirjutada selle kasutamise kohta lihtne lühike näitelause, kasutades seda sõna.\n" +
-                "Lauses kasuta kõige levinuimaid ja lihtsamaid sõnu eesti keeles et toetada keeleõpet.\n" +
-                "Eelistan SVO-lausete sõnajärge, kus esikohal on subjekt (S), seejärel tegusõna (V) ja objekt (O)\n" +
-                "Lausel peaks olema praktiline tegelik elu mõte\n" +
-                "Teie väljundiks on JSON-objekt koos eestikeelse näidislausega ja sellele vastav tõlge inglise keelde vastavalt lepingule:\n" +
-                "```\n{\n" +
-                "\"ee_sentence\": \"<näide eesti keeles>\", \"en_sentence\": \"<näide inglise keeles>\"" +
-                "\n}\n```\n" +
-                ((existingSamples != null && existingSamples.Any())
-                 ? "PS: Ärge korrake järgmisi näidiseid, olge erinevad:\n" + string.Join(",", existingSamples.Select(s => $"'{s}'"))
-                 : string.Empty);
-
-            return await openAiClient.CompleteJsonAsync<Sentence>(prompt, $"{eeWord} (${explanation})");
-        }
-
-        private class WordMetadata
-        {
-            [JsonPropertyName("ee_word")]
-            public required string EeWord { get; set; }
-
-            [JsonPropertyName("en_word")]
-            public required string EnWord { get; set; }
-
-            [JsonPropertyName("en_explanation")]
-            public required string EnExplanation { get; set; }
-
-            [JsonPropertyName("ee_explanation")]
-            public required string EeExplanation { get; set; }
-
-            [JsonPropertyName("en_words")]
-            public required string[] EnWords { get; set; } = Array.Empty<string>();
-        }
-    }
-
-    public class Sentence
-    {
-        [JsonPropertyName("ee_sentence")]
-        public required string Ee { get; set; }
-
-        [JsonPropertyName("en_sentence")]
-        public required string En { get; set; }
     }
 }

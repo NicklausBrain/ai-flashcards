@@ -1,4 +1,6 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System.Text.Json;
+
+using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Models;
 
@@ -26,6 +28,7 @@ namespace My1kWordsEe.Services.Cqs
                 "\"EnWord\": \"<default english translation>\n" +
                 "\"EnExplanation\": \"<explanation of the estonian word in english>\n" +
                 "}\n```\n" +
+
                 "Your outpur is JSON object:\n" +
                 "```\n{\n" +
                 "\"IsValid\": <boolean:true|false>,\n" +
@@ -33,12 +36,12 @@ namespace My1kWordsEe.Services.Cqs
                 "\"EeExplanationMessage\": \"<selgitus oma otsuse kohta>\"\n" +
                 "}\n```\n";
 
-            var input =
-                "{" +
-                " \"EeWord\": \"" + sample.EeWord + "\"," +
-                " \"EnWord\": \"" + sample.EnWord + "\"," +
-                " \"EnExplanation\": \"" + sample.EnExplanation + "\"" +
-                "}";
+            var input = JsonSerializer.Serialize(new
+            {
+                sample.EeWord,
+                sample.EnWord,
+                sample.EnExplanation
+            });
 
             var result = await this.openAiClient.CompleteJsonAsync<ValidationResult>(prompt, input);
 

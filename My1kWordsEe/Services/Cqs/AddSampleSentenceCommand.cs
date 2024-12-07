@@ -1,3 +1,6 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Models;
@@ -9,10 +12,10 @@ namespace My1kWordsEe.Services.Cqs
     {
         public const int MaxSamples = 6;
 
-        private readonly AzureStorageClient azureBlobService;
-        private readonly OpenAiClient openAiService;
+        private readonly AzureStorageClient azureBlobClient;
+        private readonly OpenAiClient openAiClient;
         private readonly AddAudioCommand addAudioCommand;
-        private readonly StabilityAiClient stabilityAiService;
+        private readonly StabilityAiClient stabilityAiClient;
 
         public AddSampleSentenceCommand(
             AzureStorageClient azureBlobService,
@@ -20,10 +23,10 @@ namespace My1kWordsEe.Services.Cqs
             AddAudioCommand createAudioCommand,
             StabilityAiClient stabilityAiService)
         {
-            this.azureBlobService = azureBlobService;
-            this.openAiService = openAiService;
+            this.azureBlobClient = azureBlobService;
+            this.openAiClient = openAiService;
             this.addAudioCommand = createAudioCommand;
-            this.stabilityAiService = stabilityAiService;
+            this.stabilityAiClient = stabilityAiService;
         }
 
         public async Task<Result<SampleWord>> Invoke(SampleWord word)
@@ -33,10 +36,8 @@ namespace My1kWordsEe.Services.Cqs
                 return Result.Failure<SampleWord>($"Too many samples. {MaxSamples} is a maximum");
             }
 
-            var sentence = await this.openAiService.GetSampleSentence(
-                eeWord: word.EeWord,
-                explanation: word.EeExplanation ?? word.EnExplanation,
-                existingSamples: word.Samples.Select(s => s.EeSentence).ToArray());
+            var sentence = await this.GetSampleSentence(word);
+
             if (sentence.IsFailure)
             {
                 return Result.Failure<SampleWord>($"Sentence generation failed: {sentence.Error}");
@@ -68,17 +69,60 @@ namespace My1kWordsEe.Services.Cqs
                 }).ToArray()
             };
 
-            return (await this.azureBlobService
+            return (await this.azureBlobClient
                 .SaveWordData(updatedWordData))
                 .Bind(r => Result.Success(updatedWordData));
         }
 
         private Task<Result<Uri>> GenerateImage(Sentence sentence) =>
-            this.openAiService.GetDallEPrompt(sentence.En).Bind(
-            this.stabilityAiService.GenerateImage).Bind(
-            this.azureBlobService.SaveImage);
+            this.openAiClient.GetDallEPrompt(sentence.En).Bind(
+            this.stabilityAiClient.GenerateImage).Bind(
+            this.azureBlobClient.SaveImage);
 
         private Task<Result<Uri>> GenerateSpeech(Sentence sentence) =>
             this.addAudioCommand.Invoke(sentence.Ee);
+
+        private async Task<Result<Sentence>> GetSampleSentence(SampleWord word)
+        {
+            var prompt =
+                "Sa oled keeleõppe süsteemi abiline, mis aitab õppida enim levinud eesti keele sõnu.\n" +
+
+                "Teie sisend on JSON-objekt:" +
+                "```\n{\n" +
+                "\"EeWord\": \"<eestikeelne sõna>\", " +
+                "\"EnWord\": \"<default english translation>\n" +
+                "\"EnExplanation\": \"<explanation of the estonian word in english>\n" +
+                "}\n```\n" +
+
+                "Sinu sisend on üks eestikeelne sõna ja selle rakenduse kontekst: <sõna> (<kontekst>).\n" +
+                "Sinu ülesanne on kirjutada selle kasutamise kohta lihtne lühike näitelause, kasutades seda sõna.\n" +
+                "Lauses kasuta kõige levinuimaid ja lihtsamaid sõnu eesti keeles et toetada keeleõpet.\n" +
+                "Eelistan SVO-lausete sõnajärge, kus esikohal on subjekt (S), seejärel tegusõna (V) ja objekt (O)\n" +
+                "Lausel peaks olema praktiline tegelik elu mõte\n" +
+                "Teie väljundiks on JSON-objekt koos eestikeelse näidislausega ja sellele vastav tõlge inglise keelde vastavalt lepingule:\n" +
+                "```\n{\n" +
+                "\"ee_sentence\": \"<näide eesti keeles>\", \"en_sentence\": \"<näide inglise keeles>\"" +
+                "\n}\n```\n";
+
+            var input = JsonSerializer.Serialize(new
+            {
+                word.EeWord,
+                word.EnWord,
+                word.EnExplanation
+            });
+
+            var result = await this.openAiClient.CompleteJsonAsync<Sentence>(prompt, input, temperature: 0.7f);
+
+            return result;
+        }
+
+        private class Sentence
+        {
+            [JsonPropertyName("ee_sentence")]
+            public required string Ee { get; set; }
+
+            [JsonPropertyName("en_sentence")]
+            public required string En { get; set; }
+        }
     }
 }
