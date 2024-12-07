@@ -81,14 +81,17 @@
                                 <div class="col col-12 col-sm-4 p-1">
                                     <Card>
                                         <CardBody>
-                                            <CardTitle>
-                                                @word.EeWord
+                                            <CardTitle Class="row">
+                                                <div class="col-1"></div>
+                                                <div class="col-10">@word.EeWord</div>
+                                                <div class="col-1">
+                                                    <a href="@($"/word/{word.EeWord}")">
+                                                        <i role="link" class="bi bi-box-arrow-up-right float-end"></i>
+                                                    </a>
+                                                </div>
                                             </CardTitle>
                                             <CardSubTitle>@word.EnWord</CardSubTitle>
                                             <CardText>@word.EnExplanation</CardText>
-                                            <CardLink To="@($"/word/{word.EeWord}")">
-                                                <i role="link" class="bi bi-box-arrow-up-right"></i>
-                                            </CardLink>
                                         </CardBody>
                                     </Card>
                                 </div>
