@@ -91,14 +91,14 @@
             {
                 var nextWord = Ee1kWords.AllWords[rn.Next(0, Ee1kWords.AllWords.Length)];
 
-                if (eeWords.ContainsKey(nextWord.Value) || enWords.ContainsKey(nextWord.EnWord))
+                if (eeWords.ContainsKey(nextWord.EeWord) || enWords.ContainsKey(nextWord.EnWord))
                 {
                     continue;
                 }
 
                 var pair = new Pair
                 {
-                    EeWord = nextWord.Value,
+                    EeWord = nextWord.EeWord,
                     EnWord = nextWord.EnWord
                 };
 

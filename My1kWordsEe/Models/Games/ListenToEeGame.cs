@@ -66,7 +66,7 @@ namespace My1kWordsEe.Models.Games
         {
             var rn = new Random(Environment.TickCount);
             var eeWord = Ee1kWords.AllWords[rn.Next(0, Ee1kWords.AllWords.Length)];
-            var sampleWord = await getOrAddSampleWordCommand.Invoke(eeWord.Value);
+            var sampleWord = await getOrAddSampleWordCommand.Invoke(eeWord.EeWord);
 
             if (sampleWord.IsFailure)
             {
