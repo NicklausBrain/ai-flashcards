@@ -1,3 +1,6 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Models;
@@ -33,10 +36,8 @@ namespace My1kWordsEe.Services.Cqs
                 return Result.Failure<SampleWord>($"Too many samples. {MaxSamples} is a maximum");
             }
 
-            var sentence = await this.openAiService.GetSampleSentence(
-                eeWord: word.EeWord,
-                explanation: word.EeExplanation ?? word.EnExplanation,
-                existingSamples: word.Samples.Select(s => s.EeSentence).ToArray());
+            var sentence = await this.GetSampleSentence(word);
+
             if (sentence.IsFailure)
             {
                 return Result.Failure<SampleWord>($"Sentence generation failed: {sentence.Error}");
@@ -80,5 +81,48 @@ namespace My1kWordsEe.Services.Cqs
 
         private Task<Result<Uri>> GenerateSpeech(Sentence sentence) =>
             this.addAudioCommand.Invoke(sentence.Ee);
+
+        private async Task<Result<Sentence>> GetSampleSentence(SampleWord word)
+        {
+            var prompt =
+                "Sa oled keeleõppe süsteemi abiline, mis aitab õppida enim levinud eesti keele sõnu.\n" +
+
+                "Teie sisend on JSON-objekt:" +
+                "```\n{\n" +
+                "\"EeWord\": \"<eestikeelne sõna>\", " +
+                "\"EnWord\": \"<default english translation>\n" +
+                "\"EnExplanation\": \"<explanation of the estonian word in english>\n" +
+                "}\n```\n" +
+
+                "Sinu sisend on üks eestikeelne sõna ja selle rakenduse kontekst: <sõna> (<kontekst>).\n" +
+                "Sinu ülesanne on kirjutada selle kasutamise kohta lihtne lühike näitelause, kasutades seda sõna.\n" +
+                "Lauses kasuta kõige levinuimaid ja lihtsamaid sõnu eesti keeles et toetada keeleõpet.\n" +
+                "Eelistan SVO-lausete sõnajärge, kus esikohal on subjekt (S), seejärel tegusõna (V) ja objekt (O)\n" +
+                "Lausel peaks olema praktiline tegelik elu mõte\n" +
+                "Teie väljundiks on JSON-objekt koos eestikeelse näidislausega ja sellele vastav tõlge inglise keelde vastavalt lepingule:\n" +
+                "```\n{\n" +
+                "\"ee_sentence\": \"<näide eesti keeles>\", \"en_sentence\": \"<näide inglise keeles>\"" +
+                "\n}\n```\n";
+
+            var input = JsonSerializer.Serialize(new
+            {
+                word.EeWord,
+                word.EnWord,
+                word.EnExplanation
+            });
+
+            var result = await this.openAiService.CompleteJsonAsync<Sentence>(prompt, input, temperature: 0.7f);
+
+            return result;
+        }
+
+        private class Sentence
+        {
+            [JsonPropertyName("ee_sentence")]
+            public required string Ee { get; set; }
+
+            [JsonPropertyName("en_sentence")]
+            public required string En { get; set; }
+        }
     }
 }

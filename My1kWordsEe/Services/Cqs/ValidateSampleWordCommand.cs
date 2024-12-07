@@ -26,6 +26,7 @@ namespace My1kWordsEe.Services.Cqs
                 "\"EnWord\": \"<default english translation>\n" +
                 "\"EnExplanation\": \"<explanation of the estonian word in english>\n" +
                 "}\n```\n" +
+
                 "Your outpur is JSON object:\n" +
                 "```\n{\n" +
                 "\"IsValid\": <boolean:true|false>,\n" +

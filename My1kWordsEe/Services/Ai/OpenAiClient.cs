@@ -49,11 +49,12 @@ namespace My1kWordsEe.Services
             }
         }
 
-        public async Task<Result<T>> CompleteJsonAsync<T>(string instructions, string input)
+        public async Task<Result<T>> CompleteJsonAsync<T>(string instructions, string input, float? temperature = null)
         {
             var response = await this.CompleteAsync(instructions, input, new ChatCompletionOptions
             {
                 ResponseFormat = ChatResponseFormat.JsonObject,
+                Temperature = temperature
             });
 
             if (response.IsFailure)
@@ -171,26 +172,6 @@ namespace My1kWordsEe.Services
             });
         }
 
-        public static async Task<Result<Sentence>> GetSampleSentence(this OpenAiClient openAiClient, string eeWord, string explanation, string[]? existingSamples = null)
-        {
-            var prompt =
-                "Sa oled keeleõppe süsteemi abiline, mis aitab õppida enim levinud eesti keele sõnu.\n" +
-                "Sinu sisend on üks eestikeelne sõna ja selle rakenduse kontekst: <sõna> (<kontekst>).\n" +
-                "Sinu ülesanne on kirjutada selle kasutamise kohta lihtne lühike näitelause, kasutades seda sõna.\n" +
-                "Lauses kasuta kõige levinuimaid ja lihtsamaid sõnu eesti keeles et toetada keeleõpet.\n" +
-                "Eelistan SVO-lausete sõnajärge, kus esikohal on subjekt (S), seejärel tegusõna (V) ja objekt (O)\n" +
-                "Lausel peaks olema praktiline tegelik elu mõte\n" +
-                "Teie väljundiks on JSON-objekt koos eestikeelse näidislausega ja sellele vastav tõlge inglise keelde vastavalt lepingule:\n" +
-                "```\n{\n" +
-                "\"ee_sentence\": \"<näide eesti keeles>\", \"en_sentence\": \"<näide inglise keeles>\"" +
-                "\n}\n```\n" +
-                ((existingSamples != null && existingSamples.Any())
-                 ? "PS: Ärge korrake järgmisi näidiseid, olge erinevad:\n" + string.Join(",", existingSamples.Select(s => $"'{s}'"))
-                 : string.Empty);
-
-            return await openAiClient.CompleteJsonAsync<Sentence>(prompt, $"{eeWord} (${explanation})");
-        }
-
         private class WordMetadata
         {
             [JsonPropertyName("ee_word")]
@@ -210,12 +191,5 @@ namespace My1kWordsEe.Services
         }
     }
 
-    public class Sentence
-    {
-        [JsonPropertyName("ee_sentence")]
-        public required string Ee { get; set; }
 
-        [JsonPropertyName("en_sentence")]
-        public required string En { get; set; }
-    }
 }
