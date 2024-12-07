@@ -21,7 +21,7 @@ namespace My1kWordsEe.Services.Cqs
             this.deleteSampleSentenceCommand = deleteSampleSentenceCommand;
         }
 
-        public async Task<Result<SampleWord>> Invoke(string eeWord)
+        public async Task<Result<SampleWord>> Invoke(string eeWord, string? comment = null)
         {
             if (!eeWord.ValidateWord())
             {
@@ -39,7 +39,7 @@ namespace My1kWordsEe.Services.Cqs
                 return Result.Failure<SampleWord>(blobAccessError);
             }
 
-            var redoTask = this.addSampleWordCommand.Invoke(eeWord);
+            var redoTask = this.addSampleWordCommand.Invoke(eeWord, comment);
 
             if (savedWord.HasValue)
             {

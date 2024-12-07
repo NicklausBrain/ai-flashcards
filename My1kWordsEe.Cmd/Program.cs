@@ -1,6 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Text.Json;
+
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
+using My1kWordsEe.Models;
 using My1kWordsEe.Services.Cqs;
 
 namespace My1kWordsEe.Cmd
@@ -16,10 +19,12 @@ namespace My1kWordsEe.Cmd
             var redoSampleWordCommand = host.Services.GetRequiredService<RedoSampleWordCommand>();
             var log = host.Services.GetRequiredService<ILoggerFactory>().CreateLogger("cmd");
 
-            var i = 0;
-            foreach (var word in TopWords.Take(3))
+            var topData = new Dictionary<string, SampleWord>();
+            var validationErrors = new List<string>();
+
+            for (var i = 0; i < TopWords.Length; i++)
             {
-                i++;
+                var word = TopWords[i];
                 var wordSample = await getOrAddSampleWordCommand.Invoke(word);
 
                 if (wordSample.IsFailure)
@@ -41,17 +46,24 @@ namespace My1kWordsEe.Cmd
                 if (validationResult.Value.IsValid)
                 {
                     log.LogInformation($"#{i}. {word} is ok!");
+                    topData[wordSample.Value.EeWord] = wordSample.Value;
                 }
                 else
                 {
-                    log.LogError($"#{i}. {word} is not ok! {validationResult.Value.ExplanationMessage}");
+                    validationErrors.Add(validationResult.Value.EnExplanationMessage);
+                    log.LogError($"#{i}. {word} is not ok! {validationResult.Value.EnExplanationMessage}");
 
-                    var redoCommand = await redoSampleWordCommand.Invoke(word);
+                    var redoCommand = await redoSampleWordCommand.Invoke(word, validationResult.Value.EeExplanationMessage);
                     if (redoCommand.IsFailure)
                     {
                         log.LogError($"#{i}. {word} redo failed! {redoCommand.Error}");
                     }
+                    log.LogInformation($"repeat #{i}. {word}");
+                    i--;
                 }
+
+                await File.WriteAllBytesAsync("./top-data.json", JsonSerializer.SerializeToUtf8Bytes(topData));
+                await File.WriteAllBytesAsync("./validation-errors.json", JsonSerializer.SerializeToUtf8Bytes(validationErrors));
             }
         }
 

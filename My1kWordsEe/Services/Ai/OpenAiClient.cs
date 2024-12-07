@@ -111,10 +111,13 @@ namespace My1kWordsEe.Services
             });
         }
 
-        public static async Task<Result<SampleWord>> GetWordMetadata(this OpenAiClient openAiClient, string eeWord)
+        public static async Task<Result<SampleWord>> GetWordMetadata(
+            this OpenAiClient openAiClient,
+            string eeWord,
+            string? comment = null)
         {
             const string prompt =
-                "Sinu sisend on eestikeelne sõna.\n" +
+                "Teie sisend on eestikeelne sõna (ja selle sõna valikuline selgitus).\n" +
                 "Kui antud sõna ei ole eestikeelne, tagasta 404\n" +
                 "Teie väljund on sõna metaandmed JSON-is vastavalt antud lepingule:\n" +
                 "```\n{\n" +
@@ -125,11 +128,16 @@ namespace My1kWordsEe.Services
                 "\"ee_explanation\": \"<sõna tähenduse seletus eesti keeles>\"\n" +
                 "}\n```\n";
 
-            var response = await openAiClient.CompleteAsync(prompt, eeWord, new ChatCompletionOptions
-            {
-                ResponseFormat = ChatResponseFormat.JsonObject,
-                Temperature = 0.333f
-            });
+            var response = await openAiClient.CompleteAsync(
+                prompt,
+                string.IsNullOrEmpty(comment)
+                    ? eeWord
+                    : $"{eeWord} ({comment})",
+                new ChatCompletionOptions
+                {
+                    ResponseFormat = ChatResponseFormat.JsonObject,
+                    Temperature = 0.333f
+                });
 
             if (response.IsFailure)
             {

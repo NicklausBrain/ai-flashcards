@@ -21,14 +21,14 @@ namespace My1kWordsEe.Services.Cqs
             this.addAudioCommand = createAudioCommand;
         }
 
-        public async Task<Result<SampleWord>> Invoke(string eeWord)
+        public async Task<Result<SampleWord>> Invoke(string eeWord, string? comment = null)
         {
             if (!eeWord.ValidateWord())
             {
                 return Result.Failure<SampleWord>("Not an Estonian word");
             }
 
-            (await openAiService.GetWordMetadata(eeWord)).Deconstruct(
+            (await openAiService.GetWordMetadata(eeWord, comment)).Deconstruct(
                 out bool _,
                 out bool isAiFailure,
                 out SampleWord sampleWord,

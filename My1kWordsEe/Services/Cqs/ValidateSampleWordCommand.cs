@@ -29,7 +29,8 @@ namespace My1kWordsEe.Services.Cqs
                 "Your outpur is JSON object:\n" +
                 "```\n{\n" +
                 "\"IsValid\": <boolean:true|false>,\n" +
-                "\"ExplanationMessage\": \"<explanation of your judjement>\"\n" +
+                "\"EnExplanationMessage\": \"<explanation of your judgement>\"\n" +
+                "\"EeExplanationMessage\": \"<selgitus oma otsuse kohta>\"\n" +
                 "}\n```\n";
 
             var input =
@@ -48,7 +49,9 @@ namespace My1kWordsEe.Services.Cqs
         {
             public bool IsValid { get; init; }
 
-            public required string ExplanationMessage { get; init; }
+            public required string EnExplanationMessage { get; init; }
+
+            public required string EeExplanationMessage { get; init; }
         }
     }
 }
