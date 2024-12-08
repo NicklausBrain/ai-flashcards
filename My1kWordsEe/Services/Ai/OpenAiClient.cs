@@ -100,11 +100,13 @@ namespace My1kWordsEe.Services
                 "The image should be sketchy, mostly shades of blue, black, and white.\n" +
                 "Your response is a DALL-E prompt as a plain string.\n";
 
-            return await openAiClient.CompleteAsync(prompt, sentence, new ChatCompletionOptions
+            var result = await openAiClient.CompleteAsync(prompt, sentence, new ChatCompletionOptions
             {
                 ResponseFormat = ChatResponseFormat.CreateTextFormat(),
-                Temperature = (float)Math.PI / 2,
+                Temperature = 0.7f,
             });
+
+            return result;
         }
     }
 }
