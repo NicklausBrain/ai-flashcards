@@ -50,8 +50,8 @@ namespace My1kWordsEe.Services
         {
             var response = await this.CompleteAsync(instructions, input, new ChatCompletionOptions
             {
-                ResponseFormat = ChatResponseFormat.JsonObject,
-                Temperature = temperature
+                ResponseFormat = ChatResponseFormat.CreateJsonObjectFormat(),
+                Temperature = temperature,
             });
 
             if (response.IsFailure)
@@ -102,10 +102,8 @@ namespace My1kWordsEe.Services
 
             return await openAiClient.CompleteAsync(prompt, sentence, new ChatCompletionOptions
             {
-                ResponseFormat = ChatResponseFormat.Text,
+                ResponseFormat = ChatResponseFormat.CreateTextFormat(),
                 Temperature = (float)Math.PI / 2,
-                // limit the number of tokens to avoid long prompts that crush stability ai
-                MaxTokens = 400,
             });
         }
     }

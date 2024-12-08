@@ -91,7 +91,7 @@ namespace My1kWordsEe.Services.Cqs
                 input,
                 new ChatCompletionOptions
                 {
-                    ResponseFormat = ChatResponseFormat.JsonObject,
+                    ResponseFormat = ChatResponseFormat.CreateJsonObjectFormat(),
                     Temperature = 0.333f
                 });
 
