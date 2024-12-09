@@ -24,6 +24,22 @@
 
     private Maybe<Result<Favorites>> Favorites;
 
+    private List<SampleWord> SampleWordsList = new List<SampleWord>();
+
+    private void OnWordsListUpdate(SortableListEventArgs args)
+    {
+        var itemToMove = SampleWordsList[args.OldIndex];
+
+        SampleWordsList.RemoveAt(args.OldIndex);
+
+        if (args.NewIndex < SampleWordsList.Count)
+            SampleWordsList.Insert(args.NewIndex, itemToMove);
+        else
+            SampleWordsList.Add(itemToMove);
+    }
+
+    public record Employee(int Id, string? Name);
+
     protected override async Task OnParametersSetAsync()
     {
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -32,6 +48,7 @@
             User = authState.User;
             var user = await UserAccessor.GetRequiredUserAsync(authState.User);
             Favorites = await GetFavoritesQuery.Invoke(user.Id);
+            SampleWordsList = Favorites.Value.Value.Words.Values.ToList();
         }
 
         await base.OnParametersSetAsync();
@@ -72,10 +89,33 @@
         <Tabs EnableFadeEffect="true">
             <Tab Title="Words" Active="true">
                 <Content>
-                    <div class="row">
-                        @if (FavoriteWords.Any())
-                        {
-                            foreach (var wordPair in FavoriteWords)
+                    @if (FavoriteWords.Any())
+                    {
+                        <SortableList TItem="SampleWord"
+                                      Data="SampleWordsList"
+                                      Context="item"
+                                      OnUpdate="@OnWordsListUpdate">
+                            <ItemTemplate>
+                                <Card>
+                                    <CardBody>
+                                        <CardTitle Class="row">
+                                            @* <div class="bb-sortable-list-handle pe-2"><Icon Name="IconName.GripVertical" /></div> *@
+                                            <div class="col-1"></div>
+                                            <div class="col-10">@item.EeWord</div>
+                                            <div class="col-1">
+                                                <a href="@($"/word/{item.EeWord}")" target="_blank">
+                                                    <i role="link" class="bi bi-box-arrow-up-right float-end"></i>
+                                                </a>
+                                            </div>
+                                        </CardTitle>
+                                        <CardSubTitle>@item.EnWord</CardSubTitle>
+                                        <CardText>@item.EnExplanation</CardText>
+                                    </CardBody>
+                                </Card>
+                            </ItemTemplate>
+                        </SortableList>
+
+                        @* foreach (var wordPair in FavoriteWords)
                             {
                                 var word = wordPair.Value;
                                 <div class="col col-12 col-sm-4 p-1">
@@ -95,13 +135,12 @@
                                         </CardBody>
                                     </Card>
                                 </div>
-                            }
-                        }
-                        else
-                        {
-                            <p class="mt-3">No favorite words yet</p>
-                        }
-                    </div>
+                            } *@
+                    }
+                    else
+                    {
+                        <p class="mt-3">No favorite words yet</p>
+                    }
                 </Content>
             </Tab>
             <Tab Title="Sentences">
