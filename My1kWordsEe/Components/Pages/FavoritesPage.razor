@@ -82,7 +82,9 @@
                                     <Card>
                                         <CardBody>
                                             <CardTitle Class="row">
-                                                <div class="col-1"></div>
+                                                <div class="col-1">
+                                                    <i role="button" @onclick="@(()=> RemoveFromFavorites(word))" class="bi bi-x-lg float-start favorite-active"></i>
+                                                </div>
                                                 <div class="col-10">@word.EeWord</div>
                                                 <div class="col-1">
                                                     <a href="@($"/word/{word.EeWord}")" target="_blank">
