@@ -7,7 +7,7 @@
     {
         if (LoadingTemplate is not null)
         {
-            <div class="col-4 p-1">@LoadingTemplate</div>
+            <div class="col col-12 col-sm-4 p-1">@LoadingTemplate</div>
         }
         else
         {
@@ -23,11 +23,11 @@
                 var disableItem = DisableItem?.Invoke(item) ?? false;
                 if (disableItem) // disable item
                 {
-                    <div class="col-4 p-1 @filter.Replace(".", "") @DisabledItemCssClass">@ItemTemplate(item)</div>
+                    <div class="col col-12 col-sm-4 p-1 @filter.Replace(".", "") @DisabledItemCssClass">@ItemTemplate(item)</div>
                 }
                 else
                 {
-                    <div class="col-4 p-1">@ItemTemplate(item)</div>
+                    <div class="col col-12 col-sm-4 p-1">@ItemTemplate(item)</div>
                 }
             }
         }
@@ -36,11 +36,11 @@
     {
         if (EmptyDataTemplate is not null)
         {
-            <div class="col-4 p-1">@EmptyDataTemplate</div>
+            <div class="col col-12 col-sm-4 p-1">@EmptyDataTemplate</div>
         }
         else
         {
-            <div class="col-4 p-1">@EmptyText</div>
+            <div class="col col-12 col-sm-4 p-1">@EmptyText</div>
         }
     }
 </div>
