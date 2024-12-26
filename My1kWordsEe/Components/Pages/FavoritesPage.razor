@@ -16,17 +16,18 @@
 @inject IdentityUserAccessor UserAccessor
 @inject AddToFavoritesCommand AddToFavoritesCommand
 @inject RemoveFromFavoritesCommand RemoveFromFavoritesCommand
+@inject ReorderFavoritesCommand ReorderFavoritesCommand
 
 @code {
     [Inject] protected PreloadService PreloadService { get; set; } = default!;
 
-    private ClaimsPrincipal? User;
+    private Data.ApplicationUser? User;
 
     private Maybe<Result<Favorites>> Favorites;
 
     private List<SampleWord> SampleWordsList = new List<SampleWord>();
 
-    private void OnWordsListUpdate(SortableListEventArgs args)
+    private async void OnWordsListUpdate(SortableListEventArgs args)
     {
         var itemToMove = SampleWordsList[args.OldIndex];
 
@@ -36,6 +37,9 @@
             SampleWordsList.Insert(args.NewIndex, itemToMove);
         else
             SampleWordsList.Add(itemToMove);
+
+
+        await ReorderFavoritesCommand.Invoke(User.Id, SampleWordsList);
     }
 
     public record Employee(int Id, string? Name);
@@ -45,9 +49,8 @@
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         if (authState != null)
         {
-            User = authState.User;
-            var user = await UserAccessor.GetRequiredUserAsync(authState.User);
-            Favorites = await GetFavoritesQuery.Invoke(user.Id);
+            User = await UserAccessor.GetRequiredUserAsync(authState.User);
+            Favorites = await GetFavoritesQuery.Invoke(User.Id);
             SampleWordsList = Favorites.Value.Value.Words.Values.ToList();
         }
 
@@ -57,8 +60,7 @@
     private async Task AddToFavorites(dynamic favorite)
     {
         PreloadService.Show(SpinnerColor.Light, "Saving data...");
-        var user = await UserAccessor.GetRequiredUserAsync(User);
-        Favorites = await AddToFavoritesCommand.Invoke(user.Id, favorite);
+        Favorites = await AddToFavoritesCommand.Invoke(User.Id, favorite);
         await Task.Delay(300);
         PreloadService.Hide();
         StateHasChanged();
@@ -67,8 +69,7 @@
     private async Task RemoveFromFavorites(dynamic favorite)
     {
         PreloadService.Show(SpinnerColor.Light, "Saving data...");
-        var user = await UserAccessor.GetRequiredUserAsync(User);
-        Favorites = await RemoveFromFavoritesCommand.Invoke(user.Id, favorite);
+        Favorites = await RemoveFromFavoritesCommand.Invoke(User.Id, favorite);
         await Task.Delay(300);
         PreloadService.Hide();
         StateHasChanged();
