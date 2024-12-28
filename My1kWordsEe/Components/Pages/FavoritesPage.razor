@@ -1,5 +1,5 @@
 ﻿@page "/favorites"
-@rendermode @(new InteractiveServerRenderMode(prerender: true))
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
 
 @using BlazorBootstrap
 @using CSharpFunctionalExtensions
@@ -8,7 +8,6 @@
 @using My1kWordsEe.Models;
 @using My1kWordsEe.Components.Layout;
 @using My1kWordsEe.Services.Cqs
-@using System.Security.Claims
 
 @inject NavigationManager NavigationManager
 @inject GetFavoritesQuery GetFavoritesQuery
@@ -38,7 +37,6 @@
         else
             SampleWordsList.Add(itemToMove);
 
-
         await ReorderFavoritesCommand.Invoke(User.Id, SampleWordsList);
     }
 
@@ -63,6 +61,7 @@
         Favorites = await AddToFavoritesCommand.Invoke(User.Id, favorite);
         await Task.Delay(300);
         PreloadService.Hide();
+        await OnParametersSetAsync();
         StateHasChanged();
     }
 
@@ -72,6 +71,7 @@
         Favorites = await RemoveFromFavoritesCommand.Invoke(User.Id, favorite);
         await Task.Delay(300);
         PreloadService.Hide();
+        await OnParametersSetAsync();
         StateHasChanged();
     }
 
@@ -100,8 +100,9 @@
                                 <Card role="button">
                                     <CardBody>
                                         <CardTitle Class="row">
-                                            @* <div class="bb-sortable-list-handle pe-2"><Icon Name="IconName.GripVertical" /></div> *@
-                                            <div class="col-1"></div>
+                                            <div class="col-1">
+                                                <i role="button" class="bi bi-x" @onclick="@(() => RemoveFromFavorites(item))"></i>
+                                            </div>
                                             <div class="col-10">@item.EeWord</div>
                                             <div class="col-1">
                                                 <a href="@($"/word/{item.EeWord}")" target="_blank">
