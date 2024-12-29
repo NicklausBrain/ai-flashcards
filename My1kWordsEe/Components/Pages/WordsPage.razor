@@ -56,10 +56,9 @@
 
 <div class="text-center">
     <div class="row sticky-top">
-        <div class="input-group mb-3">
+        <div class="input-group mb-1 small">
             <span class="input-group-text">Search</span>
             <InputText @bind-Value="SearchTerm" @oninput="OnSearchInput" class="form-control" aria-label="Search" aria-describedby="inputGroup-sizing-default" />
-
             @if (IsCheckInProgress)
             {
                 <button class="btn btn-outline-primary" type="button">
@@ -76,14 +75,14 @@
         <Grid TItem="SampleWord"
         Class="table table-hover table-bordered table-striped"
         Data="Ee1KWords.SelectedWords"
-        PageSize="10"
+        PageSize="9"
         AllowPaging="true"
         AllowSorting="true"
         Responsive="true"
         AllowRowClick="true"
         OnRowClick="@(args => SelectWord(args.Item.EeWord))">
             <GridColumns>
-                <GridColumn TItem="SampleWord" HeaderText="#" PropertyName="Id" SortKeySelector="item => WordIndex[item]" Class="col-auto small">
+                <GridColumn TItem="SampleWord" HeaderText="" PropertyName="Id" SortKeySelector="item => WordIndex[item]" Class="col-auto small">
                     @WordIndex[context]
                 </GridColumn>
                 <GridColumn TItem="SampleWord" HeaderText="Eestikeelne sõna" PropertyName="EeWord" SortKeySelector="item => item.EeWord" Class="col-2 small">
