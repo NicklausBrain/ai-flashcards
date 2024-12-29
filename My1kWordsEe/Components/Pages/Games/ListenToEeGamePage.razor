@@ -39,6 +39,11 @@
     {
         await JS.InvokeVoidAsync("playAudioSample", Game.AudioUrl);
     }
+
+    private void AddUserInputWord(string word)
+    {
+        Game.UserInput = Game.UserInput + " " + word;
+    }
 }
 
 <script>
@@ -98,15 +103,14 @@
                                         (@checkResult.Match / 5)
                                     </li>
                                     <li class="list-group-item list-group-item-success">
-                                        @checkResult.EeSentence
-                                        <br />
-                                        (@checkResult.EnSentence)
-                                    </li>
+                            @checkResult.EeSentence
+                            <br />
+                            (@checkResult.EnSentence)
+                        </li>
                                     <li class="list-group-item list-group-item-info">
-                                        @checkResult.EnComment
-                                    </li>
+                            @checkResult.EnComment
+                        </li>
                                 }
-
                             </ul>
                         }
                         @if (Game.CheckResult.HasValue && Game.CheckResult.Value.IsFailure)
@@ -123,10 +127,29 @@
                         }
                         else if (Game.CheckResult.HasNoValue)
                         {
-                            <div class="input-group input-group-sm">
-                                <span class="input-group-text btn-success">You hear:</span>
-                                <InputText @bind-Value="@Game.UserInput" class="form-control" autocomplete="off" />
-                                <button @onclick="@OnSubmit" class="btn btn-outline-primary" type="button">Submit</button>
+                            <div class="row mb-1">
+                                <div class="d-flex gap-2 justify-content-center">
+                                    @{
+                                        var rnWords = Game.EeSentence.Split(' ');
+                                        Random.Shared.Shuffle(rnWords);
+                                    }
+                                    @foreach (var word in rnWords)
+                                    {
+                                        @* https://getbootstrap.com/docs/5.3/examples/badges/ *@
+                                        <span @onclick="@(() => AddUserInputWord(word))" role="button"
+                                            class="badge d-flex p-2 align-items-center text-bg-primary rounded-pill">
+                                            <span class="px-1">@word</span>
+                                        </span>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="row mb-1">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text btn-success">You hear:</span>
+                                    <InputText @bind-Value="@Game.UserInput" class="form-control" autocomplete="off" />
+                                    <button @onclick="@OnSubmit" class="btn btn-outline-primary" type="button">Submit</button>
+                                </div>
                             </div>
                         }
                     </div>

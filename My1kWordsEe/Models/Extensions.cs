@@ -7,7 +7,7 @@ namespace My1kWordsEe.Models
         // The longest word in Estonian is 43 characters long
         public const int MaxWordLength = 43;
 
-        private static readonly Regex UnicodeWordRegex = new(@"\p{L}+", RegexOptions.Compiled);
+        private static readonly Regex UnicodeWordRegex = new(@"(\p{L}|[0-9])+", RegexOptions.Compiled);
 
         public static bool ValidateWord(this string word)
         {
@@ -42,7 +42,7 @@ namespace My1kWordsEe.Models
             }
 
             var areWordsValid = sentence
-                .Split([' ', ':', ';', ',', '.', '?', '!', '-', '\''], StringSplitOptions.RemoveEmptyEntries)
+                .Split((char[])[' ', ':', ';', ',', '.', '?', '!', '-', '\''], StringSplitOptions.RemoveEmptyEntries)
                 .All(w => w.ValidateWord());
 
             return areWordsValid;

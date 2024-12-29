@@ -5,14 +5,18 @@ defaults:
     working-directory: ./My1kWordsEe.Tests.E2E
 
 on:
-  push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
+  workflow_run:
+    workflows: [Unit Tests - my-1k-ee]
+    types: [completed]
+
+  workflow_dispatch:
+
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
     steps:
       - uses: actions/checkout@v4
       - name: Setup dotnet
@@ -23,7 +27,7 @@ jobs:
         run: dotnet build
       - name: Ensure browsers are installed
         run: pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps
-      - name: Run your tests
+      - name: Run e2e tests
         env:
           Secrets__OpenAiKey: ${{ secrets.Secrets__OpenAiKey }}
           Secrets__StabilityAiKey: ${{ secrets.Secrets__StabilityAiKey }}
