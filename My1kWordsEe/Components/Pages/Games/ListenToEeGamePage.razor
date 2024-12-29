@@ -39,6 +39,11 @@
     {
         await JS.InvokeVoidAsync("playAudioSample", Game.AudioUrl);
     }
+
+    private void AddUserInputWord(string word)
+    {
+        Game.UserInput = Game.UserInput + " " + word;
+    }
 }
 
 <script>
@@ -106,7 +111,6 @@
                                         @checkResult.EnComment
                                     </li>
                                 }
-
                             </ul>
                         }
                         @if (Game.CheckResult.HasValue && Game.CheckResult.Value.IsFailure)
@@ -123,10 +127,26 @@
                         }
                         else if (Game.CheckResult.HasNoValue)
                         {
-                            <div class="input-group input-group-sm">
-                                <span class="input-group-text btn-success">You hear:</span>
-                                <InputText @bind-Value="@Game.UserInput" class="form-control" autocomplete="off" />
-                                <button @onclick="@OnSubmit" class="btn btn-outline-primary" type="button">Submit</button>
+                            <div class="row mb-1">
+                                <div class="d-flex gap-2 justify-content-center">
+                                    @foreach (var word in Game.EeSentence.Split(' '))
+                                    {
+                                        @* https://getbootstrap.com/docs/5.3/examples/badges/ *@
+                                        <span @onclick="@(() => AddUserInputWord(word))"
+                                            role="button"
+                                            class="badge d-flex p-2 align-items-center text-bg-primary rounded-pill">
+                                            <span class="px-1">@word</span>
+                                        </span>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="row mb-1">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text btn-success">You hear:</span>
+                                    <InputText @bind-Value="@Game.UserInput" class="form-control" autocomplete="off" />
+                                    <button @onclick="@OnSubmit" class="btn btn-outline-primary" type="button">Submit</button>
+                                </div>
                             </div>
                         }
                     </div>
