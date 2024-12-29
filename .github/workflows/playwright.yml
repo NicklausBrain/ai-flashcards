@@ -9,10 +9,14 @@ on:
     workflows: [Unit Tests - my-1k-ee]
     types: [completed]
 
+  workflow_dispatch:
+
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
     steps:
       - uses: actions/checkout@v4
       - name: Setup dotnet
