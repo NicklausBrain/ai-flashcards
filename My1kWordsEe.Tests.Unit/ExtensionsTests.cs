@@ -14,7 +14,7 @@ namespace My1kWordsEe.Tests.Models
         [InlineData("abc123", true)]
         [InlineData("123", true)]
         [InlineData("abc-def", false)]
-        [InlineData("äöü", true)]
+        [InlineData("Ã¤Ã¶Ã¼", true)]
         public void ValidateWord_ShouldReturnExpectedResult(string word, bool expected)
         {
             // Act

@@ -42,7 +42,7 @@ namespace My1kWordsEe.Models
             }
 
             var areWordsValid = sentence
-                .Split([' ', ':', ';', ',', '.', '?', '!', '-', '\''], StringSplitOptions.RemoveEmptyEntries)
+                .Split((char[])[' ', ':', ';', ',', '.', '?', '!', '-', '\''], StringSplitOptions.RemoveEmptyEntries)
                 .All(w => w.ValidateWord());
 
             return areWordsValid;
