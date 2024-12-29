@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "My1kWordsEe.Tests.E2E", "My
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "My1kWordsEe.Cmd", "My1kWordsEe.Cmd\My1kWordsEe.Cmd.csproj", "{D124C849-3B0B-43AB-830C-B518BD57CE34}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "My1kWordsEe.Tests.Unit", "My1kWordsEe.Tests.Unit\My1kWordsEe.Tests.Unit.csproj", "{60DE0FDF-5FCC-458D-83AD-C0903D8F4AC6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{D124C849-3B0B-43AB-830C-B518BD57CE34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D124C849-3B0B-43AB-830C-B518BD57CE34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D124C849-3B0B-43AB-830C-B518BD57CE34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60DE0FDF-5FCC-458D-83AD-C0903D8F4AC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60DE0FDF-5FCC-458D-83AD-C0903D8F4AC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60DE0FDF-5FCC-458D-83AD-C0903D8F4AC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60DE0FDF-5FCC-458D-83AD-C0903D8F4AC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
