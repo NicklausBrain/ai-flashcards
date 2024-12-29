@@ -8,9 +8,11 @@ namespace My1kWordsEe.Tests.Models
         [InlineData(null, false)]
         [InlineData("", false)]
         [InlineData(" ", false)]
+        [InlineData("<!", false)]
         [InlineData("a", true)]
         [InlineData("abc", true)]
-        [InlineData("abc123", false)]
+        [InlineData("abc123", true)]
+        [InlineData("123", true)]
         [InlineData("abc-def", false)]
         [InlineData("הצü", true)]
         public void ValidateWord_ShouldReturnExpectedResult(string word, bool expected)
