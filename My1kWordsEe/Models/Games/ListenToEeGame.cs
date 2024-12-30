@@ -11,13 +11,18 @@ namespace My1kWordsEe.Models.Games
         public ListenToEeGame(string eeWord, int sampleIndex, SampleSentence sampleSentence)
         {
             this.sampleSentence = sampleSentence;
-            EeWord = eeWord;
-            SampleIndex = sampleIndex;
+            this.EeWord = eeWord;
+            this.SampleIndex = sampleIndex;
+            var rnWords = sampleSentence.EeSentence.Split(' ');
+            Random.Shared.Shuffle(rnWords);
+            this.RandomizedWords = rnWords;
         }
 
         public string EeWord { get; private set; }
 
         public int SampleIndex { get; private set; }
+
+        public string[] RandomizedWords { get; private set; }
 
         public Maybe<Result<EeListeningCheckResult>> CheckResult { get; private set; }
 
