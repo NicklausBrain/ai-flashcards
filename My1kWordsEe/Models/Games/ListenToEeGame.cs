@@ -8,7 +8,7 @@ namespace My1kWordsEe.Models.Games
     {
         private readonly SampleSentence sampleSentence;
 
-        public ListenToEeGame(SampleSentence sampleSentence)
+        public ListenToEeGame(string eeWord, int sampleIndex, SampleSentence sampleSentence)
         {
             this.sampleSentence = sampleSentence;
         }
@@ -62,11 +62,18 @@ namespace My1kWordsEe.Models.Games
 
         public static async Task<Result<ListenToEeGame>> Generate(
             GetOrAddSampleWordCommand getOrAddSampleWordCommand,
-            AddSampleSentenceCommand addSampleSentenceCommand)
+            AddSampleSentenceCommand addSampleSentenceCommand,
+            string? eeWord,
+            int? wordIndex)
         {
-            var rn = new Random(Environment.TickCount);
-            var eeWord = Ee1kWords.AllWords[rn.Next(0, Ee1kWords.AllWords.Length)];
-            var sampleWord = await getOrAddSampleWordCommand.Invoke(eeWord.EeWord);
+            eeWord = (eeWord ?? GetRandomEeWord()).ToLower();
+
+            if (!eeWord.ValidateWord())
+            {
+                return Result.Failure<ListenToEeGame>("Not an Estonian word");
+            }
+
+            var sampleWord = await getOrAddSampleWordCommand.Invoke(eeWord);
 
             if (sampleWord.IsFailure)
             {
@@ -75,7 +82,7 @@ namespace My1kWordsEe.Models.Games
 
             if (sampleWord.Value.Samples.Any())
             {
-                return new ListenToEeGame(sampleWord.Value.Samples.First());
+                return new ListenToEeGame(eeWord, 0, sampleWord.Value.Samples.First());
             }
             else
             {
@@ -83,7 +90,7 @@ namespace My1kWordsEe.Models.Games
 
                 if (addSampleResult.IsSuccess)
                 {
-                    return new ListenToEeGame(addSampleResult.Value.Samples.First());
+                    return new ListenToEeGame(eeWord, 0, addSampleResult.Value.Samples.First());
                 }
 
                 return Result.Failure<ListenToEeGame>(addSampleResult.Error);
@@ -93,6 +100,13 @@ namespace My1kWordsEe.Models.Games
         /// <summary>
         /// Null object pattern.
         /// </summary>
-        public static readonly ListenToEeGame Empty = new ListenToEeGame(SampleSentence.Empty);
+        public static readonly ListenToEeGame Empty = new ListenToEeGame(string.Empty, 0, SampleSentence.Empty);
+
+        private static string GetRandomEeWord()
+        {
+            var rn = new Random(Environment.TickCount);
+            var eeWord = Ee1kWords.AllWords[rn.Next(0, Ee1kWords.AllWords.Length)];
+            return eeWord.EeWord;
+        }
     }
 }

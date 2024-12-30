@@ -1,4 +1,5 @@
 ﻿@page "/listen-game/ee"
+@page "/listen-game/ee/{eeWord}/{sampleIndex:int}"
 
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
@@ -14,13 +15,19 @@
 @inject IJSRuntime JS;
 
 @code {
+    [Parameter]
+    public string? EeWord { get; init; }
+
+    [Parameter]
+    public int? SampleIndex { get; init; }
+
     ListenToEeGame Game = ListenToEeGame.Empty;
     Maybe<string> GameGenerationError;
 
     protected override async Task OnParametersSetAsync()
     {
         Game = ListenToEeGame.Empty;
-        var gameGen = await ListenToEeGame.Generate(EnsureWordCommand, CreateSampleCommand);
+        var gameGen = await ListenToEeGame.Generate(EnsureWordCommand, CreateSampleCommand, EeWord, SampleIndex);
         if (gameGen.IsSuccess)
         {
             Game = gameGen.Value;
