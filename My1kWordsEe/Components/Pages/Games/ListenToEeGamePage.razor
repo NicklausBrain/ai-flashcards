@@ -12,6 +12,7 @@
 @inject GetOrAddSampleWordCommand EnsureWordCommand;
 @inject AddSampleSentenceCommand CreateSampleCommand;
 @inject CheckEeListeningCommand CheckEeListeningCommand;
+@inject NavigationManager Navigation;
 @inject IJSRuntime JS;
 
 @code {
@@ -30,6 +31,14 @@
         var gameGen = await ListenToEeGame.Generate(EnsureWordCommand, CreateSampleCommand, EeWord, SampleIndex);
         if (gameGen.IsSuccess)
         {
+            if (EeWord == null)
+            {
+                Navigation.NavigateTo(
+                    uri: $"/listen-game/ee/{gameGen.Value.EeWord}/{gameGen.Value.SampleIndex}",
+                    forceLoad: false,
+                    replace: true);
+            }
+
             Game = gameGen.Value;
         }
         else

@@ -11,7 +11,13 @@ namespace My1kWordsEe.Models.Games
         public ListenToEeGame(string eeWord, int sampleIndex, SampleSentence sampleSentence)
         {
             this.sampleSentence = sampleSentence;
+            EeWord = eeWord;
+            SampleIndex = sampleIndex;
         }
+
+        public string EeWord { get; private set; }
+
+        public int SampleIndex { get; private set; }
 
         public Maybe<Result<EeListeningCheckResult>> CheckResult { get; private set; }
 
