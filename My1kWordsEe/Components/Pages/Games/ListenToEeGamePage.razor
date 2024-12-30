@@ -33,10 +33,7 @@
         {
             if (EeWord == null)
             {
-                Navigation.NavigateTo(
-                    uri: $"/listen-game/ee/{gameGen.Value.EeWord}/{gameGen.Value.SampleIndex}",
-                    forceLoad: false,
-                    replace: true);
+                Navigation.NavigateTo($"/listen-game/ee/{gameGen.Value.EeWord}/{gameGen.Value.SampleIndex}");
             }
 
             Game = gameGen.Value;
