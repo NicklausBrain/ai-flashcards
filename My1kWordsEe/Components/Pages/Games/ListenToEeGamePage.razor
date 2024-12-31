@@ -1,4 +1,5 @@
 ﻿@page "/listen-game/ee"
+@page "/listen-game/ee/{eeWord}/{sampleIndex:int}"
 
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
@@ -11,19 +12,33 @@
 @inject GetOrAddSampleWordCommand EnsureWordCommand;
 @inject AddSampleSentenceCommand CreateSampleCommand;
 @inject CheckEeListeningCommand CheckEeListeningCommand;
+@inject NavigationManager Navigation;
 @inject IJSRuntime JS;
 
 @code {
+    [Parameter]
+    public string? EeWord { get; init; }
+
+    [Parameter]
+    public int? SampleIndex { get; init; }
+
     ListenToEeGame Game = ListenToEeGame.Empty;
     Maybe<string> GameGenerationError;
 
     protected override async Task OnParametersSetAsync()
     {
         Game = ListenToEeGame.Empty;
-        var gameGen = await ListenToEeGame.Generate(EnsureWordCommand, CreateSampleCommand);
+        var gameGen = await ListenToEeGame.Generate(EnsureWordCommand, CreateSampleCommand, EeWord, SampleIndex);
         if (gameGen.IsSuccess)
         {
-            Game = gameGen.Value;
+            if (EeWord == null)
+            {
+                Navigation.NavigateTo($"/listen-game/ee/{gameGen.Value.EeWord}/{gameGen.Value.SampleIndex}");
+            }
+            else
+            {
+                Game = gameGen.Value;
+            }
         }
         else
         {
@@ -31,6 +46,8 @@
         }
         await base.OnParametersSetAsync();
     }
+
+    private void RegenGame() => Navigation.NavigateTo($"/listen-game/ee");
 
     // todo add succes/fail sound
     private Task OnSubmit() => Game.Submit(CheckEeListeningCommand);
@@ -61,7 +78,7 @@
         <div class="col-5">
             @if (Game.IsFinished)
             {
-                <Button Color="ButtonColor.Primary" Type="ButtonType.Reset" @onclick="@OnParametersSetAsync">
+                <Button Color="ButtonColor.Primary" Type="ButtonType.Reset" @onclick="@RegenGame">
                     <i class="bi bi-arrow-repeat"></i>
                     Try again!
                 </Button>
@@ -103,13 +120,13 @@
                                         (@checkResult.Match / 5)
                                     </li>
                                     <li class="list-group-item list-group-item-success">
-                            @checkResult.EeSentence
-                            <br />
-                            (@checkResult.EnSentence)
-                        </li>
+                                        @checkResult.EeSentence
+                                        <br />
+                                        (@checkResult.EnSentence)
+                                    </li>
                                     <li class="list-group-item list-group-item-info">
-                            @checkResult.EnComment
-                        </li>
+                                        @checkResult.EnComment
+                                    </li>
                                 }
                             </ul>
                         }
@@ -129,15 +146,11 @@
                         {
                             <div class="row mb-1">
                                 <div class="d-flex gap-2 justify-content-center">
-                                    @{
-                                        var rnWords = Game.EeSentence.Split(' ');
-                                        Random.Shared.Shuffle(rnWords);
-                                    }
-                                    @foreach (var word in rnWords)
+                                    @foreach (var word in Game.RandomizedWords)
                                     {
                                         @* https://getbootstrap.com/docs/5.3/examples/badges/ *@
                                         <span @onclick="@(() => AddUserInputWord(word))" role="button"
-                                            class="badge d-flex p-2 align-items-center text-bg-primary rounded-pill">
+                                              class="badge d-flex p-2 align-items-center text-bg-primary rounded-pill">
                                             <span class="px-1">@word</span>
                                         </span>
                                     }
