@@ -35,8 +35,10 @@
             {
                 Navigation.NavigateTo($"/listen-game/ee/{gameGen.Value.EeWord}/{gameGen.Value.SampleIndex}");
             }
-
-            Game = gameGen.Value;
+            else
+            {
+                Game = gameGen.Value;
+            }
         }
         else
         {
@@ -44,6 +46,8 @@
         }
         await base.OnParametersSetAsync();
     }
+
+    private void RegenGame() => Navigation.NavigateTo($"/listen-game/ee");
 
     // todo add succes/fail sound
     private Task OnSubmit() => Game.Submit(CheckEeListeningCommand);
@@ -74,7 +78,7 @@
         <div class="col-5">
             @if (Game.IsFinished)
             {
-                <Button Color="ButtonColor.Primary" Type="ButtonType.Reset" @onclick="@OnParametersSetAsync">
+                <Button Color="ButtonColor.Primary" Type="ButtonType.Reset" @onclick="@RegenGame">
                     <i class="bi bi-arrow-repeat"></i>
                     Try again!
                 </Button>
