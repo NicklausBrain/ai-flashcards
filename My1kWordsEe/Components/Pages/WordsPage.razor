@@ -1,4 +1,6 @@
 ﻿@page "/"
+@page "/{SearchTerm}"
+
 @rendermode InteractiveServer
 
 @using BlazorBootstrap
@@ -7,6 +9,7 @@
 @using My1kWordsEe.Components.Layout;
 @using My1kWordsEe.Services.Cqs
 
+@inject IJSRuntime JS
 @inject NavigationManager NavigationManager
 @inject GetOrAddSampleWordCommand GetOrAddSampleWordCommand;
 
@@ -15,21 +18,35 @@
         .Select((w, i) => (w, i))
         .ToDictionary(p => p.w, p => p.i + 1);
 
+    [Parameter]
+    public string? SearchTerm { get; set; }
+    public string SearchTermTrimmed => SearchTerm?.ToString()?.Trim() ?? string.Empty;
+
     private Ee1kWords Ee1KWords = new Ee1kWords();
-    private string? SearchTerm;
     private bool IsCheckInProgress = false;
     private Maybe<Result<SampleWord>> CheckWordResult;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (!string.IsNullOrWhiteSpace(this.SearchTermTrimmed))
+        {
+            this.Ee1KWords = Ee1KWords.WithSearch(SearchTermTrimmed);
+        }
+
+        await base.OnParametersSetAsync();
+    }
 
     private void SelectWord(string word)
     {
         this.NavigationManager.NavigateTo($"/word/{word}");
     }
 
-    private void OnSearchInput(ChangeEventArgs e)
+    private async Task OnSearchInput(ChangeEventArgs e)
     {
         this.CheckWordResult = default;
-        var searchTerm = e.Value?.ToString()?.Trim() ?? string.Empty;
-        this.Ee1KWords = Ee1KWords.WithSearch(searchTerm);
+        SearchTerm = e.Value?.ToString();
+        await OnParametersSetAsync();
+        await JS.InvokeVoidAsync("replaceAddress", $"/{SearchTermTrimmed}");
     }
 
     private async Task CheckWord(MouseEventArgs e)
@@ -51,6 +68,13 @@
         this.IsCheckInProgress = false;
     }
 }
+
+<script>
+    function replaceAddress(url) {
+        history.replaceState(null, "", url);
+    }
+
+</script>
 
 <PageTitle>1k Words</PageTitle>
 
