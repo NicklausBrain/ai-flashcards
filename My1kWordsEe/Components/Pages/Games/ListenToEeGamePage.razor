@@ -160,7 +160,7 @@
                         }
                         else if (Game.CheckResult.HasNoValue)
                         {
-                            <div class="row mb-1 gap-2 justify-content-md-center">
+                            <div class="row mb-1 gap-2 justify-content-center">
                                 @for (var i = 0; i < SuggestedWords.Count; i++)
                                 {
                                     var wordIndex = i;
@@ -171,7 +171,7 @@
                                 }
                             </div>
 
-                            <div class="row mb-1 gap-2 justify-content-md-center">
+                            <div class="row mb-1 gap-2 justify-content-center">
                                 @for(var i = 0; i < UserInputWords.Count; i++)
                                 {
                                     var wordIndex = i;
@@ -184,7 +184,7 @@
                                 }
                             </div>
 
-                            <div class="row mb-1 gap-2 justify-content-md-center">
+                            <div class="row mb-1 gap-2 justify-content-center">
                                 @if(SuggestedWords.Count == 0)
                                 {
                                     <Button Class="col-auto" Type="ButtonType.Submit" Color="ButtonColor.Primary" @onclick="@OnSubmit">Submit</Button>
