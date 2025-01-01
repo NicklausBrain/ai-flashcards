@@ -160,7 +160,7 @@
                         }
                         else if (Game.CheckResult.HasNoValue)
                         {
-                            <div class="row mb-1 gap-2">
+                            <div class="row mb-1 gap-2 justify-content-md-center">
                                 @for (var i = 0; i < SuggestedWords.Count; i++)
                                 {
                                     var wordIndex = i;
@@ -171,11 +171,11 @@
                                 }
                             </div>
 
-                            <div class="row mb-1 gap-2">
+                            <div class="row mb-1 gap-2 justify-content-md-center">
                                 @for(var i = 0; i < UserInputWords.Count; i++)
                                 {
                                     var wordIndex = i;
-                                    <Button Class="col-auto" Type="ButtonType.Button" Color="ButtonColor.Primary">
+                                    <Button Class="col-auto" Type="ButtonType.Button" Color="ButtonColor.Secondary">
                                         @UserInputWords[wordIndex]
                                         <Badge @onclick="@(()=> DropUserInputWord(wordIndex))">
                                             <i class="bi bi-x"></i>
@@ -184,12 +184,15 @@
                                 }
                             </div>
 
-                            <div class="row mb-1">
-                                <div class="input-group input-group-sm">
-                                    @* <span class="input-group-text btn-success">You hear:</span>
-                                    <InputText @bind-Value="@Game.UserInput" class="form-control" autocomplete="off"/> *@
-                                    <button @onclick="@OnSubmit" class="btn btn-outline-primary" type="button">Submit</button>
-                                </div>
+                            <div class="row mb-1 gap-2 justify-content-md-center">
+                                @if(SuggestedWords.Count == 0)
+                                {
+                                    <Button Class="col-auto" Type="ButtonType.Submit" Color="ButtonColor.Primary" @onclick="@OnSubmit">Submit</Button>
+                                }
+                                @* <div class="input-group input-group-sm">
+                                    <span class="input-group-text btn-success">You hear:</span>
+                                    <InputText @bind-Value="@Game.UserInput" class="form-control" autocomplete="off"/>
+                                </div> *@
                             </div>
                         }
                     </div>
