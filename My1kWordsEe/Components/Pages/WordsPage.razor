@@ -1,4 +1,5 @@
 ﻿@page "/"
+
 @rendermode InteractiveServer
 
 @using BlazorBootstrap
@@ -7,29 +8,39 @@
 @using My1kWordsEe.Components.Layout;
 @using My1kWordsEe.Services.Cqs
 
+@inject IJSRuntime JS
 @inject NavigationManager NavigationManager
 @inject GetOrAddSampleWordCommand GetOrAddSampleWordCommand;
 
 @code {
     private static readonly Dictionary<SampleWord, int> WordIndex = Ee1kWords.AllWords
-        .Select((w, i) => (w, i))
-        .ToDictionary(p => p.w, p => p.i + 1);
+    .Select((w, i) => (w, i))
+    .ToDictionary(p => p.w, p => p.i + 1);
+
+    [SupplyParameterFromQuery]
+    public string? SearchTerm { get; set; }
+    public string SearchTermTrimmed => SearchTerm?.ToString()?.Trim() ?? string.Empty;
 
     private Ee1kWords Ee1KWords = new Ee1kWords();
-    private string? SearchTerm;
     private bool IsCheckInProgress = false;
     private Maybe<Result<SampleWord>> CheckWordResult;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        this.Ee1KWords = Ee1KWords.WithSearch(SearchTermTrimmed);
+        await base.OnParametersSetAsync();
+    }
 
     private void SelectWord(string word)
     {
         this.NavigationManager.NavigateTo($"/word/{word}");
     }
 
-    private void OnSearchInput(ChangeEventArgs e)
+    private async Task OnSearchInput()
     {
         this.CheckWordResult = default;
-        var searchTerm = e.Value?.ToString()?.Trim() ?? string.Empty;
-        this.Ee1KWords = Ee1KWords.WithSearch(searchTerm);
+        await OnParametersSetAsync();
+        await JS.InvokeVoidAsync("replaceAddress", $"?SearchTerm={SearchTermTrimmed}");
     }
 
     private async Task CheckWord(MouseEventArgs e)
@@ -52,13 +63,21 @@
     }
 }
 
+<script>
+    function replaceAddress(url) {
+        history.replaceState(null, "", url);
+    }
+
+</script>
+
 <PageTitle>1k Words</PageTitle>
 
 <div class="text-center">
     <div class="row sticky-top">
         <div class="input-group mb-1 small">
             <span class="input-group-text">Search</span>
-            <InputText @bind-Value="SearchTerm" @oninput="OnSearchInput" class="form-control" aria-label="Search" aria-describedby="inputGroup-sizing-default" />
+            <input @bind="SearchTerm" @bind:event="oninput" @bind:after="OnSearchInput" class="form-control"
+                aria-label="Search" aria-describedby="inputGroup-sizing-default" />
             @if (IsCheckInProgress)
             {
                 <button class="btn btn-outline-primary" type="button">
@@ -67,35 +86,33 @@
             }
             else
             {
-                <button  @onclick="CheckWord" class="btn btn-outline-primary" type="button">Check the word</button>
+                <button @onclick="CheckWord" class="btn btn-outline-primary" type="button">Check the word</button>
             }
         </div>
     </div>
     <div class="row">
-        <Grid TItem="SampleWord"
-        Class="table table-hover table-bordered table-striped"
-        Data="Ee1KWords.SelectedWords"
-        PageSize="9"
-        AllowPaging="true"
-        AllowSorting="true"
-        Responsive="true"
-        AllowRowClick="true"
-        OnRowClick="@(args => SelectWord(args.Item.EeWord))">
+        <Grid TItem="SampleWord" Class="table table-hover table-bordered table-striped" Data="Ee1KWords.SelectedWords"
+            PageSize="9" AllowPaging="true" AllowSorting="true" Responsive="true" AllowRowClick="true"
+            OnRowClick="@(args => SelectWord(args.Item.EeWord))">
             <GridColumns>
-                <GridColumn TItem="SampleWord" HeaderText="" PropertyName="Id" SortKeySelector="item => WordIndex[item]" Class="col-auto small">
+                <GridColumn TItem="SampleWord" HeaderText="" PropertyName="Id" SortKeySelector="item => WordIndex[item]"
+                    Class="col-auto small">
                     @WordIndex[context]
                 </GridColumn>
-                <GridColumn TItem="SampleWord" HeaderText="Eestikeelne sõna" PropertyName="EeWord" SortKeySelector="item => item.EeWord" Class="col-2 small">
+                <GridColumn TItem="SampleWord" HeaderText="Eestikeelne sõna" PropertyName="EeWord"
+                    SortKeySelector="item => item.EeWord" Class="col-2 small">
                     @context.EeWord
                 </GridColumn>
-                <GridColumn TItem="SampleWord" HeaderText="English word(s)" PropertyName="EnWord" SortKeySelector="item => item.EnWord" Class="col-2 small">
+                <GridColumn TItem="SampleWord" HeaderText="English word(s)" PropertyName="EnWord"
+                    SortKeySelector="item => item.EnWord" Class="col-2 small">
                     @context.EnWord
                     @if (context.EnWords.Any() && context.EnWords.First() != context.EnWord)
                     {
                         @($" ({string.Join(" / ", context.EnWords)})")
                     }
                 </GridColumn>
-                <GridColumn TItem="SampleWord" HeaderText="Explanation" PropertyName="EnExplanation" SortKeySelector="item => item.EnExplanation" Class="col-8 small">
+                <GridColumn TItem="SampleWord" HeaderText="Explanation" PropertyName="EnExplanation"
+                    SortKeySelector="item => item.EnExplanation" Class="col-8 small">
                     @context.EnExplanation
                 </GridColumn>
             </GridColumns>
