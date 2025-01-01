@@ -1,5 +1,4 @@
 ﻿@page "/"
-@page "/{SearchTerm}"
 
 @rendermode InteractiveServer
 
@@ -18,7 +17,7 @@
     .Select((w, i) => (w, i))
     .ToDictionary(p => p.w, p => p.i + 1);
 
-    [Parameter]
+    [SupplyParameterFromQuery]
     public string? SearchTerm { get; set; }
     public string SearchTermTrimmed => SearchTerm?.ToString()?.Trim() ?? string.Empty;
 
@@ -41,7 +40,7 @@
     {
         this.CheckWordResult = default;
         await OnParametersSetAsync();
-        await JS.InvokeVoidAsync("replaceAddress", $"/{SearchTermTrimmed}");
+        await JS.InvokeVoidAsync("replaceAddress", $"?SearchTerm={SearchTermTrimmed}");
     }
 
     private async Task CheckWord(MouseEventArgs e)
