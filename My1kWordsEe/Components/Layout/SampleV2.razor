@@ -20,9 +20,11 @@
     [Parameter]
     public required SampleSentence Sample { get; init; }
 
+    // todo: i guess we can get rid of it
     [Parameter]
     public Func<SampleSentence, Task>? AddToFavorites { get; init; }
 
+    // todo: i guess we can get rid of it
     [Parameter]
     public Func<SampleSentence, Task>? RemoveFromFavorites { get; init; }
 
