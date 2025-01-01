@@ -50,16 +50,28 @@
     private void RegenGame() => Navigation.NavigateTo($"/listen-game/ee");
 
     // todo add succes/fail sound
-    private Task OnSubmit() => Game.Submit(CheckEeListeningCommand);
+    private async Task OnSubmit()
+    {
+        Game.UserInput = UserInput;
+        await Game.Submit(CheckEeListeningCommand);
+    }
 
     private async Task PlaySample()
     {
         await JS.InvokeVoidAsync("playAudioSample", Game.AudioUrl);
     }
 
+    private List<string> UserInputWords = new List<string>();
+    private string UserInput => string.Join(" ", UserInputWords);
+
     private void AddUserInputWord(string word)
     {
-        Game.UserInput = Game.UserInput + " " + word;
+        UserInputWords.Add(word);
+    }
+
+    private void DropUserInputWord(int index)
+    {
+        UserInputWords.RemoveAt(index);
     }
 }
 
@@ -144,23 +156,33 @@
                         }
                         else if (Game.CheckResult.HasNoValue)
                         {
-                            <div class="row mb-1">
-                                <div class="d-flex gap-2 justify-content-center">
-                                    @foreach (var word in Game.RandomizedWords)
-                                    {
-                                        @* https://getbootstrap.com/docs/5.3/examples/badges/ *@
-                                        <span @onclick="@(() => AddUserInputWord(word))" role="button"
-                                              class="badge d-flex p-2 align-items-center text-bg-primary rounded-pill">
-                                            <span class="px-1">@word</span>
-                                        </span>
-                                    }
-                                </div>
+                            <div class="row mb-1 gap-2">
+                                @foreach (var word in Game.RandomizedWords.Except(UserInputWords))
+                                {
+                                    <Button @onclick="@(() => AddUserInputWord(word))"
+                                    Class="col-auto" Type="ButtonType.Button" Color="ButtonColor.Primary">
+                                        @word
+                                    </Button>
+                                }
+                            </div>
+
+                            <div class="row mb-1 gap-2">
+                                @for(var i = 0; i < UserInputWords.Count; i++)
+                                {
+                                    var wordIndex = i;
+                                    <Button Class="col-auto" Type="ButtonType.Button" Color="ButtonColor.Primary">
+                                        @UserInputWords[wordIndex]
+                                        <Badge @onclick="@(()=> DropUserInputWord(wordIndex))">
+                                            <i class="bi bi-x"></i>
+                                        </Badge>
+                                    </Button>
+                                }
                             </div>
 
                             <div class="row mb-1">
                                 <div class="input-group input-group-sm">
-                                    <span class="input-group-text btn-success">You hear:</span>
-                                    <InputText @bind-Value="@Game.UserInput" class="form-control" autocomplete="off" />
+                                    @* <span class="input-group-text btn-success">You hear:</span>
+                                    <InputText @bind-Value="@Game.UserInput" class="form-control" autocomplete="off"/> *@
                                     <button @onclick="@OnSubmit" class="btn btn-outline-primary" type="button">Submit</button>
                                 </div>
                             </div>
