@@ -38,6 +38,7 @@
             else
             {
                 Game = gameGen.Value;
+                SuggestedWords = new List<string>(Game.RandomizedWords);
             }
         }
         else
@@ -61,16 +62,19 @@
         await JS.InvokeVoidAsync("playAudioSample", Game.AudioUrl);
     }
 
+    private List<string> SuggestedWords = new List<string>();
     private List<string> UserInputWords = new List<string>();
     private string UserInput => string.Join(" ", UserInputWords);
 
-    private void AddUserInputWord(string word)
+    private void AddUserInputWord(int index)
     {
-        UserInputWords.Add(word);
+        UserInputWords.Add(SuggestedWords[index]);
+        SuggestedWords.RemoveAt(index);
     }
 
     private void DropUserInputWord(int index)
     {
+        SuggestedWords.Add(UserInputWords[index]);
         UserInputWords.RemoveAt(index);
     }
 }
@@ -157,11 +161,12 @@
                         else if (Game.CheckResult.HasNoValue)
                         {
                             <div class="row mb-1 gap-2">
-                                @foreach (var word in Game.RandomizedWords.Except(UserInputWords))
+                                @for (var i = 0; i < SuggestedWords.Count; i++)
                                 {
-                                    <Button @onclick="@(() => AddUserInputWord(word))"
+                                    var wordIndex = i;
+                                    <Button @onclick="@(() => AddUserInputWord(wordIndex))"
                                     Class="col-auto" Type="ButtonType.Button" Color="ButtonColor.Primary">
-                                        @word
+                                        @SuggestedWords[wordIndex]
                                     </Button>
                                 }
                             </div>
