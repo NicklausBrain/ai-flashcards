@@ -8,6 +8,7 @@
 @using My1kWordsEe.Models
 @using My1kWordsEe.Models.Games
 @using My1kWordsEe.Services.Cqs
+@using My1kWordsEe.Components.Layout
 
 @inject GetOrAddSampleWordCommand EnsureWordCommand;
 @inject AddSampleSentenceCommand CreateSampleCommand;
@@ -113,10 +114,7 @@
                                 <i class="bi bi-volume-down-fill"></i>
                             </button>
                             <audio id="@Game.AudioUrl" src="@Game.AudioUrl"></audio>
-                            @* @onclick="() => AddToFavorites(Sample)" *@
-                            <button type="button" class="btn btn-primary btn-sm" >
-                                <i role="button" class="bi bi-star"></i>
-                            </button>
+                            <FavoriteButton Sample="@Game.SampleSentence" />
                         </h5>
                         <img id="sampleImage" class="img-fluid rounded img-max-w-256 p-1" src="@Game.ImageUrl" />
 
@@ -140,13 +138,13 @@
                                         (@checkResult.Match / 5)
                                     </li>
                                     <li class="list-group-item list-group-item-success">
-                                        @checkResult.EeSentence
-                                        <br />
-                                        (@checkResult.EnSentence)
-                                    </li>
+                            @checkResult.EeSentence
+                            <br />
+                            (@checkResult.EnSentence)
+                        </li>
                                     <li class="list-group-item list-group-item-info">
-                                        @checkResult.EnComment
-                                    </li>
+                            @checkResult.EnComment
+                        </li>
                                 }
                             </ul>
                         }
@@ -168,15 +166,15 @@
                                 @for (var i = 0; i < SuggestedWords.Count; i++)
                                 {
                                     var wordIndex = i;
-                                    <Button @onclick="@(() => AddUserInputWord(wordIndex))"
-                                    Class="col-auto" Type="ButtonType.Button" Color="ButtonColor.Primary">
+                                    <Button @onclick="@(() => AddUserInputWord(wordIndex))" Class="col-auto"
+                                        Type="ButtonType.Button" Color="ButtonColor.Primary">
                                         @SuggestedWords[wordIndex]
                                     </Button>
                                 }
                             </div>
 
                             <div class="row mb-1 gap-2 justify-content-md-center">
-                                @for(var i = 0; i < UserInputWords.Count; i++)
+                        @for (var i = 0; i < UserInputWords.Count; i++)
                                 {
                                     var wordIndex = i;
                                     <Button Class="col-auto" Type="ButtonType.Button" Color="ButtonColor.Secondary">
@@ -189,15 +187,16 @@
                             </div>
 
                             <div class="row mb-1 gap-2 justify-content-md-center">
-                                @if(SuggestedWords.Count == 0)
+                        @if (SuggestedWords.Count == 0)
                                 {
-                                    <Button Class="col-auto" Type="ButtonType.Submit" Color="ButtonColor.Primary" @onclick="@OnSubmit">Submit</Button>
+                                    <Button Class="col-auto" Type="ButtonType.Submit" Color="ButtonColor.Primary"
+                                        @onclick="@OnSubmit">Submit</Button>
                                 }
                                 @* <div class="input-group input-group-sm">
                                     <span class="input-group-text btn-success">You hear:</span>
                                     <InputText @bind-Value="@Game.UserInput" class="form-control" autocomplete="off"/>
                                 </div> *@
-                            </div>
+                    </div>
                         }
                     </div>
                 </div>
