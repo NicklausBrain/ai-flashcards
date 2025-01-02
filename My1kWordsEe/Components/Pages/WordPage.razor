@@ -5,11 +5,11 @@
 @using CSharpFunctionalExtensions
 @using Microsoft.AspNetCore.Components.Authorization
 @using My1kWordsEe.Components.Account
-@using My1kWordsEe.Services;
-@using My1kWordsEe.Models;
-@using My1kWordsEe.Components.Layout;
-@using My1kWordsEe.Services.Cqs;
-@using System.Text.RegularExpressions;
+@using My1kWordsEe.Services
+@using My1kWordsEe.Models
+@using My1kWordsEe.Components.Layout
+@using My1kWordsEe.Services.Cqs
+@using System.Text.RegularExpressions
 @using System.ComponentModel.DataAnnotations
 @using System.Security.Claims
 @using My1kWordsEe.Services.Scoped
@@ -209,20 +209,23 @@
         <h1>
             @EeWord
 
-            @if (IsFavorite())
+            @if (IsDataLoadedOk)
             {
-                <i role="button" class="bi bi-star-fill favorite-active" @onclick="() => RemoveFromFavorites(Value)"></i>
-            }
-            else
-            {
-                <i role="button" class="bi bi-star" @onclick="() => AddToFavorites(Value)"></i>
-            }
+                if (IsFavorite())
+                {
+                    <i role="button" class="bi bi-star-fill favorite-active" @onclick="() => RemoveFromFavorites(Value)"></i>
+                }
+                else
+                {
+                    <i role="button" class="bi bi-star" @onclick="() => AddToFavorites(Value)"></i>
+                }
 
-            @if (IsDataLoadedOk && Value.EeAudioUrl != null)
-            {
-                <i role="button" class="bi bi-volume-down-fill small" @onclick="SpeakWord">
-                    <audio id="@EeWord" src="@Value.EeAudioUrl"></audio>
-                </i>
+                if (Value.EeAudioUrl != null)
+                {
+                    <i role="button" class="bi bi-volume-down-fill small" @onclick="SpeakWord">
+                        <audio id="@EeWord" src="@Value.EeAudioUrl"></audio>
+                    </i>
+                }
             }
 
             @if (IsLoggedIn)
