@@ -92,16 +92,14 @@
                 <Content>
                     @if (FavoriteWords.Any())
                     {
-                        <SortableGrid TItem="SampleWord"
-                                      Data="SampleWordsList"
-                                      Context="item"
-                                      OnUpdate="@OnWordsListUpdate">
+                        <SortableGrid TItem="SampleWord" Data="SampleWordsList" Context="item" OnUpdate="@OnWordsListUpdate">
                             <ItemTemplate>
                                 <Card role="button">
                                     <CardBody>
                                         <CardTitle Class="row">
                                             <div class="col-1">
-                                                <i role="button" class="bi bi-x" @onclick="@(() => RemoveFromFavorites(item))"></i>
+                                                <i role="button" class="bi bi-x"
+                                                    @onclick="@(() => RemoveFromFavorites(item))"></i>
                                             </div>
                                             <div class="col-10">@item.EeWord</div>
                                             <div class="col-1">
@@ -132,10 +130,7 @@
                             {
                                 var sentence = sentencePair.Value;
                                 <div class="col col-12 col-sm-6 p-1">
-                                    <SampleV2 Sample="sentence"
-                                              AddToFavorites="AddToFavorites"
-                                              RemoveFromFavorites="RemoveFromFavorites"
-                                              IsFavorite="true">
+                                    <SampleV2 Sample="sentence">
                                     </SampleV2>
                                 </div>
                             }

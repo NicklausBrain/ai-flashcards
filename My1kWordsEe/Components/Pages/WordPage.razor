@@ -12,15 +12,14 @@
 @using System.Text.RegularExpressions;
 @using System.ComponentModel.DataAnnotations
 @using System.Security.Claims
+@using My1kWordsEe.Services.Scoped
 
 @inject IJSRuntime JS
 @inject GetOrAddSampleWordCommand EnsureWordCommand
 @inject GetFavoritesQuery GetFavoritesQuery
 @inject AddSampleSentenceCommand CreateSampleCommand
 @inject AuthenticationStateProvider AuthenticationStateProvider
-@inject IdentityUserAccessor UserAccessor
-@inject AddToFavoritesCommand AddToFavoritesCommand
-@inject RemoveFromFavoritesCommand RemoveFromFavoritesCommand
+@inject FavoritesStateContainer FavoritesStateContainer
 @inject DeleteSampleSentenceCommand DeleteSampleSentenceCommand
 @inject RedoSampleWordCommand RedoSampleWordCommand
 @inject ValidateSampleWordCommand ValidateSampleWordCommand
@@ -59,8 +58,7 @@
         var commonSample = this.EnsureWordCommand.Invoke(EeWord);
         if (IsLoggedIn)
         {
-            var user = await UserAccessor.GetRequiredUserAsync(User);
-            var favorites = GetFavoritesQuery.Invoke(user.Id);
+            var favorites = FavoritesStateContainer.GetAsync();
             await Task.WhenAll(commonSample, favorites);
 
             if (favorites.Result.IsSuccess)
@@ -75,8 +73,7 @@
     private async Task AddToFavorites(dynamic favorite)
     {
         PreloadService.Show(SpinnerColor.Light, "Saving data...");
-        var user = await UserAccessor.GetRequiredUserAsync(User);
-        Favorites = await AddToFavoritesCommand.Invoke(user.Id, favorite);
+        Favorites = await FavoritesStateContainer.AddAsync(favorite);
         await Task.Delay(300);
         PreloadService.Hide();
         StateHasChanged();
@@ -85,8 +82,7 @@
     private async Task RemoveFromFavorites(dynamic favorite)
     {
         PreloadService.Show(SpinnerColor.Light, "Saving data...");
-        var user = await UserAccessor.GetRequiredUserAsync(User);
-        Favorites = await RemoveFromFavoritesCommand.Invoke(user.Id, favorite);
+        Favorites = await FavoritesStateContainer.RemoveAsync(favorite);
         PreloadService.Hide();
         await Task.Delay(300);
         StateHasChanged();
@@ -139,16 +135,16 @@
             };
 
         var confirmation = await ConfirmDialog.ShowAsync(
-            title: "Is this word described inadequately?",
-            message1: "This will regenerate the word explanation and all the samples will removed.",
-            message2: "Do you want to proceed?", options);
+        title: "Is this word described inadequately?",
+        message1: "This will regenerate the word explanation and all the samples will removed.",
+        message2: "Do you want to proceed?", options);
 
         if (confirmation)
         {
             PreloadService.Show(SpinnerColor.Light, "Saving data...");
-            
+
             var redoResult = await this.ValidateSampleWordCommand.Invoke(Value).Bind(r =>
-                this.RedoSampleWordCommand.Invoke(Value.EeWord, r.EeExplanationMessage));
+            this.RedoSampleWordCommand.Invoke(Value.EeWord, r.EeExplanationMessage));
 
             if (redoResult.IsSuccess)
             {
@@ -264,8 +260,7 @@
             @foreach (var sample in Value.Samples)
             {
                 <div class="col col-12 col-sm-6 p-1">
-                    <SampleV2 Sample="@sample" AddToFavorites="AddToFavorites" RemoveFromFavorites="RemoveFromFavorites"
-                              DeleteSample="DeleteSampleSentence" IsFavorite="IsFavorite(sample)">
+                    <SampleV2 Sample="@sample" DeleteSample="DeleteSampleSentence">
                     </SampleV2>
                 </div>
             }

@@ -9,7 +9,7 @@
     [Inject] protected PreloadService PreloadService { get; set; } = default!;
 
     [Parameter]
-    public required SampleWord Sample { get; init; }
+    public required SampleSentence Sample { get; init; }
 
     private Maybe<Result<Favorites>> Favorites;
 
@@ -22,7 +22,8 @@
     private bool IsFavorite =>
     Favorites.HasValue &&
     Favorites.Value.IsSuccess &&
-    Favorites.Value.Value.Words.ContainsKey(Sample.EeWord.ToLower());
+    Favorites.Value.Value.Sentences.ContainsKey(Sample.EeSentence.ToLower());
+    // Favorites.Value.IsSuccess && Favorites.Value.Value.Sentences.ContainsKey(sentence.EeSentence.ToLower());
 
     private async Task AddToFavorites(dynamic favorite)
     {
