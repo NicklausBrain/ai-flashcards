@@ -17,5 +17,9 @@
         public IDictionary<string, SampleWord> Words { get; }
 
         public IDictionary<string, SampleSentence> Sentences { get; }
+
+        // public bool IsFavorite(){
+
+        // }
     }
 }
