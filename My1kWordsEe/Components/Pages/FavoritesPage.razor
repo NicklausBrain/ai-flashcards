@@ -3,19 +3,13 @@
 
 @using BlazorBootstrap
 @using CSharpFunctionalExtensions
-@using Microsoft.AspNetCore.Components.Authorization
 @using My1kWordsEe.Components.Account
 @using My1kWordsEe.Models;
 @using My1kWordsEe.Components.Layout;
 @using My1kWordsEe.Services.Cqs
+@using My1kWordsEe.Services.Scoped
 
-@inject NavigationManager NavigationManager
-@inject GetFavoritesQuery GetFavoritesQuery
-@inject AuthenticationStateProvider AuthenticationStateProvider
-@inject IdentityUserAccessor UserAccessor
-@inject AddToFavoritesCommand AddToFavoritesCommand
-@inject RemoveFromFavoritesCommand RemoveFromFavoritesCommand
-@inject ReorderFavoritesCommand ReorderFavoritesCommand
+@inject FavoritesStateContainer FavoritesStateContainer;
 
 @code {
     [Inject] protected PreloadService PreloadService { get; set; } = default!;
@@ -37,18 +31,16 @@
         else
             SampleWordsList.Add(itemToMove);
 
-        await ReorderFavoritesCommand.Invoke(User.Id, SampleWordsList);
+        await FavoritesStateContainer.ReorderAsync(SampleWordsList);
     }
 
     public record Employee(int Id, string? Name);
 
     protected override async Task OnParametersSetAsync()
     {
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        if (authState != null)
+        Favorites = await FavoritesStateContainer.GetAsync();
+        if (Favorites.HasValue && Favorites.Value.IsSuccess)
         {
-            User = await UserAccessor.GetRequiredUserAsync(authState.User);
-            Favorites = await GetFavoritesQuery.Invoke(User.Id);
             SampleWordsList = Favorites.Value.Value.Words.Values.ToList();
         }
 
@@ -58,7 +50,7 @@
     private async Task AddToFavorites(dynamic favorite)
     {
         PreloadService.Show(SpinnerColor.Light, "Saving data...");
-        Favorites = await AddToFavoritesCommand.Invoke(User.Id, favorite);
+        Favorites = await FavoritesStateContainer.AddAsync(favorite);
         await Task.Delay(300);
         PreloadService.Hide();
         await OnParametersSetAsync();
@@ -68,7 +60,7 @@
     private async Task RemoveFromFavorites(dynamic favorite)
     {
         PreloadService.Show(SpinnerColor.Light, "Saving data...");
-        Favorites = await RemoveFromFavoritesCommand.Invoke(User.Id, favorite);
+        Favorites = await FavoritesStateContainer.RemoveAsync(favorite);
         await Task.Delay(300);
         PreloadService.Hide();
         await OnParametersSetAsync();

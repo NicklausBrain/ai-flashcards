@@ -77,5 +77,17 @@ namespace My1kWordsEe.Services.Scoped
 
             return updatedFavorites;
         }
+
+        public async Task<Result<Favorites>> ReorderAsync(IEnumerable<SampleWord> sampleWords)
+        {
+            var updatedFavorites = await this.reorderFavoritesCommand.Invoke(user.Value.Id, sampleWords);
+
+            if (updatedFavorites.IsSuccess)
+            {
+                this.favorites = updatedFavorites;
+            }
+
+            return updatedFavorites;
+        }
     }
 }
