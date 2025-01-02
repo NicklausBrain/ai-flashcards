@@ -1,0 +1,63 @@
+﻿@using BlazorBootstrap
+@using CSharpFunctionalExtensions
+@using My1kWordsEe.Models
+@using My1kWordsEe.Services.Scoped
+
+@inject FavoritesStateContainer FavoritesStateContainer;
+
+@code {
+    [Inject] protected PreloadService PreloadService { get; set; } = default!;
+
+    [Parameter]
+    public required SampleSentence Sample { get; init; }
+
+    private Maybe<Result<Favorites>> Favorites;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Favorites = await FavoritesStateContainer.GetAsync();
+        await base.OnParametersSetAsync();
+    }
+
+    private bool IsFavorite =>
+    Favorites.HasValue &&
+    Favorites.Value.IsSuccess &&
+    Favorites.Value.Value.Sentences.ContainsKey(Sample.EeSentence.ToLower());
+    // Favorites.Value.IsSuccess && Favorites.Value.Value.Sentences.ContainsKey(sentence.EeSentence.ToLower());
+
+    private async Task AddToFavorites(dynamic favorite)
+    {
+        PreloadService.Show(SpinnerColor.Light, "Saving data...");
+        Favorites = await FavoritesStateContainer.AddAsync(favorite);
+        await Task.Delay(300);
+        PreloadService.Hide();
+        await OnParametersSetAsync();
+        StateHasChanged();
+    }
+
+    private async Task RemoveFromFavorites(dynamic favorite)
+    {
+        PreloadService.Show(SpinnerColor.Light, "Saving data...");
+        Favorites = await FavoritesStateContainer.RemoveAsync(favorite);
+        await Task.Delay(300);
+        PreloadService.Hide();
+        await OnParametersSetAsync();
+        StateHasChanged();
+    }
+}
+
+
+@if (IsFavorite && RemoveFromFavorites != null)
+{
+    <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" @onclick="() => RemoveFromFavorites(Sample)">
+    <i role="button" class="bi bi-star-fill"></i>
+</Button>
+}
+else if (AddToFavorites != null)
+{
+    <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" @onclick="() => AddToFavorites(Sample)">
+    <i role="button" class="bi bi-star"></i>
+</Button>
+}
+
+<Preload LoadingText="Loading..." />

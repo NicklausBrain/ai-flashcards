@@ -6,17 +6,17 @@ namespace My1kWordsEe.Models.Games
 {
     public class ListenToEeGame
     {
-        private readonly SampleSentence sampleSentence;
-
         public ListenToEeGame(string eeWord, int sampleIndex, SampleSentence sampleSentence)
         {
-            this.sampleSentence = sampleSentence;
+            this.SampleSentence = sampleSentence;
             this.EeWord = eeWord;
             this.SampleIndex = sampleIndex;
             var rnWords = sampleSentence.EeSentence.Split(' ');
             Random.Shared.Shuffle(rnWords);
             this.RandomizedWords = rnWords;
         }
+
+        public SampleSentence SampleSentence { get; init; }
 
         public string EeWord { get; private set; }
 
@@ -30,11 +30,11 @@ namespace My1kWordsEe.Models.Games
 
         public bool IsFinished => CheckResult.HasValue;
 
-        public string EeSentence => sampleSentence.EeSentence;
+        public string EeSentence => SampleSentence.EeSentence;
 
-        public Uri ImageUrl => sampleSentence.ImageUrl;
+        public Uri ImageUrl => SampleSentence.ImageUrl;
 
-        public Uri AudioUrl => sampleSentence.EeAudioUrl;
+        public Uri AudioUrl => SampleSentence.EeAudioUrl;
 
         public string UserInput { get; set; } = string.Empty;
 
@@ -49,7 +49,7 @@ namespace My1kWordsEe.Models.Games
             }
 
             var userInput = UserInput.Trim('.', ' ');
-            var eeSampleSentence = sampleSentence.EeSentence.Trim('.', ' ');
+            var eeSampleSentence = SampleSentence.EeSentence.Trim('.', ' ');
 
             if (string.Equals(
                 userInput,
@@ -57,8 +57,8 @@ namespace My1kWordsEe.Models.Games
                 StringComparison.InvariantCultureIgnoreCase))
             {
                 CheckResult = Result.Success(EeListeningCheckResult.Success(
-                    eeSentence: sampleSentence.EeSentence,
-                    enSentence: sampleSentence.EnSentence,
+                    eeSentence: SampleSentence.EeSentence,
+                    enSentence: SampleSentence.EnSentence,
                     eeUserSentence: userInput));
             }
             else

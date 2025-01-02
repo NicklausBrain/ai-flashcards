@@ -21,16 +21,7 @@
     public required SampleSentence Sample { get; init; }
 
     [Parameter]
-    public Func<SampleSentence, Task>? AddToFavorites { get; init; }
-
-    [Parameter]
-    public Func<SampleSentence, Task>? RemoveFromFavorites { get; init; }
-
-    [Parameter]
     public Func<SampleSentence, Task>? DeleteSample { get; init; }
-
-    [Parameter]
-    public bool IsFavorite { get; init; }
 
     private bool IsAdmin { get; set; } = false;
 
@@ -78,24 +69,14 @@
                             @if (IsLoggedIn)
                             {
                                 <li class="list-group-item border-0">
-                                    @if (IsFavorite && RemoveFromFavorites != null)
-                                    {
-                                        <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" @onclick="() => RemoveFromFavorites(Sample)">
-                                            <i role="button" class="bi bi-star-fill"></i>
-                                        </Button>
-                                    }
-                                    else if (AddToFavorites != null)
-                                    {
-                                        <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" @onclick="() => AddToFavorites(Sample)">
-                                            <i role="button" class="bi bi-star"></i>
-                                        </Button>
-                                    }
+                                    <FavoriteButton Sample="@Sample"></FavoriteButton>
                                 </li>
                             }
                             @if (IsAdmin && DeleteSample != null)
                             {
                                 <li class="list-group-item border-0">
-                                    <Button Color="ButtonColor.Danger" Size="ButtonSize.Small" @onclick="() => DeleteSample(Sample)">
+                                    <Button Color="ButtonColor.Danger" Size="ButtonSize.Small"
+                                        @onclick="() => DeleteSample(Sample)">
                                         <i class="bi bi-trash3-fill"></i>
                                     </Button>
                                 </li>

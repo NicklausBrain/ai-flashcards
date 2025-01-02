@@ -8,6 +8,7 @@ using My1kWordsEe.Data;
 using My1kWordsEe.Services;
 using My1kWordsEe.Services.Cqs;
 using My1kWordsEe.Services.Db;
+using My1kWordsEe.Services.Scoped;
 
 namespace My1kWordsEe
 {
@@ -59,6 +60,7 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<RedoSampleWordCommand>();
             builder.Services.AddSingleton<ValidateSampleWordCommand>();
             builder.Services.AddSingleton<ReorderFavoritesCommand>();
+            builder.Services.AddScoped<FavoritesStateContainer>();
 
             // Blazor-specific services
             builder.Services
