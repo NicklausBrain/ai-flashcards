@@ -50,6 +50,14 @@ namespace My1kWordsEe.Models.SensePoc
         // imho too much nesting for now
         // public Form[] Forms { get; init; } = Array.Empty<Form>();
 
+        public required PartOfSpeech PartOfSpeech { get; init; } = PartOfSpeech.None;
+
+        public GrammaticalCase? GrammaticalCase { get; init; } = null;
+
+        public Tense? Tense { get; init; }
+
+        public Number? Number { get; init; }
+
         public SampleSentence[] Samples { get; init; } = Array.Empty<SampleSentence>();
     }
 
@@ -74,4 +82,36 @@ namespace My1kWordsEe.Models.SensePoc
         public Uri? EeAudioUrl { get; init; }
         public Uri? ImageUrl { get; init; }
     }
+
+    public enum PartOfSpeech
+    {
+        None, // Default value | cannot be determined
+        Noun,
+        Adjective,
+        Pronoun,
+        Numeral,
+        Verb,
+        Adverb,
+        Interjection,
+        Conjunction,
+        Preposition,
+        Article,
+        Determiner
+    }
+
+    public enum GrammaticalCase
+    {
+        None, // Undetermied
+        // Common grammatical cases
+        Nominative, Genitive, Accusative, // Add more based on specific language needs
+        Partitive, Dative, Ablative, Locative, Allative, Illative, Elative, Translative, Terminative, Essive, Abessive, Comitative, Inessive, Adessive
+    }
+
+    public enum Tense { Present, Past, Future }
+    public enum Number
+    {
+        Singular, Plural
+    }
+
 }
+
