@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 using CSharpFunctionalExtensions;
 
@@ -31,7 +32,11 @@ namespace My1kWordsEe.Services.Cqs
                          "\"match_level\": <correctes level in integer from 0 to 5>\n" +
                          "}\n```\n";
 
-            var input = "{\"ee_sentence\": \"" + eeSentence + "\", \"ee_user_sentence\": \"" + userInput + "\"}";
+            var input = JsonSerializer.Serialize(new
+            {
+                ee_sentence = eeSentence.Trim('.', ' ').ToLowerInvariant(),
+                ee_user_sentence = userInput.Trim('.', ' ').ToLowerInvariant(),
+            });
 
             var result = await this.openAiClient.CompleteJsonAsync<EeListeningCheckResult>(prompt, input);
 

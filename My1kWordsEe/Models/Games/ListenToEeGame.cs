@@ -18,11 +18,11 @@ namespace My1kWordsEe.Models.Games
 
         public SampleSentence SampleSentence { get; init; }
 
-        public string EeWord { get; private set; }
+        public string EeWord { get; init; }
 
-        public int SampleIndex { get; private set; }
+        public int SampleIndex { get; init; }
 
-        public string[] RandomizedWords { get; private set; }
+        public string[] RandomizedWords { get; init; }
 
         public Maybe<Result<EeListeningCheckResult>> CheckResult { get; private set; }
 

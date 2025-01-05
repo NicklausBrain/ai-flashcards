@@ -17,7 +17,7 @@ namespace My1kWordsEe.Services.Cqs
         public async Task<Result<EnTranslationCheckResult>> Invoke(string eeSentence, string enSentence)
         {
             var prompt = "Your task is to check user's translation from Estonian into English.\n" +
-                         "Ignore the letters case (upper or lower) and termination symbols in your check.\n" +
+                         "Ignore the letters case (upper or lower) and punctuation symbols in your check.\n" +
                          $"Your input is JSON object:\n" +
                          "```\n{\n" +
                          "\"ee_sentence\": \"<eestikeelne lause>\", \"en_user_sentence\": \"<user translation to English>\n" +
@@ -33,8 +33,8 @@ namespace My1kWordsEe.Services.Cqs
 
             var input = JsonSerializer.Serialize(new
             {
-                ee_sentence = eeSentence,
-                en_user_sentence = enSentence
+                ee_sentence = eeSentence.Trim('.', ' ').ToLowerInvariant(),
+                en_user_sentence = enSentence.Trim('.', ' ').ToLowerInvariant(),
             });
 
             var result = await this.openAiClient.CompleteJsonAsync<EnTranslationCheckResult>(prompt, input);
