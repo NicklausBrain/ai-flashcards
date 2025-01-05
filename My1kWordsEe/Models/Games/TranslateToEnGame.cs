@@ -6,18 +6,18 @@ namespace My1kWordsEe.Models.Games
 {
     public class TranslateToEnGame
     {
-        private readonly SampleSentence sampleSentence;
-
         public TranslateToEnGame(string eeWord, int sampleIndex, SampleSentence sampleSentence)
         {
             this.EeWord = eeWord;
             this.SampleIndex = sampleIndex;
-            this.sampleSentence = sampleSentence;
+            this.SampleSentence = sampleSentence;
         }
 
-        public string EeWord { get; private set; }
+        public string EeWord { get; init; }
 
-        public int SampleIndex { get; private set; }
+        public int SampleIndex { get; init; }
+
+        public SampleSentence SampleSentence { get; init; }
 
         public Maybe<Result<EnTranslationCheckResult>> CheckResult { get; private set; }
 
@@ -25,11 +25,11 @@ namespace My1kWordsEe.Models.Games
 
         public bool IsFinished => CheckResult.HasValue;
 
-        public string EeSentence => sampleSentence.EeSentence;
+        public string EeSentence => SampleSentence.EeSentence;
 
-        public Uri ImageUrl => sampleSentence.ImageUrl;
+        public Uri ImageUrl => SampleSentence.ImageUrl;
 
-        public Uri AudioUrl => sampleSentence.EeAudioUrl;
+        public Uri AudioUrl => SampleSentence.EeAudioUrl;
 
         public string UserTranslation { get; set; } = string.Empty;
 
@@ -44,7 +44,7 @@ namespace My1kWordsEe.Models.Games
             }
 
             var userInput = UserTranslation.Trim('.', ' ');
-            var defaultEnTranslation = sampleSentence.EnSentence.Trim('.', ' ');
+            var defaultEnTranslation = SampleSentence.EnSentence.Trim('.', ' ');
 
             if (string.Equals(
                 userInput,
@@ -60,7 +60,7 @@ namespace My1kWordsEe.Models.Games
                 IsCheckInProgress = true;
                 CheckResult = await checkEnTranslationCommand.Invoke(
                     eeSentence: EeSentence,
-                    enSentence: userInput);
+                    enSentence: AddMissingPeriod(EeSentence, userInput));
                 IsCheckInProgress = false;
             }
         }
@@ -106,6 +106,13 @@ namespace My1kWordsEe.Models.Games
             var rn = new Random(Environment.TickCount);
             var eeWord = Ee1kWords.AllWords[rn.Next(0, Ee1kWords.AllWords.Length)];
             return eeWord.EeWord;
+        }
+
+        private static string AddMissingPeriod(string eeSentence, string userInput)
+        {
+            return eeSentence.Last() == '.' && userInput.Last() != '.'
+                ? userInput + '.'
+                : userInput;
         }
     }
 }

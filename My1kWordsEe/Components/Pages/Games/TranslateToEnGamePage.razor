@@ -5,6 +5,7 @@
 
 @using BlazorBootstrap
 @using CSharpFunctionalExtensions
+@using My1kWordsEe.Components.Layout
 @using My1kWordsEe.Models
 @using My1kWordsEe.Models.Games
 @using My1kWordsEe.Services.Cqs
@@ -22,7 +23,7 @@
     [Parameter]
     public int? SampleIndex { get; init; }
 
-    TranslateToEnGame Game;
+    TranslateToEnGame Game = TranslateToEnGame.Empty;
     Maybe<string> GameGenerationError;
 
     protected override async Task OnParametersSetAsync()
@@ -54,6 +55,8 @@
     {
         await JS.InvokeVoidAsync("playAudioSample", Game.AudioUrl);
     }
+
+    private void RegenGame() => Navigation.NavigateTo($"/translate-game/ee");
 }
 
 <script>
@@ -71,7 +74,7 @@
         <div class="col-5">
             @if (Game.IsFinished)
             {
-                <Button Color="ButtonColor.Primary" Type="ButtonType.Reset" @onclick="@OnParametersSetAsync">
+                <Button Color="ButtonColor.Primary" Type="ButtonType.Reset" @onclick="@RegenGame">
                     <i class="bi bi-arrow-repeat"></i>
                     Try again!
                 </Button>
@@ -91,6 +94,7 @@
                                 <i class="bi bi-volume-down-fill"></i>
                             </button>
                             <audio id="@Game.AudioUrl" src="@Game.AudioUrl"></audio>
+                            <FavoriteButton Sample="@Game.SampleSentence" />
                         </h5>
                         <img id="sampleImage" class="img-fluid rounded img-max-w-256 p-1" src="@Game.ImageUrl" />
 
