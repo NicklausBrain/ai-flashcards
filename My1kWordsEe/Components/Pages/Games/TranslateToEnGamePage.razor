@@ -1,4 +1,5 @@
 ﻿@page "/translate-game/en"
+@page "/translate-game/ee/{eeWord}/{sampleIndex:int}"
 
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
@@ -11,19 +12,33 @@
 @inject GetOrAddSampleWordCommand EnsureWordCommand;
 @inject AddSampleSentenceCommand CreateSampleCommand;
 @inject CheckEnTranslationCommand CheckEnTranslationCommand;
+@inject NavigationManager Navigation;
 @inject IJSRuntime JS;
 
 @code {
+    [Parameter]
+    public string? EeWord { get; init; }
+
+    [Parameter]
+    public int? SampleIndex { get; init; }
+
     TranslateToEnGame Game;
     Maybe<string> GameGenerationError;
 
     protected override async Task OnParametersSetAsync()
     {
         Game = TranslateToEnGame.Empty;
-        var gameGen = await TranslateToEnGame.Generate(EnsureWordCommand, CreateSampleCommand);
+        var gameGen = await TranslateToEnGame.Generate(EnsureWordCommand, CreateSampleCommand, EeWord, SampleIndex);
         if (gameGen.IsSuccess)
         {
-            Game = gameGen.Value;
+            if (EeWord == null)
+            {
+                Navigation.NavigateTo($"/translate-game/ee/{gameGen.Value.EeWord}/{gameGen.Value.SampleIndex}");
+            }
+            else
+            {
+                Game = gameGen.Value;
+            }
         }
         else
         {
@@ -121,7 +136,7 @@
                         {
                             <div class="input-group input-group-sm">
                                 <span class="input-group-text btn-success">Your translation:</span>
-                                <InputText @bind-Value="@Game.UserTranslation" class="form-control" autocomplete="off" />
+                                <InputTextArea @bind-Value="@Game.UserTranslation" class="form-control" autocomplete="off" />
                                 <button @onclick="@OnSubmit" class="btn btn-outline-primary" type="button">Submit</button>
                             </div>
                         }

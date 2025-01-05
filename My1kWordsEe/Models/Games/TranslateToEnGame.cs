@@ -8,10 +8,16 @@ namespace My1kWordsEe.Models.Games
     {
         private readonly SampleSentence sampleSentence;
 
-        public TranslateToEnGame(SampleSentence sampleSentence)
+        public TranslateToEnGame(string eeWord, int sampleIndex, SampleSentence sampleSentence)
         {
+            this.EeWord = eeWord;
+            this.SampleIndex = sampleIndex;
             this.sampleSentence = sampleSentence;
         }
+
+        public string EeWord { get; private set; }
+
+        public int SampleIndex { get; private set; }
 
         public Maybe<Result<EnTranslationCheckResult>> CheckResult { get; private set; }
 
@@ -61,11 +67,12 @@ namespace My1kWordsEe.Models.Games
 
         public static async Task<Result<TranslateToEnGame>> Generate(
             GetOrAddSampleWordCommand getOrAddSampleWordCommand,
-            AddSampleSentenceCommand addSampleSentenceCommand)
+            AddSampleSentenceCommand addSampleSentenceCommand,
+            string? eeWord,
+            int? wordIndex)
         {
-            var rn = new Random(Environment.TickCount);
-            var eeWord = Ee1kWords.AllWords[rn.Next(0, Ee1kWords.AllWords.Length)];
-            var sampleWord = await getOrAddSampleWordCommand.Invoke(eeWord.EeWord);
+            eeWord = (eeWord ?? GetRandomEeWord()).ToLower();
+            var sampleWord = await getOrAddSampleWordCommand.Invoke(eeWord);
 
             if (sampleWord.IsFailure)
             {
@@ -74,7 +81,7 @@ namespace My1kWordsEe.Models.Games
 
             if (sampleWord.Value.Samples.Any())
             {
-                return new TranslateToEnGame(sampleWord.Value.Samples.First());
+                return new TranslateToEnGame(eeWord, 0, sampleWord.Value.Samples.First());
             }
             else
             {
@@ -82,7 +89,7 @@ namespace My1kWordsEe.Models.Games
 
                 if (addSampleResult.IsSuccess)
                 {
-                    return new TranslateToEnGame(addSampleResult.Value.Samples.First());
+                    return new TranslateToEnGame(eeWord, 0, addSampleResult.Value.Samples.First());
                 }
 
                 return Result.Failure<TranslateToEnGame>(addSampleResult.Error);
@@ -92,6 +99,13 @@ namespace My1kWordsEe.Models.Games
         /// <summary>
         /// Null object pattern.
         /// </summary>
-        public static readonly TranslateToEnGame Empty = new TranslateToEnGame(SampleSentence.Empty);
+        public static readonly TranslateToEnGame Empty = new TranslateToEnGame(string.Empty, 0, SampleSentence.Empty);
+
+        private static string GetRandomEeWord()
+        {
+            var rn = new Random(Environment.TickCount);
+            var eeWord = Ee1kWords.AllWords[rn.Next(0, Ee1kWords.AllWords.Length)];
+            return eeWord.EeWord;
+        }
     }
 }
