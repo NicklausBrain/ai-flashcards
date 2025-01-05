@@ -33,8 +33,8 @@ namespace My1kWordsEe.Services.Cqs
 
             var input = JsonSerializer.Serialize(new
             {
-                ee_sentence = eeSentence,
-                en_user_sentence = enSentence
+                ee_sentence = eeSentence.Trim('.', ' ').ToLowerInvariant(),
+                en_user_sentence = enSentence.Trim('.', ' ').ToLowerInvariant(),
             });
 
             var result = await this.openAiClient.CompleteJsonAsync<EnTranslationCheckResult>(prompt, input);
