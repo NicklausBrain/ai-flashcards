@@ -99,19 +99,35 @@ namespace My1kWordsEe.Models.SensePoc
         Determiner
     }
 
+    /// <summary>
+    /// Grammatical cases in Estonian language
+    /// </summary>
     public enum GrammaticalCase
     {
-        None, // Undetermied
-        // Common grammatical cases
-        Nominative, Genitive, Accusative, // Add more based on specific language needs
-        Partitive, Dative, Ablative, Locative, Allative, Illative, Elative, Translative, Terminative, Essive, Abessive, Comitative, Inessive, Adessive
+        None, // Default value | cannot be determined
+        Nominative,
+        Genitive,
+        Partitive,
+        Illative,
+        Inessive,
+        Elative,
+        Allative,
+        Adessive,
+        Ablative,
+        Translative,
+        Terminative,
+        Essive,
+        Abessive,
+        Comitative
     }
 
     public enum Tense { Present, Past, Future }
+
     public enum Number
     {
         Singular, Plural
     }
-
 }
 
+
+//[Guid("61893B0B-A754-4F7F-9721-7ADDF39C383B")]
