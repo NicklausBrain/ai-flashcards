@@ -4,9 +4,75 @@ using My1kWordsEe.Services.Cqs;
 
 namespace My1kWordsEe.Models.Games
 {
+    public class ListenToEeGameFactory
+    {
+        GetOrAddSampleWordCommand getOrAddSampleWordCommand;
+        AddSampleSentenceCommand addSampleSentenceCommand;
+        CheckEeListeningCommand checkEeListeningCommand;
+
+        public ListenToEeGameFactory(
+            GetOrAddSampleWordCommand getOrAddSampleWordCommand,
+            AddSampleSentenceCommand addSampleSentenceCommand,
+            CheckEeListeningCommand checkEeListeningCommand)
+        {
+            this.getOrAddSampleWordCommand = getOrAddSampleWordCommand;
+            this.addSampleSentenceCommand = addSampleSentenceCommand;
+            this.checkEeListeningCommand = checkEeListeningCommand;
+        }
+
+
+        public async Task<Result<ListenToEeGame>> Generate(
+            string? eeWord,
+            int? wordIndex)
+        {
+            eeWord = (eeWord ?? GetRandomEeWord()).ToLower();
+
+            if (!eeWord.ValidateWord())
+            {
+                return Result.Failure<ListenToEeGame>("Not an Estonian word");
+            }
+
+            var sampleWord = await getOrAddSampleWordCommand.Invoke(eeWord);
+
+            if (sampleWord.IsFailure)
+            {
+                return Result.Failure<ListenToEeGame>(sampleWord.Error);
+            }
+
+            if (sampleWord.Value.Samples.Any())
+            {
+                return new ListenToEeGame(eeWord, 0, sampleWord.Value.Samples.First(), checkEeListeningCommand);
+            }
+            else
+            {
+                var addSampleResult = await addSampleSentenceCommand.Invoke(sampleWord.Value);
+
+                if (addSampleResult.IsSuccess)
+                {
+                    return new ListenToEeGame(eeWord, 0, addSampleResult.Value.Samples.First(), checkEeListeningCommand);
+                }
+
+                return Result.Failure<ListenToEeGame>(addSampleResult.Error);
+            }
+        }
+
+        private static string GetRandomEeWord()
+        {
+            var rn = new Random(Environment.TickCount);
+            var eeWord = Ee1kWords.AllWords[rn.Next(0, Ee1kWords.AllWords.Length)];
+            return eeWord.EeWord;
+        }
+    }
+
     public class ListenToEeGame
     {
-        public ListenToEeGame(string eeWord, int sampleIndex, SampleSentence sampleSentence)
+        private readonly CheckEeListeningCommand checkEeListeningCommand;
+
+        public ListenToEeGame(
+            string eeWord,
+            int sampleIndex,
+            SampleSentence sampleSentence,
+            CheckEeListeningCommand checkEeListeningCommand)
         {
             this.SampleSentence = sampleSentence;
             this.EeWord = eeWord;
@@ -14,6 +80,7 @@ namespace My1kWordsEe.Models.Games
             var rnWords = sampleSentence.EeSentence.Split(' ');
             Random.Shared.Shuffle(rnWords);
             this.RandomizedWords = rnWords;
+            this.checkEeListeningCommand = checkEeListeningCommand;
         }
 
         public SampleSentence SampleSentence { get; init; }
@@ -25,8 +92,6 @@ namespace My1kWordsEe.Models.Games
         public string[] RandomizedWords { get; init; }
 
         public Maybe<Result<EeListeningCheckResult>> CheckResult { get; private set; }
-
-        public bool IsReady => this != Empty;
 
         public bool IsFinished => CheckResult.HasValue;
 
@@ -40,7 +105,7 @@ namespace My1kWordsEe.Models.Games
 
         public bool IsCheckInProgress { get; private set; }
 
-        public async Task Submit(CheckEeListeningCommand checkEeListeningCommand)
+        public async Task Submit()
         {
             if (!UserInput.ValidateSentence())
             {
@@ -69,55 +134,6 @@ namespace My1kWordsEe.Models.Games
                     userInput: userInput);
                 IsCheckInProgress = false;
             }
-        }
-
-        public static async Task<Result<ListenToEeGame>> Generate(
-            GetOrAddSampleWordCommand getOrAddSampleWordCommand,
-            AddSampleSentenceCommand addSampleSentenceCommand,
-            string? eeWord,
-            int? wordIndex)
-        {
-            eeWord = (eeWord ?? GetRandomEeWord()).ToLower();
-
-            if (!eeWord.ValidateWord())
-            {
-                return Result.Failure<ListenToEeGame>("Not an Estonian word");
-            }
-
-            var sampleWord = await getOrAddSampleWordCommand.Invoke(eeWord);
-
-            if (sampleWord.IsFailure)
-            {
-                return Result.Failure<ListenToEeGame>(sampleWord.Error);
-            }
-
-            if (sampleWord.Value.Samples.Any())
-            {
-                return new ListenToEeGame(eeWord, 0, sampleWord.Value.Samples.First());
-            }
-            else
-            {
-                var addSampleResult = await addSampleSentenceCommand.Invoke(sampleWord.Value);
-
-                if (addSampleResult.IsSuccess)
-                {
-                    return new ListenToEeGame(eeWord, 0, addSampleResult.Value.Samples.First());
-                }
-
-                return Result.Failure<ListenToEeGame>(addSampleResult.Error);
-            }
-        }
-
-        /// <summary>
-        /// Null object pattern.
-        /// </summary>
-        public static readonly ListenToEeGame Empty = new ListenToEeGame(string.Empty, 0, SampleSentence.Empty);
-
-        private static string GetRandomEeWord()
-        {
-            var rn = new Random(Environment.TickCount);
-            var eeWord = Ee1kWords.AllWords[rn.Next(0, Ee1kWords.AllWords.Length)];
-            return eeWord.EeWord;
         }
     }
 }

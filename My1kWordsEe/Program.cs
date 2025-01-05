@@ -63,6 +63,7 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<ValidateSampleWordCommand>();
             builder.Services.AddSingleton<ReorderFavoritesCommand>();
             builder.Services.AddSingleton<TranslateToEnGameFactory>();
+            builder.Services.AddSingleton<ListenToEeGameFactory>();
             // scoped states
             builder.Services.AddScoped<FavoritesStateContainer>();
 
