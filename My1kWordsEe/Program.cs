@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using My1kWordsEe.Components;
 using My1kWordsEe.Components.Account;
 using My1kWordsEe.Data;
+using My1kWordsEe.Models.Games;
 using My1kWordsEe.Services;
 using My1kWordsEe.Services.Cqs;
 using My1kWordsEe.Services.Db;
@@ -43,6 +44,7 @@ namespace My1kWordsEe
                     options.RateLimiter.DefaultRateLimiterOptions.QueueLimit = 0;
                 });
 
+            // singletons
             builder.Services.AddSingleton<StabilityAiClient>();
             builder.Services.AddSingleton<OpenAiClient>();
             builder.Services.AddSingleton<AzureStorageClient>();
@@ -60,6 +62,9 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<RedoSampleWordCommand>();
             builder.Services.AddSingleton<ValidateSampleWordCommand>();
             builder.Services.AddSingleton<ReorderFavoritesCommand>();
+            builder.Services.AddSingleton<TranslateToEnGameFactory>();
+            builder.Services.AddSingleton<ListenToEeGameFactory>();
+            // scoped states
             builder.Services.AddScoped<FavoritesStateContainer>();
 
             // Blazor-specific services

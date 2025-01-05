@@ -4,13 +4,71 @@ using My1kWordsEe.Services.Cqs;
 
 namespace My1kWordsEe.Models.Games
 {
+    public class TranslateToEnGameFactory
+    {
+        GetOrAddSampleWordCommand getOrAddSampleWordCommand;
+        AddSampleSentenceCommand addSampleSentenceCommand;
+        CheckEnTranslationCommand checkEnTranslationCommand;
+
+        public TranslateToEnGameFactory(
+            GetOrAddSampleWordCommand getOrAddSampleWordCommand,
+            AddSampleSentenceCommand addSampleSentenceCommand,
+            CheckEnTranslationCommand checkEnTranslationCommand)
+        {
+            this.getOrAddSampleWordCommand = getOrAddSampleWordCommand;
+            this.addSampleSentenceCommand = addSampleSentenceCommand; ;
+            this.checkEnTranslationCommand = checkEnTranslationCommand;
+        }
+
+        public async Task<Result<TranslateToEnGame>> Generate(string? eeWord, int? wordIndex)
+        {
+            eeWord = (eeWord ?? GetRandomEeWord()).ToLower();
+            var sampleWord = await getOrAddSampleWordCommand.Invoke(eeWord);
+
+            if (sampleWord.IsFailure)
+            {
+                return Result.Failure<TranslateToEnGame>(sampleWord.Error);
+            }
+
+            if (!sampleWord.Value.Samples.Any())
+            {
+                return new TranslateToEnGame(eeWord, 0, sampleWord.Value.Samples.First(), this.checkEnTranslationCommand);
+            }
+            else
+            {
+                var addSampleResult = await addSampleSentenceCommand.Invoke(sampleWord.Value);
+
+                if (addSampleResult.IsSuccess)
+                {
+                    return new TranslateToEnGame(eeWord, 0, addSampleResult.Value.Samples.First(), this.checkEnTranslationCommand);
+                }
+
+                return Result.Failure<TranslateToEnGame>(addSampleResult.Error);
+            }
+        }
+
+        private static string GetRandomEeWord()
+        {
+            var rn = new Random(Environment.TickCount);
+            var eeWord = Ee1kWords.AllWords[rn.Next(0, Ee1kWords.AllWords.Length)];
+            return eeWord.EeWord;
+        }
+    }
+
     public class TranslateToEnGame
     {
-        public TranslateToEnGame(string eeWord, int sampleIndex, SampleSentence sampleSentence)
+        private readonly CheckEnTranslationCommand checkEnTranslationCommand;
+
+        public TranslateToEnGame(
+            string eeWord,
+            int sampleIndex,
+            SampleSentence sampleSentence,
+            CheckEnTranslationCommand checkEnTranslationCommand)
         {
             this.EeWord = eeWord;
             this.SampleIndex = sampleIndex;
             this.SampleSentence = sampleSentence;
+            this.checkEnTranslationCommand = checkEnTranslationCommand;
         }
 
         public string EeWord { get; init; }
@@ -20,8 +78,6 @@ namespace My1kWordsEe.Models.Games
         public SampleSentence SampleSentence { get; init; }
 
         public Maybe<Result<EnTranslationCheckResult>> CheckResult { get; private set; }
-
-        public bool IsReady => this != Empty;
 
         public bool IsFinished => CheckResult.HasValue;
 
@@ -35,7 +91,7 @@ namespace My1kWordsEe.Models.Games
 
         public bool IsCheckInProgress { get; private set; }
 
-        public async Task Submit(CheckEnTranslationCommand checkEnTranslationCommand)
+        public async Task Submit()
         {
             if (!UserTranslation.ValidateSentence())
             {
@@ -63,49 +119,6 @@ namespace My1kWordsEe.Models.Games
                     enSentence: userInput);
                 IsCheckInProgress = false;
             }
-        }
-
-        public static async Task<Result<TranslateToEnGame>> Generate(
-            GetOrAddSampleWordCommand getOrAddSampleWordCommand,
-            AddSampleSentenceCommand addSampleSentenceCommand,
-            string? eeWord,
-            int? wordIndex)
-        {
-            eeWord = (eeWord ?? GetRandomEeWord()).ToLower();
-            var sampleWord = await getOrAddSampleWordCommand.Invoke(eeWord);
-
-            if (sampleWord.IsFailure)
-            {
-                return Result.Failure<TranslateToEnGame>(sampleWord.Error);
-            }
-
-            if (sampleWord.Value.Samples.Any())
-            {
-                return new TranslateToEnGame(eeWord, 0, sampleWord.Value.Samples.First());
-            }
-            else
-            {
-                var addSampleResult = await addSampleSentenceCommand.Invoke(sampleWord.Value);
-
-                if (addSampleResult.IsSuccess)
-                {
-                    return new TranslateToEnGame(eeWord, 0, addSampleResult.Value.Samples.First());
-                }
-
-                return Result.Failure<TranslateToEnGame>(addSampleResult.Error);
-            }
-        }
-
-        /// <summary>
-        /// Null object pattern.
-        /// </summary>
-        public static readonly TranslateToEnGame Empty = new TranslateToEnGame(string.Empty, 0, SampleSentence.Empty);
-
-        private static string GetRandomEeWord()
-        {
-            var rn = new Random(Environment.TickCount);
-            var eeWord = Ee1kWords.AllWords[rn.Next(0, Ee1kWords.AllWords.Length)];
-            return eeWord.EeWord;
         }
     }
 }
