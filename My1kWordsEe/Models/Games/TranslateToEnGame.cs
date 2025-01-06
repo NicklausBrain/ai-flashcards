@@ -30,7 +30,7 @@ namespace My1kWordsEe.Models.Games
                 return Result.Failure<TranslateToEnGame>(sampleWord.Error);
             }
 
-            if (!sampleWord.Value.Samples.Any())
+            if (sampleWord.Value.Samples.Any())
             {
                 return new TranslateToEnGame(eeWord, 0, sampleWord.Value.Samples.First(), this.checkEnTranslationCommand);
             }
