@@ -114,11 +114,11 @@
                                         (@checkResult.Match / 5)
                                     </li>
                                     <li class="list-group-item list-group-item-success">
-                                        @checkResult.EnExpectedSentence
-                                    </li>
+                            @checkResult.EnExpectedSentence
+                        </li>
                                     <li class="list-group-item list-group-item-info">
-                                        @checkResult.EnComment
-                                    </li>
+                            @checkResult.EnComment
+                        </li>
                                 }
                             </ul>
                         }
@@ -136,10 +136,18 @@
                         }
                         else if (game.CheckResult.HasNoValue)
                         {
-                            <div class="input-group input-group-sm">
-                                <span class="input-group-text btn-success">Your translation:</span>
-                                <InputTextArea @bind-Value="@game.UserTranslation" class="form-control" autocomplete="off" />
-                                <button @onclick="@OnSubmit" class="btn btn-outline-primary" type="button">Submit</button>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Your translation:</label>
+                                </div>
+                                <div class="col-md-4 p-1">
+                                    <InputTextArea @bind-Value="@game.UserTranslation" class="form-control"
+                                        autocomplete="off" />
+                                </div>
+                                <div class="col-md-4">
+                                    <button @onclick="@OnSubmit" class="btn btn-outline-primary" type="button">Submit</button>
+
+                                </div>
                             </div>
                         }
                     </div>

@@ -49,9 +49,14 @@ namespace My1kWordsEe.Services.Scoped
                 return Result.Failure<Favorites>("User is not authenticated");
             }
 
-            user = await this.userAccessor.GetRequiredUserAsync(authState.User);
-            favorites = await this.getFavoritesQuery.Invoke(user.Value.Id);
-            return favorites.Value;
+            var appUser = await this.userAccessor.GetUserAsync(authState.User);
+            if (appUser is null)
+            {
+                return Result.Failure<Favorites>("User is not authenticated");
+            }
+            this.user = appUser;
+            this.favorites = await this.getFavoritesQuery.Invoke(user.Value.Id);
+            return this.favorites.Value;
         }
 
         public async Task<Result<Favorites>> AddAsync(dynamic favorite)

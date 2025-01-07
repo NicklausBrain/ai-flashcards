@@ -93,6 +93,11 @@ namespace My1kWordsEe.Models.Games
 
         public async Task Submit()
         {
+            if (string.IsNullOrWhiteSpace(UserTranslation))
+            {
+                return;
+            }
+
             if (!UserTranslation.ValidateSentence())
             {
                 CheckResult = Result.Failure<EnTranslationCheckResult>("Bad input");
