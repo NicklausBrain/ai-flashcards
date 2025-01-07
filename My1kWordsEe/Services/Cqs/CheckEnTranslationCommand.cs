@@ -14,7 +14,7 @@ namespace My1kWordsEe.Services.Cqs
             this.openAiClient = openAiClient;
         }
 
-        public async Task<Result<EnTranslationCheckResult>> Invoke(string eeSentence, string enSentence)
+        public virtual async Task<Result<EnTranslationCheckResult>> Invoke(string eeSentence, string enSentence)
         {
             var prompt = "Your task is to check user's translation from Estonian into English.\n" +
                          "Ignore the letters case (upper or lower) and punctuation symbols in your check.\n" +
