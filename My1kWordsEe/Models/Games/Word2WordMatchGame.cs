@@ -9,7 +9,7 @@
         private readonly ISet<string> enWords2Match = new HashSet<string>();
         private readonly Stack<Pair> matches = new Stack<Pair>();
 
-        private Word2WordMatchGame(
+        public Word2WordMatchGame(
             IEnumerable<Pair> pairs,
             IReadOnlyDictionary<string, Pair> eeWords,
             IReadOnlyDictionary<string, Pair> enWords)
