@@ -23,7 +23,6 @@
     Favorites.HasValue &&
     Favorites.Value.IsSuccess &&
     Favorites.Value.Value.Sentences.ContainsKey(Sample.EeSentence.ToLower());
-    // Favorites.Value.IsSuccess && Favorites.Value.Value.Sentences.ContainsKey(sentence.EeSentence.ToLower());
 
     private async Task AddToFavorites(dynamic favorite)
     {

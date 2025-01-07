@@ -31,5 +31,12 @@ namespace My1kWordsEe.Components.Account
 
             return appUser;
         }
+
+        public async Task<ApplicationUser?> GetUserAsync(ClaimsPrincipal user)
+        {
+            var appUser = await userManager.GetUserAsync(user);
+
+            return appUser;
+        }
     }
 }
