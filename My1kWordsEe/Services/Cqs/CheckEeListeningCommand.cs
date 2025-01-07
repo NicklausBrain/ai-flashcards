@@ -14,7 +14,7 @@ namespace My1kWordsEe.Services.Cqs
             this.openAiClient = openAiClient;
         }
 
-        public async Task<Result<EeListeningCheckResult>> Invoke(string eeSentence, string userInput)
+        public virtual async Task<Result<EeListeningCheckResult>> Invoke(string eeSentence, string userInput)
         {
             var prompt = "Your task is to check user's listening to Estonian speech.\n" +
                          "Ignore the letters case (upper or lower) and termination symbols in your check.\n" +
