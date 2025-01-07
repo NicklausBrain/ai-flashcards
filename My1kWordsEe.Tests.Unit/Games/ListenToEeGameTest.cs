@@ -109,5 +109,21 @@ namespace My1kWordsEe.Tests.Models.Games
             Assert.True(game.CheckResult.Value.IsFailure);
             Assert.Equal("Listening failed", game.CheckResult.Value.Error);
         }
+
+        [Fact]
+        public void RandomizedWords_ShouldRandomizeWords()
+        {
+            var sampleSentence = new SampleSentence
+            {
+                EeWord = "pere",
+                EeSentence = "See on minu pere.",
+                EnSentence = "This is my family.",
+                EeAudioUrl = new Uri("http://example.com/audio"),
+                ImageUrl = new Uri("http://example.com/image")
+            };
+            var game = new ListenToEeGame("pere", 1, sampleSentence, _checkEeListeningCommandMock.Object);
+            Assert.Equivalent(new[] { "minu", "pere", "See", "on" }, game.RandomizedWords);
+            Assert.Equal(4, game.RandomizedWords.Length);
+        }
     }
 }
