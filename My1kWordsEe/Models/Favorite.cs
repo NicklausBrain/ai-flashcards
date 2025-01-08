@@ -18,8 +18,14 @@
 
         public IDictionary<string, SampleSentence> Sentences { get; }
 
-        // public bool IsFavorite(){
+        public bool IsFavorite(SampleWord word)
+        {
+            return this.Words.ContainsKey(word.EeWord.ToLowerInvariant());
+        }
 
-        // }
+        public bool IsFavorite(SampleSentence sentence)
+        {
+            return this.Sentences.ContainsKey(sentence.EeSentence.ToLowerInvariant());
+        }
     }
 }

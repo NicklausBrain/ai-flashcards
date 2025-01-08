@@ -9,7 +9,7 @@
     [Inject] protected PreloadService PreloadService { get; set; } = default!;
 
     [Parameter]
-    public required SampleSentence Sample { get; init; }
+    public required dynamic Sample { get; init; }
 
     private Maybe<Result<Favorites>> Favorites;
 
@@ -22,7 +22,7 @@
     private bool IsFavorite =>
     Favorites.HasValue &&
     Favorites.Value.IsSuccess &&
-    Favorites.Value.Value.Sentences.ContainsKey(Sample.EeSentence.ToLower());
+    Favorites.Value.Value.IsFavorite(Sample);
 
     private bool IsFeatureAvailable => Favorites.HasValue && Favorites.Value.IsSuccess;
 
@@ -60,5 +60,6 @@ else if (IsFeatureAvailable)
     <i role="button" class="bi bi-star"></i>
 </Button>
 }
+@* else redirect to login button *@
 
 <Preload LoadingText="Loading..." />
