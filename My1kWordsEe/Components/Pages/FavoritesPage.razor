@@ -147,6 +147,11 @@
     @if (Favorites.HasValue && Favorites.Value.IsFailure)
     {
         <h3 class="alert-warning">@Favorites.Value.Error</h3>
+
+        if (Favorites.Value.Error == Errors.AuthRequired)
+        {
+            <a href="Account/Login" class="btn btn-primary">Login</a>
+        }
     }
 </div>
 
