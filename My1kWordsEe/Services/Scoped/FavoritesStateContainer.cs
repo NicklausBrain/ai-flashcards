@@ -1,6 +1,7 @@
 using CSharpFunctionalExtensions;
+
 using Microsoft.AspNetCore.Components.Authorization;
-using My1kWordsEe.Components.Account;
+
 using My1kWordsEe.Data;
 using My1kWordsEe.Models;
 using My1kWordsEe.Services.Cqs;
@@ -10,7 +11,6 @@ namespace My1kWordsEe.Services.Scoped
     internal class FavoritesStateContainer
     {
         private readonly AuthenticationStateProvider authenticationStateProvider;
-        private readonly IdentityUserAccessor userAccessor;
         private readonly GetFavoritesQuery getFavoritesQuery;
         private readonly AddToFavoritesCommand addToFavoritesCommand;
         private readonly RemoveFromFavoritesCommand removeFromFavoritesCommand;
@@ -21,14 +21,12 @@ namespace My1kWordsEe.Services.Scoped
 
         public FavoritesStateContainer(
             AuthenticationStateProvider authenticationStateProvider,
-            IdentityUserAccessor userAccessor,
             GetFavoritesQuery getFavoritesQuery,
             AddToFavoritesCommand addToFavoritesCommand,
             RemoveFromFavoritesCommand removeFromFavoritesCommand,
             ReorderFavoritesCommand reorderFavoritesCommand)
         {
             this.authenticationStateProvider = authenticationStateProvider;
-            this.userAccessor = userAccessor;
             this.getFavoritesQuery = getFavoritesQuery;
             this.addToFavoritesCommand = addToFavoritesCommand;
             this.removeFromFavoritesCommand = removeFromFavoritesCommand;
@@ -46,16 +44,17 @@ namespace My1kWordsEe.Services.Scoped
 
             if (authState == null)
             {
-                return Result.Failure<Favorites>("User is not authenticated");
+                return Result.Failure<Favorites>(Errors.AuthRequired);
             }
 
-            var appUser = await this.userAccessor.GetUserAsync(authState.User);
-            if (appUser is null)
+            var idClaim = authState.User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier);
+
+            if (idClaim == null)
             {
-                return Result.Failure<Favorites>("User is not authenticated");
+                return Result.Failure<Favorites>(Errors.AuthRequired);
             }
-            this.user = appUser;
-            this.favorites = await this.getFavoritesQuery.Invoke(user.Value.Id);
+
+            this.favorites = await this.getFavoritesQuery.Invoke(idClaim.Value);
             return this.favorites.Value;
         }
 

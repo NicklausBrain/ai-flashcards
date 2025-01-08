@@ -1,0 +1,16 @@
+﻿@inherits FavoriteButton;
+
+@using BlazorBootstrap
+
+@if (IsFavorite)
+{
+    <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" @onclick="() => RemoveFromFavorites(Sample)">
+    <i role="button" class="bi bi-star-fill"></i>
+</Button>
+}
+else if (IsFeatureAvailable)
+{
+    <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" @onclick="() => AddToFavorites(Sample)">
+    <i role="button" class="bi bi-star"></i>
+</Button>
+}
