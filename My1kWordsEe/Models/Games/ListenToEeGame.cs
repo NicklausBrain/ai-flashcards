@@ -17,7 +17,7 @@ namespace My1kWordsEe.Models.Games
             this.SampleSentence = sampleSentence;
             this.EeWord = eeWord;
             this.SampleIndex = sampleIndex;
-            var rnWords = sampleSentence.EeSentence.Split(' ', '.', StringSplitOptions.RemoveEmptyEntries);
+            var rnWords = sampleSentence.EeSentence.Split([" ", "."], StringSplitOptions.RemoveEmptyEntries).ToArray();
             Random.Shared.Shuffle(rnWords);
             this.RandomizedWords = rnWords;
             this.checkEeListeningCommand = checkEeListeningCommand;
