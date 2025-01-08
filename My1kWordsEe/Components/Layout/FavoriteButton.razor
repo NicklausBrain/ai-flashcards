@@ -56,4 +56,7 @@ else if (IsFeatureAvailable)
 {
     <i role="button" class="bi bi-star" @onclick="() => AddToFavorites(Sample)"></i>
 }
-@* else redirect to login button *@
+else
+{
+    <a role="button" class="bi bi-star" href="Account/Login"></a>
+}
