@@ -29,6 +29,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        // todo: extract this code to scoped state container
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         if (authState != null)
         {

@@ -16,10 +16,8 @@
 
 @inject IJSRuntime JS
 @inject GetOrAddSampleWordCommand EnsureWordCommand
-@inject GetFavoritesQuery GetFavoritesQuery
 @inject AddSampleSentenceCommand CreateSampleCommand
 @inject AuthenticationStateProvider AuthenticationStateProvider
-@inject FavoritesStateContainer FavoritesStateContainer
 @inject DeleteSampleSentenceCommand DeleteSampleSentenceCommand
 @inject RedoSampleWordCommand RedoSampleWordCommand
 @inject ValidateSampleWordCommand ValidateSampleWordCommand
@@ -35,7 +33,6 @@
     public required string EeWord { get; init; }
 
     private Maybe<Result<SampleWord>> WordMetadata;
-    private Maybe<Result<Favorites>> Favorites;
     private ClaimsPrincipal? User;
 
     protected override async Task OnParametersSetAsync()
@@ -56,17 +53,6 @@
     private async Task<Result<SampleWord>> ResolveSample()
     {
         var commonSample = this.EnsureWordCommand.Invoke(EeWord);
-        if (IsLoggedIn)
-        {
-            var favorites = FavoritesStateContainer.GetAsync();
-            await Task.WhenAll(commonSample, favorites);
-
-            if (favorites.Result.IsSuccess)
-            {
-                Favorites = favorites.Result;
-            }
-        }
-
         return await commonSample;
     }
 
