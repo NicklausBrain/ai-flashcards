@@ -2,7 +2,6 @@ using CSharpFunctionalExtensions;
 
 using Microsoft.AspNetCore.Components.Authorization;
 
-using My1kWordsEe.Data;
 using My1kWordsEe.Models;
 using My1kWordsEe.Services.Cqs;
 
@@ -16,7 +15,6 @@ namespace My1kWordsEe.Services.Scoped
         private readonly RemoveFromFavoritesCommand removeFromFavoritesCommand;
         private readonly ReorderFavoritesCommand reorderFavoritesCommand;
 
-        private Maybe<ApplicationUser> user;
         private Maybe<Result<Favorites>> favorites;
 
         public FavoritesStateContainer(
@@ -60,7 +58,11 @@ namespace My1kWordsEe.Services.Scoped
 
         public async Task<Result<Favorites>> AddAsync(dynamic favorite)
         {
-            var updatedFavorites = await this.addToFavoritesCommand.Invoke(user.Value.Id, favorite);
+            var updatedFavorites = await GetAsync().Bind(async (f) =>
+            {
+                Result<Favorites> updatedFavorites = await this.addToFavoritesCommand.Invoke(f.UserId, favorite);
+                return updatedFavorites;
+            });
 
             if (updatedFavorites.IsSuccess)
             {
@@ -72,7 +74,11 @@ namespace My1kWordsEe.Services.Scoped
 
         public async Task<Result<Favorites>> RemoveAsync(dynamic favorite)
         {
-            var updatedFavorites = await this.removeFromFavoritesCommand.Invoke(user.Value.Id, favorite);
+            var updatedFavorites = await GetAsync().Bind(async (f) =>
+            {
+                Result<Favorites> updatedFavorites = await this.removeFromFavoritesCommand.Invoke(f.UserId, favorite);
+                return updatedFavorites;
+            });
 
             if (updatedFavorites.IsSuccess)
             {
@@ -84,7 +90,12 @@ namespace My1kWordsEe.Services.Scoped
 
         public async Task<Result<Favorites>> ReorderAsync(IEnumerable<SampleWord> sampleWords)
         {
-            var updatedFavorites = await this.reorderFavoritesCommand.Invoke(user.Value.Id, sampleWords);
+            var updatedFavorites = await GetAsync().Bind(async (f) =>
+            {
+                Result<Favorites> updatedFavorites = await this.reorderFavoritesCommand.Invoke(f.UserId, sampleWords);
+                return updatedFavorites;
+            });
+
 
             if (updatedFavorites.IsSuccess)
             {
