@@ -48,11 +48,11 @@
 
     private void RegenGame() => Navigation.NavigateTo($"/listen-game/ee");
 
-    // todo add succes/fail sound
     private async Task OnSubmit()
     {
         Game.Value.UserInput = UserInput;
         await Game.Value.Submit();
+        await PlaySample();
     }
 
     private async Task PlaySample()
