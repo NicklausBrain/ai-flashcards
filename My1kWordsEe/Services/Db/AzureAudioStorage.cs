@@ -1,4 +1,4 @@
-﻿using Azure.Storage.Blobs;
+using Azure.Storage.Blobs;
 
 using CSharpFunctionalExtensions;
 
@@ -25,3 +25,4 @@ namespace My1kWordsEe.Services.Db
         private static string WavBlobName() => Guid.NewGuid() + ".wav";
     }
 }
+

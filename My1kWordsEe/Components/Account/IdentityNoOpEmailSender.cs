@@ -20,3 +20,4 @@ namespace My1kWordsEe.Components.Account
             emailSender.SendEmailAsync(email, "Reset your password", $"Please reset your password using the following code: {resetCode}");
     }
 }
+

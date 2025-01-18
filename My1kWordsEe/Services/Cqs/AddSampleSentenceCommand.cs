@@ -85,23 +85,23 @@ namespace My1kWordsEe.Services.Cqs
         private async Task<Result<Sentence>> GetSampleSentence(SampleWord word)
         {
             var prompt =
-                "Sa oled keeleõppe süsteemi abiline, mis aitab õppida enim levinud eesti keele sõnu.\n" +
+                "Sa oled keeleï¿½ppe sï¿½steemi abiline, mis aitab ï¿½ppida enim levinud eesti keele sï¿½nu.\n" +
 
                 "Teie sisend on JSON-objekt:" +
                 "```\n{\n" +
-                "\"EeWord\": \"<eestikeelne sõna>\", " +
+                "\"EeWord\": \"<eestikeelne sï¿½na>\", " +
                 "\"EnWord\": \"<default english translation>\n" +
                 "\"EnExplanation\": \"<explanation of the estonian word in english>\n" +
                 "}\n```\n" +
 
-                "Sinu sisend on üks eestikeelne sõna ja selle rakenduse kontekst: <sõna> (<kontekst>).\n" +
-                "Sinu ülesanne on kirjutada selle kasutamise kohta lihtne lühike näitelause, kasutades seda sõna.\n" +
-                "Lauses kasuta kõige levinuimaid ja lihtsamaid sõnu eesti keeles et toetada keeleõpet.\n" +
-                "Eelistan SVO-lausete sõnajärge, kus esikohal on subjekt (S), seejärel tegusõna (V) ja objekt (O)\n" +
-                "Lausel peaks olema praktiline tegelik elu mõte\n" +
-                "Teie väljundiks on JSON-objekt koos eestikeelse näidislausega ja sellele vastav tõlge inglise keelde vastavalt lepingule:\n" +
+                "Sinu sisend on ï¿½ks eestikeelne sï¿½na ja selle rakenduse kontekst: <sï¿½na> (<kontekst>).\n" +
+                "Sinu ï¿½lesanne on kirjutada selle kasutamise kohta lihtne lï¿½hike nï¿½itelause, kasutades seda sï¿½na.\n" +
+                "Lauses kasuta kï¿½ige levinuimaid ja lihtsamaid sï¿½nu eesti keeles et toetada keeleï¿½pet.\n" +
+                "Eelistan SVO-lausete sï¿½najï¿½rge, kus esikohal on subjekt (S), seejï¿½rel tegusï¿½na (V) ja objekt (O)\n" +
+                "Lausel peaks olema praktiline tegelik elu mï¿½te\n" +
+                "Teie vï¿½ljundiks on JSON-objekt koos eestikeelse nï¿½idislausega ja sellele vastav tï¿½lge inglise keelde vastavalt lepingule:\n" +
                 "```\n{\n" +
-                "\"ee_sentence\": \"<näide eesti keeles>\", \"en_sentence\": \"<näide inglise keeles>\"" +
+                "\"ee_sentence\": \"<nï¿½ide eesti keeles>\", \"en_sentence\": \"<nï¿½ide inglise keeles>\"" +
                 "\n}\n```\n";
 
             var input = JsonSerializer.Serialize(new

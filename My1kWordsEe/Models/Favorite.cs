@@ -1,4 +1,4 @@
-﻿namespace My1kWordsEe.Models
+namespace My1kWordsEe.Models
 {
     public class Favorites
     {
@@ -29,3 +29,4 @@
         }
     }
 }
+

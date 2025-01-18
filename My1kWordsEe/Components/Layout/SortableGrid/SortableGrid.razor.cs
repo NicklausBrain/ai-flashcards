@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
 namespace BlazorBootstrap;
@@ -239,3 +239,4 @@ public partial class SortableGrid<TItem> : BlazorBootstrapComponentBase
 
     #endregion
 }
+

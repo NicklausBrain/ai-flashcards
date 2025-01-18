@@ -40,3 +40,4 @@ namespace My1kWordsEe.Models
         public required Uri ImageUrl { get; init; }
     }
 }
+

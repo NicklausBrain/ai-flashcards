@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 
 using Azure;
 using Azure.Storage.Blobs;
@@ -61,3 +61,4 @@ namespace My1kWordsEe.Services.Db
         private Task<Result<BlobContainerClient>> GetWordsContainer() => this.GetOrCreateContainer("words");
     }
 }
+

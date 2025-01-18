@@ -1,4 +1,4 @@
-﻿using CSharpFunctionalExtensions;
+using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Models;
 using My1kWordsEe.Services.Db;
@@ -39,3 +39,4 @@ namespace My1kWordsEe.Services.Cqs
         }
     }
 }
+

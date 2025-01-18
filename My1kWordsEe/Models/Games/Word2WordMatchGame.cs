@@ -1,4 +1,4 @@
-﻿namespace My1kWordsEe.Models.Games
+namespace My1kWordsEe.Models.Games
 {
     public class Word2WordMatchGame
     {
@@ -133,3 +133,4 @@
         }
     }
 }
+

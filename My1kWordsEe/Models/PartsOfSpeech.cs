@@ -119,3 +119,4 @@ namespace My1kWordsEe.Models
 // Preposition,Kaassõna (Adpositsioon)
 // Article,Artikkel (no direct equivalent)
 // Determiner,Artikkel / Määrsõna (depending on usage)
+

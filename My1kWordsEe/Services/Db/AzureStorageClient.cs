@@ -71,3 +71,4 @@ namespace My1kWordsEe.Services.Db
         private static string JsonBlobName(string word) => word.ToLower() + ".json";
     }
 }
+

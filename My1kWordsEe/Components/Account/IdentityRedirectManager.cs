@@ -58,3 +58,4 @@ namespace My1kWordsEe.Components.Account
             => RedirectToWithStatus(CurrentPath, message, context);
     }
 }
+

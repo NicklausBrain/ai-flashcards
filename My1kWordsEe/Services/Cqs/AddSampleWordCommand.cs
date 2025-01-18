@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 using CSharpFunctionalExtensions;
@@ -146,3 +146,4 @@ namespace My1kWordsEe.Services.Cqs
         }
     }
 }
+

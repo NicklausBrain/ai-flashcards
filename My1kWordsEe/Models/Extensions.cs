@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 
 namespace My1kWordsEe.Models
 {
@@ -59,3 +59,4 @@ namespace My1kWordsEe.Models
         }
     }
 }
+

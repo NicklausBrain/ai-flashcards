@@ -1,4 +1,4 @@
-﻿using CSharpFunctionalExtensions;
+using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Services.Cqs;
 
@@ -77,3 +77,4 @@ namespace My1kWordsEe.Models.Games
         }
     }
 }
+
