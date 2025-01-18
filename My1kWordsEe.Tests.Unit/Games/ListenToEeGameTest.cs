@@ -1,10 +1,14 @@
 using System;
 using System.Threading.Tasks;
+
 using CSharpFunctionalExtensions;
+
 using Moq;
+
 using My1kWordsEe.Models;
 using My1kWordsEe.Models.Games;
 using My1kWordsEe.Services.Cqs;
+
 using Xunit;
 
 namespace My1kWordsEe.Tests.Models.Games

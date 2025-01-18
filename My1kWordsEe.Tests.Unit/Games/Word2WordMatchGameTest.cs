@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using My1kWordsEe.Models.Games;
+
 using Xunit;
 
 namespace My1kWordsEe.Tests.Models.Games
