@@ -1,7 +1,7 @@
-using My1kWordsEe.Data;
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+
+using My1kWordsEe.Data;
 
 namespace My1kWordsEe.Components.Account
 {
