@@ -85,23 +85,23 @@ namespace My1kWordsEe.Services.Cqs
         private async Task<Result<Sentence>> GetSampleSentence(SampleWord word)
         {
             var prompt =
-                "Sa oled keeleıppe s¸steemi abiline, mis aitab ıppida enim levinud eesti keele sınu.\n" +
+                "Sa oled keele√µppe s√ºsteemi abiline, mis aitab √µppida enim levinud eesti keele s√µnu.\n" +
 
                 "Teie sisend on JSON-objekt:" +
                 "```\n{\n" +
-                "\"EeWord\": \"<eestikeelne sına>\", " +
+                "\"EeWord\": \"<eestikeelne s√µna>\", " +
                 "\"EnWord\": \"<default english translation>\n" +
                 "\"EnExplanation\": \"<explanation of the estonian word in english>\n" +
                 "}\n```\n" +
 
-                "Sinu sisend on ¸ks eestikeelne sına ja selle rakenduse kontekst: <sına> (<kontekst>).\n" +
-                "Sinu ¸lesanne on kirjutada selle kasutamise kohta lihtne l¸hike n‰itelause, kasutades seda sına.\n" +
-                "Lauses kasuta kıige levinuimaid ja lihtsamaid sınu eesti keeles et toetada keeleıpet.\n" +
-                "Eelistan SVO-lausete sınaj‰rge, kus esikohal on subjekt (S), seej‰rel tegusına (V) ja objekt (O)\n" +
-                "Lausel peaks olema praktiline tegelik elu mıte\n" +
-                "Teie v‰ljundiks on JSON-objekt koos eestikeelse n‰idislausega ja sellele vastav tılge inglise keelde vastavalt lepingule:\n" +
+                "Sinu sisend on √ºks eestikeelne s√µna ja selle rakenduse kontekst: <s√µna> (<kontekst>).\n" +
+                "Sinu √ºlesanne on kirjutada selle kasutamise kohta lihtne l√ºhike n√§itelause, kasutades seda s√µna.\n" +
+                "Lauses kasuta k√µige levinuimaid ja lihtsamaid s√µnu eesti keeles et toetada keele√µpet.\n" +
+                "Eelistan SVO-lausete s√µnaj√§rge, kus esikohal on subjekt (S), seej√§rel tegus√µna (V) ja objekt (O)\n" +
+                "Lausel peaks olema praktiline tegelik elu m√µte\n" +
+                "Teie v√§ljundiks on JSON-objekt koos eestikeelse n√§idislausega ja sellele vastav t√µlge inglise keelde vastavalt lepingule:\n" +
                 "```\n{\n" +
-                "\"ee_sentence\": \"<n‰ide eesti keeles>\", \"en_sentence\": \"<n‰ide inglise keeles>\"" +
+                "\"ee_sentence\": \"<n√§ide eesti keeles>\", \"en_sentence\": \"<n√§ide inglise keeles>\"" +
                 "\n}\n```\n";
 
             var input = JsonSerializer.Serialize(new

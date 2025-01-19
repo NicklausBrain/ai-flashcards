@@ -1,4 +1,4 @@
-﻿using CSharpFunctionalExtensions;
+using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Services.Cqs;
 
@@ -6,31 +6,47 @@ namespace My1kWordsEe.Models.Games
 {
     public class TranslateToEnGame
     {
-        private readonly SampleSentence sampleSentence;
+        private readonly CheckEnTranslationCommand checkEnTranslationCommand;
 
-        public TranslateToEnGame(SampleSentence sampleSentence)
+        public TranslateToEnGame(
+            string eeWord,
+            int sampleIndex,
+            SampleSentence sampleSentence,
+            CheckEnTranslationCommand checkEnTranslationCommand)
         {
-            this.sampleSentence = sampleSentence;
+            this.EeWord = eeWord;
+            this.SampleIndex = sampleIndex;
+            this.SampleSentence = sampleSentence;
+            this.checkEnTranslationCommand = checkEnTranslationCommand;
         }
+
+        public string EeWord { get; init; }
+
+        public int SampleIndex { get; init; }
+
+        public SampleSentence SampleSentence { get; init; }
 
         public Maybe<Result<EnTranslationCheckResult>> CheckResult { get; private set; }
 
-        public bool IsReady => this != Empty;
-
         public bool IsFinished => CheckResult.HasValue;
 
-        public string EeSentence => sampleSentence.EeSentence;
+        public string EeSentence => SampleSentence.EeSentence;
 
-        public Uri ImageUrl => sampleSentence.ImageUrl;
+        public Uri ImageUrl => SampleSentence.ImageUrl;
 
-        public Uri AudioUrl => sampleSentence.EeAudioUrl;
+        public Uri AudioUrl => SampleSentence.EeAudioUrl;
 
         public string UserTranslation { get; set; } = string.Empty;
 
         public bool IsCheckInProgress { get; private set; }
 
-        public async Task Submit(CheckEnTranslationCommand checkEnTranslationCommand)
+        public async Task Submit()
         {
+            if (string.IsNullOrWhiteSpace(UserTranslation))
+            {
+                return;
+            }
+
             if (!UserTranslation.ValidateSentence())
             {
                 CheckResult = Result.Failure<EnTranslationCheckResult>("Bad input");
@@ -38,7 +54,7 @@ namespace My1kWordsEe.Models.Games
             }
 
             var userInput = UserTranslation.Trim('.', ' ');
-            var defaultEnTranslation = sampleSentence.EnSentence.Trim('.', ' ');
+            var defaultEnTranslation = SampleSentence.EnSentence.Trim('.', ' ');
 
             if (string.Equals(
                 userInput,
@@ -58,40 +74,5 @@ namespace My1kWordsEe.Models.Games
                 IsCheckInProgress = false;
             }
         }
-
-        public static async Task<Result<TranslateToEnGame>> Generate(
-            GetOrAddSampleWordCommand getOrAddSampleWordCommand,
-            AddSampleSentenceCommand addSampleSentenceCommand)
-        {
-            var rn = new Random(Environment.TickCount);
-            var eeWord = Ee1kWords.AllWords[rn.Next(0, Ee1kWords.AllWords.Length)];
-            var sampleWord = await getOrAddSampleWordCommand.Invoke(eeWord.EeWord);
-
-            if (sampleWord.IsFailure)
-            {
-                return Result.Failure<TranslateToEnGame>(sampleWord.Error);
-            }
-
-            if (sampleWord.Value.Samples.Any())
-            {
-                return new TranslateToEnGame(sampleWord.Value.Samples.First());
-            }
-            else
-            {
-                var addSampleResult = await addSampleSentenceCommand.Invoke(sampleWord.Value);
-
-                if (addSampleResult.IsSuccess)
-                {
-                    return new TranslateToEnGame(addSampleResult.Value.Samples.First());
-                }
-
-                return Result.Failure<TranslateToEnGame>(addSampleResult.Error);
-            }
-        }
-
-        /// <summary>
-        /// Null object pattern.
-        /// </summary>
-        public static readonly TranslateToEnGame Empty = new TranslateToEnGame(SampleSentence.Empty);
     }
 }

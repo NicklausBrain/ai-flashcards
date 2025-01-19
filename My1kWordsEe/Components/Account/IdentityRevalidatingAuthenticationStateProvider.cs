@@ -1,11 +1,11 @@
 using System.Security.Claims;
 
-using My1kWordsEe.Data;
-
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+
+using My1kWordsEe.Data;
 
 namespace My1kWordsEe.Components.Account
 {

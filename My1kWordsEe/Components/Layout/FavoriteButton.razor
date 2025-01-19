@@ -9,9 +9,9 @@
     [Inject] protected PreloadService PreloadService { get; set; } = default!;
 
     [Parameter]
-    public required SampleSentence Sample { get; init; }
+    public required dynamic Sample { get; init; }
 
-    private Maybe<Result<Favorites>> Favorites;
+    protected Maybe<Result<Favorites>> Favorites;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -19,13 +19,14 @@
         await base.OnParametersSetAsync();
     }
 
-    private bool IsFavorite =>
+    protected bool IsFavorite =>
     Favorites.HasValue &&
     Favorites.Value.IsSuccess &&
-    Favorites.Value.Value.Sentences.ContainsKey(Sample.EeSentence.ToLower());
-    // Favorites.Value.IsSuccess && Favorites.Value.Value.Sentences.ContainsKey(sentence.EeSentence.ToLower());
+    Favorites.Value.Value.IsFavorite(Sample);
 
-    private async Task AddToFavorites(dynamic favorite)
+    protected bool IsFeatureAvailable => Favorites.HasValue && Favorites.Value.IsSuccess;
+
+    protected async Task AddToFavorites(dynamic favorite)
     {
         PreloadService.Show(SpinnerColor.Light, "Saving data...");
         Favorites = await FavoritesStateContainer.AddAsync(favorite);
@@ -35,7 +36,7 @@
         StateHasChanged();
     }
 
-    private async Task RemoveFromFavorites(dynamic favorite)
+    protected async Task RemoveFromFavorites(dynamic favorite)
     {
         PreloadService.Show(SpinnerColor.Light, "Saving data...");
         Favorites = await FavoritesStateContainer.RemoveAsync(favorite);
@@ -47,17 +48,15 @@
 }
 
 
-@if (IsFavorite && RemoveFromFavorites != null)
+@if (IsFavorite)
 {
-    <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" @onclick="() => RemoveFromFavorites(Sample)">
-    <i role="button" class="bi bi-star-fill"></i>
-</Button>
+    <i role="button" class="bi bi-star-fill favorite-active" @onclick="() => RemoveFromFavorites(Sample)"></i>
 }
-else if (AddToFavorites != null)
+else if (IsFeatureAvailable)
 {
-    <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" @onclick="() => AddToFavorites(Sample)">
-    <i role="button" class="bi bi-star"></i>
-</Button>
+    <i role="button" class="bi bi-star" @onclick="() => AddToFavorites(Sample)"></i>
 }
-
-<Preload LoadingText="Loading..." />
+else
+{
+    <a role="button" class="bi bi-star" href="Account/Login"></a>
+}

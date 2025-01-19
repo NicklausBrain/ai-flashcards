@@ -16,10 +16,8 @@
 
 @inject IJSRuntime JS
 @inject GetOrAddSampleWordCommand EnsureWordCommand
-@inject GetFavoritesQuery GetFavoritesQuery
 @inject AddSampleSentenceCommand CreateSampleCommand
 @inject AuthenticationStateProvider AuthenticationStateProvider
-@inject FavoritesStateContainer FavoritesStateContainer
 @inject DeleteSampleSentenceCommand DeleteSampleSentenceCommand
 @inject RedoSampleWordCommand RedoSampleWordCommand
 @inject ValidateSampleWordCommand ValidateSampleWordCommand
@@ -35,7 +33,6 @@
     public required string EeWord { get; init; }
 
     private Maybe<Result<SampleWord>> WordMetadata;
-    private Maybe<Result<Favorites>> Favorites;
     private ClaimsPrincipal? User;
 
     protected override async Task OnParametersSetAsync()
@@ -56,36 +53,7 @@
     private async Task<Result<SampleWord>> ResolveSample()
     {
         var commonSample = this.EnsureWordCommand.Invoke(EeWord);
-        if (IsLoggedIn)
-        {
-            var favorites = FavoritesStateContainer.GetAsync();
-            await Task.WhenAll(commonSample, favorites);
-
-            if (favorites.Result.IsSuccess)
-            {
-                Favorites = favorites.Result;
-            }
-        }
-
         return await commonSample;
-    }
-
-    private async Task AddToFavorites(dynamic favorite)
-    {
-        PreloadService.Show(SpinnerColor.Light, "Saving data...");
-        Favorites = await FavoritesStateContainer.AddAsync(favorite);
-        await Task.Delay(300);
-        PreloadService.Hide();
-        StateHasChanged();
-    }
-
-    private async Task RemoveFromFavorites(dynamic favorite)
-    {
-        PreloadService.Show(SpinnerColor.Light, "Saving data...");
-        Favorites = await FavoritesStateContainer.RemoveAsync(favorite);
-        PreloadService.Hide();
-        await Task.Delay(300);
-        StateHasChanged();
     }
 
     private async Task DeleteSampleSentence(SampleSentence sampleSentence)
@@ -190,11 +158,6 @@
 
     private bool IsLoggedIn => User?.Identity?.IsAuthenticated ?? false;
 
-    private bool IsFavorite() => IsDataLoadedOk && IsLoggedIn && Favorites.HasValue && Favorites.Value.IsSuccess &&
-    Favorites.Value.Value.Words.ContainsKey(EeWord.ToLower());
-
-    private bool IsFavorite(SampleSentence sentence) => IsDataLoadedOk && IsLoggedIn && Favorites.HasValue &&
-    Favorites.Value.IsSuccess && Favorites.Value.Value.Sentences.ContainsKey(sentence.EeSentence.ToLower());
 }
 
 <script>
@@ -211,14 +174,7 @@
 
             @if (IsDataLoadedOk)
             {
-                if (IsFavorite())
-                {
-                    <i role="button" class="bi bi-star-fill favorite-active" @onclick="() => RemoveFromFavorites(Value)"></i>
-                }
-                else
-                {
-                    <i role="button" class="bi bi-star" @onclick="() => AddToFavorites(Value)"></i>
-                }
+                <FavoriteButton Sample="@Value"></FavoriteButton>
 
                 if (Value.EeAudioUrl != null)
                 {

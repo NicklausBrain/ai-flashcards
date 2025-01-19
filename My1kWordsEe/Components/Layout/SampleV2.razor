@@ -29,6 +29,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        // todo: extract this code to scoped state container
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         if (authState != null)
         {
@@ -69,7 +70,7 @@
                             @if (IsLoggedIn)
                             {
                                 <li class="list-group-item border-0">
-                                    <FavoriteButton Sample="@Sample"></FavoriteButton>
+                                    <FavoriteOutlineButton Sample="@Sample"></FavoriteOutlineButton>
                                 </li>
                             }
                             @if (IsAdmin && DeleteSample != null)

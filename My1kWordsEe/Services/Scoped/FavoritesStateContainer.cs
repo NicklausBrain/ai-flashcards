@@ -1,7 +1,7 @@
 using CSharpFunctionalExtensions;
+
 using Microsoft.AspNetCore.Components.Authorization;
-using My1kWordsEe.Components.Account;
-using My1kWordsEe.Data;
+
 using My1kWordsEe.Models;
 using My1kWordsEe.Services.Cqs;
 
@@ -10,25 +10,21 @@ namespace My1kWordsEe.Services.Scoped
     internal class FavoritesStateContainer
     {
         private readonly AuthenticationStateProvider authenticationStateProvider;
-        private readonly IdentityUserAccessor userAccessor;
         private readonly GetFavoritesQuery getFavoritesQuery;
         private readonly AddToFavoritesCommand addToFavoritesCommand;
         private readonly RemoveFromFavoritesCommand removeFromFavoritesCommand;
         private readonly ReorderFavoritesCommand reorderFavoritesCommand;
 
-        private Maybe<ApplicationUser> user;
         private Maybe<Result<Favorites>> favorites;
 
         public FavoritesStateContainer(
             AuthenticationStateProvider authenticationStateProvider,
-            IdentityUserAccessor userAccessor,
             GetFavoritesQuery getFavoritesQuery,
             AddToFavoritesCommand addToFavoritesCommand,
             RemoveFromFavoritesCommand removeFromFavoritesCommand,
             ReorderFavoritesCommand reorderFavoritesCommand)
         {
             this.authenticationStateProvider = authenticationStateProvider;
-            this.userAccessor = userAccessor;
             this.getFavoritesQuery = getFavoritesQuery;
             this.addToFavoritesCommand = addToFavoritesCommand;
             this.removeFromFavoritesCommand = removeFromFavoritesCommand;
@@ -46,17 +42,27 @@ namespace My1kWordsEe.Services.Scoped
 
             if (authState == null)
             {
-                return Result.Failure<Favorites>("User is not authenticated");
+                return Result.Failure<Favorites>(Errors.AuthRequired);
             }
 
-            user = await this.userAccessor.GetRequiredUserAsync(authState.User);
-            favorites = await this.getFavoritesQuery.Invoke(user.Value.Id);
-            return favorites.Value;
+            var idClaim = authState.User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier);
+
+            if (idClaim == null)
+            {
+                return Result.Failure<Favorites>(Errors.AuthRequired);
+            }
+
+            this.favorites = await this.getFavoritesQuery.Invoke(idClaim.Value);
+            return this.favorites.Value;
         }
 
         public async Task<Result<Favorites>> AddAsync(dynamic favorite)
         {
-            var updatedFavorites = await this.addToFavoritesCommand.Invoke(user.Value.Id, favorite);
+            var updatedFavorites = await GetAsync().Bind(async (f) =>
+            {
+                Result<Favorites> updatedFavorites = await this.addToFavoritesCommand.Invoke(f.UserId, favorite);
+                return updatedFavorites;
+            });
 
             if (updatedFavorites.IsSuccess)
             {
@@ -68,7 +74,11 @@ namespace My1kWordsEe.Services.Scoped
 
         public async Task<Result<Favorites>> RemoveAsync(dynamic favorite)
         {
-            var updatedFavorites = await this.removeFromFavoritesCommand.Invoke(user.Value.Id, favorite);
+            var updatedFavorites = await GetAsync().Bind(async (f) =>
+            {
+                Result<Favorites> updatedFavorites = await this.removeFromFavoritesCommand.Invoke(f.UserId, favorite);
+                return updatedFavorites;
+            });
 
             if (updatedFavorites.IsSuccess)
             {
@@ -80,7 +90,12 @@ namespace My1kWordsEe.Services.Scoped
 
         public async Task<Result<Favorites>> ReorderAsync(IEnumerable<SampleWord> sampleWords)
         {
-            var updatedFavorites = await this.reorderFavoritesCommand.Invoke(user.Value.Id, sampleWords);
+            var updatedFavorites = await GetAsync().Bind(async (f) =>
+            {
+                Result<Favorites> updatedFavorites = await this.reorderFavoritesCommand.Invoke(f.UserId, sampleWords);
+                return updatedFavorites;
+            });
+
 
             if (updatedFavorites.IsSuccess)
             {

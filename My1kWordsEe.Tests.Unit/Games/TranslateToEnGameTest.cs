@@ -1,0 +1,115 @@
+using System;
+using System.Threading.Tasks;
+
+using CSharpFunctionalExtensions;
+
+using Moq;
+
+using My1kWordsEe.Models;
+using My1kWordsEe.Models.Games;
+using My1kWordsEe.Services.Cqs;
+
+using Xunit;
+
+namespace My1kWordsEe.Tests.Models.Games
+{
+    public class TranslateToEnGameTest
+    {
+        private readonly Mock<CheckEnTranslationCommand> _checkEnTranslationCommandMock;
+        private readonly SampleSentence _sampleSentence;
+
+        public TranslateToEnGameTest()
+        {
+            _checkEnTranslationCommandMock = new Mock<CheckEnTranslationCommand>(null);
+            _sampleSentence = new SampleSentence
+            {
+                EeWord = "Tere",
+                EeSentence = "Tere",
+                EnSentence = "Hello",
+                EeAudioUrl = new Uri("http://example.com/audio"),
+                ImageUrl = new Uri("http://example.com/image")
+            };
+        }
+
+        [Fact]
+        public void Constructor_ShouldInitializeProperties()
+        {
+            var game = new TranslateToEnGame("Tere", 1, _sampleSentence, _checkEnTranslationCommandMock.Object);
+
+            Assert.Equal("Tere", game.EeWord);
+            Assert.Equal(1, game.SampleIndex);
+            Assert.Equal(_sampleSentence, game.SampleSentence);
+            Assert.False(game.IsFinished);
+            Assert.Equal(_sampleSentence.EeSentence, game.EeSentence);
+            Assert.Equal(_sampleSentence.ImageUrl, game.ImageUrl);
+            Assert.Equal(_sampleSentence.EeAudioUrl, game.AudioUrl);
+            Assert.Equal(string.Empty, game.UserTranslation);
+            Assert.False(game.IsCheckInProgress);
+            Assert.False(game.CheckResult.HasValue);
+        }
+
+        [Fact]
+        public async Task Submit_ShouldReturnSuccess_WhenUserTranslationMatches()
+        {
+            var game = new TranslateToEnGame("Tere", 1, _sampleSentence, _checkEnTranslationCommandMock.Object);
+            game.UserTranslation = "Hello";
+
+            await game.Submit();
+
+            Assert.True(game.CheckResult.HasValue);
+            Assert.True(game.CheckResult.Value.IsSuccess);
+            Assert.Equal("Hello", game.CheckResult.Value.Value.EnExpectedSentence);
+        }
+
+        [Fact]
+        public async Task Submit_ShouldInvokeCheckEnTranslationCommand_WhenUserTranslationDoesNotMatch()
+        {
+            var game = new TranslateToEnGame("Tere", 1, _sampleSentence, _checkEnTranslationCommandMock.Object);
+            game.UserTranslation = "Hi";
+
+            _checkEnTranslationCommandMock.Setup(cmd => cmd.Invoke(It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(Result.Success(new EnTranslationCheckResult
+                {
+                    EeSentence = "Tere",
+                    EnExpectedSentence = "Hi",
+                    EnUserSentence = "Hi",
+                    EnComment = "ok",
+                    Match = 5
+                }));
+
+            await game.Submit();
+
+            Assert.True(game.CheckResult.HasValue);
+            Assert.True(game.CheckResult.Value.IsSuccess);
+            Assert.Equal("Hi", game.CheckResult.Value.Value.EnExpectedSentence);
+            _checkEnTranslationCommandMock.Verify(cmd => cmd.Invoke("Tere", "Hi"), Times.Once);
+        }
+
+        [Fact]
+        public async Task Submit_ShouldNotProceed_WhenUserTranslationIsNullOrWhitespace()
+        {
+            var game = new TranslateToEnGame("Tere", 1, _sampleSentence, _checkEnTranslationCommandMock.Object);
+            game.UserTranslation = " ";
+
+            await game.Submit();
+
+            Assert.False(game.CheckResult.HasValue);
+        }
+
+        [Fact]
+        public async Task Submit_ShouldReturnFailure_WhenTranslationCommandFails()
+        {
+            var game = new TranslateToEnGame("Tere", 1, _sampleSentence, _checkEnTranslationCommandMock.Object);
+            game.UserTranslation = "Hi";
+
+            _checkEnTranslationCommandMock.Setup(cmd => cmd.Invoke(It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(Result.Failure<EnTranslationCheckResult>("Translation failed"));
+
+            await game.Submit();
+
+            Assert.True(game.CheckResult.HasValue);
+            Assert.True(game.CheckResult.Value.IsFailure);
+            Assert.Equal("Translation failed", game.CheckResult.Value.Error);
+        }
+    }
+}
