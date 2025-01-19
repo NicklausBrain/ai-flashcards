@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 
 /*
  * Discussion:
@@ -45,30 +45,41 @@ namespace My1kWordsEe.Models.SensePoc
         // does it actually make sense id? so that we can navigate to form in this sense?
         // public required string SenseId { get; init; } // Unique identifier for the sense
 
+        public required string BaseForm { get; init; } // Reference to the base form
+
         public required IDictionary<LanguageCode, string> Explanation { get; init; } = new Dictionary<LanguageCode, string>();
 
-        // imho too much nesting for now
-        // public Form[] Forms { get; init; } = Array.Empty<Form>();
-
         public required PartOfSpeech PartOfSpeech { get; init; } = PartOfSpeech.None;
-
-        public GrammaticalCase? GrammaticalCase { get; init; } = null;
-
-        public Tense? Tense { get; init; }
-
-        public Number? Number { get; init; }
 
         public SampleSentence[] Samples { get; init; } = Array.Empty<SampleSentence>();
     }
 
-    /// <summary>
-    /// A form of a sense of a word in the Estonian language.
-    /// </summary>
-    public record Form
+    public class NounForms
     {
-        public required string EeForm { get; init; }
-        public required string EeGrammarCase { get; init; }  // E.g., nominative, genitive, etc.
-        public Uri? EeAudioUrl { get; init; }
+        public PartOfSpeech PartOfSpeech => PartOfSpeech.Noun;
+        public required string BaseForm { get; init; }
+        public NounForm[] List { get; init; } = Array.Empty<NounForm>();
+    }
+
+    public record NounForm
+    {
+        GrammaticalCase Case { get; init; }
+        Number Number { get; init; }
+        string Value { get; init; }
+    }
+
+    public class VerbForms
+    {
+        public PartOfSpeech PartOfSpeech => PartOfSpeech.Verb;
+        public required string BaseForm { get; init; }
+        public VerbForm[] List { get; init; } = Array.Empty<VerbForm>();
+    }
+
+    public record VerbForm
+    {
+        Pronoun Pronoun { get; init; }
+        Tense Tense { get; init; }
+        string Value { get; init; }
     }
 
     /// <summary>
@@ -127,7 +138,28 @@ namespace My1kWordsEe.Models.SensePoc
     {
         Singular, Plural
     }
+
+    public enum Pronoun
+    {
+        // Personal Pronouns
+        I,          // mina
+        YouSingular, // sina
+        He,         // tema (ta)
+        She,        // tema (ta)
+        It,         // see (ta)
+        We,         // meie
+        YouPlural,  // teie
+        They,       // nemad (nad)
+
+        // Possessive Pronouns
+        My,         // minu
+        YourSingular, // sinu
+        His,        // tema (ta)
+        Her,        // tema (ta)
+        Its,        // selle
+        Our,        // meie
+        YourPlural, // teie
+        Their       // nende
+    }
 }
 
-
-//[Guid("61893B0B-A754-4F7F-9721-7ADDF39C383B")]
