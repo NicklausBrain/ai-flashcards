@@ -52,6 +52,9 @@ namespace My1kWordsEe.Models.SensePoc
         public required PartOfSpeech PartOfSpeech { get; init; } = PartOfSpeech.None;
 
         public SampleSentence[] Samples { get; init; } = Array.Empty<SampleSentence>();
+
+        [JsonIgnore]
+        public dynamic? Forms { get; init; }
     }
 
     public class NounForms
