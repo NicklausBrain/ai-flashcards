@@ -1,15 +1,15 @@
 namespace My1kWordsEe.Models.Grammar
 {
-    public class NounForms
+    public class AdjectiveForms
     {
-        public PartOfSpeech PartOfSpeech => PartOfSpeech.Noun;
+        public PartOfSpeech PartOfSpeech => PartOfSpeech.Adjective;
 
         public required string BaseForm { get; init; }
 
-        public required NounForm[] List { get; init; } = Array.Empty<NounForm>();
+        public required AdjectiveForm[] List { get; init; } = Array.Empty<AdjectiveForm>();
     }
 
-    public record NounForm
+    public record AdjectiveForm
     {
         public required GrammaticalCase Case { get; init; }
 

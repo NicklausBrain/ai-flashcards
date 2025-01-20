@@ -11,7 +11,6 @@ namespace My1kWordsEe.Models.Grammar
         // word?
 
         public required IDictionary<LanguageCode, string> Sentence { get; init; } = new Dictionary<LanguageCode, string>();
-        public required string EnSentence { get; init; }
         public Uri? EeAudioUrl { get; init; }
         public Uri? ImageUrl { get; init; }
     }
