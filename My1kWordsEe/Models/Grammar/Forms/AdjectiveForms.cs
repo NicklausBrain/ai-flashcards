@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace My1kWordsEe.Models.Grammar
 {
     public class AdjectiveForms
@@ -15,6 +17,11 @@ namespace My1kWordsEe.Models.Grammar
 
         public required GrammaticalNumber Number { get; init; }
 
-        public required string Value { get; init; } // can we translate it?
+        public required DegreeOfComparison Degree { get; init; }
+
+        public required Dictionary<LanguageCode, string> Value { get; init; } = new();
     }
+
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public enum DegreeOfComparison { Positive, Comparative }
 }

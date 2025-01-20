@@ -11,10 +11,10 @@ namespace My1kWordsEe.Models.Grammar
 
     public record VerbForm
     {
-        public required Pronoun Pronoun { get; init; }
+        public required Dictionary<LanguageCode, string> Pronoun { get; init; } = new();
 
         public required GrammaticalTense Tense { get; init; }
 
-        public required string Value { get; init; } // shall we translate it?
+        public required Dictionary<LanguageCode, string> Value { get; init; } = new();
     }
 }

@@ -1,16 +1,19 @@
 using System.Text.Json.Serialization;
 
-namespace My1kWordsEe.Models.Grammar
+using My1kWordsEe.Models.Grammar;
+
+namespace My1kWordsEe.Models.Semantics
 {
     /// <summary>
     /// A sense or meaning of a word with respective forms.
     /// </summary>
-    public record Sense
+    public record WordSense
     {
-        // does it actually make sense id? so that we can navigate to form in this sense?
-        // public required string SenseId { get; init; } // Unique identifier for the sense
-
-        public required string BaseForm { get; init; } // Reference to the base form
+        /// <summary>
+        /// The form of a word to which prefixes and suffixes can be added.
+        /// Use to locate word forms based on <see cref="PartOfSpeech"/>
+        /// </summary>
+        public required string BaseForm { get; init; }
 
         public required IDictionary<LanguageCode, string> Explanation { get; init; } = new Dictionary<LanguageCode, string>();
 
@@ -18,6 +21,9 @@ namespace My1kWordsEe.Models.Grammar
 
         public SampleSentence[] Samples { get; init; } = Array.Empty<SampleSentence>();
 
+        /// <summary>
+        /// Can be used to load respecive forms/conjugations
+        /// </summary>
         [JsonIgnore]
         public dynamic? Forms { get; init; }
     }

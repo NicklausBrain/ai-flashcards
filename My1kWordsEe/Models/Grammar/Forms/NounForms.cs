@@ -15,6 +15,6 @@ namespace My1kWordsEe.Models.Grammar
 
         public required GrammaticalNumber Number { get; init; }
 
-        public required string Value { get; init; } // can we translate it?
+        public required Dictionary<LanguageCode, string> Value { get; init; } = new();
     }
 }

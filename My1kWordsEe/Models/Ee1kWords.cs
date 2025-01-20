@@ -69,7 +69,7 @@ namespace My1kWordsEe.Models
                 }
             }
 
-            return (sb.ToString().Normalize(NormalizationForm.FormC));
+            return sb.ToString().Normalize(NormalizationForm.FormC);
         }
 
         private static SampleWord[] Load1kEeWords()
