@@ -18,7 +18,7 @@ namespace My1kWordsEe.Models.Semantics
         /// <summary>
         /// Sample pronunciation of the word.
         /// </summary>
-        public Uri? EeAudioUrl { get; init; } // todo: use relative url
+        public Uri? AudioUrl { get; init; } // todo: use relative url
 
         [JsonIgnore]
         public WordSense DefaultSense => Senses[0];

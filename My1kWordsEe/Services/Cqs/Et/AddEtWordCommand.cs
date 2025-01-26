@@ -4,20 +4,20 @@ using System.Text.Json.Serialization;
 using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Models;
+using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Db;
 
 using OpenAI.Chat;
 
-namespace My1kWordsEe.Services.Cqs
+namespace My1kWordsEe.Services.Cqs.Et
 {
-    [Obsolete]
-    public class AddSampleWordCommand
+    public class AddEtWordCommand
     {
         private readonly OpenAiClient openAiClient;
         private readonly AzureStorageClient azureBlobClient;
         private readonly AddAudioCommand addAudioCommand;
 
-        public AddSampleWordCommand(
+        public AddEtWordCommand(
             OpenAiClient openAiService,
             AzureStorageClient azureBlobService,
             AddAudioCommand createAudioCommand)
@@ -27,11 +27,11 @@ namespace My1kWordsEe.Services.Cqs
             this.addAudioCommand = createAudioCommand;
         }
 
-        public async Task<Result<SampleWord>> Invoke(string eeWord, string? comment = null)
+        public async Task<Result<EtWord>> Invoke(string eeWord, string? comment = null)
         {
             if (!eeWord.ValidateWord())
             {
-                return Result.Failure<SampleWord>("Not an Estonian word");
+                return Result.Failure<EtWord>("Not an Estonian word");
             }
 
             (await this.GetWordMetadata(eeWord, comment)).Deconstruct(
@@ -42,7 +42,7 @@ namespace My1kWordsEe.Services.Cqs
 
             if (isAiFailure)
             {
-                return Result.Failure<SampleWord>(aiError);
+                return Result.Failure<EtWord>(aiError);
             }
 
             (await this.addAudioCommand.Invoke(eeWord)).Deconstruct(
@@ -54,37 +54,36 @@ namespace My1kWordsEe.Services.Cqs
                 ? sampleWord with { EeAudioUrl = audioUri }
                 : sampleWord;
 
-            return (await azureBlobClient.SaveWordData(sampleWord))
+            return (await azureBlobClient.SaveEtWordData(sampleWord))
                 .Bind(_ => Result.Of(sampleWord));
         }
 
-        private async Task<Result<SampleWord>> GetWordMetadata(
-           string eeWord,
-           string? comment = null)
+        private async Task<Result<EtWord>> GetWordMetadata(string etWord)
         {
             const string prompt =
+                // Metadata must be provided for a given Estonian word.
                 "Antud eestikeelse sõna kohta tuleb esitada metaandmed\n" +
-
-                "Teie sisend on JSON-objekt:" +
+                // Your input is a JSON object
+                "Teie sisend on JSON-objekt:\n" +
                 "```\n{\n" +
-                "\"EeWord\": \"<eestikeelne sõna>\", " +
-                "\"Comment\": \"<eestikeelse sõna valikuline selgitus eesti või inglise keeles>\n" +
-                "}\n```\n" +
-
+                "\"EtWord\": \"<eestikeelne sõna>\" " +
+                "\n}\n```\n" +
+                // If the given word is not in Estonian, return 404
                 "Kui antud sõna ei ole eestikeelne, tagasta 404\n" +
+                // Your output is the word metadata in JSON according to the given contract
                 "Teie väljund on sõna metaandmed JSON-is vastavalt antud lepingule:\n" +
-                "```\n{\n" +
-                "\"ee_word\": \"<antud sõna>\",\n" +
+                // IT SHOULD BE ARRAY OF WORD SENESES
+                "```\n[\n{" +
+                $"\"{nameof(WordSense.BaseForm)}\": \"<antud sõna>\",\n" +
                 "\"en_word\": \"<english translation>\",\n" +
                 "\"en_words\": [<array of alternative english translations if applicable>],\n" +
                 "\"en_explanation\": \"<explanation of the word meaning in english>\",\n" +
                 "\"ee_explanation\": \"<sõna tähenduse seletus eesti keeles>\"\n" +
-                "}\n```\n";
+                "}]\n```\n";
 
             var input = JsonSerializer.Serialize(new
             {
-                EeWord = eeWord,
-                Comment = comment
+                EtWord = etWord,
             });
 
             var response = await this.openAiClient.CompleteAsync(
@@ -98,13 +97,13 @@ namespace My1kWordsEe.Services.Cqs
 
             if (response.IsFailure)
             {
-                return Result.Failure<SampleWord>(response.Error);
+                return Result.Failure<EtWord>(response.Error);
             }
 
             // could be ommited if we integrate an EE dictionary within the app
             if (response.Value.Contains("404"))
             {
-                return Result.Failure<SampleWord>("Not an Estonian word");
+                return Result.Failure<EtWord>("Not an Estonian word");
             }
 
             openAiClient.ParseJsonResponse<WordMetadata>(response).Deconstruct(
@@ -115,19 +114,27 @@ namespace My1kWordsEe.Services.Cqs
 
             if (isParsingError)
             {
-                return Result.Failure<SampleWord>(parsingError);
+                return Result.Failure<EtWord>(parsingError);
             }
 
-            return Result.Success(new SampleWord
+            return Result.Success(new EtWord
             {
-                EeWord = wordMetadata.EeWord,
-                EnWord = wordMetadata.EnWord,
-                EnWords = wordMetadata.EnWords,
-                EnExplanation = wordMetadata.EnExplanation,
-                EeExplanation = wordMetadata.EeExplanation,
+                // EeWord = wordMetadata.EeWord,
+                // EnWord = wordMetadata.EnWord,
+                // EnWords = wordMetadata.EnWords,
+                // EnExplanation = wordMetadata.EnExplanation,
+                // EeExplanation = wordMetadata.EeExplanation,
             });
         }
 
+        private class Input
+        {
+            public string EtWord { get; }
+
+            public string Serialize() => JsonSerializer.Serialize(this);
+        }
+
+        [Obsolete]
         private class WordMetadata
         {
             [JsonPropertyName("ee_word")]

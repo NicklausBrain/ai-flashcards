@@ -5,6 +5,7 @@ using My1kWordsEe.Services.Db;
 
 namespace My1kWordsEe.Services.Cqs
 {
+    [Obsolete]
     public class GetOrAddSampleWordCommand
     {
         private readonly AzureStorageClient azureBlobService;
