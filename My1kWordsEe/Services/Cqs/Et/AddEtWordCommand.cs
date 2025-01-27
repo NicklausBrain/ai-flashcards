@@ -34,10 +34,10 @@ namespace My1kWordsEe.Services.Cqs.Et
                 return Result.Failure<EtWord>("Not an Estonian word");
             }
 
-            (await this.GetWordMetadata(eeWord, comment)).Deconstruct(
+            (await this.GetWordMetadata(eeWord)).Deconstruct(
                 out bool _,
                 out bool isAiFailure,
-                out SampleWord sampleWord,
+                out EtWord etWord,
                 out string aiError);
 
             if (isAiFailure)
@@ -50,12 +50,12 @@ namespace My1kWordsEe.Services.Cqs.Et
                 out bool _,
                 out Uri audioUri);
 
-            sampleWord = isAudioSaved
-                ? sampleWord with { EeAudioUrl = audioUri }
-                : sampleWord;
+            etWord = isAudioSaved
+                ? etWord with { AudioUrl = audioUri }
+                : etWord;
 
-            return (await azureBlobClient.SaveEtWordData(sampleWord))
-                .Bind(_ => Result.Of(sampleWord));
+            return (await azureBlobClient.SaveEtWordData(etWord))
+                .Bind(_ => Result.Of(etWord));
         }
 
         private async Task<Result<EtWord>> GetWordMetadata(string etWord)
@@ -119,6 +119,8 @@ namespace My1kWordsEe.Services.Cqs.Et
 
             return Result.Success(new EtWord
             {
+                Value = etWord.Normalize(),
+
                 // EeWord = wordMetadata.EeWord,
                 // EnWord = wordMetadata.EnWord,
                 // EnWords = wordMetadata.EnWords,
