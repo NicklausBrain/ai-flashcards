@@ -1,0 +1,81 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.3 Chrome/130.0.6723.137 Electron/33.2.1 Safari/537.36" version="26.0.3">
+  <diagram name="Page-1" id="ZIKXhhZbbatba5ODVGRu">
+    <mxGraphModel dx="1318" dy="602" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Z1JVSipxi-uQwTgNkyXM-1" value="existing blob storage" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=30;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="-130" y="20" width="160" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="Z1JVSipxi-uQwTgNkyXM-2" value="audio" style="html=1;whiteSpace=wrap;" vertex="1" parent="Z1JVSipxi-uQwTgNkyXM-1">
+          <mxGeometry width="110" height="30" relative="1" as="geometry">
+            <mxPoint x="20" y="50" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z1JVSipxi-uQwTgNkyXM-3" value="favorites" style="html=1;whiteSpace=wrap;" vertex="1" parent="Z1JVSipxi-uQwTgNkyXM-1">
+          <mxGeometry width="110" height="30" relative="1" as="geometry">
+            <mxPoint x="20" y="100" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z1JVSipxi-uQwTgNkyXM-4" value="image" style="html=1;whiteSpace=wrap;" vertex="1" parent="Z1JVSipxi-uQwTgNkyXM-1">
+          <mxGeometry width="110" height="30" relative="1" as="geometry">
+            <mxPoint x="20" y="150" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z1JVSipxi-uQwTgNkyXM-9" value="words" style="html=1;whiteSpace=wrap;" vertex="1" parent="Z1JVSipxi-uQwTgNkyXM-1">
+          <mxGeometry width="110" height="30" relative="1" as="geometry">
+            <mxPoint x="20" y="200" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z1JVSipxi-uQwTgNkyXM-10" value="word/sense model" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=30;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="60" y="20" width="490" height="470" as="geometry" />
+        </mxCell>
+        <mxCell id="Z1JVSipxi-uQwTgNkyXM-11" value="audio" style="html=1;whiteSpace=wrap;" vertex="1" parent="Z1JVSipxi-uQwTgNkyXM-10">
+          <mxGeometry width="110" height="30" relative="1" as="geometry">
+            <mxPoint x="20" y="50" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z1JVSipxi-uQwTgNkyXM-12" value="favorites" style="html=1;whiteSpace=wrap;" vertex="1" parent="Z1JVSipxi-uQwTgNkyXM-10">
+          <mxGeometry width="110" height="30" relative="1" as="geometry">
+            <mxPoint x="20" y="100" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z1JVSipxi-uQwTgNkyXM-13" value="image" style="html=1;whiteSpace=wrap;" vertex="1" parent="Z1JVSipxi-uQwTgNkyXM-10">
+          <mxGeometry width="110" height="30" relative="1" as="geometry">
+            <mxPoint x="20" y="150" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z1JVSipxi-uQwTgNkyXM-16" value="word(s)" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=30;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;whiteSpace=wrap;" vertex="1" parent="Z1JVSipxi-uQwTgNkyXM-10">
+          <mxGeometry x="20" y="210" width="150" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="Z1JVSipxi-uQwTgNkyXM-17" value="et" style="html=1;whiteSpace=wrap;" vertex="1" parent="Z1JVSipxi-uQwTgNkyXM-16">
+          <mxGeometry width="110" height="30" relative="1" as="geometry">
+            <mxPoint x="20" y="50" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z1JVSipxi-uQwTgNkyXM-18" value="forms" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=30;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;whiteSpace=wrap;" vertex="1" parent="Z1JVSipxi-uQwTgNkyXM-10">
+          <mxGeometry x="20" y="330" width="150" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="Z1JVSipxi-uQwTgNkyXM-19" value="sense guid" style="html=1;whiteSpace=wrap;" vertex="1" parent="Z1JVSipxi-uQwTgNkyXM-18">
+          <mxGeometry width="110" height="30" relative="1" as="geometry">
+            <mxPoint x="20" y="50" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z1JVSipxi-uQwTgNkyXM-22" value="?user_data?" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=30;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;whiteSpace=wrap;" vertex="1" parent="Z1JVSipxi-uQwTgNkyXM-10">
+          <mxGeometry x="230" y="170" width="220" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="Z1JVSipxi-uQwTgNkyXM-24" value="GUID" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=30;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;whiteSpace=wrap;" vertex="1" parent="Z1JVSipxi-uQwTgNkyXM-22">
+          <mxGeometry x="10" y="50" width="150" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="Z1JVSipxi-uQwTgNkyXM-25" value="words" style="html=1;whiteSpace=wrap;" vertex="1" parent="Z1JVSipxi-uQwTgNkyXM-24">
+          <mxGeometry width="110" height="30" relative="1" as="geometry">
+            <mxPoint x="20" y="50" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z1JVSipxi-uQwTgNkyXM-21" value="Note" style="shape=note;size=20;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="150" width="100" height="100" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

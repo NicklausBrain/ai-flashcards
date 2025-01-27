@@ -10,6 +10,7 @@ using OpenAI.Chat;
 
 namespace My1kWordsEe.Services.Cqs
 {
+    [Obsolete]
     public class AddSampleWordCommand
     {
         private readonly OpenAiClient openAiClient;
