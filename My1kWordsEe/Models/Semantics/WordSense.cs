@@ -22,14 +22,5 @@ namespace My1kWordsEe.Models.Semantics
 
         [Description("Part of speech, None if cannot be determined")]
         public required PartOfSpeech PartOfSpeech { get; init; } = PartOfSpeech.None;
-
-        // [Description("Samples, keep empty by default")]
-        // public SampleSentence[] Samples { get; init; } = Array.Empty<SampleSentence>();
-
-        /// <summary>
-        /// Can be used to load respecive forms/conjugations
-        /// </summary>
-        // [JsonIgnore]
-        // public dynamic? Forms { get; init; }
     }
 }

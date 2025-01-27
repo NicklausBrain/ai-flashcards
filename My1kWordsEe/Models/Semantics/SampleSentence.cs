@@ -7,7 +7,7 @@ namespace My1kWordsEe.Models.Semantics
     /// </summary>
     public record SampleSentence
     {
-        public required IDictionary<LanguageCode, string> Sentence { get; init; } = new Dictionary<LanguageCode, string>();
+        public required TranslatedString Sentence { get; init; } = new TranslatedString();
         // todo: use relative url
         public Uri? AudioUrl { get; init; }
         // todo: use relative url

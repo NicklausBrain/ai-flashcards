@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Text.Json;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -6,14 +7,23 @@ using Microsoft.Extensions.Logging;
 using My1kWordsEe.Models;
 using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Cqs;
+using My1kWordsEe.Services.Cqs.Et;
+
+using static My1kWordsEe.Models.Extensions;
 
 namespace My1kWordsEe.Cmd
 {
     internal class Program
     {
+        private class Input
+        {
+            [Description("eestikeelne sõna")]
+            public string EtWord { get; }
+        }
+
         static async Task Main(string[] args)
         {
-            Console.WriteLine(EtWord.SensesJsonSchema.Value);
+            Console.WriteLine(AddEtWordCommand.Prompt);
         }
 
         public static async Task WordsCorrectionProcedure()

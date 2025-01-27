@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -9,6 +10,8 @@ using My1kWordsEe.Services.Db;
 
 using OpenAI.Chat;
 
+using static My1kWordsEe.Models.Extensions;
+
 namespace My1kWordsEe.Services.Cqs.Et
 {
     public class AddEtWordCommand
@@ -16,6 +19,14 @@ namespace My1kWordsEe.Services.Cqs.Et
         private readonly OpenAiClient openAiClient;
         private readonly AzureStorageClient azureBlobClient;
         private readonly AddAudioCommand addAudioCommand;
+
+        // todo: write unit test to prevent schema drift
+        public static readonly string Prompt =
+            "See on keeleõppe süsteem\n" +
+            "Teie väljund on JSON-i massiiv vastavalt järgmisele skeemile:\n" +
+            $"```\n{GetJsonSchema(typeof(WordSense[]))}\n```\n" +
+            "Teie sisend on JSON-objekt vastavalt järgmisele skeemile:\n" +
+            $"\n```\n{GetJsonSchema(typeof(Input))}\n```\n";
 
         public AddEtWordCommand(
             OpenAiClient openAiService,
@@ -60,34 +71,13 @@ namespace My1kWordsEe.Services.Cqs.Et
 
         private async Task<Result<EtWord>> GetWordMetadata(string etWord)
         {
-            const string prompt =
-                // Metadata must be provided for a given Estonian word.
-                "Antud eestikeelse sõna kohta tuleb esitada metaandmed\n" +
-                // Your input is a JSON object
-                "Teie sisend on JSON-objekt:\n" +
-                "```\n{\n" +
-                "\"EtWord\": \"<eestikeelne sõna>\" " +
-                "\n}\n```\n" +
-                // If the given word is not in Estonian, return 404
-                "Kui antud sõna ei ole eestikeelne, tagasta 404\n" +
-                // Your output is the word metadata in JSON according to the given contract
-                "Teie väljund on sõna metaandmed JSON-is vastavalt antud lepingule:\n" +
-                // IT SHOULD BE ARRAY OF WORD SENESES
-                "```\n[\n{" +
-                $"\"{nameof(WordSense.BaseForm)}\": \"<antud sõna>\",\n" +
-                "\"en_word\": \"<english translation>\",\n" +
-                "\"en_words\": [<array of alternative english translations if applicable>],\n" +
-                "\"en_explanation\": \"<explanation of the word meaning in english>\",\n" +
-                "\"ee_explanation\": \"<sõna tähenduse seletus eesti keeles>\"\n" +
-                "}]\n```\n";
-
-            var input = JsonSerializer.Serialize(new
+            var input = JsonSerializer.Serialize(new Input
             {
                 EtWord = etWord,
             });
 
             var response = await this.openAiClient.CompleteAsync(
-                prompt,
+                Prompt,
                 input,
                 new ChatCompletionOptions
                 {
@@ -100,16 +90,17 @@ namespace My1kWordsEe.Services.Cqs.Et
                 return Result.Failure<EtWord>(response.Error);
             }
 
-            // could be ommited if we integrate an EE dictionary within the app
-            if (response.Value.Contains("404"))
+            // todo: could be ommited if we integrate an EE dictionary within the app
+            if (string.IsNullOrWhiteSpace(response.Value))
             {
+                // todo: debug/check
                 return Result.Failure<EtWord>("Not an Estonian word");
             }
 
-            openAiClient.ParseJsonResponse<WordMetadata>(response).Deconstruct(
+            openAiClient.ParseJsonResponse<WordSense[]>(response).Deconstruct(
                 out bool _,
                 out bool isParsingError,
-                out WordMetadata wordMetadata,
+                out WordSense[] senses,
                 out string parsingError);
 
             if (isParsingError)
@@ -119,40 +110,16 @@ namespace My1kWordsEe.Services.Cqs.Et
 
             return Result.Success(new EtWord
             {
-                Value = etWord.Normalize(),
-
-                // EeWord = wordMetadata.EeWord,
-                // EnWord = wordMetadata.EnWord,
-                // EnWords = wordMetadata.EnWords,
-                // EnExplanation = wordMetadata.EnExplanation,
-                // EeExplanation = wordMetadata.EeExplanation,
+                // todo: make it nicer than that
+                Value = etWord.Trim().ToLower(),
+                Senses = senses
             });
         }
 
         private class Input
         {
-            public string EtWord { get; }
-
-            public string Serialize() => JsonSerializer.Serialize(this);
-        }
-
-        [Obsolete]
-        private class WordMetadata
-        {
-            [JsonPropertyName("ee_word")]
-            public required string EeWord { get; set; }
-
-            [JsonPropertyName("en_word")]
-            public required string EnWord { get; set; }
-
-            [JsonPropertyName("en_explanation")]
-            public required string EnExplanation { get; set; }
-
-            [JsonPropertyName("ee_explanation")]
-            public required string EeExplanation { get; set; }
-
-            [JsonPropertyName("en_words")]
-            public required string[] EnWords { get; set; } = Array.Empty<string>();
+            [Description("eestikeelne sõna")]
+            public required string EtWord { get; init; }
         }
     }
 }
