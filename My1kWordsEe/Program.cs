@@ -98,6 +98,7 @@ namespace My1kWordsEe
             }
 
             app.UseHttpsRedirection();
+            // check MapStaticAssets instead
             app.UseStaticFiles();
             app.UseAntiforgery();
 
