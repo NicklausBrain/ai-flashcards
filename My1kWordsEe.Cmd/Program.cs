@@ -13,7 +13,7 @@ namespace My1kWordsEe.Cmd
     {
         static async Task Main(string[] args)
         {
-            // Console.WriteLine(EtWord.JsonSchema.Value);
+            Console.WriteLine(EtWord.SensesJsonSchema.Value);
         }
 
         public static async Task WordsCorrectionProcedure()

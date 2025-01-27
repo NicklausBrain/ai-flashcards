@@ -1,11 +1,17 @@
+using System.ComponentModel;
 using System.Text.Json.Serialization;
 
 namespace My1kWordsEe.Models.Grammar
 {
+    [Description("Grammatical category of the word")]
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum PartOfSpeech
     {
-        None, // Default value | cannot be determined
+        /// <summary>
+        /// Cannot be determined - Default value
+        /// </summary>
+        [Description("Cannot be determined")]
+        None,
         Noun,
         Adjective,
         Pronoun,
