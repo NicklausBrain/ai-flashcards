@@ -1,6 +1,5 @@
 using System.ComponentModel;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 using CSharpFunctionalExtensions;
 
@@ -20,13 +19,12 @@ namespace My1kWordsEe.Services.Cqs.Et
         private readonly AzureStorageClient azureBlobClient;
         private readonly AddAudioCommand addAudioCommand;
 
-        // todo: write unit test to prevent schema drift
         public static readonly string Prompt =
             "See on keeleõppe süsteem\n" +
             "Teie väljund on JSON-i massiiv vastavalt järgmisele skeemile:\n" +
             $"```\n{GetJsonSchema(typeof(WordSense[]))}\n```\n" +
             "Teie sisend on JSON-objekt vastavalt järgmisele skeemile:\n" +
-            $"\n```\n{GetJsonSchema(typeof(Input))}\n```\n";
+            $"```\n{GetJsonSchema(typeof(Input))}\n```";
 
         public AddEtWordCommand(
             OpenAiClient openAiService,
@@ -118,7 +116,7 @@ namespace My1kWordsEe.Services.Cqs.Et
 
         private class Input
         {
-            [Description("eestikeelne sõna")]
+            [Description("Estonian word")]
             public required string EtWord { get; init; }
         }
     }
