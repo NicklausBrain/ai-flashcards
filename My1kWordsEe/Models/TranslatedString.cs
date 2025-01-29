@@ -10,10 +10,10 @@ namespace My1kWordsEe.Models
     {
         [JsonPropertyName(nameof(LanguageCode.Et))]
         [Description("Translation in Estonian (ISO 639 code: et)")]
-        public string? Et { get; set; }
+        public required string Et { get; set; }
 
         [JsonPropertyName(nameof(LanguageCode.En))]
         [Description("Translation in English (ISO 639 code: en)")]
-        public string? En { get; set; }
+        public required string En { get; set; }
     }
 }

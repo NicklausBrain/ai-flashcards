@@ -14,7 +14,7 @@ namespace My1kWordsEe.Models.Semantics
         public required string Word { get; init; }
 
         [Description("Explanation of the word meaning and its given grammar form")]
-        public required TranslatedString Explanation { get; init; } = new TranslatedString();
+        public required TranslatedString Explanation { get; init; }
 
         /// <summary>
         /// The form of a word to which prefixes and suffixes can be added.

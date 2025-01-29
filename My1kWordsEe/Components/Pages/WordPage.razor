@@ -1,27 +1,26 @@
-@page "/word/{eeWord}"
+@page "/word/{etWord}"
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
 @using BlazorBootstrap
 @using CSharpFunctionalExtensions
 @using Microsoft.AspNetCore.Components.Authorization
 @using My1kWordsEe.Components.Account
-@using My1kWordsEe.Services
-@using My1kWordsEe.Models
+@using My1kWordsEe.Models.Semantics
 @using My1kWordsEe.Components.Layout
-@using My1kWordsEe.Services.Cqs
+@using My1kWordsEe.Services.Cqs.Et
 @using System.Text.RegularExpressions
 @using System.ComponentModel.DataAnnotations
 @using System.Security.Claims
 @using My1kWordsEe.Services.Scoped
 
-@inject IJSRuntime JS
-@inject GetOrAddSampleWordCommand EnsureWordCommand
-@inject AddSampleSentenceCommand CreateSampleCommand
-@inject AuthenticationStateProvider AuthenticationStateProvider
-@inject DeleteSampleSentenceCommand DeleteSampleSentenceCommand
-@inject RedoSampleWordCommand RedoSampleWordCommand
-@inject ValidateSampleWordCommand ValidateSampleWordCommand
+@using static My1kWordsEe.Models.Extensions;
 
+@inject IJSRuntime JS
+@inject GetOrAddEtWordCommand GetOrAddEtWordCommand
+@inject AddEtSampleSentenceCommand AddEtSampleSentenceCommand
+@inject DeleteEtSampleSentenceCommand DeleteEtSampleSentenceCommand
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@* @inject RedoSampleWordCommand RedoSampleWordCommand *@
 
 @code {
     [Inject] protected PreloadService PreloadService { get; set; } = default!;
@@ -30,9 +29,10 @@
     private ConfirmDialog ConfirmDialog = default!;
 
     [Parameter]
-    public required string EeWord { get; init; }
+    public required string EtWord { get; init; }
 
-    private Maybe<Result<SampleWord>> WordMetadata;
+    private Maybe<Result<EtWord>> EtWordData;
+    private Maybe<Result<SampleSentence[]>> Samples;
     private ClaimsPrincipal? User;
 
     protected override async Task OnParametersSetAsync()
@@ -43,17 +43,17 @@
             User = authState.User;
         }
 
-        WordMetadata = EeWord.ValidateWord()
+        EtWordData = EtWord.ValidateWord()
         ? await ResolveSample()
-        : Result.Failure<SampleWord>("Invalid word");
+        : Result.Failure<EtWord>("Invalid word");
 
         await base.OnParametersSetAsync();
     }
 
-    private async Task<Result<SampleWord>> ResolveSample()
+    private async Task<Result<EtWord>> ResolveSample()
     {
-        var commonSample = this.EnsureWordCommand.Invoke(EeWord);
-        return await commonSample;
+        var commonSample = await this.GetOrAddEtWordCommand.Invoke(EtWord);
+        return commonSample;
     }
 
     private async Task DeleteSampleSentence(SampleSentence sampleSentence)
@@ -74,10 +74,10 @@
         if (confirmation)
         {
             PreloadService.Show(SpinnerColor.Light, "Saving data...");
-            var deletionResult = await this.DeleteSampleSentenceCommand.Invoke(sampleSentence);
+            var deletionResult = await this.DeleteEtSampleSentenceCommand.Invoke(sampleSentence);
             if (deletionResult.IsSuccess)
             {
-                WordMetadata = deletionResult;
+                Samples = deletionResult;
                 StateHasChanged();
             }
             else
@@ -92,72 +92,30 @@
         }
     }
 
-    private async Task RedoSample()
-    {
-        var options = new ConfirmDialogOptions
-            {
-                IsScrollable = true,
-                Dismissable = true,
-                IsVerticallyCentered = true,
-                AutoFocusYesButton = false,
-            };
-
-        var confirmation = await ConfirmDialog.ShowAsync(
-        title: "Is this word described inadequately?",
-        message1: "This will regenerate the word explanation and all the samples will removed.",
-        message2: "Do you want to proceed?", options);
-
-        if (confirmation)
-        {
-            PreloadService.Show(SpinnerColor.Light, "Saving data...");
-
-            var redoResult = await this.ValidateSampleWordCommand.Invoke(Value).Bind(r =>
-            this.RedoSampleWordCommand.Invoke(Value.EeWord, r.EeExplanationMessage));
-
-            if (redoResult.IsSuccess)
-            {
-                WordMetadata = redoResult;
-                StateHasChanged();
-            }
-            else
-            {
-                ToastService.Notify(new ToastMessage(ToastType.Warning, redoResult.Error));
-            }
-            PreloadService.Hide();
-        }
-        else
-        {
-            ToastService.Notify(new ToastMessage(ToastType.Secondary, $"Redo action canceled."));
-        }
-    }
-
     private bool IsSampleGenerationInProgress = false;
 
     private async Task GenerateSample(MouseEventArgs e)
     {
         this.IsSampleGenerationInProgress = true;
-        if (IsDataLoadedOk)
+        if (IsEtWordDataLoadedOk)
         {
-            this.WordMetadata = await this.CreateSampleCommand.Invoke(Value);
+            this.Samples = await this.AddEtSampleSentenceCommand.Invoke(EtWordData.Value.Value.DefaultSense);
         }
         this.IsSampleGenerationInProgress = false;
     }
 
     private async Task SpeakWord(MouseEventArgs e)
     {
-        await JS.InvokeVoidAsync("speakWord", EeWord);
+        await JS.InvokeVoidAsync("speakWord", EtWord);
     }
 
-    private bool IsDataLoadedOk => WordMetadata.HasValue && WordMetadata.Value.IsSuccess;
+    private bool IsEtWordDataLoadedOk => EtWordData.HasValue && EtWordData.Value.IsSuccess;
 
-    private bool HasError => WordMetadata.HasValue && WordMetadata.Value.IsFailure;
+    private bool HasError => EtWordData.HasValue && EtWordData.Value.IsFailure;
 
-    private SampleWord Value => WordMetadata.Value.Value;
-
-    private string Error => WordMetadata.Value.Error;
+    private string Error => EtWordData.Value.Error;
 
     private bool IsLoggedIn => User?.Identity?.IsAuthenticated ?? false;
-
 }
 
 <script>
@@ -170,36 +128,32 @@
 <div class="text-left">
     <div class="row">
         <h1>
-            @EeWord
+            @EtWord
 
-            @if (IsDataLoadedOk)
+            @if (IsEtWordDataLoadedOk)
             {
-                <FavoriteButton Sample="@Value"></FavoriteButton>
+                <FavoriteButton Sample="@EtWordData"></FavoriteButton>
 
-                if (Value.EeAudioUrl != null)
+                if (EtWordData.Value.Value.AudioUrl != null)
                 {
                     <i role="button" class="bi bi-volume-down-fill small" @onclick="SpeakWord">
-                        <audio id="@EeWord" src="@Value.EeAudioUrl"></audio>
+                        <audio id="@EtWord" src="@EtWordData.Value.Value.AudioUrl"></audio>
                     </i>
                 }
             }
-
-            @if (IsLoggedIn)
-            {
-                <i role="button" class="bi bi-arrow-clockwise float-end" @onclick="RedoSample"></i>
-            }
         </h1>
 
-        @if (IsDataLoadedOk)
+        @if (IsEtWordDataLoadedOk)
         {
-            <h3>[@Value.EnWord]</h3>
+            var Value = EtWordData.Value.Value;
+            <h3>[@Value.Value]</h3>
 
-            @if (Value.EnWords.Any())
+            @if (Value.Senses.Any())
             {
-                <h4>[@string.Join(" / ", Value.EnWords)]</h4>
+                <h4>[@string.Join(" / ", Value.Senses.Select(s => s.Explanation.En))]</h4>
             }
 
-            <h4>@Value.EnExplanation</h4>
+            <h4>@Value.DefaultSense.Explanation.En</h4>
         }
         else if (HasError)
         {
@@ -213,14 +167,14 @@
         }
     </div>
 
-    @if (IsDataLoadedOk)
+    @if (Samples.HasValue && Samples.Value.IsSuccess)
     {
         <div class="row">
-            @foreach (var sample in Value.Samples)
+            @foreach (var sample in Samples.Value.Value)
             {
                 <div class="col col-12 col-sm-6 p-1">
-                    <SampleV2 Sample="@sample" DeleteSample="DeleteSampleSentence">
-                    </SampleV2>
+                    @* <SampleV2 Sample="@sample" DeleteSample="DeleteSampleSentence">
+                    </SampleV2> *@
                 </div>
             }
 

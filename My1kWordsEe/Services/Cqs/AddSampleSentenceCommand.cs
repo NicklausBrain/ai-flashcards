@@ -8,6 +8,7 @@ using My1kWordsEe.Services.Db;
 
 namespace My1kWordsEe.Services.Cqs
 {
+    [Obsolete]
     public class AddSampleSentenceCommand
     {
         public const int MaxSamples = 6;

@@ -8,6 +8,7 @@ using My1kWordsEe.Data;
 using My1kWordsEe.Models.Games;
 using My1kWordsEe.Services;
 using My1kWordsEe.Services.Cqs;
+using My1kWordsEe.Services.Cqs.Et;
 using My1kWordsEe.Services.Db;
 using My1kWordsEe.Services.Scoped;
 
@@ -52,6 +53,12 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<GetOrAddSampleWordCommand>();
             builder.Services.AddSingleton<AddSampleSentenceCommand>();
             builder.Services.AddSingleton<AddSampleWordCommand>();
+
+            builder.Services.AddSingleton<AddEtWordCommand>();
+            builder.Services.AddSingleton<GetOrAddEtWordCommand>();
+            builder.Services.AddSingleton<AddEtSampleSentenceCommand>();
+            builder.Services.AddSingleton<DeleteEtSampleSentenceCommand>();
+
             builder.Services.AddSingleton<AddAudioCommand>();
             builder.Services.AddSingleton<CheckEnTranslationCommand>();
             builder.Services.AddSingleton<CheckEeListeningCommand>();

@@ -1,5 +1,3 @@
-using My1kWordsEe.Models.Grammar;
-
 namespace My1kWordsEe.Models.Semantics
 {
     /// <summary>
@@ -7,10 +5,10 @@ namespace My1kWordsEe.Models.Semantics
     /// </summary>
     public record SampleSentence
     {
-        public required TranslatedString Sentence { get; init; } = new TranslatedString();
+        public required TranslatedString Sentence { get; init; }
         // todo: use relative url
-        public Uri? AudioUrl { get; init; }
+        public required Uri AudioUrl { get; init; }
         // todo: use relative url
-        public Uri? ImageUrl { get; init; }
+        public required Uri ImageUrl { get; init; }
     }
 }

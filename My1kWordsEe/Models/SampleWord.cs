@@ -3,6 +3,7 @@ namespace My1kWordsEe.Models
     /// <summary>
     /// A word of the Estonian language with the respective translations and usage examples
     /// </summary>
+    [Obsolete]
     public record SampleWord
     {
         private readonly string eeWord = "";

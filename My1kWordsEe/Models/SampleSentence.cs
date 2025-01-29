@@ -3,6 +3,7 @@ namespace My1kWordsEe.Models
     /// <summary>
     /// Sample sentence illustrating the use of a give Estonian word
     /// </summary>
+    [Obsolete]
     public record SampleSentence
     {
         public static readonly SampleSentence Empty = new SampleSentence
