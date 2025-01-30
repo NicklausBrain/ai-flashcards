@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace My1kWordsEe.Models.Semantics
 {
     /// <summary>
@@ -6,9 +8,5 @@ namespace My1kWordsEe.Models.Semantics
     public record SampleSentence
     {
         public required TranslatedString Sentence { get; init; }
-        // todo: use relative url
-        public required Uri AudioUrl { get; init; }
-        // todo: use relative url
-        public required Uri ImageUrl { get; init; }
     }
 }

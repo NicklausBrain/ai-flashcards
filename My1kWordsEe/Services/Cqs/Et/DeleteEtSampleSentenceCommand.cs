@@ -16,7 +16,7 @@ namespace My1kWordsEe.Services.Cqs.Et
             this.azureBlobService = azureBlobService;
         }
 
-        public async Task<Result<SampleSentence[]>> Invoke(SampleSentence sampleToRemove)
+        public async Task<Result<SampleSentenceWithMedia[]>> Invoke(SampleSentenceWithMedia sampleToRemove)
         {
             var imageRemoval = this.azureBlobService.DeleteImage(sampleToRemove.ImageUrl.Segments.Last());
             var audioRemoval = this.azureBlobService.DeleteAudio(sampleToRemove.AudioUrl.Segments.Last());
@@ -25,12 +25,12 @@ namespace My1kWordsEe.Services.Cqs.Et
 
             if (imageRemoval.Result.IsFailure)
             {
-                return Result.Failure<SampleSentence[]>($"Image removal failed: {imageRemoval.Result.Error}");
+                return Result.Failure<SampleSentenceWithMedia[]>($"Image removal failed: {imageRemoval.Result.Error}");
             }
 
             if (audioRemoval.Result.IsFailure)
             {
-                return Result.Failure<SampleSentence[]>($"Speech removal failed: {audioRemoval.Result.Error}");
+                return Result.Failure<SampleSentenceWithMedia[]>($"Speech removal failed: {audioRemoval.Result.Error}");
             }
 
             // todo: fix it
@@ -38,11 +38,11 @@ namespace My1kWordsEe.Services.Cqs.Et
 
             if (wordData.IsFailure)
             {
-                return Result.Failure<SampleSentence[]>("Sample word not found");
+                return Result.Failure<SampleSentenceWithMedia[]>("Sample word not found");
             }
 
             // todo: fix it
-            return new SampleSentence[] { };
+            return new SampleSentenceWithMedia[] { };
             // var updatedWordData = wordData.Value.Value with
             // {
             //     Samples = wordData.Value.Value.Samples.Where(s => s != sampleToRemove).ToArray()

@@ -17,9 +17,9 @@ namespace My1kWordsEe.Services.Cqs.Et
         // todo: test it
         public static readonly string Prompt =
             "Sa oled keeleõppe süsteemi abiline, mis aitab õppida enim levinud eesti keele sõnu.\n" +
-            "Teie sisend on JSON-objekt:" +
+            "Sisendiks on JSON-objekt, mis kirjeldab eesti keele sõna tähendust ja grammatilist vormi:\n" +
             $"```\n{GetJsonSchema(typeof(WordSense))}\n```\n" +
-            "Teie väljundiks on JSON-i objekt koos näidislausega vastavalt JSON-skeemile:\n" +
+            "Teie ülesanne on genereerida JSON-objekt, mis sisaldab näidislauseid eesti ja inglise keeles, kasutades antud sõna sobivas grammatilises vormis:\n" +
             $"```\n{GetJsonSchema(typeof(SampleSentence))}\n```\n";
 
         private readonly AzureStorageClient azureBlobClient;
@@ -39,20 +39,20 @@ namespace My1kWordsEe.Services.Cqs.Et
             this.stabilityAiClient = stabilityAiService;
         }
 
-        public async Task<Result<SampleSentence[]>> Invoke(WordSense word)
+        public async Task<Result<SampleSentenceWithMedia[]>> Invoke(WordSense word)
         {
-            var existingSamples = new SampleSentence[] { };
+            var existingSamples = new SampleSentenceWithMedia[] { };
 
             if (existingSamples.Length >= MaxSamples)
             {
-                return Result.Failure<SampleSentence[]>($"Too many samples. {MaxSamples} is a maximum");
+                return Result.Failure<SampleSentenceWithMedia[]>($"Too many samples. {MaxSamples} is a maximum");
             }
 
             var sentence = await this.GetSampleSentence(word);
 
             if (sentence.IsFailure)
             {
-                return Result.Failure<SampleSentence[]>($"Sentence generation failed: {sentence.Error}");
+                return Result.Failure<SampleSentenceWithMedia[]>($"Sentence generation failed: {sentence.Error}");
             }
 
             var imageGeneration = this.GenerateImage(sentence.Value);
@@ -61,16 +61,16 @@ namespace My1kWordsEe.Services.Cqs.Et
 
             if (imageGeneration.Result.IsFailure)
             {
-                return Result.Failure<SampleSentence[]>($"Image generation failed: {imageGeneration.Result.Error}");
+                return Result.Failure<SampleSentenceWithMedia[]>($"Image generation failed: {imageGeneration.Result.Error}");
             }
 
             if (speechGeneration.Result.IsFailure)
             {
-                return Result.Failure<SampleSentence[]>($"Speech generation failed: {speechGeneration.Result.Error}");
+                return Result.Failure<SampleSentenceWithMedia[]>($"Speech generation failed: {speechGeneration.Result.Error}");
             }
 
             // todo: fix it
-            return new SampleSentence[] { };
+            return new SampleSentenceWithMedia[] { };
             // var updatedWordData = word with
             // {
             //     Samples = word.Samples.Append(new SampleSentence
