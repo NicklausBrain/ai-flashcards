@@ -1,13 +1,8 @@
-using System.ComponentModel;
-using System.Text.Json;
-
 using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Models;
 using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Db;
-
-using OpenAI.Chat;
 
 using static My1kWordsEe.Models.Extensions;
 
@@ -20,11 +15,13 @@ namespace My1kWordsEe.Services.Cqs.Et
         private readonly AddAudioCommand addAudioCommand;
 
         public static readonly string Prompt =
-            "See on keeleõppe süsteem\n" +
-            "Teie väljund on JSON-i massiiv vastavalt järgmisele skeemile:\n" +
-            $"```\n{GetJsonSchema(typeof(WordSense[]))}\n```\n" +
-            "Teie sisend on JSON-objekt vastavalt järgmisele skeemile:\n" +
-            $"```\n{GetJsonSchema(typeof(Input))}\n```";
+            "See on keeleõppe süsteem.\n" +
+            "Teie sisestus on eestikeelne sõna (ja ainult eestikeelne sõna).\n" +
+            "Ärge lisage ingliskeelsetel homonüümidel põhinevaid sõnade tähendusi.\n" +
+            "Sõna tähendused peavad pärinema ainult eesti keelest.\n" +
+            "Iga sõnafunktsiooni tuleks kirjeldada ainult ühes kirjes.\n" +
+            "Kui mitu kirjeldust selgitavad sama tähendust, ühendage need üheks selgituseks.\n" +
+            "Teie väljund on JSON-objekt vastavalt antud skeemile.\n";
 
         public AddEtWordCommand(
             OpenAiClient openAiService,
@@ -69,55 +66,23 @@ namespace My1kWordsEe.Services.Cqs.Et
 
         private async Task<Result<EtWord>> GetWordMetadata(string etWord)
         {
-            var input = JsonSerializer.Serialize(new Input
-            {
-                EtWord = etWord,
-            });
-
-            var response = await this.openAiClient.CompleteAsync(
+            var response = await this.openAiClient.CompleteJsonSchemaAsync<WordSenses>(
                 Prompt,
-                input,
-                new ChatCompletionOptions
-                {
-                    ResponseFormat = ChatResponseFormat.CreateJsonObjectFormat(),
-                    Temperature = 0.333f
-                });
+                etWord,
+                GetJsonSchema(typeof(WordSenses)),
+                temperature: 0.1f);
 
             if (response.IsFailure)
             {
                 return Result.Failure<EtWord>(response.Error);
             }
 
-            // todo: could be ommited if we integrate an EE dictionary within the app
-            if (string.IsNullOrWhiteSpace(response.Value))
-            {
-                // todo: debug/check
-                return Result.Failure<EtWord>("Not an Estonian word");
-            }
-
-            openAiClient.ParseJsonResponse<WordSense[]>(response).Deconstruct(
-                out bool _,
-                out bool isParsingError,
-                out WordSense[] senses,
-                out string parsingError);
-
-            if (isParsingError)
-            {
-                return Result.Failure<EtWord>(parsingError);
-            }
-
             return Result.Success(new EtWord
             {
                 // todo: make it nicer than that
                 Value = etWord.Trim().ToLower(),
-                Senses = senses
+                Senses = response.Value.Array
             });
-        }
-
-        private class Input
-        {
-            [Description("Estonian word")]
-            public required string EtWord { get; init; }
         }
     }
 }

@@ -100,9 +100,10 @@ namespace My1kWordsEe.Services.Cqs.Et
         {
             var input = JsonSerializer.Serialize(word);
 
-            var result = await this.openAiClient.CompleteJsonAsync<SampleSentence>(
-                Prompt,
-                input,
+            var result = await this.openAiClient.CompleteJsonSchemaAsync<SampleSentence>(
+                instructions: Prompt,
+                input: input,
+                schema: GetJsonSchema(typeof(SampleSentence)),
                 temperature: 0.7f);
 
             return result;

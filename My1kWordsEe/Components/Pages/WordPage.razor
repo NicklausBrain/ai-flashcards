@@ -148,11 +148,12 @@
             var Value = EtWordData.Value.Value;
             <h3>[@Value.Value]</h3>
 
-            @if (Value.Senses.Any())
+         @*    @if (Value.Senses.Any())
             {
                 <h4>[@string.Join(" / ", Value.Senses.Select(s => s.Explanation.En))]</h4>
             }
-
+ *@
+            <h4>@Value.DefaultSense.Explanation.Et</h4>
             <h4>@Value.DefaultSense.Explanation.En</h4>
         }
         else if (HasError)

@@ -58,6 +58,6 @@ namespace My1kWordsEe.Services.Db
                 container.GetBlobClient(JsonBlobName(word.Value)),
                 new MemoryStream(JsonSerializer.SerializeToUtf8Bytes(word))));
 
-        private Task<Result<BlobContainerClient>> GetEtWordsContainer() => this.GetOrCreateContainer("et_word");
+        private Task<Result<BlobContainerClient>> GetEtWordsContainer() => this.GetOrCreateContainer("et-word");
     }
 }

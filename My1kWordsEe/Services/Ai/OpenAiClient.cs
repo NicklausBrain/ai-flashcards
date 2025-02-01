@@ -62,6 +62,30 @@ namespace My1kWordsEe.Services
             return this.ParseJsonResponse<T>(response);
         }
 
+        public async Task<Result<T>> CompleteJsonSchemaAsync<T>(
+            string instructions,
+            string input,
+            string schema,
+            float? temperature = null)
+        {
+            var response = await this.CompleteAsync(instructions, input, new ChatCompletionOptions
+            {
+                ResponseFormat = ChatResponseFormat.CreateJsonSchemaFormat(
+                    typeof(T).Name,
+                    BinaryData.FromString(schema),
+                    // jsonSchemaFormatDescription: instructions,
+                    jsonSchemaIsStrict: false),
+                Temperature = temperature,
+            });
+
+            if (response.IsFailure)
+            {
+                return Result.Failure<T>(response.Error);
+            }
+
+            return this.ParseJsonResponse<T>(response);
+        }
+
         public Result<T> ParseJsonResponse<T>(Result<string> textResult)
         {
             if (textResult.IsFailure)

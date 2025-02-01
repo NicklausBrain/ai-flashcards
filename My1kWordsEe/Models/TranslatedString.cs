@@ -5,11 +5,10 @@ using My1kWordsEe.Models.Grammar;
 
 namespace My1kWordsEe.Models
 {
-    [Description("A map of LanguageCode and string in a given language")]
     public class TranslatedString
     {
         [JsonPropertyName(nameof(LanguageCode.Et))]
-        [Description("Translation in Estonian (ISO 639 code: et)")]
+        [Description("Tõlge eesti keelde (ISO 639 code: et)")]
         public required string Et { get; set; }
 
         [JsonPropertyName(nameof(LanguageCode.En))]

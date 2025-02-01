@@ -1,10 +1,12 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Schema;
 using System.Text.RegularExpressions;
+using System.Text.Unicode;
 
 namespace My1kWordsEe.Models
 {
@@ -109,10 +111,36 @@ namespace My1kWordsEe.Models
             JsonSerializerOptions options = new(JsonSerializerOptions.Default)
             {
                 MaxDepth = 12,
-                WriteIndented = false
+                WriteIndented = false,
+                //RespectNullableAnnotations = true
             };
             JsonNode schema = options.GetJsonSchemaAsNode(type, ExporterOptions);
-            return schema.ToJsonString();
+
+
+            var etEncoderSettings = new TextEncoderSettings();
+            etEncoderSettings.AllowCharacters(
+                '\u00C4', // Ä
+                '\u00E4', // ä
+                '\u00D5', // Õ
+                '\u00F5', // õ
+                '\u00D6', // Ö
+                '\u00F6', // ö
+                '\u00DC', // Ü
+                '\u00FC', // ü
+                '\u010C', // Č
+                '\u010D', // č
+                '\u0160', // Š
+                '\u0161', // š
+                '\u017D', // Ž
+                '\u017E',  // ž
+                '\''
+              );
+            etEncoderSettings.AllowRange(UnicodeRanges.BasicLatin);
+            return schema.ToJsonString(new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.Create(etEncoderSettings),
+                WriteIndented = false
+            });
         }
     }
 }
