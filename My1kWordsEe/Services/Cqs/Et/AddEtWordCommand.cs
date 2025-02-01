@@ -15,13 +15,13 @@ namespace My1kWordsEe.Services.Cqs.Et
         private readonly AddAudioCommand addAudioCommand;
 
         public static readonly string Prompt =
-            "See on keeleõppe süsteem.\n" +
-            "Teie sisestus on eestikeelne sõna (ja ainult eestikeelne sõna).\n" +
-            "Ärge lisage ingliskeelsetel homonüümidel põhinevaid sõnade tähendusi.\n" +
-            "Sõna tähendused peavad pärinema ainult eesti keelest.\n" +
-            "Iga sõnafunktsiooni tuleks kirjeldada ainult ühes kirjes.\n" +
-            "Kui mitu kirjeldust selgitavad sama tähendust, ühendage need üheks selgituseks.\n" +
-            "Teie väljund on JSON-objekt vastavalt antud skeemile.\n";
+@"See on keeleõppe süsteem.
+Teie sisend on üks eestikeelne sõna (ja ainult eestikeelne sõna).
+Ärge lisage tähendusi, mis põhinevad ingliskeelsetel homonüümidel.
+Sõna tähendused peavad tulenema ainult eesti keelest.
+Kirjeldage iga sõna funktsiooni või tähendust ainult ühes kirjes.
+Lisage üksnes algajale vajalikud sõnatähendused.
+Väljund peab olema JSON-objekt vastavalt antud skeemile.";
 
         public AddEtWordCommand(
             OpenAiClient openAiService,
@@ -81,7 +81,7 @@ namespace My1kWordsEe.Services.Cqs.Et
             {
                 // todo: make it nicer than that
                 Value = etWord.Trim().ToLower(),
-                Senses = response.Value.Array
+                Senses = response.Value.Senses
             });
         }
     }

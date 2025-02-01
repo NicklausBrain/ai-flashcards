@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Text.Json;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -15,15 +14,10 @@ namespace My1kWordsEe.Cmd
 {
     internal class Program
     {
-        private class Input
-        {
-            [Description("eestikeelne sõna")]
-            public string EtWord { get; }
-        }
-
         static async Task Main(string[] args)
         {
             Console.WriteLine(AddEtWordCommand.Prompt);
+            Console.WriteLine(GetJsonSchema(typeof(WordSenses)));
         }
 
         public static async Task WordsCorrectionProcedure()

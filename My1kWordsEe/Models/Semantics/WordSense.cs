@@ -10,8 +10,11 @@ namespace My1kWordsEe.Models.Semantics
     [Description("Eesti sõna tähendus või tähendus vastavate vormidega.")]
     public record WordSense
     {
+        [Description("Antud sõna ja selle tõlked")]
+        public required TranslatedString Word { get; init; }
+
         [Description("Sõna tähenduse ja antud grammatikavormi selgitus")]
-        public required TranslatedString Explanation { get; init; }
+        public required TranslatedString Definition { get; init; }
 
         /// <summary>
         /// The form of a word to which prefixes and suffixes can be added.

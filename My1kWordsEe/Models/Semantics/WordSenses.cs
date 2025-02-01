@@ -13,6 +13,6 @@ namespace My1kWordsEe.Models.Semantics
         public required string EtWord { get; init; }
 
         [Description("Sõnatähenduste hulk. Kui antud sõna pole olemas, peaks väljundmassiiv Array olema tühi.")]
-        public required WordSense[] Array { get; init; }
+        public required WordSense[] Senses { get; init; }
     }
 }
