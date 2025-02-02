@@ -16,7 +16,10 @@ namespace My1kWordsEe.Services.Cqs.Et
             this.azureBlobService = azureBlobService;
         }
 
-        public async Task<Result<SampleSentenceWithMedia[]>> Invoke(SampleSentenceWithMedia sampleToRemove)
+        public async Task<Result<SampleSentenceWithMedia[]>> Invoke(
+            EtWord word,
+            uint senseIndex,
+            SampleSentenceWithMedia sampleToRemove)
         {
             var imageRemoval = this.azureBlobService.DeleteImage(sampleToRemove.ImageUrl.Segments.Last());
             var audioRemoval = this.azureBlobService.DeleteAudio(sampleToRemove.AudioUrl.Segments.Last());
@@ -33,24 +36,25 @@ namespace My1kWordsEe.Services.Cqs.Et
                 return Result.Failure<SampleSentenceWithMedia[]>($"Speech removal failed: {audioRemoval.Result.Error}");
             }
 
-            // todo: fix it
-            var wordData = await this.azureBlobService.GetEtSampleData("eeee");
+            var containerId = new AzureStorageClient.SamplesContainerId
+            {
+                Word = word.Value,
+                SenseIndex = senseIndex
+            };
 
-            if (wordData.IsFailure)
+            var existingSamples = await this.azureBlobService.GetEtSampleData(containerId);
+
+            if (existingSamples.IsFailure)
             {
                 return Result.Failure<SampleSentenceWithMedia[]>("Sample word not found");
             }
 
-            // todo: fix it
-            return new SampleSentenceWithMedia[] { };
-            // var updatedWordData = wordData.Value.Value with
-            // {
-            //     Samples = wordData.Value.Value.Samples.Where(s => s != sampleToRemove).ToArray()
-            // };
+            // check if its ok
+            var updatedSamples = existingSamples.Value.Where(s => s.GetHashCode() != sampleToRemove.GetHashCode()).ToArray();
 
-            // await this.azureBlobService.SaveWordData(updatedWordData);
-
-            // return Result.Success(updatedWordData);
+            return (await this.azureBlobService
+                .SaveEtSamplesData(containerId, updatedSamples))
+                .Bind(r => Result.Success(updatedSamples));
         }
     }
 }

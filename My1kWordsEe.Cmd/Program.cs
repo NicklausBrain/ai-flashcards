@@ -14,10 +14,10 @@ namespace My1kWordsEe.Cmd
     {
         static async Task Main(string[] args)
         {
-            Console.WriteLine(AddEtSampleSentenceCommand.Prompt);
-            Console.WriteLine(JsonSchemaRecord.For(typeof(SampleEtSentence)));
-            //Console.WriteLine(AddEtWordCommand.Prompt);
-            //Console.WriteLine(JsonSchemaRecord.For(typeof(WordSenses)));
+            //Console.WriteLine(AddEtSampleSentenceCommand.Prompt);
+            //Console.WriteLine(JsonSchemaRecord.For(typeof(SampleEtSentence)));
+            Console.WriteLine(AddEtWordCommand.Prompt);
+            Console.WriteLine(JsonSchemaRecord.For(typeof(WordSenses)));
         }
 
         public static async Task WordsCorrectionProcedure()

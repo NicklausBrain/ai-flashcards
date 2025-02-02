@@ -1,4 +1,5 @@
-@page "/word/{etWord}"
+@page "/word/{Word}"
+@page "/word/{Word}/{SenseIndex:int}"
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
 @using BlazorBootstrap
@@ -17,6 +18,7 @@
 
 @inject IJSRuntime JS
 @inject GetOrAddEtWordCommand GetOrAddEtWordCommand
+@inject GetEtSampleSentencesQuery GetEtSampleSentencesQuery
 @inject AddEtSampleSentenceCommand AddEtSampleSentenceCommand
 @inject DeleteEtSampleSentenceCommand DeleteEtSampleSentenceCommand
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -29,7 +31,9 @@
     private ConfirmDialog ConfirmDialog = default!;
 
     [Parameter]
-    public required string EtWord { get; init; }
+    public required string Word { get; init; }
+    [Parameter]
+    public uint SenseIndex { get; init; } = 0;
 
     private Maybe<Result<EtWord>> EtWordData;
     private Maybe<Result<SampleSentenceWithMedia[]>> Samples;
@@ -43,10 +47,15 @@
             User = authState.User;
         }
 
-        EtWordData = EtWord.ValidateWord()
-        ? await this.GetOrAddEtWordCommand.Invoke(EtWord)
+        EtWordData = Word.ValidateWord()
+        ? await this.GetOrAddEtWordCommand.Invoke(Word)
         : Result.Failure<EtWord>("Invalid word");
 
+        Samples = await this.GetEtSampleSentencesQuery.Invoke(EtWord, SenseIndex);
+
+        // todo: can i chain/unite 2 results?
+
+        // todo: validate sense index
         await base.OnParametersSetAsync();
     }
 
@@ -61,14 +70,14 @@
             };
 
         var confirmation = await ConfirmDialog.ShowAsync(
-        title: "Are you sure you want to delete this?",
-        message1: "This will delete the record. Once deleted can not be rolled back.",
-        message2: "Do you want to proceed?", options);
+            title: "Are you sure you want to delete this?",
+            message1: "This will delete the record. Once deleted can not be rolled back.",
+            message2: "Do you want to proceed?", options);
 
         if (confirmation)
         {
             PreloadService.Show(SpinnerColor.Light, "Saving data...");
-            var deletionResult = await this.DeleteEtSampleSentenceCommand.Invoke(sampleSentence);
+            var deletionResult = await this.DeleteEtSampleSentenceCommand.Invoke(EtWord, SenseIndex, sampleSentence);
             if (deletionResult.IsSuccess)
             {
                 Samples = deletionResult;
@@ -93,14 +102,15 @@
         this.IsSampleGenerationInProgress = true;
         if (IsEtWordDataLoadedOk)
         {
-            this.Samples = await this.AddEtSampleSentenceCommand.Invoke(EtWordData.Value.Value.DefaultSense);
+            // bug we have many senses
+            this.Samples = await this.AddEtSampleSentenceCommand.Invoke(EtWord, SenseIndex);
         }
         this.IsSampleGenerationInProgress = false;
     }
 
     private async Task SpeakWord(MouseEventArgs e)
     {
-        await JS.InvokeVoidAsync("speakWord", EtWord);
+        await JS.InvokeVoidAsync("speakWord", Word);
     }
 
     private bool IsEtWordDataLoadedOk => EtWordData.HasValue && EtWordData.Value.IsSuccess;
@@ -110,6 +120,8 @@
     private string Error => EtWordData.Value.Error;
 
     private bool IsLoggedIn => User?.Identity?.IsAuthenticated ?? false;
+
+    private EtWord EtWord => EtWordData.Value.Value;
 }
 
 <script>
@@ -122,16 +134,16 @@
 <div class="text-left">
     <div class="row">
         <h1>
-            @EtWord
+            @Word
 
             @if (IsEtWordDataLoadedOk)
             {
                 <FavoriteButton Sample="@EtWordData"></FavoriteButton>
 
-                if (EtWordData.Value.Value.AudioUrl != null)
+                if (EtWord.AudioUrl != null)
                 {
                     <i role="button" class="bi bi-volume-down-fill small" @onclick="SpeakWord">
-                        <audio id="@EtWord" src="@EtWordData.Value.Value.AudioUrl"></audio>
+                        <audio id="@Word" src="@EtWord.AudioUrl"></audio>
                     </i>
                 }
             }
@@ -139,15 +151,12 @@
 
         @if (IsEtWordDataLoadedOk)
         {
-            var Value = EtWordData.Value.Value;
-
-             @if (Value.Senses.Any())
+             @if (EtWord.Senses.Any())
             {
-                <h4>[@string.Join(" / ", Value.Senses.Select(s => s.Word.En))]</h4>
+                <h4>[@string.Join(" / ", EtWord.Senses.Select(s => s.Word.En))]</h4>
             }
  
-         @* <h4>@Value.DefaultSense.Explanation.Et</h4> *@
-            <h4>@Value.DefaultSense.Definition.En</h4>
+            <h4>@EtWord.DefaultSense.Definition.En</h4>
         }
         else if (HasError)
         {
@@ -161,33 +170,40 @@
         }
     </div>
 
-    @if (Samples.HasValue && Samples.Value.IsSuccess)
+    @if (Samples.HasValue)
     {
-        <div class="row">
-            @foreach (var sample in Samples.Value.Value)
-            {
-                <div class="col col-12 col-sm-6 p-1">
-                    @* <SampleV2 Sample="@sample" DeleteSample="DeleteSampleSentence">
-                    </SampleV2> *@
-                </div>
-            }
-
-            <div class="col col-12 col-sm-6 p-1 text-center">
-                @if (IsSampleGenerationInProgress)
+        if (Samples.Value.IsSuccess)
+        {
+            <div class="row">
+                @foreach (var sample in Samples.Value.Value)
                 {
-                    <div class="text-center">
-                        <Spinner />
+                    <div class="col col-12 col-sm-6 p-1">
+                        <SampleV2 Sample="@sample" DeleteSample="DeleteSampleSentence">
+                        </SampleV2>
                     </div>
                 }
-                else
-                {
-                    <button type="button" class="btn btn-primary" onclick="@GenerateSample">
-                        <i class="bi bi-robot"></i>
-                        Generate sample sentence
-                    </button>
-                }
+
+                <div class="col col-12 col-sm-6 p-1 text-center">
+                    @if (IsSampleGenerationInProgress)
+                    {
+                        <div class="text-center">
+                            <Spinner />
+                        </div>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-primary" onclick="@GenerateSample">
+                            <i class="bi bi-robot"></i>
+                            Generate sample sentence
+                        </button>
+                    }
+                </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <h3 class="alert-warning">@Samples.Value.Error</h3>
+        }
     }
 </div>
 

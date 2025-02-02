@@ -84,6 +84,7 @@ namespace My1kWordsEe.Models
                 {
                     MaxDepth = 12,
                     WriteIndented = false,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
                     //RespectNullableAnnotations = true
                 };
                 JsonNode schema = options.GetJsonSchemaAsNode(type, ExporterOptions);

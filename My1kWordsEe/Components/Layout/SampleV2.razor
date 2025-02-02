@@ -3,6 +3,7 @@
 @using Microsoft.AspNetCore.Identity
 @using My1kWordsEe.Components.Account
 @using My1kWordsEe.Data
+@using My1kWordsEe.Models.Semantics
 @using My1kWordsEe.Services;
 @using My1kWordsEe.Services.Cqs
 @using My1kWordsEe.Models;
@@ -18,10 +19,10 @@
 
 @code {
     [Parameter]
-    public required SampleSentence Sample { get; init; }
+    public required SampleSentenceWithMedia Sample { get; init; }
 
     [Parameter]
-    public Func<SampleSentence, Task>? DeleteSample { get; init; }
+    public Func<SampleSentenceWithMedia, Task>? DeleteSample { get; init; }
 
     private bool IsAdmin { get; set; } = false;
 
@@ -40,7 +41,7 @@
 
     private async Task PlaySample(MouseEventArgs e)
     {
-        await JS.InvokeVoidAsync("playAudioSample", Sample.EeAudioUrl);
+        await JS.InvokeVoidAsync("playAudioSample", Sample.AudioUrl);
     }
 }
 
@@ -57,7 +58,7 @@
             <tbody>
                 <tr>
                     <td>
-                        @Sample.EeSentence
+                        @Sample.Sentence.Et
                     </td>
                     <td rowspan="3">
                         <ul class="list-group list-group-flush">
@@ -65,7 +66,7 @@
                                 <Button Color="ButtonColor.Primary" Size="ButtonSize.Small" @onclick="PlaySample">
                                     <i class="bi bi-volume-down-fill"></i>
                                 </Button>
-                                <audio id="@Sample.EeAudioUrl" src="@Sample.EeAudioUrl"></audio>
+                                <audio id="@Sample.AudioUrl" src="@Sample.AudioUrl"></audio>
                             </li>
                             @if (IsLoggedIn)
                             {
@@ -87,7 +88,7 @@
                 </tr>
                 <tr>
                     <td>
-                        @Sample.EnSentence
+                        @Sample.Sentence.En
                     </td>
                 </tr>
                 <tr>

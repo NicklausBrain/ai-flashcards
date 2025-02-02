@@ -56,6 +56,7 @@ namespace My1kWordsEe
 
             builder.Services.AddSingleton<AddEtWordCommand>();
             builder.Services.AddSingleton<GetOrAddEtWordCommand>();
+            builder.Services.AddSingleton<GetEtSampleSentencesQuery>();
             builder.Services.AddSingleton<AddEtSampleSentenceCommand>();
             builder.Services.AddSingleton<DeleteEtSampleSentenceCommand>();
 

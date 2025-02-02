@@ -5,7 +5,7 @@ using My1kWordsEe.Models.Grammar;
 
 namespace My1kWordsEe.Models
 {
-    public class TranslatedString
+    public struct TranslatedString
     {
         [JsonPropertyName(nameof(LanguageCode.Et))]
         [Description("Tõlge eesti keelde")]
