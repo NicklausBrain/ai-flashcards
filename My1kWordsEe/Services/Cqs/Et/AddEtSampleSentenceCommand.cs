@@ -2,11 +2,10 @@ using System.Text.Json;
 
 using CSharpFunctionalExtensions;
 
+using My1kWordsEe.Models;
 using My1kWordsEe.Models.Semantics;
 
 using My1kWordsEe.Services.Db;
-
-using static My1kWordsEe.Models.Extensions;
 
 namespace My1kWordsEe.Services.Cqs.Et
 {
@@ -18,9 +17,8 @@ namespace My1kWordsEe.Services.Cqs.Et
         public static readonly string Prompt =
             "Sa oled keeleõppe süsteemi abiline, mis aitab õppida enim levinud eesti keele sõnu.\n" +
             "Sisendiks on JSON-objekt, mis kirjeldab eesti keele sõna tähendust ja grammatilist vormi:\n" +
-            $"```\n{GetJsonSchema(typeof(WordSense))}\n```\n" +
-            "Teie ülesanne on genereerida JSON-objekt, mis sisaldab näidislauseid eesti ja inglise keeles, kasutades antud sõna sobivas grammatilises vormis:\n" +
-            $"```\n{GetJsonSchema(typeof(SampleSentence))}\n```\n";
+            $"```\n{JsonSchemaRecord.For(typeof(WordSense))}\n```\n" +
+            "Teie ülesanne on genereerida JSON-objekt, mis sisaldab näidislauseid eesti ja inglise keeles, kasutades antud sõna sobivas grammatilises vormis\n";
 
         private readonly AzureStorageClient azureBlobClient;
         private readonly OpenAiClient openAiClient;
@@ -88,22 +86,22 @@ namespace My1kWordsEe.Services.Cqs.Et
             //     .Bind(r => Result.Success(updatedWordData));
         }
 
-        private Task<Result<Uri>> GenerateImage(SampleSentence sentence) =>
+        private Task<Result<Uri>> GenerateImage(SampleEtSentence sentence) =>
             this.openAiClient.GetDallEPrompt(sentence.Sentence.En).Bind(
             this.stabilityAiClient.GenerateImage).Bind(
             this.azureBlobClient.SaveImage);
 
-        private Task<Result<Uri>> GenerateSpeech(SampleSentence sentence) =>
+        private Task<Result<Uri>> GenerateSpeech(SampleEtSentence sentence) =>
             this.addAudioCommand.Invoke(sentence.Sentence.Et);
 
-        private async Task<Result<SampleSentence>> GetSampleSentence(WordSense word)
+        private async Task<Result<SampleEtSentence>> GetSampleSentence(WordSense word)
         {
             var input = JsonSerializer.Serialize(word);
 
-            var result = await this.openAiClient.CompleteJsonSchemaAsync<SampleSentence>(
+            var result = await this.openAiClient.CompleteJsonSchemaAsync<SampleEtSentence>(
                 instructions: Prompt,
                 input: input,
-                schema: GetJsonSchema(typeof(SampleSentence)),
+                schema: JsonSchemaRecord.For(typeof(SampleEtSentence)),
                 temperature: 0.7f);
 
             return result;

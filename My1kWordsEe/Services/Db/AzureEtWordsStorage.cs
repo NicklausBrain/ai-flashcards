@@ -1,4 +1,6 @@
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Unicode;
 
 using Azure;
 using Azure.Storage.Blobs;
@@ -56,7 +58,11 @@ namespace My1kWordsEe.Services.Db
             this.GetEtWordsContainer().Bind(container =>
             this.UploadStreamAsync(
                 container.GetBlobClient(JsonBlobName(word.Value)),
-                new MemoryStream(JsonSerializer.SerializeToUtf8Bytes(word))));
+                new MemoryStream(JsonSerializer.SerializeToUtf8Bytes(word, options: new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+                    WriteIndented = false
+                }))));
 
         private Task<Result<BlobContainerClient>> GetEtWordsContainer() => this.GetOrCreateContainer("et-word");
     }

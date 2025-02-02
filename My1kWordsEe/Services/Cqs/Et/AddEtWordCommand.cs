@@ -69,7 +69,7 @@ Väljund peab olema JSON-objekt vastavalt antud skeemile.";
             var response = await this.openAiClient.CompleteJsonSchemaAsync<WordSenses>(
                 Prompt,
                 etWord,
-                GetJsonSchema(typeof(WordSenses)),
+                JsonSchemaRecord.For(typeof(WordSenses)),
                 temperature: 0.1f);
 
             if (response.IsFailure)

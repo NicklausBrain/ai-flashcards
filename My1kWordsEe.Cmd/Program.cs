@@ -8,8 +8,6 @@ using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Cqs;
 using My1kWordsEe.Services.Cqs.Et;
 
-using static My1kWordsEe.Models.Extensions;
-
 namespace My1kWordsEe.Cmd
 {
     internal class Program
@@ -17,7 +15,7 @@ namespace My1kWordsEe.Cmd
         static async Task Main(string[] args)
         {
             Console.WriteLine(AddEtWordCommand.Prompt);
-            Console.WriteLine(GetJsonSchema(typeof(WordSenses)));
+            Console.WriteLine(JsonSchemaRecord.For(typeof(WordSenses)));
         }
 
         public static async Task WordsCorrectionProcedure()

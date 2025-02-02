@@ -8,11 +8,11 @@ namespace My1kWordsEe.Models
     public class TranslatedString
     {
         [JsonPropertyName(nameof(LanguageCode.Et))]
-        [Description("Tõlge eesti keelde (ISO 639 code: et)")]
+        [Description("Tõlge eesti keelde")]
         public required string Et { get; set; }
 
         [JsonPropertyName(nameof(LanguageCode.En))]
-        [Description("Translation in English (ISO 639 code: en)")]
+        [Description("Translation in English")]
         public required string En { get; set; }
     }
 }
