@@ -13,12 +13,13 @@ namespace My1kWordsEe.Services.Cqs.Et
     {
         public const int MaxSamples = 6;
 
-        // todo: test it
         public static readonly string Prompt =
             "Sa oled keeleõppe süsteemi abiline, mis aitab õppida enim levinud eesti keele sõnu.\n" +
-            "Sisendiks on JSON-objekt, mis kirjeldab eesti keele sõna tähendust ja grammatilist vormi:\n" +
-            $"```\n{JsonSchemaRecord.For(typeof(WordSense))}\n```\n" +
-            "Teie ülesanne on genereerida JSON-objekt, mis sisaldab näidislauseid eesti ja inglise keeles, kasutades antud sõna sobivas grammatilises vormis\n";
+            "Sisendiks on järgmine JSON-objekt, mis kirjeldab eesti keele sõna põhivormi, tähendust ja kõneosa:\n" +
+            $"{JsonSchemaRecord.For(typeof(Input))}\n" +
+            "Sinu ülesanne on:\n" +
+            "1. Vaadata sisendit ja määrata, kuidas antud sõna sobivas grammatilises vormis lauses kasutada.\n" +
+            "2. Genereerida JSON-objekt, mis sisaldab ühte näidislause paari eesti ja inglise keeles.\n";
 
         private readonly AzureStorageClient azureBlobClient;
         private readonly OpenAiClient openAiClient;
@@ -96,7 +97,12 @@ namespace My1kWordsEe.Services.Cqs.Et
 
         private async Task<Result<SampleEtSentence>> GetSampleSentence(WordSense word)
         {
-            var input = JsonSerializer.Serialize(word);
+            var input = JsonSerializer.Serialize(new Input
+            {
+                Sõna = word.Word.Et,
+                Tähendus = word.Definition.Et,
+                Kõneosa = word.PartOfSpeech.ToString(),
+            });
 
             var result = await this.openAiClient.CompleteJsonSchemaAsync<SampleEtSentence>(
                 instructions: Prompt,
@@ -105,6 +111,13 @@ namespace My1kWordsEe.Services.Cqs.Et
                 temperature: 0.7f);
 
             return result;
+        }
+
+        private struct Input
+        {
+            public required string Sõna { get; init; }
+            public required string Tähendus { get; init; }
+            public required string Kõneosa { get; init; }
         }
     }
 }
