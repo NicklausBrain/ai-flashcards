@@ -6,6 +6,7 @@
 @using My1kWordsEe.Components.Account
 @using My1kWordsEe.Models;
 @using My1kWordsEe.Components.Layout;
+@using My1kWordsEe.Models.Semantics
 @using My1kWordsEe.Services.Cqs
 @using My1kWordsEe.Services.Scoped
 
@@ -18,7 +19,7 @@
 
     private Maybe<Result<Favorites>> Favorites;
 
-    private List<SampleWord> SampleWordsList = new List<SampleWord>();
+    private List<EtWord> SampleWordsList = new List<EtWord>();
 
     private async void OnWordsListUpdate(SortableListEventArgs args)
     {
@@ -67,9 +68,9 @@
         StateHasChanged();
     }
 
-    private IDictionary<string, SampleWord> FavoriteWords => Favorites.Value.Value.Words;
+    private IDictionary<string, EtWord> FavoriteWords => Favorites.Value.Value.Words;
 
-    private IDictionary<string, SampleSentence> FavoriteSentences => Favorites.Value.Value.Sentences;
+    private IDictionary<string, SampleSentenceWithMedia> FavoriteSentences => Favorites.Value.Value.Sentences;
 }
 
 <PageTitle>Favorites | Lemmikud</PageTitle>
@@ -84,7 +85,7 @@
                 <Content>
                     @if (FavoriteWords.Any())
                     {
-                        <SortableGrid TItem="SampleWord" Data="SampleWordsList" Context="item" OnUpdate="@OnWordsListUpdate">
+                        <SortableGrid TItem="EtWord" Data="SampleWordsList" Context="item" OnUpdate="@OnWordsListUpdate">
                             <ItemTemplate>
                                 <Card role="button">
                                     <CardBody>
@@ -93,15 +94,15 @@
                                                 <i role="button" class="bi bi-x"
                                                     @onclick="@(() => RemoveFromFavorites(item))"></i>
                                             </div>
-                                            <div class="col-10">@item.EeWord</div>
+                                            <div class="col-10">@item.Value</div>
                                             <div class="col-1">
-                                                <a href="@($"/word/{item.EeWord}")" target="_blank">
+                                                <a href="@($"/word/{item.Value}")" target="_blank">
                                                     <i role="link" class="bi bi-box-arrow-up-right float-end"></i>
                                                 </a>
                                             </div>
                                         </CardTitle>
-                                        <CardSubTitle>@item.EnWord</CardSubTitle>
-                                        <CardText>@item.EnExplanation</CardText>
+                                        <CardSubTitle>@item.DefaultSense.Word.En</CardSubTitle>
+                                        <CardText>@item.DefaultSense.Definition.En</CardText>
                                     </CardBody>
                                 </Card>
                             </ItemTemplate>
@@ -122,8 +123,8 @@
                             {
                                 var sentence = sentencePair.Value;
                                 <div class="col col-12 col-sm-6 p-1">
-                                   @*  <SampleV2 Sample="sentence">
-                                    </SampleV2> *@
+                                    <SampleV2 Sample="sentence">
+                                    </SampleV2>
                                 </div>
                             }
                         }

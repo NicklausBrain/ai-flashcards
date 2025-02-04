@@ -7,7 +7,7 @@ namespace My1kWordsEe.Models.Semantics
     /// since chat GPT does not support array response.
     /// </summary>
     [Description("Eesti sõnataju")]
-    public struct WordSenses
+    public readonly struct WordSenses
     {
         [Description("Antud sõna")]
         public required string EtWord { get; init; }

@@ -1,6 +1,7 @@
 using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Models;
+using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Db;
 
 namespace My1kWordsEe.Services.Cqs
@@ -18,13 +19,13 @@ namespace My1kWordsEe.Services.Cqs
             this.azureBlobService = azureBlobService;
         }
 
-        public async Task<Result<Favorites>> Invoke(string userId, IEnumerable<SampleWord> sampleWords)
+        public async Task<Result<Favorites>> Invoke(string userId, IEnumerable<EtWord> sampleWords)
         {
             return await this.getFavoritesCommand.Invoke(userId).Bind(async favorites =>
             {
                 var reorderedFavorites = new Favorites(
                     userId: favorites.UserId,
-                    words: sampleWords.ToDictionary(w => w.EeWord),
+                    words: sampleWords.ToDictionary(w => w.Value),
                     sentences: favorites.Sentences);
                 return await this.azureBlobService.SaveFavorites(reorderedFavorites).Bind(_ =>
                     Result.Success(reorderedFavorites));

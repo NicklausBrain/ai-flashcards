@@ -33,7 +33,7 @@
     [Parameter]
     public required string Word { get; init; }
     [Parameter]
-    public uint SenseIndex { get; init; } = 0;
+    public int SenseIndex { get; init; } = 0;
 
     private Maybe<Result<EtWord>> EtWordData;
     private Maybe<Result<SampleSentenceWithMedia[]>> Samples;
@@ -51,7 +51,7 @@
         ? await this.GetOrAddEtWordCommand.Invoke(Word)
         : Result.Failure<EtWord>("Invalid word");
 
-        Samples = await this.GetEtSampleSentencesQuery.Invoke(EtWord, SenseIndex);
+        Samples = await this.GetEtSampleSentencesQuery.Invoke(EtWord, (uint)SenseIndex);
 
         // todo: can i chain/unite 2 results?
 
@@ -77,7 +77,7 @@
         if (confirmation)
         {
             PreloadService.Show(SpinnerColor.Light, "Saving data...");
-            var deletionResult = await this.DeleteEtSampleSentenceCommand.Invoke(EtWord, SenseIndex, sampleSentence);
+            var deletionResult = await this.DeleteEtSampleSentenceCommand.Invoke(EtWord, (uint)SenseIndex, sampleSentence);
             if (deletionResult.IsSuccess)
             {
                 Samples = deletionResult;
@@ -102,8 +102,7 @@
         this.IsSampleGenerationInProgress = true;
         if (IsEtWordDataLoadedOk)
         {
-            // bug we have many senses
-            this.Samples = await this.AddEtSampleSentenceCommand.Invoke(EtWord, SenseIndex);
+            this.Samples = await this.AddEtSampleSentenceCommand.Invoke(EtWord, (uint)SenseIndex);
         }
         this.IsSampleGenerationInProgress = false;
     }
@@ -138,7 +137,7 @@
 
             @if (IsEtWordDataLoadedOk)
             {
-                <FavoriteButton Sample="@EtWordData"></FavoriteButton>
+                <FavoriteButton Sample="@EtWord"></FavoriteButton>
 
                 if (EtWord.AudioUrl != null)
                 {
@@ -151,12 +150,19 @@
 
         @if (IsEtWordDataLoadedOk)
         {
-             @if (EtWord.Senses.Any())
+            @if (EtWord.Senses.Any())
             {
-                <h4>[@string.Join(" / ", EtWord.Senses.Select(s => s.Word.En))]</h4>
+                <h4>[@for (var i = 0; i< EtWord.Senses.Length; i++) {
+                        if (i == SenseIndex) {
+                            @EtWord.Senses[i].Word.En
+                        } else {
+                             <a href="@($"/word/{EtWord.Senses[i].Word.Et}/{i}")">@EtWord.Senses[i].Word.En</a>
+                        }
+                        <text>|</text>
+                    }]</h4>
             }
  
-            <h4>@EtWord.DefaultSense.Definition.En</h4>
+            <h4>@EtWord.Senses[SenseIndex].Definition.En</h4>
         }
         else if (HasError)
         {

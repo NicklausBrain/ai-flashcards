@@ -1,31 +1,33 @@
+using My1kWordsEe.Models.Semantics;
+
 namespace My1kWordsEe.Models
 {
     public class Favorites
     {
         public Favorites(
             string userId,
-            IDictionary<string, SampleWord>? words = null,
-            IDictionary<string, SampleSentence>? sentences = null)
+            IDictionary<string, EtWord>? words = null,
+            IDictionary<string, SampleSentenceWithMedia>? sentences = null)
         {
             UserId = userId;
-            Words = words ?? new Dictionary<string, SampleWord>();
-            Sentences = sentences ?? new Dictionary<string, SampleSentence>();
+            Words = words ?? new Dictionary<string, EtWord>();
+            Sentences = sentences ?? new Dictionary<string, SampleSentenceWithMedia>();
         }
 
         public string UserId { get; }
 
-        public IDictionary<string, SampleWord> Words { get; }
+        public IDictionary<string, EtWord> Words { get; }
 
-        public IDictionary<string, SampleSentence> Sentences { get; }
+        public IDictionary<string, SampleSentenceWithMedia> Sentences { get; }
 
-        public bool IsFavorite(SampleWord word)
+        public bool IsFavorite(EtWord word)
         {
-            return this.Words.ContainsKey(word.EeWord.ToLowerInvariant());
+            return this.Words.ContainsKey(word.Value.ToLowerInvariant());
         }
 
-        public bool IsFavorite(SampleSentence sentence)
+        public bool IsFavorite(ISampleEtSentence sentence)
         {
-            return this.Sentences.ContainsKey(sentence.EeSentence.ToLowerInvariant());
+            return this.Sentences.ContainsKey(sentence.Sentence.Et.ToLowerInvariant());
         }
     }
 }

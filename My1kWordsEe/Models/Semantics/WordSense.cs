@@ -6,7 +6,7 @@ namespace My1kWordsEe.Models.Semantics
     /// A sense or meaning of a word with respective forms.
     /// </summary>
     [Description("Eesti sõna tähendus.")]
-    public record WordSense
+    public readonly struct WordSense
     {
         [Description("Sama antud sõna ja selle otsetõlge")]
         public required TranslatedString Word { get; init; }

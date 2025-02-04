@@ -19,11 +19,10 @@
         await base.OnParametersSetAsync();
     }
 
-    // todo: fix it
-    protected bool IsFavorite => false;
-    // Favorites.HasValue &&
-    // Favorites.Value.IsSuccess &&
-    // Favorites.Value.Value.IsFavorite(Sample);
+    protected bool IsFavorite =>
+        Favorites.HasValue &&
+        Favorites.Value.IsSuccess &&
+        Favorites.Value.Value.IsFavorite(Sample);
 
     protected bool IsFeatureAvailable => Favorites.HasValue && Favorites.Value.IsSuccess;
 
