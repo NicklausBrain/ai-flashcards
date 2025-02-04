@@ -95,9 +95,9 @@ namespace My1kWordsEe.Services.Cqs.Et
         }
 
         private Task<Result<Uri>> GenerateImage(SampleEtSentence sentence) =>
-            this.openAiClient.GetDallEPrompt(sentence.Sentence.En).Bind(
-            this.stabilityAiClient.GenerateImage).Bind(
-            this.azureBlobClient.SaveImage);
+            this.openAiClient.GetDallEPrompt(sentence.Sentence.En).BindZip(
+            this.stabilityAiClient.GenerateImage).Bind(p =>
+            this.azureBlobClient.SaveImage(p.First, p.Second));
 
         private Task<Result<Uri>> GenerateSpeech(SampleEtSentence sentence) =>
             this.addAudioCommand.Invoke(sentence.Sentence.Et);

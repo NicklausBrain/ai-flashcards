@@ -1,3 +1,5 @@
+using System.Text;
+
 using Azure.Storage.Blobs;
 
 using CSharpFunctionalExtensions;
@@ -10,15 +12,23 @@ namespace My1kWordsEe.Services.Db
             this.GetImageContainer().Bind((container) =>
             this.DeleteIfExistsAsync(container.GetBlobClient(blobName)));
 
-        public Task<Result<Uri>> SaveImage(Stream imageStream) =>
+        public Task<Result<Uri>> SaveImage(string prompt, MemoryStream imageStream) =>
             this.GetImageContainer().Bind((container) =>
-            this.UploadStreamAsync(
-                container.GetBlobClient(JpgBlobName()),
-                imageStream));
+            {
+                var blobId = Guid.NewGuid();
+                Task.Run(() =>
+                {
+                    return this.UploadStreamAsync(
+                        container.GetBlobClient($"{blobId}.txt"),
+                        new MemoryStream(Encoding.UTF8.GetBytes(prompt)));
+                });
+                return this.UploadStreamAsync(
+                    container.GetBlobClient($"{blobId}.jpg"),
+                    imageStream);
+            }
+            );
 
         private Task<Result<BlobContainerClient>> GetImageContainer() =>
             this.GetOrCreateContainer("image");
-
-        private static string JpgBlobName() => Guid.NewGuid() + ".jpg";
     }
 }
