@@ -6,9 +6,9 @@ using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Models;
 using My1kWordsEe.Models.Semantics;
-
 using My1kWordsEe.Services.Db;
 
+using static My1kWordsEe.Models.Conventions;
 using static My1kWordsEe.Services.Db.AzureStorageClient;
 
 namespace My1kWordsEe.Services.Cqs.Et
@@ -64,8 +64,9 @@ namespace My1kWordsEe.Services.Cqs.Et
                 return Result.Failure<SampleSentenceWithMedia[]>($"Sentence generation failed: {sentence.Error}");
             }
 
-            var imageGeneration = this.GenerateImage(sentence.Value);
-            var speechGeneration = this.GenerateSpeech(sentence.Value);
+            var sampleId = Guid.NewGuid();
+            var imageGeneration = this.GenerateImage(sampleId, sentence.Value);
+            var speechGeneration = this.GenerateSpeech(sampleId, sentence.Value);
             await Task.WhenAll(imageGeneration, speechGeneration);
 
             if (imageGeneration.Result.IsFailure)
@@ -80,13 +81,13 @@ namespace My1kWordsEe.Services.Cqs.Et
 
             var updatedSamples = existingSamples.Value.Append(new SampleSentenceWithMedia
             {
+                Id = sampleId,
                 Sentence = new TranslatedString
                 {
                     En = sentence.Value.Sentence.En,
                     Et = sentence.Value.Sentence.Et,
                 },
-                AudioUrl = speechGeneration.Result.Value,
-                ImageUrl = imageGeneration.Result.Value,
+                BlobEndpoint = azureBlobClient.AzureBlobEndpoint
             }).ToArray();
 
             return (await this.azureBlobClient
@@ -94,13 +95,15 @@ namespace My1kWordsEe.Services.Cqs.Et
                 .Bind(r => Result.Success(updatedSamples));
         }
 
-        private Task<Result<Uri>> GenerateImage(SampleEtSentence sentence) =>
+        private Task<Result<Uri>> GenerateImage(Guid sampleId, SampleEtSentence sentence) =>
             this.openAiClient.GetDallEPrompt(sentence.Sentence.En).BindZip(
             this.stabilityAiClient.GenerateImage).Bind(p =>
-            this.azureBlobClient.SaveImage(p.First, p.Second));
+            this.azureBlobClient.SaveImage(sampleId, p.First, p.Second));
 
-        private Task<Result<Uri>> GenerateSpeech(SampleEtSentence sentence) =>
-            this.addAudioCommand.Invoke(sentence.Sentence.Et);
+        private Task<Result<Uri>> GenerateSpeech(Guid sampleId, SampleEtSentence sentence) =>
+            this.addAudioCommand.Invoke(
+                text: sentence.Sentence.Et,
+                fileName: $"{sampleId}.{AudioFormat}");
 
         private async Task<Result<SampleEtSentence>> GetSampleSentence(EtWord word, uint senseIndex)
         {

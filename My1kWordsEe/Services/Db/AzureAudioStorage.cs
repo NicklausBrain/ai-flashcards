@@ -2,6 +2,8 @@ using Azure.Storage.Blobs;
 
 using CSharpFunctionalExtensions;
 
+using static My1kWordsEe.Models.Conventions;
+
 namespace My1kWordsEe.Services.Db
 {
     public partial class AzureStorageClient
@@ -16,12 +18,7 @@ namespace My1kWordsEe.Services.Db
                 container.GetBlobClient(blobName),
                 audioStream));
 
-        public Task<Result<Uri>> SaveAudio(Stream audioStream) =>
-            this.SaveAudio(audioStream, WavBlobName());
-
         private Task<Result<BlobContainerClient>> GetAudioContainer() =>
-            this.GetOrCreateContainer("audio");
-
-        private static string WavBlobName() => Guid.NewGuid() + ".wav";
+            this.GetOrCreateContainer(AudioContainer);
     }
 }

@@ -1,5 +1,6 @@
 using CSharpFunctionalExtensions;
 
+using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Cqs;
 
 namespace My1kWordsEe.Models.Games
@@ -9,23 +10,23 @@ namespace My1kWordsEe.Models.Games
         private readonly CheckEeListeningCommand checkEeListeningCommand;
 
         public ListenToEeGame(
-            string eeWord,
+            string etWord,
             int sampleIndex,
-            SampleSentence sampleSentence,
+            SampleSentenceWithMedia sampleSentence,
             CheckEeListeningCommand checkEeListeningCommand)
         {
             this.SampleSentence = sampleSentence;
-            this.EeWord = eeWord;
+            this.EtWord = etWord;
             this.SampleIndex = sampleIndex;
-            var rnWords = sampleSentence.EeSentence.Split([" ", "."], StringSplitOptions.RemoveEmptyEntries).ToArray();
+            var rnWords = sampleSentence.Sentence.Et.Split([" ", "."], StringSplitOptions.RemoveEmptyEntries).ToArray();
             Random.Shared.Shuffle(rnWords);
             this.RandomizedWords = rnWords;
             this.checkEeListeningCommand = checkEeListeningCommand;
         }
 
-        public SampleSentence SampleSentence { get; init; }
+        public SampleSentenceWithMedia SampleSentence { get; init; }
 
-        public string EeWord { get; init; }
+        public string EtWord { get; init; }
 
         public int SampleIndex { get; init; }
 
@@ -35,11 +36,11 @@ namespace My1kWordsEe.Models.Games
 
         public bool IsFinished => CheckResult.HasValue;
 
-        public string EeSentence => SampleSentence.EeSentence;
+        public string EtSentence => SampleSentence.Sentence.Et;
 
         public Uri ImageUrl => SampleSentence.ImageUrl;
 
-        public Uri AudioUrl => SampleSentence.EeAudioUrl;
+        public Uri AudioUrl => SampleSentence.AudioUrl;
 
         public string UserInput { get; set; } = string.Empty;
 
@@ -54,7 +55,7 @@ namespace My1kWordsEe.Models.Games
             }
 
             var userInput = UserInput.Trim('.', ' ');
-            var eeSampleSentence = SampleSentence.EeSentence.Trim('.', ' ');
+            var eeSampleSentence = SampleSentence.Sentence.Et.Trim('.', ' ');
 
             if (string.Equals(
                 userInput,
@@ -62,8 +63,8 @@ namespace My1kWordsEe.Models.Games
                 StringComparison.InvariantCultureIgnoreCase))
             {
                 CheckResult = Result.Success(EeListeningCheckResult.Success(
-                    eeSentence: SampleSentence.EeSentence,
-                    enSentence: SampleSentence.EnSentence,
+                    eeSentence: SampleSentence.Sentence.Et,
+                    enSentence: SampleSentence.Sentence.En,
                     eeUserSentence: userInput));
             }
             else

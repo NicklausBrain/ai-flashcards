@@ -11,9 +11,11 @@ namespace My1kWordsEe.Services.Db
     public partial class AzureStorageClient
     {
         public const string ApiSecretKey = "Secrets:AzureBlobConnectionString";
+        public const string AzureBlobEndpointKey = "AzureBlobEndpoint";
 
         private readonly IConfiguration config;
         private readonly ILogger logger;
+        public readonly Uri AzureBlobEndpoint;
 
         public AzureStorageClient(
             IConfiguration config,
@@ -21,6 +23,8 @@ namespace My1kWordsEe.Services.Db
         {
             this.config = config;
             this.logger = logger;
+            // todo: try to get it from parced  ApiSecretKey instead
+            this.AzureBlobEndpoint = new Uri(this.config[AzureBlobEndpointKey]);
         }
 
         private async Task<Result<BlobContainerClient>> GetOrCreateContainer(string containerId)

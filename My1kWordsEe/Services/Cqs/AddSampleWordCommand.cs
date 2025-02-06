@@ -45,14 +45,10 @@ namespace My1kWordsEe.Services.Cqs
                 return Result.Failure<SampleWord>(aiError);
             }
 
-            (await this.addAudioCommand.Invoke(eeWord)).Deconstruct(
-                out bool isAudioSaved,
-                out bool _,
-                out Uri audioUri);
-
-            sampleWord = isAudioSaved
-                ? sampleWord with { EeAudioUrl = audioUri }
-                : sampleWord;
+            //(await this.addAudioCommand.Invoke(eeWord)).Deconstruct(
+            //    out bool isAudioSaved,
+            //    out bool _,
+            //    out Uri audioUri);
 
             return (await azureBlobClient.SaveWordData(sampleWord))
                 .Bind(_ => Result.Of(sampleWord));

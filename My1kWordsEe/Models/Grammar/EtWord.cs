@@ -2,6 +2,8 @@ using System.Text.Json.Serialization;
 
 using My1kWordsEe.Models.Grammar;
 
+using static My1kWordsEe.Models.Conventions;
+
 namespace My1kWordsEe.Models.Semantics
 {
     /// <summary>
@@ -9,6 +11,9 @@ namespace My1kWordsEe.Models.Semantics
     /// </summary>
     public readonly struct EtWord
     {
+        [JsonIgnore]
+        public Uri BlobEndpoint { get; init; }
+
         public required string Value { get; init; }
 
         public LanguageCode Language => LanguageCode.Et;
@@ -18,7 +23,8 @@ namespace My1kWordsEe.Models.Semantics
         /// <summary>
         /// Sample pronunciation of the word.
         /// </summary>
-        public Uri? AudioUrl { get; init; } // todo: use relative url
+        [JsonIgnore]
+        public Uri AudioUrl => new Uri(BlobEndpoint, $"/{AudioContainer}/{Value}.{AudioFormat}");
 
         [JsonIgnore]
         public WordSense DefaultSense => Senses[0];

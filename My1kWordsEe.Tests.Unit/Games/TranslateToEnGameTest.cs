@@ -1,33 +1,31 @@
-using System;
-using System.Threading.Tasks;
-
 using CSharpFunctionalExtensions;
 
 using Moq;
 
 using My1kWordsEe.Models;
 using My1kWordsEe.Models.Games;
+using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Cqs;
-
-using Xunit;
 
 namespace My1kWordsEe.Tests.Models.Games
 {
     public class TranslateToEnGameTest
     {
         private readonly Mock<CheckEnTranslationCommand> _checkEnTranslationCommandMock;
-        private readonly SampleSentence _sampleSentence;
+        private readonly SampleSentenceWithMedia _sampleSentence;
 
         public TranslateToEnGameTest()
         {
             _checkEnTranslationCommandMock = new Mock<CheckEnTranslationCommand>(null);
-            _sampleSentence = new SampleSentence
+            _sampleSentence = new SampleSentenceWithMedia
             {
-                EeWord = "Tere",
-                EeSentence = "Tere",
-                EnSentence = "Hello",
-                EeAudioUrl = new Uri("http://example.com/audio"),
-                ImageUrl = new Uri("http://example.com/image")
+                Id = Guid.NewGuid(),
+                Sentence = new TranslatedString
+                {
+                    Et = "Tere",
+                    En = "Hello",
+                },
+                BlobEndpoint = new Uri("http://example.com"),
             };
         }
 
@@ -40,9 +38,9 @@ namespace My1kWordsEe.Tests.Models.Games
             Assert.Equal(1, game.SampleIndex);
             Assert.Equal(_sampleSentence, game.SampleSentence);
             Assert.False(game.IsFinished);
-            Assert.Equal(_sampleSentence.EeSentence, game.EeSentence);
+            Assert.Equal(_sampleSentence.Sentence.Et, game.EtSentence);
             Assert.Equal(_sampleSentence.ImageUrl, game.ImageUrl);
-            Assert.Equal(_sampleSentence.EeAudioUrl, game.AudioUrl);
+            Assert.Equal(_sampleSentence.AudioUrl, game.AudioUrl);
             Assert.Equal(string.Empty, game.UserTranslation);
             Assert.False(game.IsCheckInProgress);
             Assert.False(game.CheckResult.HasValue);

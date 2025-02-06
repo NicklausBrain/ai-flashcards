@@ -1,30 +1,35 @@
 using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Services.Cqs;
+using My1kWordsEe.Services.Cqs.Et;
 
 namespace My1kWordsEe.Models.Games
 {
     public class ListenToEeGameFactory
     {
-        GetOrAddSampleWordCommand getOrAddSampleWordCommand;
-        AddSampleSentenceCommand addSampleSentenceCommand;
-        CheckEeListeningCommand checkEeListeningCommand;
+        private readonly GetOrAddEtWordCommand getOrAddEtWordCommand;
+        private readonly GetEtSampleSentencesQuery getEtSampleSentencesQuery;
+        private readonly AddEtSampleSentenceCommand addEtSampleSentenceCommand;
+        private readonly CheckEeListeningCommand checkEeListeningCommand;
 
         public ListenToEeGameFactory(
-            GetOrAddSampleWordCommand getOrAddSampleWordCommand,
-            AddSampleSentenceCommand addSampleSentenceCommand,
+            GetOrAddEtWordCommand getOrAddSampleWordCommand,
+            GetEtSampleSentencesQuery getEtSampleSentencesQuery,
+            AddEtSampleSentenceCommand addSampleSentenceCommand,
             CheckEeListeningCommand checkEeListeningCommand)
         {
-            this.getOrAddSampleWordCommand = getOrAddSampleWordCommand;
-            this.addSampleSentenceCommand = addSampleSentenceCommand;
+            this.getOrAddEtWordCommand = getOrAddSampleWordCommand;
+            this.getEtSampleSentencesQuery = getEtSampleSentencesQuery;
+            this.addEtSampleSentenceCommand = addSampleSentenceCommand;
             this.checkEeListeningCommand = checkEeListeningCommand;
         }
 
 
         public async Task<Result<ListenToEeGame>> Generate(
             string? eeWord,
-            int? wordIndex)
+            int? sampleIndex = 0)
         {
+            const int senseIndex = 0;
             eeWord = (eeWord ?? GetRandomEeWord()).ToLower();
 
             if (!eeWord.ValidateWord())
@@ -32,24 +37,31 @@ namespace My1kWordsEe.Models.Games
                 return Result.Failure<ListenToEeGame>("Not an Estonian word");
             }
 
-            var sampleWord = await getOrAddSampleWordCommand.Invoke(eeWord);
+            var sampleWord = await getOrAddEtWordCommand.Invoke(eeWord);
 
             if (sampleWord.IsFailure)
             {
                 return Result.Failure<ListenToEeGame>(sampleWord.Error);
             }
 
-            if (sampleWord.Value.Samples.Any())
+            var samples = await getEtSampleSentencesQuery.Invoke(sampleWord.Value, senseIndex);
+
+            if (samples.IsFailure)
             {
-                return new ListenToEeGame(eeWord, 0, sampleWord.Value.Samples.First(), checkEeListeningCommand);
+                return Result.Failure<ListenToEeGame>(samples.Error);
+            }
+
+            if (samples.Value.Any())
+            {
+                return new ListenToEeGame(eeWord, 0, samples.Value.First(), checkEeListeningCommand);
             }
             else
             {
-                var addSampleResult = await addSampleSentenceCommand.Invoke(sampleWord.Value);
+                var addSampleResult = await addEtSampleSentenceCommand.Invoke(sampleWord.Value, senseIndex);
 
                 if (addSampleResult.IsSuccess)
                 {
-                    return new ListenToEeGame(eeWord, 0, addSampleResult.Value.Samples.First(), checkEeListeningCommand);
+                    return new ListenToEeGame(eeWord, 0, addSampleResult.Value.First(), checkEeListeningCommand);
                 }
 
                 return Result.Failure<ListenToEeGame>(addSampleResult.Error);

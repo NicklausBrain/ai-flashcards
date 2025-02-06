@@ -9,7 +9,6 @@ namespace My1kWordsEe.Services.Cqs.Et
 {
     public class GetEtSampleSentencesQuery
     {
-
         private readonly AzureStorageClient azureBlobClient;
 
         public GetEtSampleSentencesQuery(

@@ -1,5 +1,6 @@
 using CSharpFunctionalExtensions;
 
+using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Cqs;
 
 namespace My1kWordsEe.Models.Games
@@ -11,7 +12,7 @@ namespace My1kWordsEe.Models.Games
         public TranslateToEnGame(
             string eeWord,
             int sampleIndex,
-            SampleSentence sampleSentence,
+            SampleSentenceWithMedia sampleSentence,
             CheckEnTranslationCommand checkEnTranslationCommand)
         {
             this.EeWord = eeWord;
@@ -24,17 +25,17 @@ namespace My1kWordsEe.Models.Games
 
         public int SampleIndex { get; init; }
 
-        public SampleSentence SampleSentence { get; init; }
+        public SampleSentenceWithMedia SampleSentence { get; init; }
 
         public Maybe<Result<EnTranslationCheckResult>> CheckResult { get; private set; }
 
         public bool IsFinished => CheckResult.HasValue;
 
-        public string EeSentence => SampleSentence.EeSentence;
+        public string EtSentence => SampleSentence.Sentence.Et;
 
         public Uri ImageUrl => SampleSentence.ImageUrl;
 
-        public Uri AudioUrl => SampleSentence.EeAudioUrl;
+        public Uri AudioUrl => SampleSentence.AudioUrl;
 
         public string UserTranslation { get; set; } = string.Empty;
 
@@ -54,7 +55,7 @@ namespace My1kWordsEe.Models.Games
             }
 
             var userInput = UserTranslation.Trim('.', ' ');
-            var defaultEnTranslation = SampleSentence.EnSentence.Trim('.', ' ');
+            var defaultEnTranslation = SampleSentence.Sentence.En.Trim('.', ' ');
 
             if (string.Equals(
                 userInput,
@@ -62,14 +63,14 @@ namespace My1kWordsEe.Models.Games
                 StringComparison.InvariantCultureIgnoreCase))
             {
                 CheckResult = Result.Success(EnTranslationCheckResult.Success(
-                    eeSentence: EeSentence,
+                    eeSentence: EtSentence,
                     enSentence: defaultEnTranslation));
             }
             else
             {
                 IsCheckInProgress = true;
                 CheckResult = await checkEnTranslationCommand.Invoke(
-                    eeSentence: EeSentence,
+                    eeSentence: EtSentence,
                     enSentence: userInput);
                 IsCheckInProgress = false;
             }

@@ -4,6 +4,7 @@ using My1kWordsEe.Models;
 using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Db;
 
+using static My1kWordsEe.Models.Conventions;
 using static My1kWordsEe.Models.Extensions;
 
 namespace My1kWordsEe.Services.Cqs.Et
@@ -51,13 +52,15 @@ Väljund peab olema JSON-objekt vastavalt antud skeemile.";
                 return Result.Failure<EtWord>(aiError);
             }
 
-            (await this.addAudioCommand.Invoke(eeWord)).Deconstruct(
+            (await this.addAudioCommand.Invoke(
+                text: eeWord,
+                fileName: $"{eeWord}.{AudioFormat}")).Deconstruct(
                 out bool isAudioSaved,
                 out bool _,
                 out Uri audioUri);
 
             etWord = isAudioSaved
-                ? etWord with { AudioUrl = audioUri }
+                ? etWord with { BlobEndpoint = azureBlobClient.AzureBlobEndpoint }
                 : etWord;
 
             return (await azureBlobClient.SaveEtWordData(etWord))
