@@ -27,7 +27,7 @@ namespace My1kWordsEe.Services.Db
 
         public Uri AzureBlobEndpoint => this.BlobServiceClient.Uri;
 
-        private async Task<Result<BlobContainerClient>> GetOrCreateContainer(string containerId)
+        public async Task<Result<BlobContainerClient>> GetOrCreateContainer(string containerId)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace My1kWordsEe.Services.Db
             }
         }
 
-        private async Task<Result<Uri>> UploadStreamAsync(BlobClient blob, Stream stream)
+        public async Task<Result<Uri>> UploadStreamAsync(BlobClient blob, Stream stream)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace My1kWordsEe.Services.Db
             }
         }
 
-        private async Task<Result<bool>> DeleteIfExistsAsync(BlobClient blob)
+        public async Task<Result<bool>> DeleteIfExistsAsync(BlobClient blob)
         {
             try
             {

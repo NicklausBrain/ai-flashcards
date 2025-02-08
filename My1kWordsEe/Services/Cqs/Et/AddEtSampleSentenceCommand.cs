@@ -26,17 +26,20 @@ namespace My1kWordsEe.Services.Cqs.Et
             "2. Genereerida JSON-objekt, mis sisaldab ühte näidislause paari eesti ja inglise keeles.\n";
 
         private readonly AzureStorageClient azureBlobClient;
+        private readonly ImageStorageClient imageStorageClient;
         private readonly OpenAiClient openAiClient;
         private readonly AddAudioCommand addAudioCommand;
         private readonly StabilityAiClient stabilityAiClient;
 
         public AddEtSampleSentenceCommand(
             AzureStorageClient azureBlobService,
+            ImageStorageClient imageStorageClient,
             OpenAiClient openAiService,
             AddAudioCommand createAudioCommand,
             StabilityAiClient stabilityAiService)
         {
             this.azureBlobClient = azureBlobService;
+            this.imageStorageClient = imageStorageClient;
             this.openAiClient = openAiService;
             this.addAudioCommand = createAudioCommand;
             this.stabilityAiClient = stabilityAiService;
@@ -94,11 +97,13 @@ namespace My1kWordsEe.Services.Cqs.Et
                 .Bind(r => Result.Success(updatedSamples));
         }
 
+        // todo: move to separate command
         private Task<Result<Uri>> GenerateImage(Guid sampleId, SampleEtSentence sentence) =>
             this.openAiClient.GetDallEPrompt(sentence.Sentence.En).BindZip(
             this.stabilityAiClient.GenerateImage).Bind(p =>
-            this.azureBlobClient.SaveImage(sampleId, p.First, p.Second));
+            this.imageStorageClient.SaveImage(sampleId, p.First, p.Second));
 
+        // todo: rename addAudioCommand
         private Task<Result<Uri>> GenerateSpeech(Guid sampleId, SampleEtSentence sentence) =>
             this.addAudioCommand.Invoke(
                 text: sentence.Sentence.Et,
