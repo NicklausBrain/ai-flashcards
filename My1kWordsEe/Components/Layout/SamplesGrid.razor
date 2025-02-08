@@ -1,0 +1,107 @@
+﻿@using BlazorBootstrap
+@using CSharpFunctionalExtensions
+@using My1kWordsEe.Models.Semantics
+@using My1kWordsEe.Services.Cqs.Et
+
+@inject GetEtSampleSentencesQuery GetEtSampleSentencesQuery
+@inject AddEtSampleSentenceCommand AddEtSampleSentenceCommand
+@inject DeleteEtSampleSentenceCommand DeleteEtSampleSentenceCommand
+@inject PreloadService PreloadService
+@inject ToastService ToastService
+
+@code {
+    [Parameter]
+    public required EtWord EtWord { get; init; }
+    [Parameter]
+    public required int SenseIndex{ get; init; }
+
+    private ConfirmDialog ConfirmDialog = default!;
+    private Maybe<Result<SampleSentenceWithMedia[]>> Samples;
+    private bool IsSampleGenerationInProgress = false;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Samples = await this.GetEtSampleSentencesQuery.Invoke(EtWord, (uint)SenseIndex);
+    }
+
+    private async Task GenerateSample(MouseEventArgs e)
+    {
+        this.IsSampleGenerationInProgress = true;
+        this.Samples = await this.AddEtSampleSentenceCommand.Invoke(EtWord, (uint)SenseIndex);
+        this.IsSampleGenerationInProgress = false;
+    }
+
+    private async Task DeleteSampleSentence(SampleSentenceWithMedia sampleSentence)
+    {
+        var options = new ConfirmDialogOptions
+            {
+                IsScrollable = true,
+                Dismissable = true,
+                IsVerticallyCentered = true,
+                AutoFocusYesButton = false,
+            };
+
+        var confirmation = await ConfirmDialog.ShowAsync(
+            title: "Are you sure you want to delete this?",
+            message1: "This will delete the record. Once deleted can not be rolled back.",
+            message2: "Do you want to proceed?", options);
+
+        if (confirmation)
+        {
+            PreloadService.Show(SpinnerColor.Light, "Saving data...");
+            var deletionResult = await this.DeleteEtSampleSentenceCommand.Invoke(EtWord, (uint)SenseIndex, sampleSentence);
+            if (deletionResult.IsSuccess)
+            {
+                Samples = deletionResult;
+                StateHasChanged();
+            }
+            else
+            {
+                ToastService.Notify(new ToastMessage(ToastType.Warning, deletionResult.Error));
+            }
+            PreloadService.Hide();
+        }
+        else
+        {
+            ToastService.Notify(new ToastMessage(ToastType.Secondary, $"Delete action canceled."));
+        }
+    }
+}
+
+<div class="row">
+    @if (Samples.HasValue)
+    {
+        if (Samples.Value.IsSuccess)
+        {
+            @foreach (var sample in Samples.Value.Value)
+            {
+                <div class="col col-12 col-sm-6 p-1">
+                    <SampleV2 Sample="@sample" DeleteSample="DeleteSampleSentence">
+                    </SampleV2>
+                </div>
+            }
+
+            <div class="col col-12 col-sm-6 p-1 text-center">
+                @if (IsSampleGenerationInProgress)
+                {
+                    <div class="text-center">
+                        <Spinner />
+                    </div>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-primary" onclick="@GenerateSample">
+                        <i class="bi bi-robot"></i>
+                        Generate sample sentence
+                    </button>
+                }
+            </div>
+        }
+        else
+        {
+            <h3 class="alert-warning">@Samples.Value.Error</h3>
+        }
+    }
+</div>
+
+<ConfirmDialog @ref="ConfirmDialog" />

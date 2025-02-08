@@ -20,25 +20,16 @@
 @inject IJSRuntime JS
 @inject UrlService Url
 @inject GetOrAddEtWordCommand GetOrAddEtWordCommand
-@inject GetEtSampleSentencesQuery GetEtSampleSentencesQuery
-@inject AddEtSampleSentenceCommand AddEtSampleSentenceCommand
-@inject DeleteEtSampleSentenceCommand DeleteEtSampleSentenceCommand
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @* @inject RedoSampleWordCommand RedoSampleWordCommand *@
 
 @code {
-    [Inject] protected PreloadService PreloadService { get; set; } = default!;
-    [Inject] protected ToastService ToastService { get; set; } = default!;
-
-    private ConfirmDialog ConfirmDialog = default!;
-
     [Parameter]
     public required string Word { get; init; }
     [Parameter]
     public int SenseIndex { get; init; } = 0;
 
     private Maybe<Result<EtWord>> EtWordData;
-    private Maybe<Result<SampleSentenceWithMedia[]>> Samples;
     private ClaimsPrincipal? User;
 
     protected override async Task OnParametersSetAsync()
@@ -53,60 +44,9 @@
         ? await this.GetOrAddEtWordCommand.Invoke(Word)
         : Result.Failure<EtWord>("Invalid word");
 
-        Samples = await this.GetEtSampleSentencesQuery.Invoke(EtWord, (uint)SenseIndex);
-
-        // todo: can i chain/unite 2 results?
-
         // todo: validate sense index
+
         await base.OnParametersSetAsync();
-    }
-
-    private async Task DeleteSampleSentence(SampleSentenceWithMedia sampleSentence)
-    {
-        var options = new ConfirmDialogOptions
-            {
-                IsScrollable = true,
-                Dismissable = true,
-                IsVerticallyCentered = true,
-                AutoFocusYesButton = false,
-            };
-
-        var confirmation = await ConfirmDialog.ShowAsync(
-            title: "Are you sure you want to delete this?",
-            message1: "This will delete the record. Once deleted can not be rolled back.",
-            message2: "Do you want to proceed?", options);
-
-        if (confirmation)
-        {
-            PreloadService.Show(SpinnerColor.Light, "Saving data...");
-            var deletionResult = await this.DeleteEtSampleSentenceCommand.Invoke(EtWord, (uint)SenseIndex, sampleSentence);
-            if (deletionResult.IsSuccess)
-            {
-                Samples = deletionResult;
-                StateHasChanged();
-            }
-            else
-            {
-                ToastService.Notify(new ToastMessage(ToastType.Warning, deletionResult.Error));
-            }
-            PreloadService.Hide();
-        }
-        else
-        {
-            ToastService.Notify(new ToastMessage(ToastType.Secondary, $"Delete action canceled."));
-        }
-    }
-
-    private bool IsSampleGenerationInProgress = false;
-
-    private async Task GenerateSample(MouseEventArgs e)
-    {
-        this.IsSampleGenerationInProgress = true;
-        if (IsEtWordDataLoadedOk)
-        {
-            this.Samples = await this.AddEtSampleSentenceCommand.Invoke(EtWord, (uint)SenseIndex);
-        }
-        this.IsSampleGenerationInProgress = false;
     }
 
     private async Task SpeakWord(MouseEventArgs e)
@@ -185,43 +125,10 @@
         }
     </div>
 
-    @if (Samples.HasValue)
-    {
-        if (Samples.Value.IsSuccess)
-        {
-            <div class="row">
-                @foreach (var sample in Samples.Value.Value)
-                {
-                    <div class="col col-12 col-sm-6 p-1">
-                        <SampleV2 Sample="@sample" DeleteSample="DeleteSampleSentence">
-                        </SampleV2>
-                    </div>
-                }
-
-                <div class="col col-12 col-sm-6 p-1 text-center">
-                    @if (IsSampleGenerationInProgress)
-                    {
-                        <div class="text-center">
-                            <Spinner />
-                        </div>
-                    }
-                    else
-                    {
-                        <button type="button" class="btn btn-primary" onclick="@GenerateSample">
-                            <i class="bi bi-robot"></i>
-                            Generate sample sentence
-                        </button>
-                    }
-                </div>
-            </div>
-        }
-        else
-        {
-            <h3 class="alert-warning">@Samples.Value.Error</h3>
-        }
+    @if (IsEtWordDataLoadedOk){
+        <SamplesGrid EtWord="EtWord" SenseIndex="SenseIndex" />
     }
 </div>
 
 <Preload LoadingText="Loading..." />
-<ConfirmDialog @ref="ConfirmDialog" />
 <Toasts class="p-3" AutoHide="true" StackLength="3" Placement="ToastsPlacement.TopRight" />
