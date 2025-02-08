@@ -15,6 +15,7 @@
 @inject IdentityUserAccessor UserAccessor
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
+@inject UrlService Url
 @inject IJSRuntime JS
 
 @code {
@@ -66,7 +67,7 @@
                                 <Button Color="ButtonColor.Primary" Size="ButtonSize.Small" @onclick="PlaySample">
                                     <i class="bi bi-volume-down-fill"></i>
                                 </Button>
-                                <audio id="@Sample.AudioUrl" src="@Sample.AudioUrl"></audio>
+                                <audio id="@Sample.AudioUrl" src="@Url.Resolve(Sample.AudioUrl)"></audio>
                             </li>
                             @if (IsLoggedIn)
                             {
@@ -93,7 +94,7 @@
                 </tr>
                 <tr>
                     <th>
-                        <img id="sampleImage" class="img-fluid rounded img-max-w-256" src="@Sample.ImageUrl" />
+                        <img id="sampleImage" class="img-fluid rounded img-max-w-256" src="@Url.Resolve(Sample.ImageUrl)" />
                     </th>
                 </tr>
             </tbody>

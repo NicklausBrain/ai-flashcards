@@ -11,9 +11,6 @@ namespace My1kWordsEe.Models.Semantics
     /// </summary>
     public readonly struct EtWord
     {
-        [JsonIgnore]
-        public Uri BlobEndpoint { get; init; }
-
         public required string Value { get; init; }
 
         public LanguageCode Language => LanguageCode.Et;
@@ -24,7 +21,7 @@ namespace My1kWordsEe.Models.Semantics
         /// Sample pronunciation of the word.
         /// </summary>
         [JsonIgnore]
-        public Uri AudioUrl => new Uri(BlobEndpoint, $"/{AudioContainer}/{Value}.{AudioFormat}");
+        public Uri AudioUrl => new Uri($"/{AudioContainer}/{Value}.{AudioFormat}", UriKind.Relative);
 
         [JsonIgnore]
         public WordSense DefaultSense => Senses[0];

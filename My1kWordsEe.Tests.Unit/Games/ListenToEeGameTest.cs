@@ -25,7 +25,6 @@ namespace My1kWordsEe.Tests.Models.Games
                     Et = "Tere tulemast",
                     En = "Welcome"
                 },
-                BlobEndpoint = new Uri("http://example.com"),
             };
         }
 
@@ -123,7 +122,6 @@ namespace My1kWordsEe.Tests.Models.Games
                     Et = "See on minu pere.",
                     En = "This is my family.",
                 },
-                BlobEndpoint = new Uri("http://example.com"),
             };
             var game = new ListenToEeGame("pere", 1, sampleSentence, _checkEeListeningCommandMock.Object);
             Assert.Equivalent(new[] { "minu", "pere", "See", "on" }, game.RandomizedWords);

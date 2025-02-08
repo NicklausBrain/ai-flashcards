@@ -87,7 +87,6 @@ namespace My1kWordsEe.Services.Cqs.Et
                     En = sentence.Value.Sentence.En,
                     Et = sentence.Value.Sentence.Et,
                 },
-                BlobEndpoint = azureBlobClient.AzureBlobEndpoint
             }).ToArray();
 
             return (await this.azureBlobClient

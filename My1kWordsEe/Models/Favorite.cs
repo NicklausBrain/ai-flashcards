@@ -2,7 +2,7 @@ using My1kWordsEe.Models.Semantics;
 
 namespace My1kWordsEe.Models
 {
-    public class Favorites
+    public record Favorites
     {
         public Favorites(
             string userId,

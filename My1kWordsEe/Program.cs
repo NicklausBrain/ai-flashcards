@@ -49,6 +49,7 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<StabilityAiClient>();
             builder.Services.AddSingleton<OpenAiClient>();
             builder.Services.AddSingleton<AzureStorageClient>();
+            builder.Services.AddSingleton<UrlService>();
             builder.Services.AddSingleton<TartuNlpClient>();
             builder.Services.AddSingleton<GetOrAddSampleWordCommand>();
             builder.Services.AddSingleton<AddSampleWordCommand>();
@@ -140,12 +141,6 @@ namespace My1kWordsEe
             if (string.IsNullOrWhiteSpace(stabilityAiKey))
             {
                 throw new ApplicationException($"{StabilityAiClient.ApiSecretKey} is missing");
-            }
-
-            var azureBlobEndpoint = builder.Configuration[AzureStorageClient.AzureBlobEndpointKey];
-            if (string.IsNullOrWhiteSpace(azureBlobEndpoint))
-            {
-                throw new ApplicationException($"{AzureStorageClient.AzureBlobEndpointKey} is missing");
             }
 
             var azureBlobConnectionString = builder.Configuration[AzureStorageClient.ApiSecretKey];

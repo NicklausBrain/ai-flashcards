@@ -25,7 +25,6 @@ namespace My1kWordsEe.Tests.Models.Games
                     Et = "Tere",
                     En = "Hello",
                 },
-                BlobEndpoint = new Uri("http://example.com"),
             };
         }
 

@@ -1,4 +1,6 @@
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Unicode;
 
 using Azure;
 using Azure.Storage.Blobs;
@@ -33,6 +35,8 @@ namespace My1kWordsEe.Services.Db
                 if (response != null && response.HasValue)
                 {
                     var favorites = JsonSerializer.Deserialize<Favorites>(response.Value.Content);
+
+
                     return Maybe<Favorites>.From(favorites);
                 }
                 else
@@ -56,7 +60,11 @@ namespace My1kWordsEe.Services.Db
             this.GetFavoritesContainer().Bind(container =>
             this.UploadStreamAsync(
                 container.GetBlobClient(JsonBlobName(favorites.UserId)),
-                new MemoryStream(JsonSerializer.SerializeToUtf8Bytes(favorites))));
+                new MemoryStream(JsonSerializer.SerializeToUtf8Bytes(favorites, options: new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+                    WriteIndented = false
+                }))));
 
         private Task<Result<BlobContainerClient>> GetFavoritesContainer() =>
             this.GetOrCreateContainer("favorites");

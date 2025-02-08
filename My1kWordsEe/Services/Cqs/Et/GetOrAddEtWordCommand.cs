@@ -39,7 +39,7 @@ namespace My1kWordsEe.Services.Cqs.Et
 
             if (savedWord.HasValue)
             {
-                return savedWord.Value with { BlobEndpoint = azureBlobService.AzureBlobEndpoint };
+                return savedWord.Value;
             }
 
             return await this.addEtWordCommand.Invoke(eeWord);

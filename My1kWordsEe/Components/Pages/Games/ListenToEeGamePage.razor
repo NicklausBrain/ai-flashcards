@@ -7,12 +7,14 @@
 @using CSharpFunctionalExtensions
 @using My1kWordsEe.Models
 @using My1kWordsEe.Models.Games
+@using My1kWordsEe.Services
 @using My1kWordsEe.Services.Cqs
 @using My1kWordsEe.Components.Layout
 
-@inject ListenToEeGameFactory ListenToEeGameFactory;
-@inject NavigationManager Navigation;
-@inject IJSRuntime JS;
+@inject ListenToEeGameFactory ListenToEeGameFactory
+@inject NavigationManager Navigation
+@inject UrlService Url
+@inject IJSRuntime JS
 
 @code {
     [Parameter]
@@ -111,10 +113,10 @@
                             <button type="button" class="btn btn-primary btn-sm" @onclick="PlaySample">
                                 <i class="bi bi-volume-down-fill"></i>
                             </button>
-                            <audio id="@game.AudioUrl" src="@game.AudioUrl" autoplay></audio>
+                            <audio id="@game.AudioUrl" src="@Url.Resolve(game.AudioUrl)" autoplay></audio>
                             <FavoriteOutlineButton Sample="@game.SampleSentence" />
                         </h5>
-                        <img id="sampleImage" class="img-fluid rounded img-max-w-256 p-1" src="@game.ImageUrl" />
+                        <img id="sampleImage" class="img-fluid rounded img-max-w-256 p-1" src="@Url.Resolve(@game.ImageUrl)" />
 
                         @if (game.CheckResult.HasValue && game.CheckResult.Value.IsSuccess)
                         {

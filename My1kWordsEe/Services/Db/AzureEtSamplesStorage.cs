@@ -46,9 +46,7 @@ namespace My1kWordsEe.Services.Db
                 if (response != null && response.HasValue)
                 {
                     var samples = JsonSerializer.Deserialize<SampleSentenceWithMedia[]>(response.Value.Content);
-                    return samples is null
-                        ? Array.Empty<SampleSentenceWithMedia>()
-                        : samples.Select(s => s with { BlobEndpoint = AzureBlobEndpoint }).ToArray();
+                    return samples ?? Array.Empty<SampleSentenceWithMedia>();
                 }
                 else
                 {

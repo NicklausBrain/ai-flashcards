@@ -55,13 +55,15 @@ Väljund peab olema JSON-objekt vastavalt antud skeemile.";
             (await this.addAudioCommand.Invoke(
                 text: eeWord,
                 fileName: $"{eeWord}.{AudioFormat}")).Deconstruct(
-                out bool isAudioSaved,
                 out bool _,
-                out Uri audioUri);
+                out bool isAudioFailure,
+                out Uri _,
+                out string audioError);
 
-            etWord = isAudioSaved
-                ? etWord with { BlobEndpoint = azureBlobClient.AzureBlobEndpoint }
-                : etWord;
+            if (isAudioFailure)
+            {
+                return Result.Failure<EtWord>(audioError);
+            }
 
             return (await azureBlobClient.SaveEtWordData(etWord))
                 .Bind(_ => Result.Of(etWord));

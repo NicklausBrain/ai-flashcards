@@ -8,6 +8,7 @@
 @using My1kWordsEe.Components.Account
 @using My1kWordsEe.Models.Semantics
 @using My1kWordsEe.Components.Layout
+@using My1kWordsEe.Services
 @using My1kWordsEe.Services.Cqs.Et
 @using System.Text.RegularExpressions
 @using System.ComponentModel.DataAnnotations
@@ -17,6 +18,7 @@
 @using static My1kWordsEe.Models.Extensions;
 
 @inject IJSRuntime JS
+@inject UrlService Url
 @inject GetOrAddEtWordCommand GetOrAddEtWordCommand
 @inject GetEtSampleSentencesQuery GetEtSampleSentencesQuery
 @inject AddEtSampleSentenceCommand AddEtSampleSentenceCommand
@@ -142,7 +144,7 @@
                 if (EtWord.AudioUrl != null)
                 {
                     <i role="button" class="bi bi-volume-down-fill small" @onclick="SpeakWord">
-                        <audio id="@Word" src="@EtWord.AudioUrl"></audio>
+                        <audio id="@Word" src="@Url.Resolve(EtWord.AudioUrl)"></audio>
                     </i>
                 }
             }
@@ -152,14 +154,21 @@
         {
             @if (EtWord.Senses.Any())
             {
-                <h4>[@for (var i = 0; i< EtWord.Senses.Length; i++) {
-                        if (i == SenseIndex) {
+                <h4>
+                    @for (var i = 0; i < EtWord.Senses.Length; i++)
+                    {
+                        <text>[</text>
+                        if (i == SenseIndex)
+                        {
                             @EtWord.Senses[i].Word.En
-                        } else {
+                        }
+                        else
+                        {
                              <a href="@($"/word/{EtWord.Senses[i].Word.Et}/{i}")">@EtWord.Senses[i].Word.En</a>
                         }
-                        <text>|</text>
-                    }]</h4>
+                        <text>]</text>
+                    }
+                </h4>
             }
  
             <h4>@EtWord.Senses[SenseIndex].Definition.En</h4>

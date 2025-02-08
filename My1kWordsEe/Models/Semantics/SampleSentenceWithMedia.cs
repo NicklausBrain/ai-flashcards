@@ -9,20 +9,17 @@ namespace My1kWordsEe.Models.Semantics
     /// </summary>
     public readonly struct SampleSentenceWithMedia : ISampleEtSentence
     {
-        [JsonIgnore]
-        public Uri BlobEndpoint { get; init; }
-
         public required Guid Id { get; init; }
 
         public required TranslatedString Sentence { get; init; }
 
         [JsonIgnore]
-        public Uri AudioUrl => new Uri(BlobEndpoint, $"/{AudioContainer}/{Id}.{AudioFormat}");
+        public Uri AudioUrl => new Uri($"/{AudioContainer}/{Id}.{AudioFormat}", UriKind.Relative);
 
         [JsonIgnore]
-        public Uri ImageUrl => new Uri(BlobEndpoint, $"/{ImageContainer}/{Id}.{ImageFormat}");
+        public Uri ImageUrl => new Uri($"/{ImageContainer}/{Id}.{ImageFormat}", UriKind.Relative);
 
         [JsonIgnore]
-        public Uri ImagePromptUrl => new Uri(BlobEndpoint, $"/{ImageContainer}/{Id}.{TextFormat}");
+        public Uri ImagePromptUrl => new Uri($"/{ImageContainer}/{Id}.{TextFormat}", UriKind.Relative);
     }
 }
