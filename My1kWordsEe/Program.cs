@@ -52,7 +52,6 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<UrlService>();
             builder.Services.AddSingleton<TartuNlpClient>();
             builder.Services.AddSingleton<GetOrAddSampleWordCommand>();
-            builder.Services.AddSingleton<AddSampleWordCommand>();
 
             builder.Services.AddSingleton<AddEtWordCommand>();
             builder.Services.AddSingleton<GetOrAddEtWordCommand>();
@@ -63,7 +62,6 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<AddAudioCommand>();
             builder.Services.AddSingleton<CheckEnTranslationCommand>();
             builder.Services.AddSingleton<CheckEeListeningCommand>();
-            builder.Services.AddSingleton<DeleteSampleSentenceCommand>();
             builder.Services.AddSingleton<GetFavoritesQuery>();
             builder.Services.AddSingleton<AddToFavoritesCommand>();
             builder.Services.AddSingleton<RemoveFromFavoritesCommand>();

@@ -54,14 +54,6 @@ namespace My1kWordsEe.Services.Db
         }
 
         [Obsolete]
-        public Task<Result<Uri>> SaveWordData(SampleWord word) =>
-                    this.GetWordsContainer().Bind(container =>
-                    this.UploadStreamAsync(
-                        container.GetBlobClient(JsonBlobName(word.EeWord)),
-                        new MemoryStream(JsonSerializer.SerializeToUtf8Bytes(word))));
-
-
-        [Obsolete]
         private Task<Result<BlobContainerClient>> GetWordsContainer() => this.GetOrCreateContainer("words");
     }
 }
