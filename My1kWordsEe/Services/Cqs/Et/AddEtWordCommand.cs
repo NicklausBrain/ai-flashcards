@@ -66,7 +66,7 @@ Väljund peab olema JSON-objekt vastavalt antud skeemile.";
             }
 
             return (await wordStorageClient.SaveEtWordData(etWord))
-                .Bind(_ => Result.Of(etWord));
+                .Map(_ => etWord);
         }
 
         private async Task<Result<EtWord>> GetWordMetadata(string etWord)

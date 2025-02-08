@@ -31,8 +31,8 @@ namespace My1kWordsEe.Services.Db
         public Task<Result<SampleSentenceWithMedia[]>> GetEtSampleData(SamplesContainerId containerId) =>
             this.GetEtSamplesContainer().Bind(container =>
             this.azureStorageClient.DownloadJsonAsync<SampleSentenceWithMedia[]>(
-                container.GetBlobClient($"{containerId}.{JsonFormat}"))).Bind(
-                (samples) => Result.Of(samples.HasValue ? samples.Value : Array.Empty<SampleSentenceWithMedia>()));
+                container.GetBlobClient($"{containerId}.{JsonFormat}"))).Map((samples) =>
+                samples.GetValueOrDefault(() => Array.Empty<SampleSentenceWithMedia>()));
 
         public Task<Result<Uri>> SaveEtSamplesData(
             SamplesContainerId containerId,
