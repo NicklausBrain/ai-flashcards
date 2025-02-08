@@ -17,7 +17,7 @@ public class AppRenderingTests : BlazorTest
     }
 
     [TestCase("auto", "[car]")]
-    [TestCase("kutus", "[fuel]")]
+    [TestCase("kütus", "[fuel]")]
     public async Task WordPage(string eeWord, string enWord)
     {
         await Page.GotoAsync(RootUri.AbsoluteUri + $"word/{eeWord}", new() { WaitUntil = WaitUntilState.NetworkIdle });
