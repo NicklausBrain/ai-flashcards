@@ -1,33 +1,30 @@
-using System;
-using System.Threading.Tasks;
-
 using CSharpFunctionalExtensions;
 
 using Moq;
 
 using My1kWordsEe.Models;
 using My1kWordsEe.Models.Games;
+using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Cqs;
-
-using Xunit;
 
 namespace My1kWordsEe.Tests.Models.Games
 {
     public class ListenToEeGameTest
     {
         private readonly Mock<CheckEeListeningCommand> _checkEeListeningCommandMock;
-        private readonly SampleSentence _sampleSentence;
+        private readonly SampleSentenceWithMedia _sampleSentence;
 
         public ListenToEeGameTest()
         {
             _checkEeListeningCommandMock = new Mock<CheckEeListeningCommand>(null);
-            _sampleSentence = new SampleSentence
+            _sampleSentence = new SampleSentenceWithMedia
             {
-                EeWord = "Tere",
-                EeSentence = "Tere tulemast",
-                EnSentence = "Welcome",
-                EeAudioUrl = new Uri("http://example.com/audio"),
-                ImageUrl = new Uri("http://example.com/image")
+                Id = Guid.NewGuid(),
+                Sentence = new TranslatedString
+                {
+                    Et = "Tere tulemast",
+                    En = "Welcome"
+                },
             };
         }
 
@@ -36,13 +33,13 @@ namespace My1kWordsEe.Tests.Models.Games
         {
             var game = new ListenToEeGame("Tere", 1, _sampleSentence, _checkEeListeningCommandMock.Object);
 
-            Assert.Equal("Tere", game.EeWord);
+            Assert.Equal("Tere", game.EtWord);
             Assert.Equal(1, game.SampleIndex);
             Assert.Equal(_sampleSentence, game.SampleSentence);
             Assert.False(game.IsFinished);
-            Assert.Equal(_sampleSentence.EeSentence, game.EeSentence);
+            Assert.Equal(_sampleSentence.Sentence.Et, game.EtSentence);
             Assert.Equal(_sampleSentence.ImageUrl, game.ImageUrl);
-            Assert.Equal(_sampleSentence.EeAudioUrl, game.AudioUrl);
+            Assert.Equal(_sampleSentence.AudioUrl, game.AudioUrl);
             Assert.Equal(string.Empty, game.UserInput);
             Assert.False(game.IsCheckInProgress);
             Assert.False(game.CheckResult.HasValue);
@@ -117,13 +114,14 @@ namespace My1kWordsEe.Tests.Models.Games
         [Fact]
         public void RandomizedWords_ShouldRandomizeWords()
         {
-            var sampleSentence = new SampleSentence
+            var sampleSentence = new SampleSentenceWithMedia
             {
-                EeWord = "pere",
-                EeSentence = "See on minu pere.",
-                EnSentence = "This is my family.",
-                EeAudioUrl = new Uri("http://example.com/audio"),
-                ImageUrl = new Uri("http://example.com/image")
+                Id = Guid.NewGuid(),
+                Sentence = new TranslatedString
+                {
+                    Et = "See on minu pere.",
+                    En = "This is my family.",
+                },
             };
             var game = new ListenToEeGame("pere", 1, sampleSentence, _checkEeListeningCommandMock.Object);
             Assert.Equivalent(new[] { "minu", "pere", "See", "on" }, game.RandomizedWords);

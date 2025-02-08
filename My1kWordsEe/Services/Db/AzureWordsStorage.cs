@@ -11,6 +11,7 @@ namespace My1kWordsEe.Services.Db
 {
     public partial class AzureStorageClient
     {
+        [Obsolete]
         public async Task<Result<Maybe<SampleWord>>> GetWordData(string word)
         {
             var container = await GetWordsContainer();
@@ -52,12 +53,7 @@ namespace My1kWordsEe.Services.Db
             }
         }
 
-        public Task<Result<Uri>> SaveWordData(SampleWord word) =>
-            this.GetWordsContainer().Bind(container =>
-            this.UploadStreamAsync(
-                container.GetBlobClient(JsonBlobName(word.EeWord)),
-                new MemoryStream(JsonSerializer.SerializeToUtf8Bytes(word))));
-
+        [Obsolete]
         private Task<Result<BlobContainerClient>> GetWordsContainer() => this.GetOrCreateContainer("words");
     }
 }

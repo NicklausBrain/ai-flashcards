@@ -3,6 +3,7 @@ using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Components.Authorization;
 
 using My1kWordsEe.Models;
+using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Cqs;
 
 namespace My1kWordsEe.Services.Scoped
@@ -88,7 +89,7 @@ namespace My1kWordsEe.Services.Scoped
             return updatedFavorites;
         }
 
-        public async Task<Result<Favorites>> ReorderAsync(IEnumerable<SampleWord> sampleWords)
+        public async Task<Result<Favorites>> ReorderAsync(IEnumerable<EtWord> sampleWords)
         {
             var updatedFavorites = await GetAsync().Bind(async (f) =>
             {

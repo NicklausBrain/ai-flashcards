@@ -1,6 +1,8 @@
 using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Models;
+using My1kWordsEe.Models.Semantics;
+using My1kWordsEe.Services.Cqs.Et;
 using My1kWordsEe.Services.Db;
 
 namespace My1kWordsEe.Services.Cqs
@@ -8,46 +10,51 @@ namespace My1kWordsEe.Services.Cqs
     public class RedoSampleWordCommand
     {
         private readonly AzureStorageClient azureBlobService;
-        private readonly AddSampleWordCommand addSampleWordCommand;
-        private readonly DeleteSampleSentenceCommand deleteSampleSentenceCommand;
+        private readonly AddEtWordCommand addEtWordCommand;
+        private readonly GetEtSampleSentencesQuery getEtSampleSentencesQuery;
+        private readonly DeleteEtSampleSentenceCommand deleteEtSampleSentenceCommand;
 
         public RedoSampleWordCommand(
             AzureStorageClient azureBlobService,
-            AddSampleWordCommand addSampleWordCommand,
-            DeleteSampleSentenceCommand deleteSampleSentenceCommand)
+            AddEtWordCommand addEtWordCommand,
+            GetEtSampleSentencesQuery getEtSampleSentencesQuery,
+            DeleteEtSampleSentenceCommand deleteEtSampleSentenceCommand)
         {
             this.azureBlobService = azureBlobService;
-            this.addSampleWordCommand = addSampleWordCommand;
-            this.deleteSampleSentenceCommand = deleteSampleSentenceCommand;
+            this.addEtWordCommand = addEtWordCommand;
+            this.getEtSampleSentencesQuery = getEtSampleSentencesQuery;
+            this.deleteEtSampleSentenceCommand = deleteEtSampleSentenceCommand;
         }
 
-        public async Task<Result<SampleWord>> Invoke(string eeWord, string? comment = null)
+        public async Task<Result<EtWord>> Invoke(string etWord, string? comment = null)
         {
-            if (!eeWord.ValidateWord())
+            throw new NotImplementedException();
+
+            if (!etWord.ValidateWord())
             {
-                return Result.Failure<SampleWord>("Not an Estonian word");
+                return Result.Failure<EtWord>("Not an Estonian word");
             }
 
-            (await azureBlobService.GetWordData(eeWord)).Deconstruct(
+            (await azureBlobService.GetEtWordData(etWord)).Deconstruct(
                 out bool _,
                 out bool isBlobAccessFailure,
-                out Maybe<SampleWord> existingWordData,
+                out Maybe<EtWord> existingWordData,
                 out string blobAccessError);
 
             if (isBlobAccessFailure)
             {
-                return Result.Failure<SampleWord>(blobAccessError);
+                return Result.Failure<EtWord>(blobAccessError);
             }
 
-            var redoTask = this.addSampleWordCommand.Invoke(eeWord, comment);
+            var redoTask = this.addEtWordCommand.Invoke(etWord, comment);
 
             if (existingWordData.HasValue)
             {
-                await Parallel.ForEachAsync(existingWordData.Value.Samples, async (sample, ct) =>
-                {
-                    if (ct.IsCancellationRequested) { return; }
-                    await deleteSampleSentenceCommand.Invoke(sample);
-                });
+                //await Parallel.ForEachAsync(existingWordData.Value.Samples, async (sample, ct) =>
+                //{
+                //    if (ct.IsCancellationRequested) { return; }
+                //    await deleteSampleSentenceCommand.Invoke(sample);
+                //});
             }
 
             return await redoTask;

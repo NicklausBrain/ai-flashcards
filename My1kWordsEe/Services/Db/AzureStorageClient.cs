@@ -14,6 +14,7 @@ namespace My1kWordsEe.Services.Db
 
         private readonly IConfiguration config;
         private readonly ILogger logger;
+        private readonly BlobServiceClient BlobServiceClient;
 
         public AzureStorageClient(
             IConfiguration config,
@@ -21,7 +22,10 @@ namespace My1kWordsEe.Services.Db
         {
             this.config = config;
             this.logger = logger;
+            this.BlobServiceClient = new BlobServiceClient(this.config[ApiSecretKey]);
         }
+
+        public Uri AzureBlobEndpoint => this.BlobServiceClient.Uri;
 
         private async Task<Result<BlobContainerClient>> GetOrCreateContainer(string containerId)
         {
@@ -68,6 +72,6 @@ namespace My1kWordsEe.Services.Db
             }
         }
 
-        private static string JsonBlobName(string word) => word.ToLower() + ".json";
+        private static string JsonBlobName(string stringId) => stringId.ToLower() + ".json";
     }
 }

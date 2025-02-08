@@ -20,9 +20,9 @@
     }
 
     protected bool IsFavorite =>
-    Favorites.HasValue &&
-    Favorites.Value.IsSuccess &&
-    Favorites.Value.Value.IsFavorite(Sample);
+        Favorites.HasValue &&
+        Favorites.Value.IsSuccess &&
+        Favorites.Value.Value.IsFavorite(Sample);
 
     protected bool IsFeatureAvailable => Favorites.HasValue && Favorites.Value.IsSuccess;
 

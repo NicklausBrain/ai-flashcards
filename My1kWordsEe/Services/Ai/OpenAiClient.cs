@@ -2,6 +2,8 @@ using System.Text.Json;
 
 using CSharpFunctionalExtensions;
 
+using My1kWordsEe.Models;
+
 using OpenAI.Chat;
 
 namespace My1kWordsEe.Services
@@ -51,6 +53,30 @@ namespace My1kWordsEe.Services
             var response = await this.CompleteAsync(instructions, input, new ChatCompletionOptions
             {
                 ResponseFormat = ChatResponseFormat.CreateJsonObjectFormat(),
+                Temperature = temperature,
+            });
+
+            if (response.IsFailure)
+            {
+                return Result.Failure<T>(response.Error);
+            }
+
+            return this.ParseJsonResponse<T>(response);
+        }
+
+        public async Task<Result<T>> CompleteJsonSchemaAsync<T>(
+            string instructions,
+            string input,
+            JsonSchemaRecord schema,
+            float? temperature = null)
+        {
+            var response = await this.CompleteAsync(instructions, input, new ChatCompletionOptions
+            {
+                ResponseFormat = ChatResponseFormat.CreateJsonSchemaFormat(
+                    typeof(T).Name,
+                    schema.BinaryData,
+                    // jsonSchemaFormatDescription: instructions,
+                    jsonSchemaIsStrict: false),
                 Temperature = temperature,
             });
 

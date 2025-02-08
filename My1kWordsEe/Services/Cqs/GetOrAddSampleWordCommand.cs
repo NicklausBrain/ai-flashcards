@@ -5,17 +5,15 @@ using My1kWordsEe.Services.Db;
 
 namespace My1kWordsEe.Services.Cqs
 {
+    [Obsolete]
     public class GetOrAddSampleWordCommand
     {
         private readonly AzureStorageClient azureBlobService;
-        private readonly AddSampleWordCommand addSampleWordCommand;
 
         public GetOrAddSampleWordCommand(
-            AzureStorageClient azureBlobService,
-            AddSampleWordCommand addSampleWordCommand)
+            AzureStorageClient azureBlobService)
         {
             this.azureBlobService = azureBlobService;
-            this.addSampleWordCommand = addSampleWordCommand;
         }
 
         public async Task<Result<SampleWord>> Invoke(string eeWord)
@@ -41,7 +39,7 @@ namespace My1kWordsEe.Services.Cqs
                 return savedWord.Value;
             }
 
-            return await this.addSampleWordCommand.Invoke(eeWord);
+            return Result.Failure<SampleWord>("not found");
         }
     }
 }

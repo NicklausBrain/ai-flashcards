@@ -5,6 +5,7 @@ namespace My1kWordsEe.Models
     /// <summary>
     /// Sõnaliik (Estonian parts of speech)
     /// </summary>
+    [Obsolete]
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum EePartOfSpeech
     {

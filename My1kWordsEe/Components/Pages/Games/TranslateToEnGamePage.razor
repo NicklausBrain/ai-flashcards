@@ -8,11 +8,13 @@
 @using My1kWordsEe.Components.Layout
 @using My1kWordsEe.Models
 @using My1kWordsEe.Models.Games
+@using My1kWordsEe.Services
 @using My1kWordsEe.Services.Cqs
 
-@inject TranslateToEnGameFactory TranslateToEnGameFactory;
-@inject NavigationManager Navigation;
-@inject IJSRuntime JS;
+@inject TranslateToEnGameFactory TranslateToEnGameFactory
+@inject NavigationManager Navigation
+@inject UrlService Url
+@inject IJSRuntime JS
 
 @code {
     [Parameter]
@@ -87,14 +89,14 @@
                 <div class="card text-center">
                     <div class="card-body">
                         <h5 class="card-title">
-                            @game.EeSentence
+                            @game.EtSentence
                             <button type="button" class="btn btn-primary btn-sm" @onclick="PlaySample">
                                 <i class="bi bi-volume-down-fill"></i>
                             </button>
-                            <audio id="@game.AudioUrl" src="@game.AudioUrl"></audio>
+                            <audio id="@game.AudioUrl" src="@Url.Resolve(game.AudioUrl)"></audio>
                             <FavoriteOutlineButton Sample="@game.SampleSentence" />
                         </h5>
-                        <img id="sampleImage" class="img-fluid rounded img-max-w-256 p-1" src="@game.ImageUrl" />
+                        <img id="sampleImage" class="img-fluid rounded img-max-w-256 p-1" src="@Url.Resolve(game.ImageUrl)" />
 
                         @if (game.CheckResult.HasValue && game.CheckResult.Value.IsSuccess)
                         {

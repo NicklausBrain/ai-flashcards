@@ -4,13 +4,23 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 using My1kWordsEe.Models;
+using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Cqs;
+using My1kWordsEe.Services.Cqs.Et;
 
 namespace My1kWordsEe.Cmd
 {
     internal class Program
     {
         static async Task Main(string[] args)
+        {
+            //Console.WriteLine(AddEtSampleSentenceCommand.Prompt);
+            //Console.WriteLine(JsonSchemaRecord.For(typeof(SampleEtSentence)));
+            Console.WriteLine(AddEtWordCommand.Prompt);
+            Console.WriteLine(JsonSchemaRecord.For(typeof(WordSenses)));
+        }
+
+        public static async Task WordsCorrectionProcedure()
         {
             var host = My1kWordsEe.Program.BuildWebHost(new string[] { });
 

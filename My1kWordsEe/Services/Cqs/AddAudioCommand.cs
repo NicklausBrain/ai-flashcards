@@ -17,8 +17,8 @@ namespace My1kWordsEe.Services.Cqs
             this.azureBlobService = azureBlobService;
         }
 
-        public Task<Result<Uri>> Invoke(string text) =>
-          this.tartuNlpService.GetSpeech(text).Bind(
-          this.azureBlobService.SaveAudio);
+        public Task<Result<Uri>> Invoke(string text, string fileName) =>
+          this.tartuNlpService.GetSpeech(text).Bind(stream =>
+          this.azureBlobService.SaveAudio(stream, fileName));
     }
 }

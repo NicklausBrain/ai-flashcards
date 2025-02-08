@@ -25,7 +25,7 @@ namespace My1kWordsEe.Models
 
             // We are looking for an exact match, not just a search hit. This matches what
             // the RegularExpressionValidator control does
-            return (m.Success && m.Index == 0 && m.Length == word.Length);
+            return m.Success && m.Index == 0 && m.Length == word.Length;
         }
 
         // todo: return Result with the error message explaining the error

@@ -6,11 +6,13 @@
 @using CSharpFunctionalExtensions
 @using My1kWordsEe.Models;
 @using My1kWordsEe.Components.Layout;
+@using My1kWordsEe.Models.Semantics
 @using My1kWordsEe.Services.Cqs
+@using My1kWordsEe.Services.Cqs.Et
 
 @inject IJSRuntime JS
 @inject NavigationManager NavigationManager
-@inject GetOrAddSampleWordCommand GetOrAddSampleWordCommand;
+@inject GetOrAddEtWordCommand GetOrAddEtWordCommand;
 
 @code {
     private static readonly Dictionary<SampleWord, int> WordIndex = Ee1kWords.AllWords
@@ -23,7 +25,7 @@
 
     private Ee1kWords Ee1KWords = new Ee1kWords();
     private bool IsCheckInProgress = false;
-    private Maybe<Result<SampleWord>> CheckWordResult;
+    private Maybe<Result<EtWord>> CheckWordResult;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -52,7 +54,7 @@
 
         this.IsCheckInProgress = true;
 
-        this.CheckWordResult = await GetOrAddSampleWordCommand.Invoke(this.SearchTerm?.Trim() ?? string.Empty);
+        this.CheckWordResult = await GetOrAddEtWordCommand.Invoke(this.SearchTerm?.Trim() ?? string.Empty);
 
         if (this.CheckWordResult.Value.IsSuccess)
         {
