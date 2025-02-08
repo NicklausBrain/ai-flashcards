@@ -8,5 +8,6 @@ namespace My1kWordsEe.Models
         public const string AudioFormat = "wav";
         public const string ImageFormat = "jpg";
         public const string TextFormat = "txt";
+        public const string JsonFormat = "json";
     }
 }

@@ -1,3 +1,7 @@
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Unicode;
+
 using Azure;
 using Azure.Storage.Blobs;
 
@@ -55,6 +59,47 @@ namespace My1kWordsEe.Services.Db
             {
                 this.logger.LogError(exception, "Failure to upload data to blob {name}", blob.Name);
                 return Result.Failure<Uri>("Azure storage upload error");
+            }
+        }
+
+        public Task<Result<Uri>> UploadJsonAsync<T>(BlobClient blob, T record) =>
+            this.UploadStreamAsync(
+                blob,
+                new MemoryStream(JsonSerializer.SerializeToUtf8Bytes(record, options: new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+                    WriteIndented = false
+                })));
+
+        public async Task<Result<Maybe<T>>> DownloadJsonAsync<T>(BlobClient blob)
+        {
+            if (!await blob.ExistsAsync())
+            {
+                return Maybe<T>.None;
+            }
+
+            try
+            {
+                var response = await blob.DownloadContentAsync();
+                if (response != null && response.HasValue)
+                {
+                    var record = JsonSerializer.Deserialize<T>(response.Value.Content);
+                    return Maybe<T>.From(record);
+                }
+                else
+                {
+                    return Maybe<T>.None;
+                }
+            }
+            catch (RequestFailedException ex)
+            {
+                this.logger.LogError(ex, "Failure to download data from blob {name}", blob.Name);
+                return Result.Failure<Maybe<T>>("Failure to download data from blob");
+            }
+            catch (Exception ex) when (ex is JsonException || ex is NotSupportedException)
+            {
+                this.logger.LogError(ex, "Failure to parse JSON from blob {name}", blob.Name);
+                return Result.Failure<Maybe<T>>("Failure to parse JSON data from blob");
             }
         }
 

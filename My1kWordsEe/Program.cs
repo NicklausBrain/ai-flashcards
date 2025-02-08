@@ -51,6 +51,9 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<AzureStorageClient>();
             builder.Services.AddSingleton<AudioStorageClient>();
             builder.Services.AddSingleton<ImageStorageClient>();
+            builder.Services.AddSingleton<FavoritesStorageClient>();
+            builder.Services.AddSingleton<SamplesStorageClient>();
+            builder.Services.AddSingleton<WordStorageClient>();
             builder.Services.AddSingleton<UrlService>();
             builder.Services.AddSingleton<TartuNlpClient>();
             builder.Services.AddSingleton<GetOrAddSampleWordCommand>();
