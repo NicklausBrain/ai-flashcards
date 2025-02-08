@@ -1,7 +1,3 @@
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Unicode;
-
 using Azure.Storage.Blobs;
 
 using CSharpFunctionalExtensions;
@@ -29,12 +25,8 @@ namespace My1kWordsEe.Services.Db
         public Task<Result<Uri>> SaveEtWordData(EtWord word) =>
             this.GetEtWordsContainer().Bind(container =>
             this.azureStorageClient.UploadJsonAsync(
-                container.GetBlobClient($"{word.Value}.{JsonFormat}"),
-                new MemoryStream(JsonSerializer.SerializeToUtf8Bytes(word, options: new JsonSerializerOptions
-                {
-                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
-                    WriteIndented = false
-                }))));
+                blob: container.GetBlobClient($"{word.Value}.{JsonFormat}"),
+                record: word));
 
         private Task<Result<BlobContainerClient>> GetEtWordsContainer() =>
             this.azureStorageClient.GetOrCreateContainer("et-word");

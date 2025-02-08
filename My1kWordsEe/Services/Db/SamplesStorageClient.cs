@@ -39,8 +39,8 @@ namespace My1kWordsEe.Services.Db
             SampleSentenceWithMedia[] samples) =>
             this.GetEtSamplesContainer().Bind(container =>
             this.azureStorageClient.UploadJsonAsync(
-                container.GetBlobClient($"{containerId}.{JsonFormat}"),
-                samples));
+                blob: container.GetBlobClient($"{containerId}.{JsonFormat}"),
+                record: samples));
 
         private Task<Result<BlobContainerClient>> GetEtSamplesContainer() => this.azureStorageClient.GetOrCreateContainer("et-samples");
     }

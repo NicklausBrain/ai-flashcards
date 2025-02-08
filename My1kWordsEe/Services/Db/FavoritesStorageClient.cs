@@ -25,8 +25,8 @@ namespace My1kWordsEe.Services.Db
         public Task<Result<Uri>> SaveFavorites(Favorites favorites) =>
             this.GetFavoritesContainer().Bind(container =>
             this.azureStorageClient.UploadJsonAsync(
-                container.GetBlobClient($"{favorites.UserId}.{JsonFormat}"),
-                favorites));
+                blob: container.GetBlobClient($"{favorites.UserId}.{JsonFormat}"),
+                record: favorites));
 
         private Task<Result<BlobContainerClient>> GetFavoritesContainer() =>
             this.azureStorageClient.GetOrCreateContainer("favorites");

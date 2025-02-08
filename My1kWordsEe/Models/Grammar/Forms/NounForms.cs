@@ -1,20 +1,32 @@
+using System.ComponentModel;
+
+using My1kWordsEe.Models.Grammar.Forms;
+
 namespace My1kWordsEe.Models.Grammar
 {
-    public class NounForms
+    public struct NounForms : IGrammarForms
     {
-        public PartOfSpeech PartOfSpeech => PartOfSpeech.Noun;
+        public TranslatedString PartOfSpeech { get; init; }
 
         public required string BaseForm { get; init; }
 
-        public required NounForm[] List { get; init; } = Array.Empty<NounForm>();
+        //public required NounForm[] List { get; init; } = Array.Empty<NounForm>();
+
+        [Description("ainsus")]
+        public required Dictionary<GrammaticalCase, TranslatedString> Singular { get; init; }
+
+        [Description("mitmus")]
+        public required Dictionary<GrammaticalCase, TranslatedString> Plural { get; init; }
     }
 
-    public record NounForm
+    public struct NounForm
     {
+        // use Et cases? or translated words?
         public required GrammaticalCase Case { get; init; }
 
-        public required GrammaticalNumber Number { get; init; }
+        //// use Et numbers?
+        //public required GrammaticalNumber Number { get; init; }
 
-        public required Dictionary<LanguageCode, string> Value { get; init; } = new();
+        public required TranslatedString Value { get; init; }
     }
 }
