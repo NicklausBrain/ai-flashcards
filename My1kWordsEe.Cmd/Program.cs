@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using My1kWordsEe.Models;
 using My1kWordsEe.Models.Grammar;
 using My1kWordsEe.Services.Cqs;
+using My1kWordsEe.Services.Cqs.Et;
 
 namespace My1kWordsEe.Cmd
 {
@@ -13,7 +14,7 @@ namespace My1kWordsEe.Cmd
     {
         static async Task Main(string[] args)
         {
-            //Console.WriteLine(AddEtWordCommand.Prompt);
+            Console.WriteLine(AddEtFormsCommand.Prompt);
             Console.WriteLine(JsonSchemaRecord.For(typeof(NounForms)));
 
             //Console.WriteLine(AddEtSampleSentenceCommand.Prompt);
