@@ -6,27 +6,16 @@ namespace My1kWordsEe.Models.Grammar
 {
     public struct NounForms : IGrammarForms
     {
+        [Description("Kõneosa")]
         public TranslatedString PartOfSpeech { get; init; }
 
+        [Description("Sõna grammatika põhivorm (nt nimisõna ainsuse nimetav)")]
         public required string BaseForm { get; init; }
 
-        //public required NounForm[] List { get; init; } = Array.Empty<NounForm>();
+        [Description("Ainsuse vormid")]
+        public required Dictionary<EtGrammaticalCase, TranslatedString> Singular { get; init; }
 
-        [Description("ainsus")]
-        public required Dictionary<GrammaticalCase, TranslatedString> Singular { get; init; }
-
-        [Description("mitmus")]
-        public required Dictionary<GrammaticalCase, TranslatedString> Plural { get; init; }
-    }
-
-    public struct NounForm
-    {
-        // use Et cases? or translated words?
-        public required GrammaticalCase Case { get; init; }
-
-        //// use Et numbers?
-        //public required GrammaticalNumber Number { get; init; }
-
-        public required TranslatedString Value { get; init; }
+        [Description("Mitmuse vormid")]
+        public required Dictionary<EtGrammaticalCase, TranslatedString> Plural { get; init; }
     }
 }
