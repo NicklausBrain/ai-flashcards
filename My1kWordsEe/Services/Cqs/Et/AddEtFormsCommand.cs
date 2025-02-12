@@ -3,13 +3,10 @@ using System.Text.Json;
 using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Models;
-using My1kWordsEe.Models.Grammar;
 using My1kWordsEe.Models.Grammar.Forms;
 using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Db;
 
-using static My1kWordsEe.Models.Conventions;
-using static My1kWordsEe.Models.Extensions;
 using static My1kWordsEe.Services.Db.FormsStorageClient;
 
 namespace My1kWordsEe.Services.Cqs.Et

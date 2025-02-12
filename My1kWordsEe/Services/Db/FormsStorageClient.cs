@@ -28,9 +28,9 @@ namespace My1kWordsEe.Services.Db
             this.azureStorageClient = azureStorageClient;
         }
 
-        public Task<Result<Maybe<IGrammarForms>>> GetFormsData(FormsContainerId containerId) =>
+        public Task<Result<Maybe<T>>> GetFormsData<T>(FormsContainerId containerId) where T : IGrammarForms =>
             this.GetEtWordsContainer().Bind(container =>
-            this.azureStorageClient.DownloadJsonAsync<IGrammarForms>(
+            this.azureStorageClient.DownloadJsonAsync<T>(
                 container.GetBlobClient($"{containerId}.{JsonFormat}")));
 
         public Task<Result<Uri>> SaveFormsData(FormsContainerId containerId, IGrammarForms forms) =>
