@@ -11,11 +11,13 @@
     public required IEnumerable<NounForm> NounForms { get; init; }
 }
 
-<Grid TItem="NounForm" Class="table table-hover table-bordered table-striped" Data="NounForms"
-      PageSize="14" AllowPaging="true" Responsive="true">
+<Grid TItem="NounForm" Class="table table-hover table-bordered table-striped" Data="NounForms" PageSize="14" Responsive="true">
     <GridColumns>
         <GridColumn TItem="NounForm" HeaderText="Case" PropertyName="GrammaticalCase">
             @context.GrammaticalCase
+        </GridColumn>
+        <GridColumn TItem="NounForm" HeaderText="Eesti" PropertyName="Question">
+            @context.Question.Et
         </GridColumn>
         <GridColumn TItem="NounForm" HeaderText="Eesti" PropertyName="CaseForm">
             @context.CaseForm.Et
@@ -26,7 +28,7 @@
     </GridColumns>
     <GridTemplates>
         <GridEmptyDataTemplate TItem="NounForm">
-            <div class="d-grid gap-2">
+            <div class="d-grid gap-2 text-center">
                 <Spinner Size="SpinnerSize.Small" />
             </div>
         </GridEmptyDataTemplate>

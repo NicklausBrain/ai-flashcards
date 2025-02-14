@@ -15,10 +15,6 @@ namespace My1kWordsEe.Models.Semantics
         [Description("Antud sõna tähenduse ja grammatilise vormi selgitus")]
         public required TranslatedString Definition { get; init; }
 
-        /// <summary>
-        /// The form of a word to which prefixes and suffixes can be added.
-        /// Use to locate word forms based on <see cref="PartOfSpeech"/>
-        /// </summary>
         [Description("Sõna grammatika põhivorm (nt nimisõna ainsuse nimetav või tegusõna ma-da-ta-tegevusnimi)")]
         public required string BaseForm { get; init; }
 

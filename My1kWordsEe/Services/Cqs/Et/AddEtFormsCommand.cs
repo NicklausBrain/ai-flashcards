@@ -16,11 +16,17 @@ namespace My1kWordsEe.Services.Cqs.Et
         private readonly OpenAiClient openAiClient;
         private readonly FormsStorageClient formsStorageClient;
 
-        public static readonly string Prompt =
+        public static readonly string Prompt1 =
 @$"See on keeleõppe süsteem.
-Teie sisend on:
+Teie sisend on JSON-objekt:
 ```{JsonSchemaRecord.For(typeof(WordSense))}```
 Väljund peab olema JSON-objekt vastavalt antud skeemile.";
+
+        public static string Prompt2<T>() =>
+@$"See on keeleõppe süsteem.
+Teie sisend on JSON-objekt:
+```{JsonSchemaRecord.For(typeof(T))}```
+Kinnitage see ja vastake täiustatud versiooniga vastavalt JSON-skeemile.";
 
         public AddEtFormsCommand(
             OpenAiClient openAiService,
@@ -48,7 +54,7 @@ Väljund peab olema JSON-objekt vastavalt antud skeemile.";
         private async Task<Result<T>> GetFormsMetadata<T>(WordSense sense) where T : IGrammarForms
         {
             var response = await this.openAiClient.CompleteJsonSchemaAsync<T>(
-                Prompt,
+                Prompt1,
                 JsonSerializer.Serialize(sense),
                 JsonSchemaRecord.For(typeof(T)),
                 temperature: 0.1f);
@@ -58,7 +64,18 @@ Väljund peab olema JSON-objekt vastavalt antud skeemile.";
                 return Result.Failure<T>(response.Error);
             }
 
-            return response.Value;
+            var validatedResponse = await this.openAiClient.CompleteJsonSchemaAsync<T>(
+                Prompt2<T>(),
+                JsonSerializer.Serialize(response.Value),
+                JsonSchemaRecord.For(typeof(T)),
+                temperature: 0.1f);
+
+            if (validatedResponse.IsFailure)
+            {
+                return Result.Failure<T>(validatedResponse.Error);
+            }
+
+            return validatedResponse.Value;
         }
     }
 }
