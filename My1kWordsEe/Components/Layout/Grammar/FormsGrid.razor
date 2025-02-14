@@ -1,0 +1,61 @@
+﻿@using BlazorBootstrap
+@using CSharpFunctionalExtensions
+@using My1kWordsEe.Models
+@using My1kWordsEe.Models.Grammar.Forms
+@using My1kWordsEe.Models.Semantics
+@using My1kWordsEe.Models.Grammar
+@using My1kWordsEe.Services.Cqs.Et
+
+@inject GetOrAddEtFormsCommand GetOrAddEtFormsCommand;
+@inject PreloadService PreloadService
+@inject ToastService ToastService
+
+@code {
+    [Parameter]
+    public required EtWord EtWord { get; init; }
+    [Parameter]
+    public required int SenseIndex { get; init; }
+
+    private Maybe<Result<NounForms>> NounForms;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (EtWord.Senses[SenseIndex].IsNoun)
+        {
+            NounForms = await this.GetOrAddEtFormsCommand.Invoke<NounForms>(EtWord, (uint)SenseIndex);
+        }
+    }
+
+    private IEnumerable<NounForm> SingularForms =>
+        NounForms.HasValue && NounForms.Value.IsSuccess
+            ? NounForms.Value.Value.Singular
+            : Enumerable.Empty<NounForm>();
+
+    private IEnumerable<NounForm> PluralForms =>
+    NounForms.HasValue && NounForms.Value.IsSuccess
+        ? NounForms.Value.Value.Plural
+        : Enumerable.Empty<NounForm>();
+
+    private string Error => NounForms.HasValue && NounForms.Value.IsFailure
+        ? NounForms.Value.Error
+        : string.Empty;
+}
+
+<div class="row">
+    <div class="col-6">
+        <h4>Singular</h4>
+        <NounsGrid NounForms="@SingularForms" />
+    </div>
+
+    <div class="col-6">
+        <h4>Plural</h4>
+        <NounsGrid NounForms="@PluralForms" />
+    </div>
+
+    @if(!string.IsNullOrWhiteSpace(Error))
+    {
+        <div class="col-12">
+            <h3 class="alert-warning">@Error</h3>
+        </div>
+    }
+</div>

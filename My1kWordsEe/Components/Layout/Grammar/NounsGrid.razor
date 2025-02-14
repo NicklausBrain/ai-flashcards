@@ -1,0 +1,34 @@
+﻿@using BlazorBootstrap
+@using CSharpFunctionalExtensions
+@using My1kWordsEe.Models
+@using My1kWordsEe.Models.Grammar.Forms
+@using My1kWordsEe.Models.Semantics
+@using My1kWordsEe.Models.Grammar
+@using My1kWordsEe.Services.Cqs.Et
+
+@code {
+    [Parameter]
+    public required IEnumerable<NounForm> NounForms { get; init; }
+}
+
+<Grid TItem="NounForm" Class="table table-hover table-bordered table-striped" Data="NounForms"
+      PageSize="14" AllowPaging="true" Responsive="true">
+    <GridColumns>
+        <GridColumn TItem="NounForm" HeaderText="Case" PropertyName="GrammaticalCase">
+            @context.GrammaticalCase
+        </GridColumn>
+        <GridColumn TItem="NounForm" HeaderText="Eesti" PropertyName="CaseForm">
+            @context.CaseForm.Et
+        </GridColumn>
+        <GridColumn TItem="NounForm" HeaderText="English" PropertyName="CaseForm">
+            @context.CaseForm.En
+        </GridColumn>
+    </GridColumns>
+    <GridTemplates>
+        <GridEmptyDataTemplate TItem="NounForm">
+            <div class="d-grid gap-2">
+                <Spinner Size="SpinnerSize.Small" />
+            </div>
+        </GridEmptyDataTemplate>
+    </GridTemplates>
+</Grid>
