@@ -41,7 +41,7 @@ Väljund peab olema JSON-objekt vastavalt antud skeemile.";
                 return Result.Failure<T>(forms.Error);
             }
 
-            await this.formsStorageClient.SaveFormsData(containerId, forms.Value);
+            await this.formsStorageClient.SaveFormsData<T>(containerId, forms.Value);
             return forms;
         }
 

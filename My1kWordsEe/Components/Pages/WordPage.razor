@@ -104,13 +104,13 @@
                         }
                         else
                         {
-                             <a href="@($"/word/{EtWord.Senses[i].Word.Et}/{i}")">@EtWord.Senses[i].Word.En</a>
+                            <a href="@($"/word/{EtWord.Senses[i].Word.Et}/{i}")">@EtWord.Senses[i].Word.En</a>
                         }
                         <text>]</text>
                     }
                 </h4>
             }
- 
+
             <h4>@EtWord.Senses[SenseIndex].Definition.En</h4>
         }
         else if (HasError)
@@ -125,8 +125,28 @@
         }
     </div>
 
-    @if (IsEtWordDataLoadedOk){
-        <SamplesGrid EtWord="EtWord" SenseIndex="SenseIndex" />
+    @if (IsEtWordDataLoadedOk)
+    {
+        // temporal solution
+        if (@EtWord.Senses[SenseIndex].IsNoun)
+        {
+            <Tabs EnableFadeEffect="true">
+                <Tab Title="Forms" Active="true">
+                    <Content>
+                        <FormsGrid EtWord="EtWord" SenseIndex="SenseIndex" />
+                    </Content>
+                </Tab>
+                <Tab Title="Samples">
+                    <Content>
+                        <SamplesGrid EtWord="EtWord" SenseIndex="SenseIndex" />
+                    </Content>
+                </Tab>
+            </Tabs>
+        }
+        else
+        {
+            <SamplesGrid EtWord="EtWord" SenseIndex="SenseIndex" />
+        }
     }
 </div>
 

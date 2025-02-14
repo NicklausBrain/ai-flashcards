@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace My1kWordsEe.Models.Semantics
 {
@@ -23,5 +24,10 @@ namespace My1kWordsEe.Models.Semantics
 
         [Description("Kõneosa")]
         public required TranslatedString PartOfSpeech { get; init; }
+
+        [JsonIgnore]
+        public bool IsNoun =>
+            string.Equals(this.PartOfSpeech.Et, "nimisõna", StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(this.PartOfSpeech.En, "noun", StringComparison.OrdinalIgnoreCase);
     }
 }

@@ -1,0 +1,113 @@
+﻿@using BlazorBootstrap
+@using CSharpFunctionalExtensions
+@using My1kWordsEe.Models
+@using My1kWordsEe.Models.Grammar.Forms
+@using My1kWordsEe.Models.Semantics
+@using My1kWordsEe.Models.Grammar
+@using My1kWordsEe.Services.Cqs.Et
+
+@inject GetOrAddEtFormsCommand GetOrAddEtFormsCommand;
+@inject PreloadService PreloadService
+@inject ToastService ToastService
+
+@code {
+    [Parameter]
+    public required EtWord EtWord { get; init; }
+    [Parameter]
+    public required int SenseIndex { get; init; }
+
+    private Maybe<Result<NounForms>> NounForms;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (EtWord.Senses[SenseIndex].IsNoun)
+        {
+            NounForms = await this.GetOrAddEtFormsCommand.Invoke<NounForms>(EtWord, (uint)SenseIndex);
+        }
+    }
+
+    private IEnumerable<NounForm> SingularForms =>
+        NounForms.HasValue && NounForms.Value.IsSuccess
+            ? NounForms.Value.Value.Singular
+            : Enumerable.Empty<NounForm>();
+
+    private IEnumerable<NounForm> PluralForms =>
+    NounForms.HasValue && NounForms.Value.IsSuccess
+        ? NounForms.Value.Value.Plural
+        : Enumerable.Empty<NounForm>();
+
+    private string Error => NounForms.HasValue && NounForms.Value.IsFailure
+        ? NounForms.Value.Error
+        : string.Empty;
+}
+
+<div class="row">
+    <div class="col-6">
+        <h4>Singular</h4>
+        <Grid TItem="NounForm" Class="table table-hover table-bordered table-striped" Data="SingularForms"
+              PageSize="14" AllowPaging="true" Responsive="true">
+            <GridColumns>
+                <GridColumn TItem="NounForm" HeaderText="Case" PropertyName="GrammaticalCase">
+                    @context.GrammaticalCase
+                </GridColumn>
+                <GridColumn TItem="NounForm" HeaderText="Eesti" PropertyName="CaseForm">
+                    @context.CaseForm.Et
+                </GridColumn>
+                <GridColumn TItem="NounForm" HeaderText="English" PropertyName="CaseForm">
+                    @context.CaseForm.En
+                </GridColumn>
+            </GridColumns>
+            <GridTemplates>
+                <GridEmptyDataTemplate TItem="NounForm">
+                    <div class="d-grid gap-2">
+                        @if (NounForms.HasValue && NounForms.Value.IsFailure)
+                        {
+                            @NounForms.Value.Error
+                        }
+                        else
+                        {
+                            <Spinner Size="SpinnerSize.Small" />
+                        }
+                    </div>
+                </GridEmptyDataTemplate>
+            </GridTemplates>
+        </Grid>
+    </div>
+    <div class="col-6">
+        <h4>Plural</h4>
+        <Grid TItem="NounForm" Class="table table-hover table-bordered table-striped" Data="PluralForms"
+              PageSize="14" AllowPaging="true" Responsive="true">
+            <GridColumns>
+                <GridColumn TItem="NounForm" HeaderText="Case" PropertyName="GrammaticalCase">
+                    @context.GrammaticalCase
+                </GridColumn>
+                <GridColumn TItem="NounForm" HeaderText="Eesti" PropertyName="CaseForm">
+                    @context.CaseForm.Et
+                </GridColumn>
+                <GridColumn TItem="NounForm" HeaderText="English" PropertyName="CaseForm">
+                    @context.CaseForm.En
+                </GridColumn>
+            </GridColumns>
+            <GridTemplates>
+                <GridEmptyDataTemplate TItem="NounForm">
+                    <div class="d-grid gap-2">
+                        @if (NounForms.HasValue && NounForms.Value.IsFailure)
+                        {
+                            @NounForms.Value.Error
+                        }
+                        else
+                        {
+                            <Spinner Size="SpinnerSize.Small" />
+                        }
+                    </div>
+                </GridEmptyDataTemplate>
+            </GridTemplates>
+        </Grid>
+    </div>
+    @if(!string.IsNullOrWhiteSpace(Error))
+    {
+        <div class="col-12">
+            <h3 class="alert-warning">@Error</h3>
+        </div>
+    }
+</div>
