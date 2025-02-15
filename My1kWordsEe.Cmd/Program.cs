@@ -14,8 +14,12 @@ namespace My1kWordsEe.Cmd
     {
         static async Task Main(string[] args)
         {
-            Console.WriteLine(AddEtFormsCommand.Prompt1);
+
+            Console.WriteLine(AddEtFormsCommand.Prompt);
+            Console.WriteLine("------------------------------------");
             Console.WriteLine(JsonSchemaRecord.For(typeof(NounForms)));
+            //Console.WriteLine("------------------------------------");
+            //Console.WriteLine(JsonSchemaRecord.For(typeof(EtGrammaticalCases)));
 
             //Console.WriteLine(AddEtSampleSentenceCommand.Prompt);
             //Console.WriteLine(JsonSchemaRecord.For(typeof(SampleEtSentence)));

@@ -42,14 +42,14 @@
 }
 
 <div class="row">
-    <div class="col-6">
-        <h4>Singular</h4>
+    <div class="col-auto">
+        <div class="row text-center"><h4>Singular</h4></div>
         <NounsGrid NounForms="@SingularForms" />
     </div>
 
-    <div class="col-6">
-        <h4>Plural</h4>
-        <NounsGrid NounForms="@PluralForms" />
+    <div class="col-auto">
+        <div class="row text-center"><h4>Plural</h4></div>
+        <NounsGrid NounForms="@PluralForms" IsPlural="true" />
     </div>
 
     @if(!string.IsNullOrWhiteSpace(Error))

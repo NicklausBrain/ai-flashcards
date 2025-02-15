@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Text.Json;
 
 using CSharpFunctionalExtensions;
@@ -16,17 +17,16 @@ namespace My1kWordsEe.Services.Cqs.Et
         private readonly OpenAiClient openAiClient;
         private readonly FormsStorageClient formsStorageClient;
 
-        public static readonly string Prompt1 =
+        public static readonly string Prompt =
 @$"See on keeleõppe süsteem.
-Teie sisend on JSON-objekt:
-```{JsonSchemaRecord.For(typeof(WordSense))}```
-Väljund peab olema JSON-objekt vastavalt antud skeemile.";
-
-        public static string Prompt2<T>() =>
-@$"See on keeleõppe süsteem.
-Teie sisend on JSON-objekt:
-```{JsonSchemaRecord.For(typeof(T))}```
-Kinnitage see ja vastake täiustatud versiooniga vastavalt JSON-skeemile.";
+Sisend: JSON-objekt sõna grammatilise vormi ja tõlgete kohta.
+Teie ülesanne: 
+1️. Täida kõik väljad vastavalt Eesti keele grammatikareeglitele.
+2️. Kasuta korrektseid küsisõnu (ainsus ja mitmus) vastavalt käänetele.
+3️. Tagasta JSON, mis vastab allolevale skeemile.
+Sisend:
+{JsonSchemaRecord.For(typeof(EtWordSense))}
+Väljund peab olema järgmine JSON-objekt:";
 
         public AddEtFormsCommand(
             OpenAiClient openAiService,
@@ -54,8 +54,14 @@ Kinnitage see ja vastake täiustatud versiooniga vastavalt JSON-skeemile.";
         private async Task<Result<T>> GetFormsMetadata<T>(WordSense sense) where T : IGrammarForms
         {
             var response = await this.openAiClient.CompleteJsonSchemaAsync<T>(
-                Prompt1,
-                JsonSerializer.Serialize(sense),
+                Prompt,
+                JsonSerializer.Serialize(new EtWordSense
+                {
+                    EtWord = sense.Word.Et,
+                    Definition = sense.Definition.Et,
+                    BaseForm = sense.BaseForm,
+                    PartOfSpeech = sense.PartOfSpeech.Et,
+                }),
                 JsonSchemaRecord.For(typeof(T)),
                 temperature: 0.1f);
 
@@ -64,18 +70,22 @@ Kinnitage see ja vastake täiustatud versiooniga vastavalt JSON-skeemile.";
                 return Result.Failure<T>(response.Error);
             }
 
-            var validatedResponse = await this.openAiClient.CompleteJsonSchemaAsync<T>(
-                Prompt2<T>(),
-                JsonSerializer.Serialize(response.Value),
-                JsonSchemaRecord.For(typeof(T)),
-                temperature: 0.1f);
+            return response.Value;
+        }
 
-            if (validatedResponse.IsFailure)
-            {
-                return Result.Failure<T>(validatedResponse.Error);
-            }
+        private struct EtWordSense
+        {
+            [Description("Sama antud sõna ja selle otsetõlge")]
+            public required string EtWord { get; init; }
 
-            return validatedResponse.Value;
+            [Description("Antud sõna tähenduse ja grammatilise vormi selgitus")]
+            public required string Definition { get; init; }
+
+            [Description("Sõna grammatika põhivorm")]
+            public required string BaseForm { get; init; }
+
+            [Description("Kõneosa")]
+            public required string PartOfSpeech { get; init; }
         }
     }
 }
