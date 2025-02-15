@@ -7,18 +7,18 @@ namespace My1kWordsEe.Services.Cqs
     public class AddAudioCommand
     {
         private readonly TartuNlpClient tartuNlpService;
-        private readonly AzureStorageClient azureBlobService;
+        private readonly AudioStorageClient audioStorageClient;
 
         public AddAudioCommand(
             TartuNlpClient tartuNlpService,
-            AzureStorageClient azureBlobService)
+            AudioStorageClient audioStorageClient)
         {
             this.tartuNlpService = tartuNlpService;
-            this.azureBlobService = azureBlobService;
+            this.audioStorageClient = audioStorageClient;
         }
 
         public Task<Result<Uri>> Invoke(string text, string fileName) =>
           this.tartuNlpService.GetSpeech(text).Bind(stream =>
-          this.azureBlobService.SaveAudio(stream, fileName));
+          this.audioStorageClient.SaveAudio(stream, fileName));
     }
 }

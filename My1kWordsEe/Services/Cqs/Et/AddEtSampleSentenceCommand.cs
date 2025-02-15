@@ -9,7 +9,7 @@ using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Db;
 
 using static My1kWordsEe.Models.Conventions;
-using static My1kWordsEe.Services.Db.AzureStorageClient;
+using static My1kWordsEe.Services.Db.SamplesStorageClient;
 
 namespace My1kWordsEe.Services.Cqs.Et
 {
@@ -25,18 +25,21 @@ namespace My1kWordsEe.Services.Cqs.Et
             "1. Vaadata sisendit ja määrata, kuidas antud sõna sobivas grammatilises vormis lauses kasutada.\n" +
             "2. Genereerida JSON-objekt, mis sisaldab ühte näidislause paari eesti ja inglise keeles.\n";
 
-        private readonly AzureStorageClient azureBlobClient;
+        private readonly SamplesStorageClient samplesStorageClient;
+        private readonly ImageStorageClient imageStorageClient;
         private readonly OpenAiClient openAiClient;
         private readonly AddAudioCommand addAudioCommand;
         private readonly StabilityAiClient stabilityAiClient;
 
         public AddEtSampleSentenceCommand(
-            AzureStorageClient azureBlobService,
+            SamplesStorageClient samplesStorageClient,
+            ImageStorageClient imageStorageClient,
             OpenAiClient openAiService,
             AddAudioCommand createAudioCommand,
             StabilityAiClient stabilityAiService)
         {
-            this.azureBlobClient = azureBlobService;
+            this.samplesStorageClient = samplesStorageClient;
+            this.imageStorageClient = imageStorageClient;
             this.openAiClient = openAiService;
             this.addAudioCommand = createAudioCommand;
             this.stabilityAiClient = stabilityAiService;
@@ -45,7 +48,7 @@ namespace My1kWordsEe.Services.Cqs.Et
         public async Task<Result<SampleSentenceWithMedia[]>> Invoke(EtWord word, uint senseIndex)
         {
             var containerId = new SamplesContainerId { SenseIndex = senseIndex, Word = word.Value };
-            var existingSamples = await this.azureBlobClient.GetEtSampleData(containerId);
+            var existingSamples = await this.samplesStorageClient.GetEtSampleData(containerId);
 
             if (existingSamples.IsFailure)
             {
@@ -89,16 +92,18 @@ namespace My1kWordsEe.Services.Cqs.Et
                 },
             }).ToArray();
 
-            return (await this.azureBlobClient
+            return (await this.samplesStorageClient
                 .SaveEtSamplesData(containerId, updatedSamples))
                 .Bind(r => Result.Success(updatedSamples));
         }
 
+        // todo: move to separate command
         private Task<Result<Uri>> GenerateImage(Guid sampleId, SampleEtSentence sentence) =>
             this.openAiClient.GetDallEPrompt(sentence.Sentence.En).BindZip(
             this.stabilityAiClient.GenerateImage).Bind(p =>
-            this.azureBlobClient.SaveImage(sampleId, p.First, p.Second));
+            this.imageStorageClient.SaveImage(sampleId, p.First, p.Second));
 
+        // todo: rename addAudioCommand
         private Task<Result<Uri>> GenerateSpeech(Guid sampleId, SampleEtSentence sentence) =>
             this.addAudioCommand.Invoke(
                 text: sentence.Sentence.Et,

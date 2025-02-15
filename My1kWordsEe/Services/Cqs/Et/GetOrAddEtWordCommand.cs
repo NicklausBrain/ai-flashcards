@@ -8,14 +8,14 @@ namespace My1kWordsEe.Services.Cqs.Et
 {
     public class GetOrAddEtWordCommand
     {
-        private readonly AzureStorageClient azureBlobService;
+        private readonly WordStorageClient wordStorageClient;
         private readonly AddEtWordCommand addEtWordCommand;
 
         public GetOrAddEtWordCommand(
-            AzureStorageClient azureBlobService,
+            WordStorageClient wordStorageClient,
             AddEtWordCommand addEtWordCommand)
         {
-            this.azureBlobService = azureBlobService;
+            this.wordStorageClient = wordStorageClient;
             this.addEtWordCommand = addEtWordCommand;
         }
 
@@ -26,7 +26,7 @@ namespace My1kWordsEe.Services.Cqs.Et
                 return Result.Failure<EtWord>("Not an Estonian word");
             }
 
-            (await azureBlobService.GetEtWordData(eeWord)).Deconstruct(
+            (await wordStorageClient.GetEtWordData(eeWord)).Deconstruct(
                 out bool _,
                 out bool isBlobAccessFailure,
                 out Maybe<EtWord> savedWord,

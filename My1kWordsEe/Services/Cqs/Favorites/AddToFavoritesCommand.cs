@@ -9,14 +9,14 @@ namespace My1kWordsEe.Services.Cqs
     public class AddToFavoritesCommand
     {
         private readonly GetFavoritesQuery getFavoritesCommand;
-        private readonly AzureStorageClient azureBlobService;
+        private readonly FavoritesStorageClient favoritesStorageClient;
 
         public AddToFavoritesCommand(
             GetFavoritesQuery getFavoritesCommand,
-            AzureStorageClient azureBlobService)
+            FavoritesStorageClient favoritesStorageClient)
         {
             this.getFavoritesCommand = getFavoritesCommand;
-            this.azureBlobService = azureBlobService;
+            this.favoritesStorageClient = favoritesStorageClient;
         }
 
         public async Task<Result<Favorites>> Invoke(string userId, EtWord sampleWord)
@@ -24,7 +24,7 @@ namespace My1kWordsEe.Services.Cqs
             return await this.getFavoritesCommand.Invoke(userId).Bind(async favorites =>
             {
                 favorites.Words.Add(sampleWord.Value.ToLower(), sampleWord);
-                return await this.azureBlobService.SaveFavorites(favorites).Bind(_ =>
+                return await this.favoritesStorageClient.SaveFavorites(favorites).Bind(_ =>
                     Result.Success(favorites));
             });
         }
@@ -34,7 +34,7 @@ namespace My1kWordsEe.Services.Cqs
             return await this.getFavoritesCommand.Invoke(userId).Bind(async favorites =>
             {
                 favorites.Sentences.Add(sampleSentence.Sentence.Et.ToLower(), sampleSentence);
-                return await this.azureBlobService.SaveFavorites(favorites).Bind(_ =>
+                return await this.favoritesStorageClient.SaveFavorites(favorites).Bind(_ =>
                     Result.Success(favorites));
             });
         }

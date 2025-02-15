@@ -49,6 +49,12 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<StabilityAiClient>();
             builder.Services.AddSingleton<OpenAiClient>();
             builder.Services.AddSingleton<AzureStorageClient>();
+            builder.Services.AddSingleton<AudioStorageClient>();
+            builder.Services.AddSingleton<ImageStorageClient>();
+            builder.Services.AddSingleton<FavoritesStorageClient>();
+            builder.Services.AddSingleton<SamplesStorageClient>();
+            builder.Services.AddSingleton<WordStorageClient>();
+            builder.Services.AddSingleton<FormsStorageClient>();
             builder.Services.AddSingleton<UrlService>();
             builder.Services.AddSingleton<TartuNlpClient>();
             builder.Services.AddSingleton<GetOrAddSampleWordCommand>();
@@ -58,6 +64,8 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<GetEtSampleSentencesQuery>();
             builder.Services.AddSingleton<AddEtSampleSentenceCommand>();
             builder.Services.AddSingleton<DeleteEtSampleSentenceCommand>();
+            builder.Services.AddSingleton<AddEtFormsCommand>();
+            builder.Services.AddSingleton<GetOrAddEtFormsCommand>();
 
             builder.Services.AddSingleton<AddAudioCommand>();
             builder.Services.AddSingleton<CheckEnTranslationCommand>();

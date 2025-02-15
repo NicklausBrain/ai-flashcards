@@ -9,14 +9,14 @@ namespace My1kWordsEe.Services.Cqs
     public class ReorderFavoritesCommand
     {
         private readonly GetFavoritesQuery getFavoritesCommand;
-        private readonly AzureStorageClient azureBlobService;
+        private readonly FavoritesStorageClient favoritesStorageClient;
 
         public ReorderFavoritesCommand(
             GetFavoritesQuery getFavoritesCommand,
-            AzureStorageClient azureBlobService)
+            FavoritesStorageClient favoritesStorageClient)
         {
             this.getFavoritesCommand = getFavoritesCommand;
-            this.azureBlobService = azureBlobService;
+            this.favoritesStorageClient = favoritesStorageClient;
         }
 
         public async Task<Result<Favorites>> Invoke(string userId, IEnumerable<EtWord> sampleWords)
@@ -27,7 +27,7 @@ namespace My1kWordsEe.Services.Cqs
                     userId: favorites.UserId,
                     words: sampleWords.ToDictionary(w => w.Value),
                     sentences: favorites.Sentences);
-                return await this.azureBlobService.SaveFavorites(reorderedFavorites).Bind(_ =>
+                return await this.favoritesStorageClient.SaveFavorites(reorderedFavorites).Bind(_ =>
                     Result.Success(reorderedFavorites));
             });
         }

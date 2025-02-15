@@ -7,12 +7,12 @@ namespace My1kWordsEe.Services.Cqs
 {
     public class GetFavoritesQuery
     {
-        private readonly AzureStorageClient azureBlobService;
+        private readonly FavoritesStorageClient favoritesStorageClient;
 
         public GetFavoritesQuery(
-            AzureStorageClient azureBlobService)
+            FavoritesStorageClient favoritesStorageClient)
         {
-            this.azureBlobService = azureBlobService;
+            this.favoritesStorageClient = favoritesStorageClient;
         }
 
         public async Task<Result<Favorites>> Invoke(string userId)
@@ -22,7 +22,7 @@ namespace My1kWordsEe.Services.Cqs
                 return Result.Failure<Favorites>("Empty user ID");
             }
 
-            (await azureBlobService.GetFavorites(userId)).Deconstruct(
+            (await favoritesStorageClient.GetFavorites(userId)).Deconstruct(
                 out bool _,
                 out bool isBlobAccessFailure,
                 out Maybe<Favorites> favorites,

@@ -12,7 +12,7 @@ namespace My1kWordsEe.Services.Cqs.Et
     public class AddEtWordCommand
     {
         private readonly OpenAiClient openAiClient;
-        private readonly AzureStorageClient azureBlobClient;
+        private readonly WordStorageClient wordStorageClient;
         private readonly AddAudioCommand addAudioCommand;
 
         public static readonly string Prompt =
@@ -26,10 +26,10 @@ Väljund peab olema JSON-objekt vastavalt antud skeemile.";
 
         public AddEtWordCommand(
             OpenAiClient openAiService,
-            AzureStorageClient azureBlobService,
+            WordStorageClient wordStorageClient,
             AddAudioCommand createAudioCommand)
         {
-            this.azureBlobClient = azureBlobService;
+            this.wordStorageClient = wordStorageClient;
             this.openAiClient = openAiService;
             this.addAudioCommand = createAudioCommand;
         }
@@ -65,8 +65,8 @@ Väljund peab olema JSON-objekt vastavalt antud skeemile.";
                 return Result.Failure<EtWord>(audioError);
             }
 
-            return (await azureBlobClient.SaveEtWordData(etWord))
-                .Bind(_ => Result.Of(etWord));
+            return (await wordStorageClient.SaveEtWordData(etWord))
+                .Map(_ => etWord);
         }
 
         private async Task<Result<EtWord>> GetWordMetadata(string etWord)

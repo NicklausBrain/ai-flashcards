@@ -9,18 +9,18 @@ namespace My1kWordsEe.Services.Cqs
 {
     public class RedoSampleWordCommand
     {
-        private readonly AzureStorageClient azureBlobService;
+        private readonly WordStorageClient wordStorageClient;
         private readonly AddEtWordCommand addEtWordCommand;
         private readonly GetEtSampleSentencesQuery getEtSampleSentencesQuery;
         private readonly DeleteEtSampleSentenceCommand deleteEtSampleSentenceCommand;
 
         public RedoSampleWordCommand(
-            AzureStorageClient azureBlobService,
+            WordStorageClient wordStorageClient,
             AddEtWordCommand addEtWordCommand,
             GetEtSampleSentencesQuery getEtSampleSentencesQuery,
             DeleteEtSampleSentenceCommand deleteEtSampleSentenceCommand)
         {
-            this.azureBlobService = azureBlobService;
+            this.wordStorageClient = wordStorageClient;
             this.addEtWordCommand = addEtWordCommand;
             this.getEtSampleSentencesQuery = getEtSampleSentencesQuery;
             this.deleteEtSampleSentenceCommand = deleteEtSampleSentenceCommand;
@@ -35,7 +35,7 @@ namespace My1kWordsEe.Services.Cqs
                 return Result.Failure<EtWord>("Not an Estonian word");
             }
 
-            (await azureBlobService.GetEtWordData(etWord)).Deconstruct(
+            (await wordStorageClient.GetEtWordData(etWord)).Deconstruct(
                 out bool _,
                 out bool isBlobAccessFailure,
                 out Maybe<EtWord> existingWordData,

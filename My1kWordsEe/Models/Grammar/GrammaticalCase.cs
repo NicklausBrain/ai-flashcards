@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Text.Json.Serialization;
 
 namespace My1kWordsEe.Models.Grammar
@@ -6,6 +7,7 @@ namespace My1kWordsEe.Models.Grammar
     /// Grammatical cases in Estonian language
     /// </summary>
     [JsonConverter(typeof(JsonStringEnumConverter))]
+    [Description("Kääne")]
     public enum GrammaticalCase
     {
         None, // Default value | cannot be determined

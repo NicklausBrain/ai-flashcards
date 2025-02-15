@@ -8,12 +8,18 @@ namespace My1kWordsEe.Services.Cqs.Et
 {
     public class DeleteEtSampleSentenceCommand
     {
-        private readonly AzureStorageClient azureBlobService;
+        private readonly SamplesStorageClient samplesStorageClient;
+        private readonly ImageStorageClient imageStorageClient;
+        private readonly AudioStorageClient audioStorageClient;
 
         public DeleteEtSampleSentenceCommand(
-            AzureStorageClient azureBlobService)
+            SamplesStorageClient samplesStorageClient,
+            ImageStorageClient imageStorageClient,
+            AudioStorageClient audioStorageClient)
         {
-            this.azureBlobService = azureBlobService;
+            this.samplesStorageClient = samplesStorageClient;
+            this.imageStorageClient = imageStorageClient;
+            this.audioStorageClient = audioStorageClient;
         }
 
         public async Task<Result<SampleSentenceWithMedia[]>> Invoke(
@@ -21,8 +27,8 @@ namespace My1kWordsEe.Services.Cqs.Et
             uint senseIndex,
             SampleSentenceWithMedia sampleToRemove)
         {
-            var imageRemoval = this.azureBlobService.DeleteImage(sampleToRemove.ImageUrl.Segments.Last());
-            var audioRemoval = this.azureBlobService.DeleteAudio(sampleToRemove.AudioUrl.Segments.Last());
+            var imageRemoval = this.imageStorageClient.DeleteImage(sampleToRemove.ImageUrl.Segments.Last());
+            var audioRemoval = this.audioStorageClient.DeleteAudio(sampleToRemove.AudioUrl.Segments.Last());
 
             await Task.WhenAll(imageRemoval, audioRemoval);
 
@@ -36,13 +42,13 @@ namespace My1kWordsEe.Services.Cqs.Et
                 return Result.Failure<SampleSentenceWithMedia[]>($"Speech removal failed: {audioRemoval.Result.Error}");
             }
 
-            var containerId = new AzureStorageClient.SamplesContainerId
+            var containerId = new SamplesStorageClient.SamplesContainerId
             {
                 Word = word.Value,
                 SenseIndex = senseIndex
             };
 
-            var existingSamples = await this.azureBlobService.GetEtSampleData(containerId);
+            var existingSamples = await this.samplesStorageClient.GetEtSampleData(containerId);
 
             if (existingSamples.IsFailure)
             {
@@ -52,7 +58,7 @@ namespace My1kWordsEe.Services.Cqs.Et
             // check if its ok
             var updatedSamples = existingSamples.Value.Where(s => s.GetHashCode() != sampleToRemove.GetHashCode()).ToArray();
 
-            return (await this.azureBlobService
+            return (await this.samplesStorageClient
                 .SaveEtSamplesData(containerId, updatedSamples))
                 .Bind(r => Result.Success(updatedSamples));
         }
