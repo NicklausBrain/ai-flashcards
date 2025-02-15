@@ -25,10 +25,15 @@
 @* @inject RedoSampleWordCommand RedoSampleWordCommand *@
 
 @code {
+    public const string SamplesTab = "SamplesTab";
+    public const string FormsTab = "FormsTab";
+
     [Parameter]
     public required string Word { get; init; }
     [Parameter]
     public int SenseIndex { get; init; } = 0;
+    [SupplyParameterFromQuery]
+    public string? Tab { get; init; }
 
     private Maybe<Result<EtWord>> EtWordData;
     private ClaimsPrincipal? User;
@@ -55,6 +60,11 @@
         await JS.InvokeVoidAsync("speakWord", Word);
     }
 
+    private async Task OnSelectTab(TabEventArgs args)
+    {
+        await JS.InvokeVoidAsync("replaceAddress", $"/word/{Word}/{SenseIndex}?{nameof(Tab)}={args.Name}");
+    }
+
     private bool IsEtWordDataLoadedOk => EtWordData.HasValue && EtWordData.Value.IsSuccess;
 
     private bool HasError => EtWordData.HasValue && EtWordData.Value.IsFailure;
@@ -71,6 +81,10 @@
         const audio = document.getElementById(audioId);
         await audio.play();
     };
+
+    function replaceAddress(url) {
+        history.replaceState(null, "", url);
+    }
 </script>
 
 <div class="text-left">
@@ -132,12 +146,12 @@
         if (@EtWord.Senses[SenseIndex].IsNoun)
         {
             <Tabs EnableFadeEffect="true">
-                <Tab Title="Samples" Active="true">
+                <Tab Name="@SamplesTab" Title="Samples" Active="@(Tab == SamplesTab)" OnClick="OnSelectTab">
                     <Content>
                         <SamplesGrid EtWord="EtWord" SenseIndex="SenseIndex" />
                     </Content>
                 </Tab>
-                <Tab Title="Forms" >
+                <Tab Name="@FormsTab" Title="Forms" Active="@(Tab == FormsTab)" OnClick="OnSelectTab">
                     <Content>
                         <FormsGrid EtWord="EtWord" SenseIndex="SenseIndex" />
                     </Content>

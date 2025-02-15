@@ -52,7 +52,10 @@ Kaasaütlev,kellega? millega?")]
 
     public struct NounForm
     {
-        [Description("Kääne")]
+        [Description(
+@"Kääne. Tähelepanu!
+Sisseütlev peab olema pikk vorm -sse.
+Osastav võib sisaldada ebareeglipäraseid tüvemuutusi.")]
         public required EtGrammaticalCase GrammaticalCase { get; init; }
 
         [Description("Sõna antud grammatika vormis ja selle otsetõlge")]
@@ -67,10 +70,10 @@ Kaasaütlev,kellega? millega?")]
                 EtGrammaticalCase.Osastav => new TranslatedString { Et = "keda? mida?", En = "whom? what?" },
                 EtGrammaticalCase.Sisseütlev => new TranslatedString { Et = "kellesse? millesse?", En = "into whom? into what?" },
                 EtGrammaticalCase.Seesütlev => new TranslatedString { Et = "kelles? milles?", En = "in whom? in what?" },
-                EtGrammaticalCase.Seestütlev => new TranslatedString { Et = "kellest? millest?", En = "from whom? from what?" },
+                EtGrammaticalCase.Seestütlev => new TranslatedString { Et = "kellest? millest?", En = "from [within] what?" },
                 EtGrammaticalCase.Alaleütlev => new TranslatedString { Et = "kellele? millele?", En = "to whom? to what?" },
                 EtGrammaticalCase.Alalütlev => new TranslatedString { Et = "kellel? millel?", En = "on whom? on what?" },
-                EtGrammaticalCase.Alaltütlev => new TranslatedString { Et = "kellelt? millelt?", En = "from whom? from what?" },
+                EtGrammaticalCase.Alaltütlev => new TranslatedString { Et = "kellelt? millelt?", En = "from [surface] what?" },
                 EtGrammaticalCase.Saav => new TranslatedString { Et = "kelleks? milleks?", En = "into whom? into what?" },
                 EtGrammaticalCase.Rajav => new TranslatedString { Et = "kelleni? milleni?", En = "until whom? until what?" },
                 EtGrammaticalCase.Olev => new TranslatedString { Et = "kellena? millena?", En = "as whom? as what?" },
@@ -89,10 +92,10 @@ Kaasaütlev,kellega? millega?")]
                 EtGrammaticalCase.Osastav => new TranslatedString { Et = "keda? mida?", En = "whom? what?" },
                 EtGrammaticalCase.Sisseütlev => new TranslatedString { Et = "kellessse? millesse?", En = "into whom? into what?" },
                 EtGrammaticalCase.Seesütlev => new TranslatedString { Et = "kelless? milles?", En = "in whom? in what?" },
-                EtGrammaticalCase.Seestütlev => new TranslatedString { Et = "kellest? millest?", En = "from whom? from what?" },
+                EtGrammaticalCase.Seestütlev => new TranslatedString { Et = "kellest? millest?", En = "from [within] what?" },
                 EtGrammaticalCase.Alaleütlev => new TranslatedString { Et = "kellele? millele?", En = "to whom? to what?" },
                 EtGrammaticalCase.Alalütlev => new TranslatedString { Et = "kellel? millel?", En = "on whom? on what?" },
-                EtGrammaticalCase.Alaltütlev => new TranslatedString { Et = "kellelt? millelt?", En = "from whom? from what?" },
+                EtGrammaticalCase.Alaltütlev => new TranslatedString { Et = "kellelt? millelt?", En = "from [surface] what?" },
                 EtGrammaticalCase.Saav => new TranslatedString { Et = "kelledeks? milledeks?", En = "into whom? into what?" },
                 EtGrammaticalCase.Rajav => new TranslatedString { Et = "kelledeni? milledeni?", En = "until whom? until what?" },
                 EtGrammaticalCase.Olev => new TranslatedString { Et = "kelledena? milledena?", En = "as whom? as what?" },

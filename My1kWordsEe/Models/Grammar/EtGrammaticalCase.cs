@@ -7,7 +7,7 @@ namespace My1kWordsEe.Models.Grammar
     /// Grammatical cases in Estonian language
     /// </summary>
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    [Description("Kääne")]
+    [Description("Kääne. Sisseütlev peab olema pikk vorm -sse.")]
     public enum EtGrammaticalCase
     {
         Nimetav, // (nominatiiv)
