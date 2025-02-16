@@ -21,7 +21,8 @@ namespace My1kWordsEe.Services.Cqs.Et
 
         public async Task<Result<T>> Invoke<T>(EtWord word, uint senseIndex) where T : IGrammarForms
         {
-            var containerId = new FormsStorageClient.FormsContainerId { SenseIndex = senseIndex, Word = word.Value };
+            var sense = word.Senses[senseIndex];
+            var containerId = new FormsStorageClient.FormsContainerId { SenseIndex = senseIndex, BaseForm = sense.BaseForm };
 
             (await formsStorageClient.GetFormsData<T>(containerId)).Deconstruct(
                 out bool _,

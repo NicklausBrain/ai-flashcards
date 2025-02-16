@@ -12,11 +12,11 @@ namespace My1kWordsEe.Services.Db
     {
         public struct FormsContainerId
         {
-            public required string Word { get; init; }
+            public required string BaseForm { get; init; }
 
             public required uint SenseIndex { get; init; }
 
-            public override string ToString() => $"{Word}-{SenseIndex}";
+            public override string ToString() => $"{BaseForm}-{SenseIndex}";
 
             public static implicit operator string(FormsContainerId id) => id.ToString();
         }

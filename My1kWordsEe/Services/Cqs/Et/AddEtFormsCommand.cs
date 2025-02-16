@@ -38,7 +38,8 @@ Väljund peab olema järgmine JSON-objekt:";
 
         public async Task<Result<T>> Invoke<T>(EtWord word, uint senseIndex) where T : IGrammarForms
         {
-            var containerId = new FormsContainerId { SenseIndex = senseIndex, Word = word.Value };
+            var sense = word.Senses[senseIndex];
+            var containerId = new FormsContainerId { SenseIndex = senseIndex, BaseForm = sense.BaseForm };
 
             var forms = await this.GetFormsMetadata<T>(word.Senses[senseIndex]);
 
