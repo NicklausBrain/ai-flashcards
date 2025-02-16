@@ -9,12 +9,14 @@ namespace My1kWordsEe.Models
     public class EtWordsCache
     {
         private readonly IWebHostEnvironment environment;
+        private readonly ILogger logger;
         private readonly Lazy<EtWord[]> _allWords;
         private readonly Lazy<IReadOnlyDictionary<string, string>> _allWordsDiacriticsFree;
         private readonly Lazy<IReadOnlyDictionary<EtWord, int>> _wordIndex;
 
-        public EtWordsCache(IWebHostEnvironment environment)
+        public EtWordsCache(IWebHostEnvironment environment, ILogger<EtWordsCache> logger)
         {
+            this.logger = logger;
             this.environment = environment;
             this._allWords = new Lazy<EtWord[]>(LoadEtWords);
             this._allWordsDiacriticsFree = new Lazy<IReadOnlyDictionary<string, string>>(() =>
@@ -32,12 +34,19 @@ namespace My1kWordsEe.Models
 
         private EtWord[] LoadEtWords()
         {
-            var dictFile = this.environment.WebRootFileProvider.GetFileInfo("/data/et-words.json");
+            const string dictFilePath = "/data/et-words.json";
+            var dictFile = this.environment.WebRootFileProvider.GetFileInfo(dictFilePath);
+            if (!dictFile.Exists)
+            {
+                this.logger.LogError("Dictionary file not found {dictFilePath}", dictFilePath);
+                return Array.Empty<EtWord>();
+            }
             var dictStream = dictFile.CreateReadStream();
             var etWords = JsonSerializer.Deserialize<EtWord[]>(dictStream);
             if (etWords is null)
             {
-                throw new FileNotFoundException("No /data/et-words.json that is needed for Et vocab");
+                this.logger.LogError("Dictionary file is empty {dictFilePath}", dictFilePath);
+                return Array.Empty<EtWord>();
             }
             return etWords;
         }
