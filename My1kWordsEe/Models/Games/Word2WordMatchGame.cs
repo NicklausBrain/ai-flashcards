@@ -78,39 +78,6 @@ namespace My1kWordsEe.Models.Games
         }
 
         /// <summary>
-        /// Generate a new game.
-        /// </summary>
-        public static Task<Word2WordMatchGame> Generate() => Task.Run(() =>
-        {
-            var rn = new Random(Environment.TickCount);
-            var eeWords = new Dictionary<string, Pair>();
-            var enWords = new Dictionary<string, Pair>();
-            var pairs = new List<Pair>();
-
-            while (eeWords.Count < 5)
-            {
-                var nextWord = Ee1kWords.AllWords[rn.Next(0, Ee1kWords.AllWords.Length)];
-
-                if (eeWords.ContainsKey(nextWord.EeWord) || enWords.ContainsKey(nextWord.EnWord))
-                {
-                    continue;
-                }
-
-                var pair = new Pair
-                {
-                    EeWord = nextWord.EeWord,
-                    EnWord = nextWord.EnWord
-                };
-
-                eeWords.Add(pair.EeWord, pair);
-                enWords.Add(pair.EnWord, pair);
-                pairs.Add(pair);
-            }
-
-            return new Word2WordMatchGame(pairs, eeWords, enWords);
-        });
-
-        /// <summary>
         /// Null object pattern.
         /// </summary>
         public static readonly Word2WordMatchGame Empty = new Word2WordMatchGame(

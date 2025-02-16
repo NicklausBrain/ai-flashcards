@@ -7,17 +7,20 @@ namespace My1kWordsEe.Models.Games
 {
     public class ListenToEeGameFactory
     {
+        private readonly EtWordsCache etWordsCache;
         private readonly GetOrAddEtWordCommand getOrAddEtWordCommand;
         private readonly GetEtSampleSentencesQuery getEtSampleSentencesQuery;
         private readonly AddEtSampleSentenceCommand addEtSampleSentenceCommand;
         private readonly CheckEeListeningCommand checkEeListeningCommand;
 
         public ListenToEeGameFactory(
+            EtWordsCache etWordsCache,
             GetOrAddEtWordCommand getOrAddSampleWordCommand,
             GetEtSampleSentencesQuery getEtSampleSentencesQuery,
             AddEtSampleSentenceCommand addSampleSentenceCommand,
             CheckEeListeningCommand checkEeListeningCommand)
         {
+            this.etWordsCache = etWordsCache;
             this.getOrAddEtWordCommand = getOrAddSampleWordCommand;
             this.getEtSampleSentencesQuery = getEtSampleSentencesQuery;
             this.addEtSampleSentenceCommand = addSampleSentenceCommand;
@@ -30,7 +33,7 @@ namespace My1kWordsEe.Models.Games
             int? sampleIndex = 0)
         {
             const int senseIndex = 0;
-            eeWord = (eeWord ?? GetRandomEeWord()).ToLower();
+            eeWord = (eeWord ?? GetRandomEtWord()).ToLower();
 
             if (!eeWord.ValidateWord())
             {
@@ -68,11 +71,11 @@ namespace My1kWordsEe.Models.Games
             }
         }
 
-        private static string GetRandomEeWord()
+        private string GetRandomEtWord()
         {
             var rn = new Random(Environment.TickCount);
-            var eeWord = Ee1kWords.AllWords[rn.Next(0, Ee1kWords.AllWords.Length)];
-            return eeWord.EeWord;
+            var eeWord = this.etWordsCache.AllWords[rn.Next(0, this.etWordsCache.AllWords.Length)];
+            return eeWord.Value;
         }
     }
 }

@@ -7,6 +7,7 @@
 @using My1kWordsEe.Models.Games
 @using My1kWordsEe.Services.Cqs
 
+@inject Word2WordMatchGameFactory Word2WordMatchGameFactory
 @inject IJSRuntime JS
 
 @code {
@@ -20,7 +21,7 @@
     protected override async Task OnParametersSetAsync()
     {
         Game = Word2WordMatchGame.Empty;
-        Game = await Word2WordMatchGame.Generate();
+        Game = await Word2WordMatchGameFactory.Generate();
         await base.OnParametersSetAsync();
     }
 

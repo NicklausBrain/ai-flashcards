@@ -7,17 +7,20 @@ namespace My1kWordsEe.Models.Games
 {
     public class TranslateToEnGameFactory
     {
+        private readonly EtWordsCache etWordsCache;
         private readonly GetOrAddEtWordCommand getOrAddEtWordCommand;
         private readonly GetEtSampleSentencesQuery getEtSampleSentencesQuery;
         private readonly AddEtSampleSentenceCommand addEtSampleSentenceCommand;
         private readonly CheckEnTranslationCommand checkEnTranslationCommand;
 
         public TranslateToEnGameFactory(
+            EtWordsCache etWordsCache,
             GetOrAddEtWordCommand getOrAddEtWordCommand,
             GetEtSampleSentencesQuery getEtSampleSentencesQuery,
             AddEtSampleSentenceCommand addEtSampleSentenceCommand,
             CheckEnTranslationCommand checkEnTranslationCommand)
         {
+            this.etWordsCache = etWordsCache;
             this.getOrAddEtWordCommand = getOrAddEtWordCommand;
             this.getEtSampleSentencesQuery = getEtSampleSentencesQuery;
             this.addEtSampleSentenceCommand = addEtSampleSentenceCommand;
@@ -59,11 +62,11 @@ namespace My1kWordsEe.Models.Games
             }
         }
 
-        private static string GetRandomEeWord()
+        private string GetRandomEeWord()
         {
             var rn = new Random(Environment.TickCount);
-            var eeWord = Ee1kWords.AllWords[rn.Next(0, Ee1kWords.AllWords.Length)];
-            return eeWord.EeWord;
+            var eeWord = etWordsCache.AllWords[rn.Next(0, etWordsCache.AllWords.Length)];
+            return eeWord.Value;
         }
     }
 }
