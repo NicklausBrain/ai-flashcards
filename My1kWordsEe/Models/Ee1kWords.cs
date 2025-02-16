@@ -1,18 +1,19 @@
-using System.Globalization;
-using System.Text;
-using System.Text.Json;
+using My1kWordsEe.Models.Semantics;
 
 namespace My1kWordsEe.Models
 {
     /// <summary>
     /// Represents a collection of 1k most common Estonian words.
     /// </summary>
-    public class Ee1kWords
+    public class Ee1kWords // todo: rename
     {
-        public Ee1kWords()
+        private readonly EtWordsCache etWordsCache;
+
+        public Ee1kWords(EtWordsCache etWordsCache)
         {
+            this.etWordsCache = etWordsCache;
             this.Search = null;
-            this.SelectedWords = AllWords;
+            this.SelectedWords = etWordsCache.AllWords;
         }
 
         /// <summary>
@@ -23,61 +24,23 @@ namespace My1kWordsEe.Models
             if (search.ValidateWord())
             {
                 Search = search;
-                SelectedWords = AllWords.Where(w =>
-                    AllWordsDiacriticsFree[w.EeWord].Contains(search, StringComparison.InvariantCultureIgnoreCase) ||
-                    w.EnWord.Contains(search, StringComparison.InvariantCultureIgnoreCase) ||
-                    w.EnWords.Any(en => en.Contains(search, StringComparison.InvariantCultureIgnoreCase)) ||
-                    w.EeWord.Contains(search, StringComparison.InvariantCultureIgnoreCase));
+                SelectedWords = etWordsCache.AllWords.Where(w =>
+                    etWordsCache.AllWordsDiacriticsFree[w.Value].Contains(search, StringComparison.InvariantCultureIgnoreCase) ||
+                    w.DefaultSense.Word.En.Contains(search, StringComparison.InvariantCultureIgnoreCase) ||
+                    w.DefaultSense.Word.Et.Contains(search, StringComparison.InvariantCultureIgnoreCase));
             }
             else
             {
                 Search = search;
-                SelectedWords = AllWords;
+                SelectedWords = etWordsCache.AllWords;
             }
             return this;
         }
 
-        public Ee1kWords WithSelectedWord(string selectedWord)
-        {
-            return new Ee1kWords
-            {
-                Search = this.Search,
-                SelectedWords = this.SelectedWords
-            };
-        }
+        public IEnumerable<EtWord> SelectedWords { get; private set; }
 
-        public IEnumerable<SampleWord> SelectedWords { get; private set; }
+        public IReadOnlyDictionary<EtWord, int> WordIndex => this.etWordsCache.WordIndex;
 
         public string? Search { get; private set; }
-
-        public static readonly SampleWord[] AllWords = Load1kEeWords();
-
-        private static readonly IReadOnlyDictionary<string, string> AllWordsDiacriticsFree =
-            AllWords.ToDictionary(w => w.EeWord, q => RemoveDiacritics(q.EeWord));
-
-        private static string RemoveDiacritics(string stIn)
-        {
-            string stFormD = stIn.Normalize(NormalizationForm.FormD);
-            StringBuilder sb = new StringBuilder();
-
-            for (int ich = 0; ich < stFormD.Length; ich++)
-            {
-                UnicodeCategory uc = CharUnicodeInfo.GetUnicodeCategory(stFormD[ich]);
-                if (uc != UnicodeCategory.NonSpacingMark)
-                {
-                    sb.Append(stFormD[ich]);
-                }
-            }
-
-            return sb.ToString().Normalize(NormalizationForm.FormC);
-        }
-
-        private static SampleWord[] Load1kEeWords()
-        {
-            var assembly = typeof(SampleWord).Assembly;
-            var resourceName = "My1kWordsEe.ee1k.json";
-            using Stream stream = assembly.GetManifestResourceStream(resourceName);
-            return JsonSerializer.Deserialize<SampleWord[]>(stream);
-        }
     }
 }

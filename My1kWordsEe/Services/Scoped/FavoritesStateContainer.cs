@@ -89,11 +89,11 @@ namespace My1kWordsEe.Services.Scoped
             return updatedFavorites;
         }
 
-        public async Task<Result<Favorites>> ReorderAsync(IEnumerable<EtWord> sampleWords)
+        public async Task<Result<Favorites>> ReorderAsync(IEnumerable<EtWord> etWords)
         {
             var updatedFavorites = await GetAsync().Bind(async (f) =>
             {
-                Result<Favorites> updatedFavorites = await this.reorderFavoritesCommand.Invoke(f.UserId, sampleWords);
+                Result<Favorites> updatedFavorites = await this.reorderFavoritesCommand.Invoke(f.UserId, etWords);
                 return updatedFavorites;
             });
 

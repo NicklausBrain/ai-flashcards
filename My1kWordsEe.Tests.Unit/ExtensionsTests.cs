@@ -13,7 +13,7 @@ namespace My1kWordsEe.Tests.Models
         [InlineData("abc", true)]
         [InlineData("abc123", true)]
         [InlineData("123", true)]
-        [InlineData("abc-def", false)]
+        [InlineData("võib-olla", true)]
         [InlineData("äöü", true)]
         public void ValidateWord_ShouldReturnExpectedResult(string word, bool expected)
         {

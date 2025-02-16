@@ -7,17 +7,20 @@ namespace My1kWordsEe.Models.Games
 {
     public class TranslateToEnGameFactory
     {
+        private readonly EtWordsCache etWordsCache;
         private readonly GetOrAddEtWordCommand getOrAddEtWordCommand;
         private readonly GetEtSampleSentencesQuery getEtSampleSentencesQuery;
         private readonly AddEtSampleSentenceCommand addEtSampleSentenceCommand;
         private readonly CheckEnTranslationCommand checkEnTranslationCommand;
 
         public TranslateToEnGameFactory(
+            EtWordsCache etWordsCache,
             GetOrAddEtWordCommand getOrAddEtWordCommand,
             GetEtSampleSentencesQuery getEtSampleSentencesQuery,
             AddEtSampleSentenceCommand addEtSampleSentenceCommand,
             CheckEnTranslationCommand checkEnTranslationCommand)
         {
+            this.etWordsCache = etWordsCache;
             this.getOrAddEtWordCommand = getOrAddEtWordCommand;
             this.getEtSampleSentencesQuery = getEtSampleSentencesQuery;
             this.addEtSampleSentenceCommand = addEtSampleSentenceCommand;
@@ -28,14 +31,14 @@ namespace My1kWordsEe.Models.Games
         {
             const int senseIndex = 0;
             eeWord = (eeWord ?? GetRandomEeWord()).ToLower();
-            var sampleWord = await getOrAddEtWordCommand.Invoke(eeWord);
+            var etWord = await getOrAddEtWordCommand.Invoke(eeWord);
 
-            if (sampleWord.IsFailure)
+            if (etWord.IsFailure)
             {
-                return Result.Failure<TranslateToEnGame>(sampleWord.Error);
+                return Result.Failure<TranslateToEnGame>(etWord.Error);
             }
 
-            var samples = await getEtSampleSentencesQuery.Invoke(sampleWord.Value, senseIndex);
+            var samples = await getEtSampleSentencesQuery.Invoke(etWord.Value, senseIndex);
 
             if (samples.IsFailure)
             {
@@ -48,7 +51,7 @@ namespace My1kWordsEe.Models.Games
             }
             else
             {
-                var addSampleResult = await addEtSampleSentenceCommand.Invoke(sampleWord.Value, senseIndex);
+                var addSampleResult = await addEtSampleSentenceCommand.Invoke(etWord.Value, senseIndex);
 
                 if (addSampleResult.IsSuccess)
                 {
@@ -59,11 +62,11 @@ namespace My1kWordsEe.Models.Games
             }
         }
 
-        private static string GetRandomEeWord()
+        private string GetRandomEeWord()
         {
             var rn = new Random(Environment.TickCount);
-            var eeWord = Ee1kWords.AllWords[rn.Next(0, Ee1kWords.AllWords.Length)];
-            return eeWord.EeWord;
+            var eeWord = etWordsCache.AllWords[rn.Next(0, etWordsCache.AllWords.Length)];
+            return eeWord.Value;
         }
     }
 }

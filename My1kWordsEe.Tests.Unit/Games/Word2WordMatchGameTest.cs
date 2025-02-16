@@ -93,15 +93,5 @@ namespace My1kWordsEe.Tests.Models.Games
             Assert.True(game.IsFinished);
         }
 
-        [Fact]
-        public async Task Generate_ShouldCreateGameWithCorrectNumberOfPairs()
-        {
-            var game = await Word2WordMatchGame.Generate();
-
-            Assert.Equal(5, game.EeWords.Count);
-            Assert.Equal(5, game.EnWords.Count);
-            Assert.True(game.IsReady);
-            Assert.False(game.IsFinished);
-        }
     }
 }

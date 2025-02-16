@@ -19,20 +19,20 @@
 
     private Maybe<Result<Favorites>> Favorites;
 
-    private List<EtWord> SampleWordsList = new List<EtWord>();
+    private List<EtWord> EtWordsList = new List<EtWord>();
 
     private async void OnWordsListUpdate(SortableListEventArgs args)
     {
-        var itemToMove = SampleWordsList[args.OldIndex];
+        var itemToMove = EtWordsList[args.OldIndex];
 
-        SampleWordsList.RemoveAt(args.OldIndex);
+        EtWordsList.RemoveAt(args.OldIndex);
 
-        if (args.NewIndex < SampleWordsList.Count)
-            SampleWordsList.Insert(args.NewIndex, itemToMove);
+        if (args.NewIndex < EtWordsList.Count)
+            EtWordsList.Insert(args.NewIndex, itemToMove);
         else
-            SampleWordsList.Add(itemToMove);
+            EtWordsList.Add(itemToMove);
 
-        await FavoritesStateContainer.ReorderAsync(SampleWordsList);
+        await FavoritesStateContainer.ReorderAsync(EtWordsList);
     }
 
     public record Employee(int Id, string? Name);
@@ -42,7 +42,7 @@
         Favorites = await FavoritesStateContainer.GetAsync();
         if (Favorites.HasValue && Favorites.Value.IsSuccess)
         {
-            SampleWordsList = Favorites.Value.Value.Words.Values.ToList();
+            EtWordsList = Favorites.Value.Value.Words.Values.ToList();
         }
 
         await base.OnParametersSetAsync();
@@ -85,7 +85,7 @@
                 <Content>
                     @if (FavoriteWords.Any())
                     {
-                        <SortableGrid TItem="EtWord" Data="SampleWordsList" Context="item" OnUpdate="@OnWordsListUpdate">
+                        <SortableGrid TItem="EtWord" Data="EtWordsList" Context="item" OnUpdate="@OnWordsListUpdate">
                             <ItemTemplate>
                                 <Card role="button">
                                     <CardBody>

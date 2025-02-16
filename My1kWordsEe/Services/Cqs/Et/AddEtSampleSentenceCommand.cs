@@ -23,7 +23,7 @@ namespace My1kWordsEe.Services.Cqs.Et
             $"{JsonSchemaRecord.For(typeof(Input))}\n" +
             "Sinu ülesanne on:\n" +
             "1. Vaadata sisendit ja määrata, kuidas antud sõna sobivas grammatilises vormis lauses kasutada.\n" +
-            "2. Genereerida JSON-objekt, mis sisaldab ühte näidislause paari eesti ja inglise keeles.\n";
+            "2. Genereerida JSON-objekt, mis sisaldab ühte näidislause paari eesti ja inglise keeles (Kasutage SVO sõnajärge).\n";
 
         private readonly SamplesStorageClient samplesStorageClient;
         private readonly ImageStorageClient imageStorageClient;
