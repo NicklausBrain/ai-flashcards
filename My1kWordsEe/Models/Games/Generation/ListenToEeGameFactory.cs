@@ -15,13 +15,13 @@ namespace My1kWordsEe.Models.Games
 
         public ListenToEeGameFactory(
             EtWordsCache etWordsCache,
-            GetOrAddEtWordCommand getOrAddSampleWordCommand,
+            GetOrAddEtWordCommand getOrAddEtWordCommand,
             GetEtSampleSentencesQuery getEtSampleSentencesQuery,
             AddEtSampleSentenceCommand addSampleSentenceCommand,
             CheckEeListeningCommand checkEeListeningCommand)
         {
             this.etWordsCache = etWordsCache;
-            this.getOrAddEtWordCommand = getOrAddSampleWordCommand;
+            this.getOrAddEtWordCommand = getOrAddEtWordCommand;
             this.getEtSampleSentencesQuery = getEtSampleSentencesQuery;
             this.addEtSampleSentenceCommand = addSampleSentenceCommand;
             this.checkEeListeningCommand = checkEeListeningCommand;
@@ -40,14 +40,14 @@ namespace My1kWordsEe.Models.Games
                 return Result.Failure<ListenToEeGame>("Not an Estonian word");
             }
 
-            var sampleWord = await getOrAddEtWordCommand.Invoke(eeWord);
+            var etWord = await getOrAddEtWordCommand.Invoke(eeWord);
 
-            if (sampleWord.IsFailure)
+            if (etWord.IsFailure)
             {
-                return Result.Failure<ListenToEeGame>(sampleWord.Error);
+                return Result.Failure<ListenToEeGame>(etWord.Error);
             }
 
-            var samples = await getEtSampleSentencesQuery.Invoke(sampleWord.Value, senseIndex);
+            var samples = await getEtSampleSentencesQuery.Invoke(etWord.Value, senseIndex);
 
             if (samples.IsFailure)
             {
@@ -60,7 +60,7 @@ namespace My1kWordsEe.Models.Games
             }
             else
             {
-                var addSampleResult = await addEtSampleSentenceCommand.Invoke(sampleWord.Value, senseIndex);
+                var addSampleResult = await addEtSampleSentenceCommand.Invoke(etWord.Value, senseIndex);
 
                 if (addSampleResult.IsSuccess)
                 {

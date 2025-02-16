@@ -19,13 +19,13 @@ namespace My1kWordsEe.Services.Cqs
             this.favoritesStorageClient = favoritesStorageClient;
         }
 
-        public async Task<Result<Favorites>> Invoke(string userId, IEnumerable<EtWord> sampleWords)
+        public async Task<Result<Favorites>> Invoke(string userId, IEnumerable<EtWord> etWords)
         {
             return await this.getFavoritesCommand.Invoke(userId).Bind(async favorites =>
             {
                 var reorderedFavorites = new Favorites(
                     userId: favorites.UserId,
-                    words: sampleWords.ToDictionary(w => w.Value),
+                    words: etWords.ToDictionary(w => w.Value),
                     sentences: favorites.Sentences);
                 return await this.favoritesStorageClient.SaveFavorites(reorderedFavorites).Bind(_ =>
                     Result.Success(reorderedFavorites));

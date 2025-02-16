@@ -31,14 +31,14 @@ namespace My1kWordsEe.Models.Games
         {
             const int senseIndex = 0;
             eeWord = (eeWord ?? GetRandomEeWord()).ToLower();
-            var sampleWord = await getOrAddEtWordCommand.Invoke(eeWord);
+            var etWord = await getOrAddEtWordCommand.Invoke(eeWord);
 
-            if (sampleWord.IsFailure)
+            if (etWord.IsFailure)
             {
-                return Result.Failure<TranslateToEnGame>(sampleWord.Error);
+                return Result.Failure<TranslateToEnGame>(etWord.Error);
             }
 
-            var samples = await getEtSampleSentencesQuery.Invoke(sampleWord.Value, senseIndex);
+            var samples = await getEtSampleSentencesQuery.Invoke(etWord.Value, senseIndex);
 
             if (samples.IsFailure)
             {
@@ -51,7 +51,7 @@ namespace My1kWordsEe.Models.Games
             }
             else
             {
-                var addSampleResult = await addEtSampleSentenceCommand.Invoke(sampleWord.Value, senseIndex);
+                var addSampleResult = await addEtSampleSentenceCommand.Invoke(etWord.Value, senseIndex);
 
                 if (addSampleResult.IsSuccess)
                 {
