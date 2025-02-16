@@ -1,6 +1,3 @@
-using System.Globalization;
-using System.Text;
-
 using My1kWordsEe.Models.Semantics;
 
 namespace My1kWordsEe.Models
@@ -40,16 +37,9 @@ namespace My1kWordsEe.Models
             return this;
         }
 
-        // public Ee1kWords WithSelectedWord(string selectedWord)
-        // {
-        //     return new Ee1kWords(etWordsCache)
-        //     {
-        //         Search = this.Search,
-        //         SelectedWords = this.SelectedWords
-        //     };
-        // }
-
         public IEnumerable<EtWord> SelectedWords { get; private set; }
+
+        public IReadOnlyDictionary<EtWord, int> WordIndex => this.etWordsCache.WordIndex;
 
         public string? Search { get; private set; }
     }

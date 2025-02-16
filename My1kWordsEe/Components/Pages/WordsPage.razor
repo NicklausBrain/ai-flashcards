@@ -93,21 +93,20 @@
             PageSize="9" AllowPaging="true" AllowSorting="true" Responsive="true" AllowRowClick="true"
             OnRowClick="@(args => SelectWord(args.Item.Value))">
             <GridColumns>
-                @* <GridColumn TItem="SampleWord" HeaderText="" PropertyName="Id" SortKeySelector="item => WordIndex[item]"
+                <GridColumn TItem="EtWord" HeaderText="" PropertyName="Id" SortKeySelector="item => Ee1KWords.WordIndex[item]"
                     Class="col-auto small">
-                    @WordIndex[context]
-                </GridColumn> *@
+                    @Ee1KWords.WordIndex[context]
+                </GridColumn>
                 <GridColumn TItem="EtWord" HeaderText="Eestikeelne sõna" PropertyName="Value"
                     SortKeySelector="item => item.Value" Class="col-2 small">
                     @context.Value
                 </GridColumn>
                 <GridColumn TItem="EtWord" HeaderText="English word(s)" PropertyName="DefaultSense"
                     SortKeySelector="item => item.DefaultSense.Word.En" Class="col-2 small">
-                    @context.DefaultSense.Word.En
-                    @* @if (context.Senses.Any())
+                    @if (context.Senses.Any())
                     {
-                        @($" ({string.Join(" / ", context.Senses.Select(s => s.Word.En))})")
-                    } *@
+                        @($"{string.Join(" / ", context.Senses.Select(s => s.Word.En))}")
+                    }
                 </GridColumn>
                 <GridColumn TItem="EtWord" HeaderText="Explanation" PropertyName="DefaultSense"
                     SortKeySelector="item => item.DefaultSense.Definition.En" Class="col-8 small">
