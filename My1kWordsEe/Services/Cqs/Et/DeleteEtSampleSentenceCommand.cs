@@ -27,10 +27,11 @@ namespace My1kWordsEe.Services.Cqs.Et
             uint senseIndex,
             SampleSentenceWithMedia sampleToRemove)
         {
-            var imageRemoval = this.imageStorageClient.DeleteImage(sampleToRemove.ImageUrl.Segments.Last());
-            var audioRemoval = this.audioStorageClient.DeleteAudio(sampleToRemove.AudioUrl.Segments.Last());
+            var imageRemoval = this.imageStorageClient.DeleteImage(sampleToRemove.ImageFileName);
+            var audioRemoval = this.audioStorageClient.DeleteAudio(sampleToRemove.AudioFileName);
+            var promptRemoval = this.imageStorageClient.DeleteImage(sampleToRemove.ImagePromptFileName);
 
-            await Task.WhenAll(imageRemoval, audioRemoval);
+            await Task.WhenAll(imageRemoval, audioRemoval, promptRemoval);
 
             if (imageRemoval.Result.IsFailure)
             {
