@@ -29,7 +29,7 @@ namespace My1kWordsEe.Services
             if (string.IsNullOrWhiteSpace(this.config[ApiSecretKey]))
             {
                 return Result.Failure<string>("Open AI API key is missing");
-            };
+            }
 
             ChatClient client = new(model: Model, this.config[ApiSecretKey]);
 
@@ -121,10 +121,13 @@ namespace My1kWordsEe.Services
         public static async Task<Result<string>> GetDallEPrompt(this OpenAiClient openAiClient, string sentence)
         {
             const string prompt =
-                "You are part of the language learning system.\n" +
-                "Your task is to generate a DALL-E prompt so that it will create a picture to illustrate the sentence provided by the user.\n" +
-                "The image should be sketchy, mostly shades of blue, black, and white.\n" +
-                "Your response is a DALL-E prompt as a plain string.\n";
+@"You are part of a language learning system.
+Your task is to generate a DALL-E prompt for illustrating the given sentence.
+The generated image should be a sketchy illustration in shades of blue, black, and white.
+The focus should be on accurately depicting the action and elements described in the sentence while maintaining artistic simplicity.
+If the sentence contains a human or an animal, ensure it has the correct number of limbs, eyes, and other defining body parts.
+Avoid unnecessary elements that could distract from the core meaning of the sentence.
+Your response must be only the DALL-E prompt, formatted as a plain string.";
 
             var result = await openAiClient.CompleteAsync(prompt, sentence, new ChatCompletionOptions
             {

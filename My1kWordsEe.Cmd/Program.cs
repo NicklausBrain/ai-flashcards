@@ -4,10 +4,7 @@ using System.Text.Unicode;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-using My1kWordsEe.Models;
-using My1kWordsEe.Models.Grammar;
 using My1kWordsEe.Models.Semantics;
-using My1kWordsEe.Services.Cqs;
 using My1kWordsEe.Services.Cqs.Et;
 
 namespace My1kWordsEe.Cmd
@@ -16,9 +13,8 @@ namespace My1kWordsEe.Cmd
     {
         static async Task Main(string[] args)
         {
-
+            await SamplesGenerationProcedure();
             //Console.WriteLine(filesInOrder[0]);
-            //var topWords = System.IO.File.ReadAllLines("/Users/nick/Desktop/Merged_Estonian_Vocabulary.csv");
             // await WordsCorrectionProcedure(topWords);
 
             // Console.WriteLine(AddEtSampleSentenceCommand.Prompt);
@@ -31,6 +27,37 @@ namespace My1kWordsEe.Cmd
             //Console.WriteLine(JsonSchemaRecord.For(typeof(SampleEtSentence)));
             //Console.WriteLine(AddEtWordCommand.Prompt);
             //Console.WriteLine(JsonSchemaRecord.For(typeof(WordSenses)));
+        }
+
+        public static async Task SamplesGenerationProcedure()
+        {
+            var host = My1kWordsEe.Program.BuildWebHost(new string[] { });
+            var addEtSampleSentenceCommand = host.Services.GetRequiredService<AddEtSampleSentenceCommand>();
+            var getEtSampleSentencesQuery = host.Services.GetRequiredService<GetEtSampleSentencesQuery>();
+
+            var topWords = File.ReadAllBytes(@"C:\Users\Nick\source\repos\ai-flashcards\My1kWordsEe\wwwroot\data\et-words.json");
+            var etWords = JsonSerializer.Deserialize<EtWord[]>(topWords);
+
+            foreach (var etWord in etWords)
+            {
+                Console.WriteLine(etWord.DefaultSense.Word.Et);
+                var existingSamples = await getEtSampleSentencesQuery.Invoke(etWord, 0);
+                if (existingSamples.IsSuccess && existingSamples.Value.Any())
+                {
+                    continue;
+                }
+
+                var sample = await addEtSampleSentenceCommand.Invoke(etWord, 0);
+                if (sample.IsFailure)
+                {
+                    Console.WriteLine(sample.Error);
+                }
+                else
+                {
+                    Console.WriteLine(sample.Value.Last().Sentence.Et);
+                }
+                Console.WriteLine();
+            }
         }
 
         public static async Task WordsCorrectionProcedure(string[] topWords)

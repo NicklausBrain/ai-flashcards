@@ -14,12 +14,21 @@ namespace My1kWordsEe.Models.Semantics
         public required TranslatedString Sentence { get; init; }
 
         [JsonIgnore]
-        public Uri AudioUrl => new Uri($"/{AudioContainer}/{Id}.{AudioFormat}", UriKind.Relative);
+        public string AudioFileName => $"{Id}.{AudioFormat}";
 
         [JsonIgnore]
-        public Uri ImageUrl => new Uri($"/{ImageContainer}/{Id}.{ImageFormat}", UriKind.Relative);
+        public Uri AudioUrl => new Uri($"/{AudioContainer}/{AudioFileName}", UriKind.Relative);
 
         [JsonIgnore]
-        public Uri ImagePromptUrl => new Uri($"/{ImageContainer}/{Id}.{TextFormat}", UriKind.Relative);
+        public string ImageFileName => $"{Id}.{ImageFormat}";
+
+        [JsonIgnore]
+        public Uri ImageUrl => new Uri($"/{ImageContainer}/{ImageFileName}", UriKind.Relative);
+
+        [JsonIgnore]
+        public string ImagePromptFileName => $"{Id}.{TextFormat}";
+
+        [JsonIgnore]
+        public Uri ImagePromptUrl => new Uri($"/{ImageContainer}/{ImagePromptFileName}", UriKind.Relative);
     }
 }
