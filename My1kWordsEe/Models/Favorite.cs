@@ -36,15 +36,5 @@ namespace My1kWordsEe.Models
         {
             return this.Sentences.ContainsKey(sentence.Sentence.Et.ToLowerInvariant());
         }
-
-        //public bool ScoreUp(string word)
-        //{
-        //    //var 
-        //}
-
-        //public bool ScoreDown(string word)
-        //{
-        //    return this.Words.ContainsKey(word.ToLowerInvariant());
-        //}
     }
 }

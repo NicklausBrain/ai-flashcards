@@ -8,7 +8,7 @@ using My1kWordsEe.Services.Cqs;
 
 namespace My1kWordsEe.Services.Scoped
 {
-    internal class FavoritesStateContainer
+    public class FavoritesStateContainer
     {
         private readonly AuthenticationStateProvider authenticationStateProvider;
         private readonly GetFavoritesQuery getFavoritesQuery;
