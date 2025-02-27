@@ -13,7 +13,7 @@ namespace My1kWordsEe.Cmd
     {
         static async Task Main(string[] args)
         {
-            await SamplesGenerationProcedure();
+            //await SamplesGenerationProcedure();
             //Console.WriteLine(filesInOrder[0]);
             // await WordsCorrectionProcedure(topWords);
 
