@@ -75,5 +75,12 @@ namespace My1kWordsEe.Models.Games
                 IsCheckInProgress = false;
             }
         }
+
+        public void GiveUp()
+        {
+            CheckResult = Result.Success(EnTranslationCheckResult.Fail(
+                eeSentence: EtSentence,
+                enSentence: SampleSentence.Sentence.En));
+        }
     }
 }

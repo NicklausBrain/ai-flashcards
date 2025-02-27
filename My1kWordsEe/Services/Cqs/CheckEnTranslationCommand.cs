@@ -70,5 +70,14 @@ namespace My1kWordsEe.Services.Cqs
             Match = 5,
             EnComment = string.Empty
         };
+
+        public static EnTranslationCheckResult Fail(string eeSentence, string enSentence) => new EnTranslationCheckResult
+        {
+            EeSentence = eeSentence,
+            EnUserSentence = "",
+            EnExpectedSentence = enSentence,
+            Match = 0,
+            EnComment = string.Empty
+        };
     }
 }

@@ -65,6 +65,14 @@
         }
     }
 
+    private void OnGiveUp()
+    {
+        Game.Value.GiveUp();
+        _ = FavoritesStateContainer.UpdateScore(
+               EtWord,
+               UpdateScoreCommand.ScoreUpdate.Down);
+    }
+
     private async Task PlaySample(MouseEventArgs e)
     {
         await JS.InvokeVoidAsync("playAudioSample", Game.Value.AudioUrl);
@@ -163,7 +171,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <button @onclick="@OnSubmit" class="btn btn-outline-primary" type="button">Submit</button>
-
+                                    <button @onclick="@OnGiveUp" class="btn btn-outline-danger" type="button">Give up</button>
                                 </div>
                             </div>
                         }
