@@ -1,5 +1,6 @@
 using CSharpFunctionalExtensions;
 
+using My1kWordsEe.Models.Games.Generation;
 using My1kWordsEe.Services.Cqs;
 using My1kWordsEe.Services.Cqs.Et;
 
@@ -7,20 +8,20 @@ namespace My1kWordsEe.Models.Games
 {
     public class TranslateToEnGameFactory
     {
-        private readonly EtWordsCache etWordsCache;
+        private readonly NextWordSelector nextWordSelector;
         private readonly GetOrAddEtWordCommand getOrAddEtWordCommand;
         private readonly GetEtSampleSentencesQuery getEtSampleSentencesQuery;
         private readonly AddEtSampleSentenceCommand addEtSampleSentenceCommand;
         private readonly CheckEnTranslationCommand checkEnTranslationCommand;
 
         public TranslateToEnGameFactory(
-            EtWordsCache etWordsCache,
+            NextWordSelector nextWordSelector,
             GetOrAddEtWordCommand getOrAddEtWordCommand,
             GetEtSampleSentencesQuery getEtSampleSentencesQuery,
             AddEtSampleSentenceCommand addEtSampleSentenceCommand,
             CheckEnTranslationCommand checkEnTranslationCommand)
         {
-            this.etWordsCache = etWordsCache;
+            this.nextWordSelector = nextWordSelector;
             this.getOrAddEtWordCommand = getOrAddEtWordCommand;
             this.getEtSampleSentencesQuery = getEtSampleSentencesQuery;
             this.addEtSampleSentenceCommand = addEtSampleSentenceCommand;
@@ -30,7 +31,7 @@ namespace My1kWordsEe.Models.Games
         public async Task<Result<TranslateToEnGame>> Generate(string? eeWord, int? wordIndex)
         {
             const int senseIndex = 0;
-            eeWord = (eeWord ?? GetRandomEeWord()).ToLower();
+            eeWord = (eeWord ?? await GetRandomEeWord()).ToLower();
             var etWord = await getOrAddEtWordCommand.Invoke(eeWord);
 
             if (etWord.IsFailure)
@@ -62,10 +63,9 @@ namespace My1kWordsEe.Models.Games
             }
         }
 
-        private string GetRandomEeWord()
+        private async Task<string> GetRandomEeWord()
         {
-            var rn = new Random(Environment.TickCount);
-            var eeWord = etWordsCache.AllWords[rn.Next(0, etWordsCache.AllWords.Length)];
+            var eeWord = await nextWordSelector.GetNextWord();
             return eeWord.Value;
         }
     }

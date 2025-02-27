@@ -7,6 +7,7 @@ using My1kWordsEe.Components.Account;
 using My1kWordsEe.Data;
 using My1kWordsEe.Models;
 using My1kWordsEe.Models.Games;
+using My1kWordsEe.Models.Games.Generation;
 using My1kWordsEe.Services;
 using My1kWordsEe.Services.Cqs;
 using My1kWordsEe.Services.Cqs.Et;
@@ -78,12 +79,15 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<RedoSampleWordCommand>();
             builder.Services.AddSingleton<ValidateSampleWordCommand>();
             builder.Services.AddSingleton<ReorderFavoritesCommand>();
-            builder.Services.AddSingleton<TranslateToEnGameFactory>();
-            builder.Services.AddSingleton<ListenToEeGameFactory>();
-            builder.Services.AddSingleton<Word2WordMatchGameFactory>();
+            builder.Services.AddSingleton<UpdateScoreCommand>();
+
             // scoped states
             builder.Services.AddScoped<FavoritesStateContainer>();
+            builder.Services.AddScoped<NextWordSelector>();
             builder.Services.AddScoped<Et1kWords>();
+            builder.Services.AddScoped<TranslateToEnGameFactory>();
+            builder.Services.AddScoped<ListenToEeGameFactory>();
+            builder.Services.AddScoped<Word2WordMatchGameFactory>();
 
             // Blazor-specific services
             builder.Services

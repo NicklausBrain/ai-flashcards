@@ -6,15 +6,18 @@ using My1kWordsEe.Models;
 using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Cqs;
 
+using static My1kWordsEe.Services.Cqs.UpdateScoreCommand;
+
 namespace My1kWordsEe.Services.Scoped
 {
-    internal class FavoritesStateContainer
+    public class FavoritesStateContainer
     {
         private readonly AuthenticationStateProvider authenticationStateProvider;
         private readonly GetFavoritesQuery getFavoritesQuery;
         private readonly AddToFavoritesCommand addToFavoritesCommand;
         private readonly RemoveFromFavoritesCommand removeFromFavoritesCommand;
         private readonly ReorderFavoritesCommand reorderFavoritesCommand;
+        private readonly UpdateScoreCommand updateScoreCommand;
 
         private Maybe<Result<Favorites>> favorites;
 
@@ -23,13 +26,15 @@ namespace My1kWordsEe.Services.Scoped
             GetFavoritesQuery getFavoritesQuery,
             AddToFavoritesCommand addToFavoritesCommand,
             RemoveFromFavoritesCommand removeFromFavoritesCommand,
-            ReorderFavoritesCommand reorderFavoritesCommand)
+            ReorderFavoritesCommand reorderFavoritesCommand,
+            UpdateScoreCommand updateScoreCommand)
         {
             this.authenticationStateProvider = authenticationStateProvider;
             this.getFavoritesQuery = getFavoritesQuery;
             this.addToFavoritesCommand = addToFavoritesCommand;
             this.removeFromFavoritesCommand = removeFromFavoritesCommand;
             this.reorderFavoritesCommand = reorderFavoritesCommand;
+            this.updateScoreCommand = updateScoreCommand;
         }
 
         public async Task<Result<Favorites>> GetAsync()
@@ -94,6 +99,23 @@ namespace My1kWordsEe.Services.Scoped
             var updatedFavorites = await GetAsync().Bind(async (f) =>
             {
                 Result<Favorites> updatedFavorites = await this.reorderFavoritesCommand.Invoke(f.UserId, etWords);
+                return updatedFavorites;
+            });
+
+
+            if (updatedFavorites.IsSuccess)
+            {
+                this.favorites = updatedFavorites;
+            }
+
+            return updatedFavorites;
+        }
+
+        public async Task<Result<Favorites>> UpdateScore(string etWord, ScoreUpdate update)
+        {
+            var updatedFavorites = await GetAsync().Bind(async (f) =>
+            {
+                Result<Favorites> updatedFavorites = await this.updateScoreCommand.Invoke(f.UserId, etWord, update);
                 return updatedFavorites;
             });
 

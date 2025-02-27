@@ -6,8 +6,10 @@
 @using My1kWordsEe.Models
 @using My1kWordsEe.Models.Games
 @using My1kWordsEe.Services.Cqs
+@using My1kWordsEe.Services.Scoped
 
 @inject Word2WordMatchGameFactory Word2WordMatchGameFactory
+@inject FavoritesStateContainer FavoritesStateContainer
 @inject IJSRuntime JS
 
 @code {
@@ -90,10 +92,12 @@
         {
             ToastService.Notify(new ToastMessage(ToastType.Success, "Great match!"));
             await SpeakWord(SelectedEeWord);
+            _ = FavoritesStateContainer.UpdateScore(SelectedEeWord, UpdateScoreCommand.ScoreUpdate.Up);
         }
         else
         {
             ToastService.Notify(new ToastMessage(ToastType.Danger, "Try again!"));
+            _ = FavoritesStateContainer.UpdateScore(SelectedEeWord, UpdateScoreCommand.ScoreUpdate.Down);
         }
 
         SelectedEeWord = string.Empty;
