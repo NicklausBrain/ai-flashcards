@@ -83,7 +83,7 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<Word2WordMatchGameFactory>();
             // scoped states
             builder.Services.AddScoped<FavoritesStateContainer>();
-            builder.Services.AddScoped<Ee1kWords>();
+            builder.Services.AddScoped<Et1kWords>();
 
             // Blazor-specific services
             builder.Services
