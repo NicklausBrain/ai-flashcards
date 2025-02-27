@@ -18,12 +18,13 @@ namespace My1kWordsEe.Services.Cqs.Et
         public const int MaxSamples = 6;
 
         public static readonly string Prompt =
-            "Sa oled keeleõppe süsteemi abiline, mis aitab õppida enim levinud eesti keele sõnu.\n" +
-            "Sisendiks on järgmine JSON-objekt, mis kirjeldab eesti keele sõna põhivormi, tähendust ja kõneosa:\n" +
-            $"{JsonSchemaRecord.For(typeof(Input))}\n" +
-            "Sinu ülesanne on:\n" +
-            "1. Vaadata sisendit ja määrata, kuidas antud sõna sobivas grammatilises vormis lauses kasutada.\n" +
-            "2. Genereerida JSON-objekt, mis sisaldab ühte näidislause paari eesti ja inglise keeles (Kasutage SVO sõnajärge).\n";
+$@"Sa oled keeleõppe süsteemi abiline, mis aitab õppida enim levinud eesti keele sõnu.
+Sisendiks on järgmine JSON-objekt, mis kirjeldab eesti keele sõna põhivormi, tähendust ja kõneosa:
+{JsonSchemaRecord.For(typeof(Input))}
+Sinu ülesanne on:
+1. Vaadata sisendit ja määrata, kuidas antud sõna sobivas grammatilises vormis lauses kasutada.
+2. Genereerida JSON-objekt, mis sisaldab ühte näidislause paari eesti ja inglise keeles (Kasutage SVO sõnajärge)
+3. Kasutage seda tähendust, mis on JSON-objektis märgitud!";
 
         private readonly SamplesStorageClient samplesStorageClient;
         private readonly ImageStorageClient imageStorageClient;
