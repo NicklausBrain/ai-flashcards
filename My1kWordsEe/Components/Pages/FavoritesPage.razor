@@ -15,8 +15,6 @@
 @code {
     [Inject] protected PreloadService PreloadService { get; set; } = default!;
 
-    private Data.ApplicationUser? User;
-
     private Maybe<Result<Favorites>> Favorites;
 
     private List<EtWord> EtWordsList = new List<EtWord>();

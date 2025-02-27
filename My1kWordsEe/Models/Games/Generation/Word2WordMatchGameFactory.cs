@@ -1,20 +1,22 @@
+using My1kWordsEe.Models.Games.Generation;
+
 using static My1kWordsEe.Models.Games.Word2WordMatchGame;
 
 namespace My1kWordsEe.Models.Games
 {
     public class Word2WordMatchGameFactory
     {
-        private EtWordsCache etWordsCache;
+        private readonly NextWordSelector nextWordSelector;
 
-        public Word2WordMatchGameFactory(EtWordsCache etWordsCache)
+        public Word2WordMatchGameFactory(NextWordSelector nextWordSelector)
         {
-            this.etWordsCache = etWordsCache;
+            this.nextWordSelector = nextWordSelector;
         }
 
         /// <summary>
         /// Generate a new game.
         /// </summary>
-        public Task<Word2WordMatchGame> Generate() => Task.Run(() =>
+        public Task<Word2WordMatchGame> Generate() => Task.Run(async () =>
         {
             var rn = new Random(Environment.TickCount);
             var eeWords = new Dictionary<string, Pair>();
@@ -23,7 +25,7 @@ namespace My1kWordsEe.Models.Games
 
             while (eeWords.Count < 5)
             {
-                var nextWord = etWordsCache.AllWords[rn.Next(0, etWordsCache.AllWords.Length)];
+                var nextWord = await nextWordSelector.GetNextWord();
 
                 if (eeWords.ContainsKey(nextWord.DefaultSense.Word.Et) || enWords.ContainsKey(nextWord.DefaultSense.Word.En))
                 {

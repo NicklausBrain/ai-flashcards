@@ -1,5 +1,5 @@
 ﻿@page "/translate-game/en"
-@page "/translate-game/en/{eeWord}/{sampleIndex:int}"
+@page "/translate-game/en/{etWord}/{sampleIndex:int}"
 
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
@@ -10,15 +10,17 @@
 @using My1kWordsEe.Models.Games
 @using My1kWordsEe.Services
 @using My1kWordsEe.Services.Cqs
+@using My1kWordsEe.Services.Scoped
 
 @inject TranslateToEnGameFactory TranslateToEnGameFactory
+@inject FavoritesStateContainer FavoritesStateContainer
 @inject NavigationManager Navigation
 @inject UrlService Url
 @inject IJSRuntime JS
 
 @code {
     [Parameter]
-    public string? EeWord { get; init; }
+    public string? EtWord { get; init; }
 
     [Parameter]
     public int? SampleIndex { get; init; }
@@ -28,10 +30,10 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        var gameGen = await TranslateToEnGameFactory.Generate(EeWord, SampleIndex);
+        var gameGen = await TranslateToEnGameFactory.Generate(EtWord, SampleIndex);
         if (gameGen.IsSuccess)
         {
-            if (EeWord == null)
+            if (EtWord == null)
             {
                 Navigation.NavigateTo($"/translate-game/en/{gameGen.Value.EeWord}/{gameGen.Value.SampleIndex}");
             }
@@ -48,7 +50,20 @@
     }
 
     // todo add succes/fail sound
-    private Task OnSubmit() => Game.Value.Submit();
+    private async Task OnSubmit()
+    {
+        await Game.Value.Submit();
+        // todo: not nice
+        if(Game.Value.CheckResult.HasValue)
+        {
+            var checkResult = Game.Value.CheckResult.Value;
+            await FavoritesStateContainer.UpdateScore(
+                EtWord,
+                checkResult.Value.Match >= 4
+                ? UpdateScoreCommand.ScoreUpdate.Up
+                : UpdateScoreCommand.ScoreUpdate.Down);
+        }
+    }
 
     private async Task PlaySample(MouseEventArgs e)
     {
@@ -116,11 +131,11 @@
                                         (@checkResult.Match / 5)
                                     </li>
                                     <li class="list-group-item list-group-item-success">
-                            @checkResult.EnExpectedSentence
-                        </li>
+                                        @checkResult.EnExpectedSentence
+                                    </li>
                                     <li class="list-group-item list-group-item-info">
-                            @checkResult.EnComment
-                        </li>
+                                        @checkResult.EnComment
+                                    </li>
                                 }
                             </ul>
                         }
