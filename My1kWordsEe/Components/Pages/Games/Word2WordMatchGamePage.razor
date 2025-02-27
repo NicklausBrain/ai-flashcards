@@ -92,12 +92,12 @@
         {
             ToastService.Notify(new ToastMessage(ToastType.Success, "Great match!"));
             await SpeakWord(SelectedEeWord);
-            await FavoritesStateContainer.UpdateScore(SelectedEeWord, UpdateScoreCommand.ScoreUpdate.Up);
+            _ = FavoritesStateContainer.UpdateScore(SelectedEeWord, UpdateScoreCommand.ScoreUpdate.Up);
         }
         else
         {
             ToastService.Notify(new ToastMessage(ToastType.Danger, "Try again!"));
-            await FavoritesStateContainer.UpdateScore(SelectedEeWord, UpdateScoreCommand.ScoreUpdate.Down);
+            _ = FavoritesStateContainer.UpdateScore(SelectedEeWord, UpdateScoreCommand.ScoreUpdate.Down);
         }
 
         SelectedEeWord = string.Empty;
