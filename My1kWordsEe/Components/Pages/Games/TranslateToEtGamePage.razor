@@ -116,6 +116,7 @@
                         <h5 class="card-title">
                             @game.EnSentence
                             <FavoriteOutlineButton Sample="@game.SampleSentence" />
+                            <audio id="@game.AudioUrl" src="@Url.Resolve(game.AudioUrl)"></audio>
                         </h5>
                         <img id="sampleImage" class="img-fluid rounded img-max-w-256 p-1"
                             src="@Url.Resolve(game.ImageUrl)" />
