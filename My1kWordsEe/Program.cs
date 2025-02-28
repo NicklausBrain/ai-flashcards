@@ -72,6 +72,7 @@ namespace My1kWordsEe
 
             builder.Services.AddSingleton<AddAudioCommand>();
             builder.Services.AddSingleton<CheckEnTranslationCommand>();
+            builder.Services.AddSingleton<CheckEtTranslationCommand>();
             builder.Services.AddSingleton<CheckEeListeningCommand>();
             builder.Services.AddSingleton<GetFavoritesQuery>();
             builder.Services.AddSingleton<AddToFavoritesCommand>();
@@ -86,6 +87,7 @@ namespace My1kWordsEe
             builder.Services.AddScoped<NextWordSelector>();
             builder.Services.AddScoped<Et1kWords>();
             builder.Services.AddScoped<TranslateToEnGameFactory>();
+            builder.Services.AddScoped<TranslateToEtGameFactory>();
             builder.Services.AddScoped<ListenToEeGameFactory>();
             builder.Services.AddScoped<Word2WordMatchGameFactory>();
 

@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 using CSharpFunctionalExtensions;
 
@@ -48,7 +49,7 @@ Teie sisend on JSON-objekt:
         }
     }
 
-    public record EtTranslationCheckResult
+    public struct EtTranslationCheckResult
     {
         [Description("The sentence shown to the user for translation to Estonian")]
         public required string EnSentence { get; init; }
@@ -60,11 +61,12 @@ Teie sisend on JSON-objekt:
         public required string EtExpectedSentence { get; init; }
 
         [Description("Comment explaining to the student his mistake (if any) in English")]
-        public required string EnComment { get; init; } = string.Empty;
+        public required string EnComment { get; init; }
 
         [Description("Correctes level in integer from 0 to 5")]
         public required ushort Match { get; init; }
 
+        [JsonIgnore]
         public bool IsMaxMatch => this.Match == 5;
 
         public static EtTranslationCheckResult Success(string enSentence, string etSentence) => new EtTranslationCheckResult
