@@ -23,10 +23,8 @@ namespace My1kWordsEe.Services.Cqs
         {
             return await this.getFavoritesCommand.Invoke(userId).Bind(async favorites =>
             {
-                var reorderedFavorites = new Favorites(
-                    userId: favorites.UserId,
-                    words: etWords.ToDictionary(w => w.Value),
-                    sentences: favorites.Sentences);
+                var reorderedFavorites = favorites with { Words = etWords.ToDictionary(w => w.Value) };
+
                 return await this.favoritesStorageClient.SaveFavorites(reorderedFavorites).Bind(_ =>
                     Result.Success(reorderedFavorites));
             });

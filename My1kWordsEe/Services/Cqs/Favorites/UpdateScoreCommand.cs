@@ -33,13 +33,7 @@ namespace My1kWordsEe.Services.Cqs
                     favorites.Stats[etWord] = score - 1;
                 }
 
-                var reorderedFavorites = new Favorites(
-                    userId: favorites.UserId,
-                    words: favorites.Words,
-                    sentences: favorites.Sentences,
-                    stats: favorites.Stats);
-                return await this.favoritesStorageClient.SaveFavorites(reorderedFavorites).Bind(_ =>
-                    Result.Success(reorderedFavorites));
+                return await this.favoritesStorageClient.SaveFavorites(favorites).Bind(_ => Result.Success(favorites));
             });
         }
 
