@@ -69,6 +69,8 @@
     private IDictionary<string, EtWord> FavoriteWords => Favorites.Value.Value.Words;
 
     private IDictionary<string, SampleSentenceWithMedia> FavoriteSentences => Favorites.Value.Value.Sentences;
+
+    private IDictionary<string, int> Stats => Favorites.Value.Value.Stats;
 }
 
 <PageTitle>Favorites | Lemmikud</PageTitle>
@@ -129,6 +131,33 @@
                         else
                         {
                             <p class="mt-3">No favorite sentences yet</p>
+                        }
+                    </div>
+                </Content>
+            </Tab>
+            <Tab Title="Stats">
+                <Content>
+                    <div class="row">
+                        @if (Stats.Any())
+                        {
+                            @foreach (var stat in Stats)
+                            {
+                                <div class="col-6">
+                                    @stat.Key
+                                </div>
+                                <div class="col-6">
+                                    @* @($"{stat.Value}/10") *@
+                                    <div class="progress m-2" role="progressbar" aria-valuemin="0" aria-valuemax="10">
+                                        <div class="progress-bar" style="width: @(stat.Value * 10)%">
+                                            @* @stat.Value *@
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="mt-3">No stats yet</p>
                         }
                     </div>
                 </Content>
