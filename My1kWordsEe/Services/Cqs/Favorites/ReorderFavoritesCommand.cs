@@ -1,16 +1,17 @@
 using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Models;
+using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Db;
 
 namespace My1kWordsEe.Services.Cqs
 {
-    public class UpdateScoreCommand
+    public class ReorderFavoritesCommand
     {
         private readonly GetFavoritesQuery getFavoritesCommand;
         private readonly FavoritesStorageClient favoritesStorageClient;
 
-        public UpdateScoreCommand(
+        public ReorderFavoritesCommand(
             GetFavoritesQuery getFavoritesCommand,
             FavoritesStorageClient favoritesStorageClient)
         {
@@ -18,35 +19,15 @@ namespace My1kWordsEe.Services.Cqs
             this.favoritesStorageClient = favoritesStorageClient;
         }
 
-        public async Task<Result<Favorites>> Invoke(string userId, string etWord, ScoreUpdate update)
+        public async Task<Result<Favorites>> Invoke(string userId, IEnumerable<EtWord> etWords)
         {
             return await this.getFavoritesCommand.Invoke(userId).Bind(async favorites =>
             {
-                favorites.Stats.TryGetValue(etWord, out var score);
+                var reorderedFavorites = favorites with { Words = etWords.ToDictionary(w => w.Value) };
 
-                if (update == ScoreUpdate.Up && score < 10)
-                {
-                    favorites.Stats[etWord] = score + 1;
-                }
-                else if (update == ScoreUpdate.Down && score > 0)
-                {
-                    favorites.Stats[etWord] = score - 1;
-                }
-
-                var reorderedFavorites = new Favorites(
-                    userId: favorites.UserId,
-                    words: favorites.Words,
-                    sentences: favorites.Sentences,
-                    stats: favorites.Stats);
                 return await this.favoritesStorageClient.SaveFavorites(reorderedFavorites).Bind(_ =>
                     Result.Success(reorderedFavorites));
             });
-        }
-
-        public enum ScoreUpdate
-        {
-            Up,
-            Down
         }
     }
 }

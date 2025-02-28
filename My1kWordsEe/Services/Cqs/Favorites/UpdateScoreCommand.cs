@@ -1,17 +1,16 @@
 using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Models;
-using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Db;
 
 namespace My1kWordsEe.Services.Cqs
 {
-    public class ReorderFavoritesCommand
+    public class UpdateScoreCommand
     {
         private readonly GetFavoritesQuery getFavoritesCommand;
         private readonly FavoritesStorageClient favoritesStorageClient;
 
-        public ReorderFavoritesCommand(
+        public UpdateScoreCommand(
             GetFavoritesQuery getFavoritesCommand,
             FavoritesStorageClient favoritesStorageClient)
         {
@@ -19,17 +18,29 @@ namespace My1kWordsEe.Services.Cqs
             this.favoritesStorageClient = favoritesStorageClient;
         }
 
-        public async Task<Result<Favorites>> Invoke(string userId, IEnumerable<EtWord> etWords)
+        public async Task<Result<Favorites>> Invoke(string userId, string etWord, ScoreUpdate update)
         {
             return await this.getFavoritesCommand.Invoke(userId).Bind(async favorites =>
             {
-                var reorderedFavorites = new Favorites(
-                    userId: favorites.UserId,
-                    words: etWords.ToDictionary(w => w.Value),
-                    sentences: favorites.Sentences);
-                return await this.favoritesStorageClient.SaveFavorites(reorderedFavorites).Bind(_ =>
-                    Result.Success(reorderedFavorites));
+                favorites.Stats.TryGetValue(etWord, out var score);
+
+                if (update == ScoreUpdate.Up && score < 10)
+                {
+                    favorites.Stats[etWord] = score + 1;
+                }
+                else if (update == ScoreUpdate.Down && score > 0)
+                {
+                    favorites.Stats[etWord] = score - 1;
+                }
+
+                return await this.favoritesStorageClient.SaveFavorites(favorites).Bind(_ => Result.Success(favorites));
             });
+        }
+
+        public enum ScoreUpdate
+        {
+            Up,
+            Down
         }
     }
 }
