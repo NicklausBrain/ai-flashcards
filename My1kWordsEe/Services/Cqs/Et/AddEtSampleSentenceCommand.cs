@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
@@ -61,7 +62,10 @@ Sinu ülesanne on:
                 return Result.Failure<SampleSentenceWithMedia[]>($"Too many samples. {MaxSamples} is a maximum");
             }
 
-            var sentence = await this.GetSampleSentence(word, senseIndex);
+            var sentence = await this.GetSampleSentence(
+                word,
+                senseIndex,
+                existingSamples.Value.Cast<ISampleEtSentence>());
 
             if (sentence.IsFailure)
             {
@@ -110,13 +114,17 @@ Sinu ülesanne on:
                 text: sentence.Sentence.Et,
                 fileName: $"{sampleId}.{AudioFormat}");
 
-        private async Task<Result<SampleEtSentence>> GetSampleSentence(EtWord word, uint senseIndex)
+        private async Task<Result<SampleEtSentence>> GetSampleSentence(
+            EtWord word,
+            uint senseIndex,
+            IEnumerable<ISampleEtSentence> existingSamples)
         {
             var input = JsonSerializer.Serialize(new Input
             {
                 Sõna = word.Value,
                 Tähendus = word.Senses[senseIndex].Definition.Et,
-                Kõneosa = word.Senses[senseIndex].PartOfSpeech.Et
+                Kõneosa = word.Senses[senseIndex].PartOfSpeech.Et,
+                OlemasolevadProovid = existingSamples.Select(s => s.Sentence.Et).ToArray(),
             }, options: new JsonSerializerOptions
             {
                 WriteIndented = false,
@@ -134,9 +142,24 @@ Sinu ülesanne on:
 
         private struct Input
         {
+            /// <summary>
+            /// Word
+            /// </summary>
             public required string Sõna { get; init; }
+            /// <summary>
+            /// Meaning
+            /// </summary>
             public required string Tähendus { get; init; }
+            /// <summary>
+            /// Part of speech
+            /// </summary>
             public required string Kõneosa { get; init; }
+
+            /// <summary>
+            /// Existing samples. Do not repeat.
+            /// </summary>
+            [Description("Ärge korrake neid")]
+            public required string[] OlemasolevadProovid { get; init; }
         }
     }
 }
