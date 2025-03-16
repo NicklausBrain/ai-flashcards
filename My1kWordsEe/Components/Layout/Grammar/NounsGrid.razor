@@ -8,6 +8,9 @@
 
 @code {
     [Parameter]
+    public required EtWord EtWord { get; init; }
+
+    [Parameter]
     public required IEnumerable<NounForm> NounForms { get; init; }
 
     [Parameter]
@@ -28,7 +31,14 @@
             }
         </GridColumn>
         <GridColumn TItem="NounForm" HeaderText="Eesti" PropertyName="CaseForm">
-            @context.CaseForm.Et
+            @if (string.Equals(EtWord.Value, @context.CaseForm.Et, StringComparison.OrdinalIgnoreCase))
+            {   // highlight the word form
+                <b>@context.CaseForm.Et</b>
+            }
+            else
+            {
+                @context.CaseForm.Et
+            }
         </GridColumn>
         <GridColumn TItem="NounForm" HeaderText="English" PropertyName="CaseForm">
             @context.CaseForm.En
