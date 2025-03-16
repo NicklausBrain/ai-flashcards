@@ -18,7 +18,7 @@ namespace My1kWordsEe.Models.Games
             this.SampleSentence = sampleSentence;
             this.EtWord = etWord;
             this.SampleIndex = sampleIndex;
-            var rnWords = sampleSentence.Sentence.Et.Split([" ", "."], StringSplitOptions.RemoveEmptyEntries).ToArray();
+            var rnWords = OrderedWords;
             Random.Shared.Shuffle(rnWords);
             this.RandomizedWords = rnWords;
             this.checkEeListeningCommand = checkEeListeningCommand;
@@ -29,6 +29,8 @@ namespace My1kWordsEe.Models.Games
         public string EtWord { get; init; }
 
         public int SampleIndex { get; init; }
+
+        public string[] OrderedWords => SampleSentence.Sentence.Et.Split([" ", "."], StringSplitOptions.RemoveEmptyEntries).ToArray();
 
         public string[] RandomizedWords { get; init; }
 
