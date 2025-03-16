@@ -17,6 +17,8 @@
 @inject IJSRuntime JS
 
 @code {
+    [Inject] protected ToastService ToastService { get; set; } = default!;
+
     [Parameter]
     public string? EeWord { get; init; }
 
@@ -68,8 +70,15 @@
 
     private void AddUserInputWord(int index)
     {
-        UserInputWords.Add(SuggestedWords[index]);
-        SuggestedWords.RemoveAt(index);
+        if (SuggestedWords[index] == Game.Value.OrderedWords[UserInputWords.Count])
+        {
+            UserInputWords.Add(SuggestedWords[index]);
+            SuggestedWords.RemoveAt(index);
+        }
+        else
+        {
+            ToastService.Notify(new ToastMessage(ToastType.Danger, "Try again!"));
+        }
     }
 
     private void DropUserInputWord(int index)
@@ -116,7 +125,8 @@
                             <audio id="@game.AudioUrl" src="@Url.Resolve(game.AudioUrl)" autoplay></audio>
                             <FavoriteOutlineButton Sample="@game.SampleSentence" />
                         </h5>
-                        <img id="sampleImage" class="img-fluid rounded img-max-w-256 p-1" src="@Url.Resolve(@game.ImageUrl)" />
+                        <img id="sampleImage" class="img-fluid rounded img-max-w-256 p-1"
+                            src="@Url.Resolve(@game.ImageUrl)" />
 
                         @if (game.CheckResult.HasValue && game.CheckResult.Value.IsSuccess)
                         {
@@ -138,13 +148,13 @@
                                         (@checkResult.Match / 5)
                                     </li>
                                     <li class="list-group-item list-group-item-success">
-                            @checkResult.EeSentence
-                            <br />
-                            (@checkResult.EnSentence)
-                        </li>
+                                        @checkResult.EeSentence
+                                        <br />
+                                        (@checkResult.EnSentence)
+                                    </li>
                                     <li class="list-group-item list-group-item-info">
-                            @checkResult.EnComment
-                        </li>
+                                        @checkResult.EnComment
+                                    </li>
                                 }
                             </ul>
                         }
@@ -174,12 +184,12 @@
                             </div>
 
                             <div class="row mb-1 gap-2 justify-content-center">
-                        @for (var i = 0; i < UserInputWords.Count; i++)
+                                @for (var i = 0; i < UserInputWords.Count; i++)
                                 {
                                     var wordIndex = i;
                                     <Button Class="col-auto" Type="ButtonType.Button" Color="ButtonColor.Secondary">
                                         @UserInputWords[wordIndex]
-                                        <Badge @onclick="@(()=> DropUserInputWord(wordIndex))">
+                                        <Badge @onclick="@(() => DropUserInputWord(wordIndex))">
                                             <i class="bi bi-x"></i>
                                         </Badge>
                                     </Button>
@@ -187,7 +197,7 @@
                             </div>
 
                             <div class="row mb-1 gap-2 justify-content-center">
-                        @if (SuggestedWords.Count == 0)
+                                @if (SuggestedWords.Count == 0)
                                 {
                                     <Button Class="col-auto" Type="ButtonType.Submit" Color="ButtonColor.Primary"
                                         @onclick="@OnSubmit">Submit</Button>
@@ -196,7 +206,7 @@
                                     <span class="input-group-text btn-success">You hear:</span>
                                     <InputText @bind-Value="@Game.UserInput" class="form-control" autocomplete="off"/>
                                 </div> *@
-                    </div>
+                            </div>
                         }
                     </div>
                 </div>
@@ -218,3 +228,4 @@
     </div>
 </div>
 <Preload LoadingText="Loading..." />
+<Toasts class="p-3" AutoHide="true" StackLength="5" Placement="ToastsPlacement.BottomRight" />
