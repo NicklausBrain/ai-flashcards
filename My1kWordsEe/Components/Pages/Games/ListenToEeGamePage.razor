@@ -68,7 +68,7 @@
     private List<string> UserInputWords = new List<string>();
     private string UserInput => string.Join(" ", UserInputWords);
 
-    private void AddUserInputWord(int index)
+    private async Task AddUserInputWord(int index)
     {
         if (SuggestedWords[index] == Game.Value.OrderedWords[UserInputWords.Count])
         {
@@ -78,6 +78,12 @@
         else
         {
             ToastService.Notify(new ToastMessage(ToastType.Danger, "Try again!"));
+        }
+
+        // todo: config if automatic matching is on
+        if (SuggestedWords.Count == 0)
+        {
+            await OnSubmit();
         }
     }
 
