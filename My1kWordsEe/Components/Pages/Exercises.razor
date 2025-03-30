@@ -1,0 +1,80 @@
+﻿@page "/exercises"
+
+@using BlazorBootstrap
+
+@code {
+    private static readonly GameReference[] Games = new GameReference[]
+    {
+        new GameReference
+        {
+            Title = "Translate to English 🇬🇧",
+            Url = $"/translate-game/en",
+            Logo = "bi bi-translate",
+            ImgUrl = "img/to-en.png"
+
+        },
+        new GameReference
+        {
+            Title = "Translate to Estonian 🇪🇪",
+            Url = $"/translate-game/et",
+            Logo = "bi bi-translate",
+            ImgUrl = "img/to-et.png"
+        },
+        new GameReference
+        {
+            Title = "Listen to Estonian 🇪🇪",
+            Url = $"/listen-game/ee",
+            Logo = "bi bi-ear-fill",
+            ImgUrl = "img/listen-et.png"
+        },
+        new GameReference
+        {
+            Title = "Match Words",
+            Url = $"/word-2-word-match-game/en",
+            Logo = "bi bi-dice-6-fill",
+            ImgUrl = "img/match.png"
+        }
+    };
+
+    private class GameReference
+    {
+        public required string Title { get; set; }
+        public required string Url { get; set; }
+        public required string Logo { get; set; }
+        public required string ImgUrl { get; set; }
+    }
+}
+
+<div class="text-left row">
+    <h3>Exercises / Ülesandeid</h3>
+</div>
+
+<div class="text-center row">
+    @foreach(var game in Games)
+    {
+        <div class="col-6 p-1">
+            <Card>
+                <Card role="button" >
+                    <CardBody>
+                        <CardTitle Class="row">
+                            <div class="col-1">
+                                <span class="@game.Logo" aria-hidden="true"></span>
+                            </div>
+                            <div class="col-10">@game.Title</div>
+                            <div class="col-1">
+                                <a href="@(game.Url)" target="_blank">
+                                    <i role="link" class="bi bi-box-arrow-up-right float-end"></i>
+                                </a>
+                            </div>
+                        </CardTitle>
+                        <CardText>
+                            <a href="@(game.Url)" target="_blank">
+                                <img src="@game.ImgUrl" height="64" />
+                            </a>
+                        </CardText>
+                    </CardBody>
+                </Card>
+            </Card>
+        </div>
+    }
+</div>
