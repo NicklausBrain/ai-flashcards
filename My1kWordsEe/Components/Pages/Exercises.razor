@@ -67,10 +67,11 @@
                                 </a>
                             </div>
                         </CardTitle>
-                      @*   <CardSubTitle>SUBTITLE</CardSubTitle>
-                        <CardText>CARD TEXT</CardText> *@
-
-                        <CardText><img src="@game.ImgUrl" height="64" /></CardText>
+                        <CardText>
+                            <a href="@(game.Url)" target="_blank">
+                                <img src="@game.ImgUrl" height="64" />
+                            </a>
+                        </CardText>
                     </CardBody>
                 </Card>
             </Card>
