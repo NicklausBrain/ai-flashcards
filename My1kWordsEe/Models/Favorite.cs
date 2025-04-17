@@ -4,8 +4,8 @@ namespace My1kWordsEe.Models
 {
     public record Favorites
     {
-        private const int MinWordScore = 0;
-        private const int MaxWordScore = 10;
+        public const int MinWordScore = 0;
+        public const int MaxWordScore = 10;
 
         public string UserId { get; init; } = string.Empty;
 

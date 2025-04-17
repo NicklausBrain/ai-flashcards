@@ -24,11 +24,11 @@ namespace My1kWordsEe.Services.Cqs
             {
                 favorites.Stats.TryGetValue(etWord, out var score);
 
-                if (update == ScoreUpdate.Up && score < 10)
+                if (update == ScoreUpdate.Up && score < Favorites.MaxWordScore)
                 {
                     favorites.Stats[etWord] = score + 1;
                 }
-                else if (update == ScoreUpdate.Down && score > 0)
+                else if (update == ScoreUpdate.Down && score > Favorites.MinWordScore)
                 {
                     favorites.Stats[etWord] = score - 1;
                 }
