@@ -15,6 +15,12 @@ namespace My1kWordsEe.Models
 
         public IDictionary<string, int> Stats { get; init; } = new Dictionary<string, int>();
 
+        public bool IsKnown(EtWord word)
+        {
+            var wordKey = word.Value.ToLowerInvariant();
+            return this.Stats.ContainsKey(wordKey) && this.Stats[wordKey] == MaxWordScore;
+        }
+
         public bool IsFavorite(EtWord word)
         {
             return this.Words.ContainsKey(word.Value.ToLowerInvariant());

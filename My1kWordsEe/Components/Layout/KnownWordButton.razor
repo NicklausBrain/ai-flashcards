@@ -1,0 +1,63 @@
+﻿@using BlazorBootstrap
+@using CSharpFunctionalExtensions
+@using My1kWordsEe.Models
+@using My1kWordsEe.Models.Semantics
+@using My1kWordsEe.Services.Scoped
+
+@inject FavoritesStateContainer FavoritesStateContainer;
+
+@code {
+    [Inject] protected PreloadService PreloadService { get; set; } = default!;
+
+    [Parameter]
+    public required EtWord Word { get; init; }
+
+    protected Maybe<Result<Favorites>> Favorites;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Favorites = await FavoritesStateContainer.GetAsync();
+        await base.OnParametersSetAsync();
+    }
+
+    protected bool IsKnown =>
+        Favorites.HasValue &&
+        Favorites.Value.IsSuccess &&
+        Favorites.Value.Value.IsKnown(Word);
+
+    protected bool IsFeatureAvailable => Favorites.HasValue && Favorites.Value.IsSuccess;
+
+    protected async Task MarkAsKnownWord(dynamic favorite)
+    {
+        PreloadService.Show(SpinnerColor.Light, "Saving data...");
+        //Favorites = await FavoritesStateContainer.AddAsync(favorite);
+        await Task.Delay(300);
+        PreloadService.Hide();
+        await OnParametersSetAsync();
+        StateHasChanged();
+    }
+
+    protected async Task RemoveFromKnownWords(dynamic favorite)
+    {
+        PreloadService.Show(SpinnerColor.Light, "Saving data...");
+        //Favorites = await FavoritesStateContainer.RemoveAsync(favorite);
+        await Task.Delay(300);
+        PreloadService.Hide();
+        await OnParametersSetAsync();
+        StateHasChanged();
+    }
+}
+
+
+@if (IsKnown)
+{
+    <i role="button" class="bi bi-clipboard-check-fill known-active" @onclick="() => RemoveFromKnownWords(Word)"></i>
+}
+else if (IsFeatureAvailable)
+{
+    <i role="button" class="bi bi-clipboard-minus" @onclick="() => MarkAsKnownWord(Word)"></i>
+}
+else
+{
+    <a role="button" class="bi bi-clipboard-minus" href="Account/Login"></a>
+}
