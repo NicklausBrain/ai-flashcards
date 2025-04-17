@@ -4,8 +4,8 @@ namespace My1kWordsEe.Models
 {
     public record Favorites
     {
-        private const int MinWordScore = 0;
-        private const int MaxWordScore = 10;
+        public const int MinWordScore = 0;
+        public const int MaxWordScore = 10;
 
         public string UserId { get; init; } = string.Empty;
 
@@ -14,6 +14,12 @@ namespace My1kWordsEe.Models
         public IDictionary<string, SampleSentenceWithMedia> Sentences { get; init; } = new Dictionary<string, SampleSentenceWithMedia>();
 
         public IDictionary<string, int> Stats { get; init; } = new Dictionary<string, int>();
+
+        public bool IsKnown(EtWord word)
+        {
+            var wordKey = word.Value.ToLowerInvariant();
+            return this.Stats.ContainsKey(wordKey) && this.Stats[wordKey] == MaxWordScore;
+        }
 
         public bool IsFavorite(EtWord word)
         {

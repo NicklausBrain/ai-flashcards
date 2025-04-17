@@ -63,3 +63,7 @@ h1:focus {
 .favorite-active {
     color: #131E5E;
 }
+
+.known-active {
+    color: darkgreen;
+}
