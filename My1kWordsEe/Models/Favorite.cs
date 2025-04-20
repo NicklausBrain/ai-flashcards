@@ -13,7 +13,7 @@ namespace My1kWordsEe.Models
 
         public IDictionary<string, SampleSentenceWithMedia> Sentences { get; init; } = new Dictionary<string, SampleSentenceWithMedia>();
 
-        public IDictionary<string, int> Stats { get; init; } = new Dictionary<string, int>();
+        public IDictionary<string, int> Stats { get; init; } = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
         public bool IsKnown(EtWord word)
         {

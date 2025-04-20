@@ -20,6 +20,7 @@ namespace My1kWordsEe.Services.Cqs
 
         public async Task<Result<Favorites>> Invoke(string userId, string etWord, ScoreUpdate update)
         {
+            etWord = etWord.ToLowerInvariant();
             return await this.getFavoritesCommand.Invoke(userId).Bind(async favorites =>
             {
                 favorites.Stats.TryGetValue(etWord, out var score);
@@ -32,6 +33,10 @@ namespace My1kWordsEe.Services.Cqs
                 {
                     favorites.Stats[etWord] = score - 1;
                 }
+                else if (update == ScoreUpdate.Max)
+                {
+                    favorites.Stats[etWord] = Favorites.MaxWordScore;
+                }
 
                 return await this.favoritesStorageClient.SaveFavorites(favorites).Bind(_ => Result.Success(favorites));
             });
@@ -40,7 +45,8 @@ namespace My1kWordsEe.Services.Cqs
         public enum ScoreUpdate
         {
             Up,
-            Down
+            Down,
+            Max
         }
     }
 }
