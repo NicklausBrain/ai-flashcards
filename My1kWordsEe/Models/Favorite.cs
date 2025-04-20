@@ -21,6 +21,12 @@ namespace My1kWordsEe.Models
             return this.Stats.ContainsKey(wordKey) && this.Stats[wordKey] == MaxWordScore;
         }
 
+        public bool IsKnown(string word)
+        {
+            var wordKey = word.ToLowerInvariant();
+            return this.Stats.ContainsKey(wordKey) && this.Stats[wordKey] == MaxWordScore;
+        }
+
         public bool IsFavorite(EtWord word)
         {
             return this.Words.ContainsKey(word.Value.ToLowerInvariant());

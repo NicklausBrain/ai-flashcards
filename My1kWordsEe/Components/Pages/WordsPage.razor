@@ -9,24 +9,29 @@
 @using My1kWordsEe.Models.Semantics
 @using My1kWordsEe.Services.Cqs
 @using My1kWordsEe.Services.Cqs.Et
+@using My1kWordsEe.Services.Scoped
 
 @inject IJSRuntime JS
 @inject NavigationManager NavigationManager
 @inject GetOrAddEtWordCommand GetOrAddEtWordCommand;
 @inject Et1kWords Ee1KWords;
+@inject FavoritesStateContainer FavoritesStateContainer;
 
 @code {
 
     [SupplyParameterFromQuery]
     public string? SearchTerm { get; set; }
+    public bool IgnoreKnownWords { get; set; } = true;
     public string SearchTermTrimmed => SearchTerm?.ToString()?.Trim() ?? string.Empty;
 
     private bool IsCheckInProgress = false;
     private Maybe<Result<EtWord>> CheckWordResult;
+    private Result<Favorites> Favorites;
 
     protected override async Task OnParametersSetAsync()
     {
-        this.Ee1KWords = Ee1KWords.WithSearch(SearchTermTrimmed);
+        this.Favorites = await this.FavoritesStateContainer.GetAsync();
+        this.Ee1KWords = Ee1KWords.WithSearch(SearchTermTrimmed, this.IsIgnoredWord);
         await base.OnParametersSetAsync();
     }
 
@@ -60,6 +65,11 @@
 
         this.IsCheckInProgress = false;
     }
+
+    private bool IsIgnoredWord(string word) =>
+        this.Favorites.IsSuccess && IgnoreKnownWords
+        ? this.Favorites.Value.IsKnown(word)
+        : false;
 }
 
 <script>
@@ -85,6 +95,18 @@
             else
             {
                 <button @onclick="CheckWord" class="btn btn-outline-primary" type="button">Check the word</button>
+                <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="visually-hidden">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <div class="form-check form-switch m-2">
+                            <input @bind="IgnoreKnownWords" @bind:event="oninput" @bind:after="OnSearchInput" class="form-check-input" type="checkbox" id="ignoreKnownWords">
+                            <label class="form-check-label" for="ignoreKnownWords">Ignore known words</label>
+                        </div>
+                    </li>
+                    
+                </ul>
             }
         </div>
     </div>

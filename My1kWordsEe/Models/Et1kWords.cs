@@ -1,4 +1,5 @@
 using My1kWordsEe.Models.Semantics;
+using My1kWordsEe.Services.Scoped;
 
 namespace My1kWordsEe.Models
 {
@@ -8,10 +9,12 @@ namespace My1kWordsEe.Models
     public class Et1kWords
     {
         private readonly EtWordsCache etWordsCache;
+        private readonly FavoritesStateContainer favoritesStateContainer;
 
-        public Et1kWords(EtWordsCache etWordsCache)
+        public Et1kWords(EtWordsCache etWordsCache, FavoritesStateContainer favoritesStateContainer)
         {
             this.etWordsCache = etWordsCache;
+            this.favoritesStateContainer = favoritesStateContainer;
             this.Search = null;
             this.SelectedWords = etWordsCache.AllWords;
         }
@@ -19,12 +22,14 @@ namespace My1kWordsEe.Models
         /// <summary>
         /// Modifies SelectedWords to contain only words that contain the search string.
         /// </summary>
-        public Et1kWords WithSearch(string search)
+        public Et1kWords WithSearch(string search, Func<string, bool> isIgnoredWord)
         {
+            var allWords = etWordsCache.AllWords.Where(w => !isIgnoredWord(w.Value));
+
             if (search.ValidateWord())
             {
                 Search = search;
-                SelectedWords = etWordsCache.AllWords.Where(w =>
+                SelectedWords = allWords.Where(w =>
                     etWordsCache.AllWordsDiacriticsFree[w.Value].Contains(search, StringComparison.InvariantCultureIgnoreCase) ||
                     w.DefaultSense.Word.En.Contains(search, StringComparison.InvariantCultureIgnoreCase) ||
                     w.DefaultSense.Word.Et.Contains(search, StringComparison.InvariantCultureIgnoreCase));
@@ -32,7 +37,7 @@ namespace My1kWordsEe.Models
             else
             {
                 Search = search;
-                SelectedWords = etWordsCache.AllWords;
+                SelectedWords = allWords;
             }
             return this;
         }
