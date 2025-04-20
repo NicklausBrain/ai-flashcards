@@ -91,12 +91,13 @@
         if (hasMatch)
         {
             ToastService.Notify(new ToastMessage(ToastType.Success, "Great match!"));
-            await SpeakWord(SelectedEeWord);
+            await SuccessSound();
             _ = FavoritesStateContainer.UpdateScore(SelectedEeWord, UpdateScoreCommand.ScoreUpdate.Up);
         }
         else
         {
             ToastService.Notify(new ToastMessage(ToastType.Danger, "Try again!"));
+            await FailSound();
             _ = FavoritesStateContainer.UpdateScore(SelectedEeWord, UpdateScoreCommand.ScoreUpdate.Down);
         }
 
@@ -104,22 +105,38 @@
         SelectedEnWord = string.Empty;
     }
 
-    private async Task SpeakWord(string eeWord)
-    {
-        await JS.InvokeVoidAsync("speakWordMatch", eeWord);
-    }
+    // private async Task SpeakWord(string eeWord)
+    // {
+    //     await JS.InvokeVoidAsync("speakWordMatch", eeWord);
+    // }
+    private async Task SuccessSound() => await JS.InvokeVoidAsync("successSound");
+    private async Task FailSound() => await JS.InvokeVoidAsync("failSound");
 }
 
 <script>
-    window.speakWordMatch = (audioId) => {
+    // window.speakWordMatch = (audioId) => {
+    //     setTimeout(() => {
+    //         const audio = document.getElementById(audioId);
+    //         audio.play();
+    //     }, 0);
+    // };
+    window.successSound = () => {
         setTimeout(() => {
-            const audio = document.getElementById(audioId);
+            const audio = document.getElementById('successSound');
+            audio.play();
+        }, 0);
+    };
+    window.failSound = () => {
+        setTimeout(() => {
+            const audio = document.getElementById('failureSound');
             audio.play();
         }, 0);
     };
 </script>
 
 <div class="text-left">
+    <audio id="successSound" src="/sound/success.wav"></audio>
+    <audio id="failureSound" src="/sound/failure.wav"></audio>
     <div class="row">
         <div class="col-7">
             <h3>Match word pairs</h3>

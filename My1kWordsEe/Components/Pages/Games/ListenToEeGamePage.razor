@@ -78,6 +78,7 @@
         else
         {
             ToastService.Notify(new ToastMessage(ToastType.Danger, "Try again!"));
+            await FailSound();
         }
 
         // todo: config if automatic matching is on
@@ -92,6 +93,8 @@
         SuggestedWords.Add(UserInputWords[index]);
         UserInputWords.RemoveAt(index);
     }
+
+    private async Task FailSound() => await JS.InvokeVoidAsync("failSound");
 }
 
 <script>
@@ -99,9 +102,16 @@
         const audio = document.getElementById(audioId);
         await audio.play();
     };
+    window.failSound = () => {
+        setTimeout(() => {
+            const audio = document.getElementById('failureSound');
+            audio.play();
+        }, 0);
+    };
 </script>
 
 <div class="text-left">
+    <audio id="failureSound" src="/sound/failure.wav"></audio>
     <div class="row">
         <div class="col-7">
             <h3>Listen and catch Estonian speech</h3>
