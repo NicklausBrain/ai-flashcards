@@ -54,13 +54,13 @@
 
 @if (IsKnown)
 {
-    <i role="button" class="bi bi-clipboard-check-fill known-active" @onclick="() => RemoveFromKnownWords(Word)"></i>
+    <i role="button" class="bi bi-clipboard-check-fill known-active" @onclick="() => RemoveFromKnownWords(Word)" title="Marked as known"></i>
 }
 else if (IsFeatureAvailable)
 {
-    <i role="button" class="bi bi-clipboard-minus" @onclick="() => MarkAsKnownWord(Word)"></i>
+    <i role="button" class="bi bi-clipboard-minus" @onclick="() => MarkAsKnownWord(Word)" title="Mark as known"></i>
 }
 else
 {
-    <a role="button" class="bi bi-clipboard-minus" href="Account/Login"></a>
+    <a role="button" class="bi bi-clipboard-minus" href="Account/Login" title="Login to use it"></a>
 }
