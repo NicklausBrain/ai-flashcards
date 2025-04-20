@@ -1,6 +1,8 @@
 ﻿@using BlazorBootstrap
 @using CSharpFunctionalExtensions
 @using My1kWordsEe.Models
+@using My1kWordsEe.Models.Semantics
+@using My1kWordsEe.Services.Cqs
 @using My1kWordsEe.Services.Scoped
 
 @inject FavoritesStateContainer FavoritesStateContainer;
@@ -9,7 +11,7 @@
     [Inject] protected PreloadService PreloadService { get; set; } = default!;
 
     [Parameter]
-    public required dynamic Sample { get; init; }
+    public required EtWord Word { get; init; }
 
     protected Maybe<Result<Favorites>> Favorites;
 
@@ -19,27 +21,29 @@
         await base.OnParametersSetAsync();
     }
 
-    protected bool IsFavorite =>
+    protected bool IsKnown =>
         Favorites.HasValue &&
         Favorites.Value.IsSuccess &&
-        Favorites.Value.Value.IsFavorite(Sample);
+        Favorites.Value.Value.IsKnown(Word);
+
+    private string UserId => Favorites.Value.Value.UserId;
 
     protected bool IsFeatureAvailable => Favorites.HasValue && Favorites.Value.IsSuccess;
 
-    protected async Task AddToFavorites(dynamic favorite)
+    protected async Task MarkAsKnownWord(EtWord word)
     {
         PreloadService.Show(SpinnerColor.Light, "Saving data...");
-        Favorites = await FavoritesStateContainer.AddAsync(favorite);
+        Favorites = await FavoritesStateContainer.UpdateScore(word.Value, UpdateScoreCommand.ScoreUpdate.Max);
         await Task.Delay(300);
         PreloadService.Hide();
         await OnParametersSetAsync();
         StateHasChanged();
     }
 
-    protected async Task RemoveFromFavorites(dynamic favorite)
+    protected async Task RemoveFromKnownWords(EtWord word)
     {
         PreloadService.Show(SpinnerColor.Light, "Saving data...");
-        Favorites = await FavoritesStateContainer.RemoveAsync(favorite);
+        Favorites = await FavoritesStateContainer.UpdateScore(word.Value, UpdateScoreCommand.ScoreUpdate.Down);
         await Task.Delay(300);
         PreloadService.Hide();
         await OnParametersSetAsync();
@@ -48,15 +52,15 @@
 }
 
 
-@if (IsFavorite)
+@if (IsKnown)
 {
-    <i role="button" class="bi bi-star-fill favorite-active" @onclick="() => RemoveFromFavorites(Sample)" title="Marked as favorite"></i>
+    <i role="button" class="bi bi-clipboard-check-fill known-active" @onclick="() => RemoveFromKnownWords(Word)" title="Marked as known"></i>
 }
 else if (IsFeatureAvailable)
 {
-    <i role="button" class="bi bi-star" @onclick="() => AddToFavorites(Sample)" title="Mark as favorite"></i>
+    <i role="button" class="bi bi-clipboard-minus" @onclick="() => MarkAsKnownWord(Word)" title="Mark as known"></i>
 }
 else
 {
-    <a role="button" class="bi bi-star" href="Account/Login" title="Login to use it"></a>
+    <a role="button" class="bi bi-clipboard-minus" href="Account/Login" title="Login to use it"></a>
 }
