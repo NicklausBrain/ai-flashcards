@@ -10,11 +10,13 @@
 @using My1kWordsEe.Services
 @using My1kWordsEe.Services.Cqs
 @using My1kWordsEe.Components.Layout
+@using Microsoft.ApplicationInsights
 
 @inject ListenToEeGameFactory ListenToEeGameFactory
 @inject NavigationManager Navigation
 @inject UrlService Url
 @inject IJSRuntime JS
+@inject TelemetryClient telemetry
 
 @code {
     [Inject] protected ToastService ToastService { get; set; } = default!;
@@ -30,6 +32,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
+        telemetry.TrackPageView(nameof(ListenToEeGamePage));
         var gameGen = await ListenToEeGameFactory.Generate(EeWord, SampleIndex);
         if (gameGen.IsSuccess)
         {

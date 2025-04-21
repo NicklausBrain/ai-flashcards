@@ -11,12 +11,14 @@
 @using My1kWordsEe.Services
 @using My1kWordsEe.Services.Cqs
 @using My1kWordsEe.Services.Scoped
+@using Microsoft.ApplicationInsights
 
 @inject TranslateToEtGameFactory TranslateToEtGameFactory
 @inject FavoritesStateContainer FavoritesStateContainer
 @inject NavigationManager Navigation
 @inject UrlService Url
 @inject IJSRuntime JS
+@inject TelemetryClient telemetry
 
 @code {
     [Parameter]
@@ -30,6 +32,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
+        telemetry.TrackPageView(nameof(TranslateToEtGamePage));
         var gameGen = await TranslateToEtGameFactory.Generate(EtWord, SampleIndex);
         if (gameGen.IsSuccess)
         {
