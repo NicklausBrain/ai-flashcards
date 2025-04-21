@@ -2,12 +2,14 @@
 @using CSharpFunctionalExtensions
 @using My1kWordsEe.Models.Semantics
 @using My1kWordsEe.Services.Cqs.Et
+@using Microsoft.ApplicationInsights
 
 @inject GetEtSampleSentencesQuery GetEtSampleSentencesQuery
 @inject AddEtSampleSentenceCommand AddEtSampleSentenceCommand
 @inject DeleteEtSampleSentenceCommand DeleteEtSampleSentenceCommand
 @inject PreloadService PreloadService
 @inject ToastService ToastService
+@inject TelemetryClient telemetry
 
 @code {
     [Parameter]
@@ -26,6 +28,11 @@
 
     private async Task GenerateSample(MouseEventArgs e)
     {
+        telemetry.TrackEvent("GenerateSample", new Dictionary<string, string>
+        {
+            { "etWord", EtWord.Value },
+            { "senseIndex", SenseIndex.ToString() }
+        });
         this.IsSampleGenerationInProgress = true;
         this.Samples = await this.AddEtSampleSentenceCommand.Invoke(EtWord, (uint)SenseIndex);
         this.IsSampleGenerationInProgress = false;

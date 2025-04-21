@@ -33,6 +33,8 @@ namespace My1kWordsEe
 
             var secrets = RequireSecrets(builder);
 
+            builder.Services.AddApplicationInsightsTelemetry();
+
             builder.Services.AddHttpClient(nameof(StabilityAiClient))
                 .AddStandardResilienceHandler(options =>
                 {
