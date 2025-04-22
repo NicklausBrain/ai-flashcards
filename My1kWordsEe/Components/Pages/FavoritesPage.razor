@@ -3,6 +3,7 @@
 
 @using BlazorBootstrap
 @using CSharpFunctionalExtensions
+@using Microsoft.ApplicationInsights
 @using My1kWordsEe.Components.Account
 @using My1kWordsEe.Models;
 @using My1kWordsEe.Components.Layout;
@@ -11,6 +12,7 @@
 @using My1kWordsEe.Services.Scoped
 
 @inject FavoritesStateContainer FavoritesStateContainer;
+@inject TelemetryClient telemetry
 
 @code {
     [Inject] protected PreloadService PreloadService { get; set; } = default!;
@@ -37,6 +39,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
+        telemetry.TrackPageView(nameof(FavoritesPage));
         Favorites = await FavoritesStateContainer.GetAsync();
         if (Favorites.HasValue && Favorites.Value.IsSuccess)
         {

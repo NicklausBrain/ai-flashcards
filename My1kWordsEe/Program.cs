@@ -189,8 +189,7 @@ namespace My1kWordsEe
             {
                 options.DefaultScheme = IdentityConstants.ApplicationScheme;
                 options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-            })
-                .AddIdentityCookies();
+            }).AddIdentityCookies();
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
@@ -205,7 +204,6 @@ namespace My1kWordsEe
                 .AddDefaultTokenProviders();
 
             builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
-
 
             builder.Services.BuildServiceProvider().GetRequiredService<ApplicationDbContext>().Database.EnsureCreated();
         }

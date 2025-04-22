@@ -3,18 +3,22 @@ using System.Text.Json.Serialization;
 
 using CSharpFunctionalExtensions;
 
+using Microsoft.ApplicationInsights;
+
 namespace My1kWordsEe.Services.Cqs
 {
     public class CheckEeListeningCommand
     {
         private readonly OpenAiClient openAiClient;
+        private readonly TelemetryClient telemetry;
 
-        public CheckEeListeningCommand(OpenAiClient openAiClient)
+        public CheckEeListeningCommand(TelemetryClient telemetry, OpenAiClient openAiClient)
         {
+            this.telemetry = telemetry;
             this.openAiClient = openAiClient;
         }
 
-        public virtual async Task<Result<EeListeningCheckResult>> Invoke(string eeSentence, string userInput)
+        public virtual async Task<Result<EeListeningCheckResult>> Invoke(string etSentence, string userInput)
         {
             var prompt = "Your task is to check user's listening to Estonian speech.\n" +
                          "Ignore the letters case (upper or lower) and termination symbols in your check.\n" +
@@ -34,11 +38,17 @@ namespace My1kWordsEe.Services.Cqs
 
             var input = JsonSerializer.Serialize(new
             {
-                ee_sentence = eeSentence.Trim('.', ' ').ToLowerInvariant(),
+                ee_sentence = etSentence.Trim('.', ' ').ToLowerInvariant(),
                 ee_user_sentence = userInput.Trim('.', ' ').ToLowerInvariant(),
             });
 
             var result = await this.openAiClient.CompleteJsonAsync<EeListeningCheckResult>(prompt, input);
+
+            telemetry.TrackEvent("CheckEeListeningCommand-done", new Dictionary<string, string>
+            {
+                { "etSentence", etSentence },
+                { "userInput", userInput },
+            });
 
             return result;
         }
