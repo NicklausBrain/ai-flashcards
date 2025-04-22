@@ -57,11 +57,11 @@ namespace My1kWordsEe.Models.Games
             }
 
             var userInput = UserInput.Trim('.', ' ');
-            var eeSampleSentence = SampleSentence.Sentence.Et.Trim('.', ' ');
+            var etSampleSentence = SampleSentence.Sentence.Et.Trim('.', ' ');
 
             if (string.Equals(
                 userInput,
-                eeSampleSentence,
+                etSampleSentence,
                 StringComparison.InvariantCultureIgnoreCase))
             {
                 CheckResult = Result.Success(EeListeningCheckResult.Success(
@@ -73,7 +73,7 @@ namespace My1kWordsEe.Models.Games
             {
                 IsCheckInProgress = true;
                 CheckResult = await checkEeListeningCommand.Invoke(
-                    eeSentence: eeSampleSentence,
+                    etSentence: etSampleSentence,
                     userInput: userInput);
                 IsCheckInProgress = false;
             }

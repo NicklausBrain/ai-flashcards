@@ -1,8 +1,18 @@
 ﻿@page "/exercises"
 
 @using BlazorBootstrap
+@using Microsoft.ApplicationInsights
+
+@inject TelemetryClient telemetry
 
 @code {
+
+    protected override async Task OnParametersSetAsync()
+    {
+        telemetry.TrackPageView(nameof(Exercises));
+        await base.OnParametersSetAsync();
+    }
+
     private static readonly GameReference[] Games = new GameReference[]
     {
 new GameReference

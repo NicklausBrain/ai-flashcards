@@ -4,6 +4,8 @@ using System.Text.Json.Serialization;
 
 using CSharpFunctionalExtensions;
 
+using Microsoft.ApplicationInsights;
+
 using My1kWordsEe.Models;
 
 namespace My1kWordsEe.Services.Cqs
@@ -17,9 +19,11 @@ Teie sisend on JSON-objekt:
 {JsonSchemaRecord.For(typeof(Input))}";
 
         private readonly OpenAiClient openAiClient;
+        private readonly TelemetryClient telemetry;
 
-        public CheckEtTranslationCommand(OpenAiClient openAiClient)
+        public CheckEtTranslationCommand(TelemetryClient telemetry, OpenAiClient openAiClient)
         {
+            this.telemetry = telemetry;
             this.openAiClient = openAiClient;
         }
 
@@ -35,6 +39,12 @@ Teie sisend on JSON-objekt:
                 instructions: Prompt,
                 input: input,
                 schema: JsonSchemaRecord.For(typeof(EtTranslationCheckResult)));
+
+            telemetry.TrackEvent("CheckEtTranslationCommand-done", new Dictionary<string, string>
+            {
+                { "etSentence", etSentence },
+                { "enSentence", enSentence },
+            });
 
             return result;
         }

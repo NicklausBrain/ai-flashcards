@@ -3,18 +3,22 @@ using System.Text.Json.Serialization;
 
 using CSharpFunctionalExtensions;
 
+using Microsoft.ApplicationInsights;
+
 namespace My1kWordsEe.Services.Cqs
 {
     public class CheckEnTranslationCommand
     {
+        private readonly TelemetryClient telemetry;
         private readonly OpenAiClient openAiClient;
 
-        public CheckEnTranslationCommand(OpenAiClient openAiClient)
+        public CheckEnTranslationCommand(TelemetryClient telemetry, OpenAiClient openAiClient)
         {
+            this.telemetry = telemetry;
             this.openAiClient = openAiClient;
         }
 
-        public virtual async Task<Result<EnTranslationCheckResult>> Invoke(string eeSentence, string enSentence)
+        public virtual async Task<Result<EnTranslationCheckResult>> Invoke(string etSentence, string enSentence)
         {
             var prompt = "Your task is to check user's translation from Estonian into English.\n" +
                          "Ignore the letters case (upper or lower) and punctuation symbols in your check.\n" +
@@ -33,11 +37,17 @@ namespace My1kWordsEe.Services.Cqs
 
             var input = JsonSerializer.Serialize(new
             {
-                ee_sentence = eeSentence.Trim('.', ' ').ToLowerInvariant(),
+                ee_sentence = etSentence.Trim('.', ' ').ToLowerInvariant(),
                 en_user_sentence = enSentence.Trim('.', ' ').ToLowerInvariant(),
             });
 
             var result = await this.openAiClient.CompleteJsonAsync<EnTranslationCheckResult>(prompt, input);
+
+            telemetry.TrackEvent("CheckEnTranslationCommand-done", new Dictionary<string, string>
+            {
+                { "etSentence", etSentence },
+                { "enSentence", enSentence },
+            });
 
             return result;
         }

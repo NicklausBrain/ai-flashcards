@@ -70,7 +70,7 @@ namespace My1kWordsEe.Models.Games
             {
                 IsCheckInProgress = true;
                 CheckResult = await checkEnTranslationCommand.Invoke(
-                    eeSentence: EtSentence,
+                    etSentence: EtSentence,
                     enSentence: userInput);
                 IsCheckInProgress = false;
             }

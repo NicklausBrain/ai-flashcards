@@ -24,9 +24,7 @@ public class BlazorTest : PageTest
             .GetRequiredFeature<IServerAddressesFeature>()
             .Addresses;
 
-        RootUri = new(_host.Services.GetRequiredService<IServer>().Features
-            .GetRequiredFeature<IServerAddressesFeature>()
-            .Addresses.Single());
+        RootUri = new(addrs.Single());
     }
 
     [TearDown]

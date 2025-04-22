@@ -4,6 +4,7 @@
 
 @using BlazorBootstrap
 @using CSharpFunctionalExtensions
+@using Microsoft.ApplicationInsights
 @using Microsoft.AspNetCore.Components.Authorization
 @using My1kWordsEe.Components.Account
 @using My1kWordsEe.Components.Layout.Grammar
@@ -22,6 +23,7 @@
 @inject UrlService Url
 @inject GetOrAddEtWordCommand GetOrAddEtWordCommand
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject TelemetryClient telemetry
 
 @code {
     public const string SamplesTab = "SamplesTab";
@@ -39,6 +41,8 @@
 
     protected override async Task OnParametersSetAsync()
     {
+        telemetry.TrackPageView(nameof(WordPage));
+
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         if (authState != null)
         {

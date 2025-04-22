@@ -16,7 +16,7 @@ namespace My1kWordsEe.Tests.Models.Games
 
         public TranslateToEnGameTest()
         {
-            _checkEnTranslationCommandMock = new Mock<CheckEnTranslationCommand>(null);
+            _checkEnTranslationCommandMock = new Mock<CheckEnTranslationCommand>(null, null);
             _sampleSentence = new SampleSentenceWithMedia
             {
                 Id = Guid.NewGuid(),
