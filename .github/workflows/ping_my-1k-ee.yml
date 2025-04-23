@@ -1,0 +1,21 @@
+# Keep Azure App Awake
+name: Ping Azure App
+
+on:
+  schedule:
+    - cron: "*/15 * * * *" # Runs every 15 minutes
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+jobs:
+  ping-app:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping and check app status
+        run: |
+          echo "Pinging https://my-1k-ee.azurewebsites.net/..."
+          STATUS=$(curl -o /dev/null -s -w "%{http_code}" https://my-1k-ee.azurewebsites.net/)
+          echo "HTTP Status: $STATUS"
+          if [ "$STATUS" != "200" ]; then
+            echo "❌ App returned unexpected status $STATUS"
+            exit 1
+          fi
