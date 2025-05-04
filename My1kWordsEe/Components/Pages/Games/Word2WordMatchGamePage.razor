@@ -108,21 +108,11 @@
         SelectedEnWord = string.Empty;
     }
 
-    // private async Task SpeakWord(string eeWord)
-    // {
-    //     await JS.InvokeVoidAsync("speakWordMatch", eeWord);
-    // }
     private async Task SuccessSound() => await JS.InvokeVoidAsync("successSound");
     private async Task FailSound() => await JS.InvokeVoidAsync("failSound");
 }
 
 <script>
-    // window.speakWordMatch = (audioId) => {
-    //     setTimeout(() => {
-    //         const audio = document.getElementById(audioId);
-    //         audio.play();
-    //     }, 0);
-    // };
     window.successSound = () => {
         setTimeout(() => {
             const audio = document.getElementById('successSound');

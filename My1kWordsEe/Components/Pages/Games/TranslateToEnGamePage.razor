@@ -22,10 +22,10 @@
 
 @code {
     [Parameter]
-    public string? EtWord { get; init; }
+    public string EtWord { get; init; } = string.Empty;
 
     [Parameter]
-    public int? SampleIndex { get; init; }
+    public int SampleIndex { get; init; } = 0;
 
     Maybe<TranslateToEnGame> Game;
     Maybe<string> GameGenerationError;
@@ -37,7 +37,7 @@
         var gameGen = await TranslateToEnGameFactory.Generate(EtWord, SampleIndex);
         if (gameGen.IsSuccess)
         {
-            if (EtWord == null)
+            if (string.IsNullOrEmpty(EtWord))
             {
                 Navigation.NavigateTo($"/translate-game/en/{gameGen.Value.EeWord}/{gameGen.Value.SampleIndex}");
             }
@@ -126,7 +126,7 @@
                             <FavoriteOutlineButton Sample="@game.SampleSentence" />
                         </h5>
                         <img id="sampleImage" class="img-fluid rounded img-max-w-256 p-1"
-                            src="@Url.Resolve(game.ImageUrl)" />
+                             src="@Url.Resolve(game.ImageUrl)" />
 
                         @if (game.CheckResult.HasValue && game.CheckResult.Value.IsSuccess)
                         {
@@ -174,7 +174,7 @@
                                 </div>
                                 <div class="col-md-4 p-1">
                                     <InputTextArea @bind-Value="@game.UserTranslation" class="form-control"
-                                        autocomplete="off" />
+                                                   autocomplete="off" />
                                 </div>
                                 <div class="col-md-4">
                                     <button @onclick="@OnSubmit" class="btn btn-outline-primary" type="button">Submit</button>

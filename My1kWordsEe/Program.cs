@@ -62,7 +62,6 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<FormsStorageClient>();
             builder.Services.AddSingleton<UrlService>();
             builder.Services.AddSingleton<TartuNlpClient>();
-            builder.Services.AddSingleton<GetOrAddSampleWordCommand>();
 
             builder.Services.AddSingleton<AddEtWordCommand>();
             builder.Services.AddSingleton<GetOrAddEtWordCommand>();
@@ -80,7 +79,6 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<AddToFavoritesCommand>();
             builder.Services.AddSingleton<RemoveFromFavoritesCommand>();
             builder.Services.AddSingleton<RedoSampleWordCommand>();
-            builder.Services.AddSingleton<ValidateSampleWordCommand>();
             builder.Services.AddSingleton<ReorderFavoritesCommand>();
             builder.Services.AddSingleton<UpdateScoreCommand>();
 

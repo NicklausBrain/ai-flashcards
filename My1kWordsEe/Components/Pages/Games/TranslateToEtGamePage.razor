@@ -22,10 +22,10 @@
 
 @code {
     [Parameter]
-    public string? EtWord { get; init; }
+    public string EtWord { get; init; } = string.Empty;
 
     [Parameter]
-    public int? SampleIndex { get; init; }
+    public int SampleIndex { get; init; } = 0;
 
     Maybe<TranslateToEtGame> Game;
     Maybe<string> GameGenerationError;
@@ -36,7 +36,7 @@
         var gameGen = await TranslateToEtGameFactory.Generate(EtWord, SampleIndex);
         if (gameGen.IsSuccess)
         {
-            if (EtWord == null)
+            if (string.IsNullOrWhiteSpace(EtWord))
             {
                 Navigation.NavigateTo($"/translate-game/et/{gameGen.Value.EtWord}/{gameGen.Value.SampleIndex}");
             }
