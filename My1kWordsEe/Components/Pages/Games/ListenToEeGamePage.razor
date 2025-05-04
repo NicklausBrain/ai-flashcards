@@ -1,5 +1,5 @@
-﻿@page "/listen-game/ee"
-@page "/listen-game/ee/{eeWord}/{sampleIndex:int}"
+﻿@page "/listen-game/et"
+@page "/listen-game/et/{eeWord}/{sampleIndex:int}"
 
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
@@ -22,10 +22,10 @@
     [Inject] protected ToastService ToastService { get; set; } = default!;
 
     [Parameter]
-    public string? EeWord { get; init; }
+    public string EeWord { get; init; } = string.Empty;
 
     [Parameter]
-    public int? SampleIndex { get; init; }
+    public int SampleIndex { get; init; } = 0;
 
     Maybe<ListenToEeGame> Game;
     Maybe<string> GameGenerationError;
@@ -36,9 +36,9 @@
         var gameGen = await ListenToEeGameFactory.Generate(EeWord, SampleIndex);
         if (gameGen.IsSuccess)
         {
-            if (EeWord == null)
+            if (string.IsNullOrEmpty(EeWord))
             {
-                Navigation.NavigateTo($"/listen-game/ee/{gameGen.Value.EtWord}/{gameGen.Value.SampleIndex}");
+                Navigation.NavigateTo($"/listen-game/et/{gameGen.Value.EtWord}/{gameGen.Value.SampleIndex}");
             }
             else
             {
@@ -53,7 +53,7 @@
         await base.OnParametersSetAsync();
     }
 
-    private void RegenGame() => Navigation.NavigateTo($"/listen-game/ee");
+    private void RegenGame() => Navigation.NavigateTo($"/listen-game/et");
 
     private async Task OnSubmit()
     {
@@ -220,10 +220,6 @@
                                     <Button Class="col-auto" Type="ButtonType.Submit" Color="ButtonColor.Primary"
                                         @onclick="@OnSubmit">Submit</Button>
                                 }
-                                @* <div class="input-group input-group-sm">
-                                    <span class="input-group-text btn-success">You hear:</span>
-                                    <InputText @bind-Value="@Game.UserInput" class="form-control" autocomplete="off"/>
-                                </div> *@
                             </div>
                         }
                     </div>
