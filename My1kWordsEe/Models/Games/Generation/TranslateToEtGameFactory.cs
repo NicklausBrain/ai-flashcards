@@ -28,12 +28,11 @@ namespace My1kWordsEe.Models.Games
             this.checkEtTranslationCommand = checkEtTranslationCommand;
         }
 
-        // todo checl eeWord naming
-        public async Task<Result<TranslateToEtGame>> Generate(string? eeWord, int? wordIndex)
+        public async Task<Result<TranslateToEtGame>> Generate(string? word, int? wordIndex)
         {
             const int senseIndex = 0;
-            eeWord = (eeWord ?? await GetRandomEeWord()).ToLower();
-            var etWord = await getOrAddEtWordCommand.Invoke(eeWord);
+            word = (word ?? await GetRandomEtWord()).ToLower();
+            var etWord = await getOrAddEtWordCommand.Invoke(word);
 
             if (etWord.IsFailure)
             {
@@ -49,7 +48,7 @@ namespace My1kWordsEe.Models.Games
 
             if (samples.Value.Any())
             {
-                return new TranslateToEtGame(eeWord, 0, samples.Value.First(), this.checkEtTranslationCommand);
+                return new TranslateToEtGame(word, 0, samples.Value.First(), this.checkEtTranslationCommand);
             }
             else
             {
@@ -57,17 +56,17 @@ namespace My1kWordsEe.Models.Games
 
                 if (addSampleResult.IsSuccess)
                 {
-                    return new TranslateToEtGame(eeWord, 0, addSampleResult.Value.First(), this.checkEtTranslationCommand);
+                    return new TranslateToEtGame(word, 0, addSampleResult.Value.First(), this.checkEtTranslationCommand);
                 }
 
                 return Result.Failure<TranslateToEtGame>(addSampleResult.Error);
             }
         }
 
-        private async Task<string> GetRandomEeWord()
+        private async Task<string> GetRandomEtWord()
         {
-            var eeWord = await nextWordSelector.GetNextWord();
-            return eeWord.Value;
+            var etWord = await nextWordSelector.GetNextWord();
+            return etWord.Value;
         }
     }
 }
