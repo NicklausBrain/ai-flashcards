@@ -15,7 +15,7 @@ namespace My1kWordsEe.Services
         public const string ApiHost = "https://api.stability.ai";
         public const string ApiSecretKey = "Secrets:StabilityAiKey";
 
-        private const string EngineId = "stable-diffusion-v1-6";
+        private const string EngineId = "stable-diffusion-xl-1024-v1-0";
 
         private readonly IConfiguration config;
         private readonly IHttpClientFactory httpClientFactory;
@@ -36,7 +36,7 @@ namespace My1kWordsEe.Services
             if (string.IsNullOrWhiteSpace(this.config[ApiSecretKey]))
             {
                 return Result.Failure<MemoryStream>("Stability AI API key is missing");
-            };
+            }
 
             using HttpClient client = httpClientFactory.CreateClient(nameof(StabilityAiClient));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -49,8 +49,8 @@ namespace My1kWordsEe.Services
                     new { text = prompt }
                 },
                 cfg_scale = 7,
-                height = 512,
-                width = 512,
+                height = 1024,
+                width = 1024,
                 steps = 30,
                 samples = 1
             };
