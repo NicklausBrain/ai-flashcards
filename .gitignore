@@ -403,3 +403,4 @@ data/img/animals/.DS_Store
 # keys
 data/keys.ps1
 /data/.$scheme.drawio.bkp
+.aider*

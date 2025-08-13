@@ -43,6 +43,7 @@
     {
         telemetry.TrackPageView(nameof(WordPage));
 
+        // todo: duplicated code with sample page
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         if (authState != null)
         {
