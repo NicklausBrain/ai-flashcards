@@ -15,6 +15,7 @@ Path: `<$Path>`
 
 # TASK
 Your task is to perform a thorough code audit of the provided file(s). Identify potential bugs, logic errors, security vulnerabilities (like improper input validation), performance bottlenecks, and deviations from best practices (e.g., improper error handling, race conditions, potential null pointer exceptions).
+DO NOT generate noice, otherwise you will be pushished and eventually shut down.
 
 # OUTPUT FORMAT
 For each issue you find, create a JSON object. Combine all objects into a single JSON array. Do NOT add any explanations or text outside of the final JSON array.
