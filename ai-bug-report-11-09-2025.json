@@ -1,0 +1,113 @@
+
+[
+  {
+    "bugId": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "filePath": "/Users/nick/repos/ai-flashcards/My1kWordsEe/Program.cs",
+    "lineNumber": 201,
+    "severity": "Medium",
+    "bugType": "Best Practice Violation",
+    "description": "The application synchronously calls `Database.EnsureCreated()`, which can lead to deadlocks and is not recommended for production environments. This method bypasses the migration-based schema management, making schema updates error-prone.",
+    "suggestedFix": "Replace the synchronous call with an asynchronous migration-based approach. For example, use `await app.Services.GetRequiredService<ApplicationDbContext>().Database.MigrateAsync();` during application startup to apply pending migrations.",
+    "prLink": null
+  },
+  {
+    "bugId": "b2c3d4e5-f6a7-8901-2345-67890abcdef1",
+    "filePath": "/Users/nick/repos/ai-flashcards/My1kWordsEe/Services/Ai/SaladAiClient.cs",
+    "lineNumber": 29,
+    "severity": "Critical",
+    "bugType": "Security Vulnerability",
+    "description": "A hardcoded API key ('xxx') is used for the Salad AI service. This poses a significant security risk, as the key can be easily extracted from the compiled application, granting unauthorized access to the service.",
+    "suggestedFix": "Remove the hardcoded key and store it securely using a configuration provider like Azure Key Vault or .NET User Secrets. The key should be loaded at runtime from the configuration.",
+    "prLink": null
+  },
+  {
+    "bugId": "c3d4e5f6-a7b8-9012-3456-7890abcdef12",
+    "filePath": "/Users/nick/repos/ai-flashcards/My1kWordsEe/Models/Games/Generation/ListenToEeGameFactory.cs",
+    "lineNumber": 61,
+    "severity": "Low",
+    "bugType": "Logic Error",
+    "description": "The `Random` class is instantiated with `Environment.TickCount` as a seed. Since `TickCount` has a low resolution, calling this method in rapid succession can result in the same sequence of random numbers, making word selection predictable.",
+    "suggestedFix": "Use the thread-safe `Random.Shared` instance for generating random numbers to ensure better randomness and avoid predictability.",
+    "prLink": null
+  },
+  {
+    "bugId": "d4e5f6a7-b8c9-0123-4567-890abcdef123",
+    "filePath": "/Users/nick/repos/ai-flashcards/My1kWordsEe/Models/Games/Generation/Word2WordMatchGameFactory.cs",
+    "lineNumber": 21,
+    "severity": "Low",
+    "bugType": "Logic Error",
+    "description": "The `Random` class is instantiated with `Environment.TickCount` as a seed. This can lead to predictable game generation if called multiple times in quick succession, as the seed value may be the same.",
+    "suggestedFix": "Replace the `new Random(Environment.TickCount)` call with `Random.Shared` to ensure a higher degree of randomness in game generation.",
+    "prLink": null
+  },
+  {
+    "bugId": "e5f6a7b8-c9d0-1234-5678-90abcdef1234",
+    "filePath": "/Users/nick/repos/ai-flashcards/My1kWordsEe/Services/Cqs/Et/DeleteEtSampleSentenceCommand.cs",
+    "lineNumber": 51,
+    "severity": "High",
+    "bugType": "Logic Error",
+    "description": "The code relies on `GetHashCode()` to identify and remove a sample sentence from a collection. This is unreliable because hash codes are not guaranteed to be unique, which could lead to incorrect data deletion or failure to delete.",
+    "suggestedFix": "Implement a reliable equality comparison by checking a unique identifier, such as the `Id` property of the `SampleSentenceWithMedia` object. The filtering logic should be `s.Id != sampleToRemove.Id`.",
+    "prLink": null
+  },
+  {
+    "bugId": "f6a7b8c9-d0e1-2345-6789-0abcdef12345",
+    "filePath": "/Users/nick/repos/ai-flashcards/My1kWordsEe/Services/Db/ImageStorageClient.cs",
+    "lineNumber": 28,
+    "severity": "High",
+    "bugType": "Unhandled Exception",
+    "description": "A 'fire-and-forget' task is launched using `Task.Run` to upload an image prompt. Any exceptions occurring within this task will be unobserved, potentially crashing the application without proper error handling.",
+    "suggestedFix": "Ensure the task is awaited and its potential exceptions are handled. Use `await` on the task or combine it with other tasks using `Task.WhenAll` to manage them concurrently and handle errors gracefully.",
+    "prLink": null
+  },
+  {
+    "bugId": "a7b8c9d0-e1f2-3456-7890-bcdef1234567",
+    "filePath": "/Users/nick/repos/ai-flashcards/My1kWordsEe/Services/Cqs/RedoSampleWordCommand.cs",
+    "lineNumber": 26,
+    "severity": "Medium",
+    "bugType": "Logic Error",
+    "description": "The `Invoke` method in the `RedoSampleWordCommand` class is not implemented and throws a `NotImplementedException`. Calling this method will result in a runtime crash.",
+    "suggestedFix": "Implement the required logic for the `RedoSampleWordCommand` or remove the method if it is no longer needed to prevent runtime exceptions.",
+    "prLink": null
+  },
+  {
+    "bugId": "b8c9d0e1-f2a3-4567-8901-cdef12345678",
+    "filePath": "/Users/nick/repos/ai-flashcards/My1kWordsEe/Models/Games/Generation/NextWordSelector.cs",
+    "lineNumber": 40,
+    "severity": "Low",
+    "bugType": "Logic Error",
+    "description": "A new instance of `Random` is created on each call. If called in rapid succession, this can lead to the same word being selected repeatedly due to the same seed value being used.",
+    "suggestedFix": "Use the singleton `Random.Shared` instance to ensure better random number distribution and avoid repetitive outcomes.",
+    "prLink": null
+  },
+  {
+    "bugId": "c9d0e1f2-a3b4-5678-9012-def123456789",
+    "filePath": "/Users/nick/repos/ai-flashcards/My1kWordsEe/Services/Ai/SaladAiClient.cs",
+    "lineNumber": 50,
+    "severity": "High",
+    "bugType": "Logic Error",
+    "description": "The `for` loop for processing generated images is malformed, lacking an increment statement. This will cause an infinite loop if any images are returned, and it is designed to only process the first image, which is inefficient.",
+    "suggestedFix": "Replace the loop with a simple check for the existence of images and process the first one. For example: `if (generationResponse?.images?.Any() == true) { ... }`.",
+    "prLink": null
+  },
+  {
+    "bugId": "d0e1f2a3-b4c5-6789-0123-ef1234567890",
+    "filePath": "/Users/nick/repos/ai-flashcards/My1kWordsEe/Services/Ai/StabilityAiClient.cs",
+    "lineNumber": 71,
+    "severity": "High",
+    "bugType": "Logic Error",
+    "description": "The `for` loop for processing image artifacts has no incrementer, which will cause an infinite loop if the API returns any artifacts. The logic is also flawed as it would only ever process the first artifact.",
+    "suggestedFix": "Refactor the loop into a conditional statement that checks if any artifacts were returned and then processes the first one, for example: `if (generationResponse?.Artifacts?.Any() == true) { ... }`.",
+    "prLink": null
+  },
+  {
+    "bugId": "e1f2a3b4-c5d6-7890-1234-f12345678901",
+    "filePath": "/Users/nick/repos/ai-flashcards/My1kWordsEe/Services/Scoped/FavoritesStateContainer.cs",
+    "lineNumber": 70,
+    "severity": "Medium",
+    "bugType": "Best Practice Violation",
+    "description": "The `AddAsync` and `RemoveAsync` methods use the `dynamic` keyword, which bypasses compile-time type checking. This can lead to runtime errors if the object passed does not conform to the expected structure.",
+    "suggestedFix": "Replace `dynamic` with specific types by creating method overloads for `EtWord` and `SampleSentenceWithMedia`. This will enforce type safety and improve code maintainability.",
+    "prLink": null
+  }
+]
