@@ -44,7 +44,7 @@ namespace My1kWordsEe.Services
             catch (Exception exception)
             {
                 this.logger.LogError(exception, "Error calling Open AI API");
-                return Result.Failure<string>(exception.Message);
+                return Result.Failure<string>("An error occurred while communicating with the AI service.");
             }
         }
 

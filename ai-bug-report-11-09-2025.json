@@ -1,0 +1,102 @@
+[
+  {
+    "bugId": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "filePath": "/Users/nick/repos/ai-flashcards/My1kWordsEe/Program.cs",
+    "lineNumber": 221,
+    "severity": "Medium",
+    "bugType": "Best Practice Violation",
+    "description": "The application uses `Database.EnsureCreated()` to initialize the Cosmos DB database. This method is not suitable for production environments as it cannot be used with migrations for relational databases and can lead to issues when the database schema changes. For Cosmos DB, while migrations are not used in the same way, it's still better to manage database and container creation through a more robust deployment script or process.",
+    "suggestedFix": "Remove the call to `Database.EnsureCreated()`. Implement a separate startup process or deployment script to handle the creation and initialization of the Cosmos DB database and containers. This provides more control and is safer for production environments.",
+    "prLink": null
+  },
+  {
+    "bugId": "b2c3d4e5-f6a7-8901-2345-67890abcdef0",
+    "filePath": "/Users/nick/repos/ai-flashcards/My1kWordsEe/Program.cs",
+    "lineNumber": 70,
+    "severity": "Medium",
+    "bugType": "Concurrency Issue",
+    "description": "CQS command and query handlers like `AddEtWordCommand`, `GetFavoritesQuery`, etc., are registered as Singleton services. If these handlers were to have any per-request state, this would lead to concurrency issues. While they currently appear stateless, it's a risky practice. A new developer might add state to them without realizing the singleton scope.",
+    "suggestedFix": "Change the service registration for all CQS command and query handlers from `AddSingleton` to `AddScoped` or `AddTransient`. This ensures that a new instance is created for each request (or a new instance per scope), preventing potential concurrency problems.",
+    "prLink": null
+  },
+  {
+    "bugId": "c3d4e5f6-a7b8-9012-3456-7890abcdef01",
+    "filePath": "/Users/nick/repos/ai-flashcards/My1kWordsEe/Services/Ai/OpenAiClient.cs",
+    "lineNumber": 32,
+    "severity": "Low",
+    "bugType": "Performance Issue",
+    "description": "The OpenAI API key is checked for its presence inside the `CompleteAsync` method. This means the check is performed every time an API call is made. This is inefficient.",
+    "suggestedFix": "Move the API key check to the `OpenAiClient` constructor. Check for the key once when the service is instantiated and throw an exception if it's missing. This 'fail-fast' approach is more efficient and robust.",
+    "prLink": null
+  },
+  {
+    "bugId": "d4e5f6a7-b8c9-0123-4567-890abcdef012",
+    "filePath": "/Users/nick/repos/ai-flashcards/My1kWordsEe/Services/Ai/OpenAiClient.cs",
+    "lineNumber": 41,
+    "severity": "High",
+    "bugType": "Unhandled Exception",
+    "description": "The code `chatCompletion.Content[0].Text` assumes that the `Content` array in the OpenAI API response is never null and always contains at least one element. If the API returns a response with an empty `Content` array, this will cause an `IndexOutOfRangeException` and crash the request.",
+    "suggestedFix": "Add a null check and a length check on the `chatCompletion.Content` array before accessing the first element. If the array is null or empty, return a `Result.Failure` with an appropriate error message.",
+    "prLink": null
+  },
+  {
+    "bugId": "e5f6a7b8-c9d0-1234-5678-90abcdef0123",
+    "filePath": "/Users/nick/repos/ai-flashcards/My1kWordsEe/Services/Ai/StabilityAiClient.cs",
+    "lineNumber": 50,
+    "severity": "Low",
+    "bugType": "Inflexible Design",
+    "description": "Image generation parameters such as `cfg_scale`, `height`, `width`, `steps`, and `samples` are hardcoded within the `GenerateImage` method. This makes the method inflexible and prevents callers from customizing the image generation process.",
+    "suggestedFix": "Modify the `GenerateImage` method to accept these parameters as optional arguments with default values. This allows for greater flexibility while maintaining the current behavior for existing callers.",
+    "prLink": null
+  },
+  {
+    "bugId": "f6a7b8c9-d0e1-2345-6789-0abcdef01234",
+    "filePath": "/Users/nick/repos/ai-flashcards/My1kWordsEe/Services/Ai/StabilityAiClient.cs",
+    "lineNumber": 75,
+    "severity": "Low",
+    "bugType": "Logic Error",
+    "description": "The `for` loop used to process the artifacts from the Stability AI response is unconventional and will only ever process the first artifact in the list. The loop does not increment `index` and returns immediately.",
+    "suggestedFix": "Replace the `for` loop with a simple `if` statement that checks if `generationResponse.Artifacts` is not null and has any elements. Then, directly process the first artifact `generationResponse.Artifacts[0]`.",
+    "prLink": null
+  },
+  {
+    "bugId": "a7b8c9d0-e1f2-3456-7890-1bcdef012345",
+    "filePath": "/Users/nick/repos/ai-flashcards/My1kWordsEe/Services/Ai/TartuNlpClient.cs",
+    "lineNumber": 31,
+    "severity": "Medium",
+    "bugType": "Security Vulnerability",
+    "description": "The `GetSpeech` method constructs a JSON payload using raw string interpolation: `{{\"text\": \"{text}\",...}}`. If the input `text` contains characters like `\"`, it can break the JSON structure, leading to a malformed request. This is a form of injection.",
+    "suggestedFix": "Use a proper JSON serialization library to construct the JSON payload. Create an anonymous object or a dedicated request class with properties for `text`, `speaker`, and `speed`, and then serialize it to a JSON string. This ensures that the input `text` is correctly escaped.",
+    "prLink": null
+  },
+  {
+    "bugId": "b8c9d0e1-f2a3-4567-8901-cdef01234567",
+    "filePath": "/Users/nick/repos/ai-flashcards/My1kWordsEe/Services/Cqs/CheckEnTranslationCommand.cs",
+    "lineNumber": 19,
+    "severity": "Medium",
+    "bugType": "Improper Input Validation",
+    "description": "The `Invoke` method does not validate the input strings `etSentence` and `enSentence`. Sending null, empty, or whitespace strings to the OpenAI API is unnecessary and wastes resources. It could also lead to unexpected behavior from the AI model.",
+    "suggestedFix": "Add validation at the beginning of the `Invoke` method. Check if `etSentence` and `enSentence` are null, empty, or consist only of white-space characters. If they are, return a `Result.Failure` immediately without calling the API.",
+    "prLink": null
+  },
+  {
+    "bugId": "c9d0e1f2-a3b4-5678-9012-def012345678",
+    "filePath": "/Users/nick/repos/ai-flashcards/My1kWordsEe/Services/Db/AzureStorageClient.cs",
+    "lineNumber": 58,
+    "severity": "Medium",
+    "bugType": "Potential Data Loss",
+    "description": "The `UploadStreamAsync` method calls `blob.UploadAsync` with `overwrite: true` by default. Any code calling this method without being aware of this behavior could accidentally overwrite and lose existing data in Azure Blob Storage.",
+    "suggestedFix": "Change the `overwrite` parameter in the `blob.UploadAsync` call to `false` by default. Add an optional boolean parameter `overwrite` to the `UploadStreamAsync` method signature so that callers must explicitly decide to overwrite a blob. This makes the operation safer.",
+    "prLink": null
+  },
+  {
+    "bugId": "d0e1f2a3-b4c5-6789-0123-ef0123456789",
+    "filePath": "/Users/nick/repos/ai-flashcards/My1kWordsEe/Services/Ai/OpenAiClient.cs",
+    "lineNumber": 45,
+    "severity": "Medium",
+    "bugType": "Security Vulnerability",
+    "description": "The catch block in `CompleteAsync` logs the full exception and returns `exception.Message` to the caller. This can leak sensitive information from the underlying exception details, such as file paths or internal API details, which could be exploited by an attacker.",
+    "suggestedFix": "Return a generic, non-specific error message to the caller, such as 'An error occurred while communicating with the AI service.' Log the detailed exception internally for debugging purposes, but do not expose it to the client.",
+    "prLink": "https://github.com/NicklausBrain/ai-flashcards/pull/234"
+  }
+]
