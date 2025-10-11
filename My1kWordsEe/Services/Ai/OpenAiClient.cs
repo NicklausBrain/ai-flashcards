@@ -11,7 +11,7 @@ namespace My1kWordsEe.Services
     public class OpenAiClient
     {
         public const string ApiSecretKey = "Secrets:OpenAiKey";
-        public const string Model = "gpt-4o";
+        public const string Model = "gpt-4.1";
 
         private readonly IConfiguration config;
         private readonly ILogger logger;
