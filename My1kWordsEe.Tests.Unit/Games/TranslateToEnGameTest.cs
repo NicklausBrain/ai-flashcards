@@ -6,17 +6,20 @@ using My1kWordsEe.Models;
 using My1kWordsEe.Models.Games;
 using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Cqs;
+using My1kWordsEe.Services.Scoped;
 
 namespace My1kWordsEe.Tests.Models.Games
 {
     public class TranslateToEnGameTest
     {
         private readonly Mock<CheckEnTranslationCommand> _checkEnTranslationCommandMock;
+        private readonly Mock<FavoritesStateContainer> _favoritesStateContainer;
         private readonly SampleSentenceWithMedia _sampleSentence;
 
         public TranslateToEnGameTest()
         {
             _checkEnTranslationCommandMock = new Mock<CheckEnTranslationCommand>(null, null);
+            _favoritesStateContainer = new Mock<FavoritesStateContainer>(null, null, null, null, null, null);
             _sampleSentence = new SampleSentenceWithMedia
             {
                 Id = Guid.NewGuid(),
@@ -31,9 +34,9 @@ namespace My1kWordsEe.Tests.Models.Games
         [Fact]
         public void Constructor_ShouldInitializeProperties()
         {
-            var game = new TranslateToEnGame("Tere", 1, _sampleSentence, _checkEnTranslationCommandMock.Object);
+            var game = new TranslateToEnGame("Tere", 1, _sampleSentence, _checkEnTranslationCommandMock.Object, _favoritesStateContainer.Object);
 
-            Assert.Equal("Tere", game.EeWord);
+            Assert.Equal("Tere", game.EtWord);
             Assert.Equal(1, game.SampleIndex);
             Assert.Equal(_sampleSentence, game.SampleSentence);
             Assert.False(game.IsFinished);
@@ -48,7 +51,7 @@ namespace My1kWordsEe.Tests.Models.Games
         [Fact]
         public async Task Submit_ShouldReturnSuccess_WhenUserTranslationMatches()
         {
-            var game = new TranslateToEnGame("Tere", 1, _sampleSentence, _checkEnTranslationCommandMock.Object);
+            var game = new TranslateToEnGame("Tere", 1, _sampleSentence, _checkEnTranslationCommandMock.Object, _favoritesStateContainer.Object);
             game.UserTranslation = "Hello";
 
             await game.Submit();
@@ -61,7 +64,7 @@ namespace My1kWordsEe.Tests.Models.Games
         [Fact]
         public async Task Submit_ShouldInvokeCheckEnTranslationCommand_WhenUserTranslationDoesNotMatch()
         {
-            var game = new TranslateToEnGame("Tere", 1, _sampleSentence, _checkEnTranslationCommandMock.Object);
+            var game = new TranslateToEnGame("Tere", 1, _sampleSentence, _checkEnTranslationCommandMock.Object, _favoritesStateContainer.Object);
             game.UserTranslation = "Hi";
 
             _checkEnTranslationCommandMock.Setup(cmd => cmd.Invoke(It.IsAny<string>(), It.IsAny<string>()))
@@ -85,7 +88,7 @@ namespace My1kWordsEe.Tests.Models.Games
         [Fact]
         public async Task Submit_ShouldNotProceed_WhenUserTranslationIsNullOrWhitespace()
         {
-            var game = new TranslateToEnGame("Tere", 1, _sampleSentence, _checkEnTranslationCommandMock.Object);
+            var game = new TranslateToEnGame("Tere", 1, _sampleSentence, _checkEnTranslationCommandMock.Object, _favoritesStateContainer.Object);
             game.UserTranslation = " ";
 
             await game.Submit();
@@ -96,7 +99,7 @@ namespace My1kWordsEe.Tests.Models.Games
         [Fact]
         public async Task Submit_ShouldReturnFailure_WhenTranslationCommandFails()
         {
-            var game = new TranslateToEnGame("Tere", 1, _sampleSentence, _checkEnTranslationCommandMock.Object);
+            var game = new TranslateToEnGame("Tere", 1, _sampleSentence, _checkEnTranslationCommandMock.Object, _favoritesStateContainer.Object);
             game.UserTranslation = "Hi";
 
             _checkEnTranslationCommandMock.Setup(cmd => cmd.Invoke(It.IsAny<string>(), It.IsAny<string>()))
