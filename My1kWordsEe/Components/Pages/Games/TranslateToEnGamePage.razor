@@ -57,17 +57,18 @@
     private async Task OnSubmit()
     {
         await Game.Value.Submit();
-        // todo: not nice
-        if (Game.Value.CheckResult.HasValue)
+        Game.Value.CheckResult.Execute(r => r.Tap(r =>
         {
-            var checkResult = Game.Value.CheckResult.Value;
+            // todo move score update logic to game class
+            var update = r.Match >= 4
+    ? UpdateScoreCommand.ScoreUpdate.Up
+    : UpdateScoreCommand.ScoreUpdate.Down;
             _ = FavoritesStateContainer.UpdateScore(
-            EtWord,
-            checkResult.Value.Match >= 4
-            ? UpdateScoreCommand.ScoreUpdate.Up
-            : UpdateScoreCommand.ScoreUpdate.Down);
+    EtWord,
+    update);
+            // but keep sound on the frontend
             _ = PlaySample();
-        }
+        }));
     }
 
     private void OnGiveUp()
@@ -126,7 +127,7 @@
                             <FavoriteOutlineButton Sample="@game.SampleSentence" />
                         </h5>
                         <img id="sampleImage" class="img-fluid rounded img-max-w-256 p-1"
-                             src="@Url.Resolve(game.ImageUrl)" />
+                            src="@Url.Resolve(game.ImageUrl)" />
 
                         @if (game.CheckResult.HasValue && game.CheckResult.Value.IsSuccess)
                         {
@@ -174,7 +175,7 @@
                                 </div>
                                 <div class="col-md-4 p-1">
                                     <InputTextArea @bind-Value="@game.UserTranslation" class="form-control"
-                                                   autocomplete="off" />
+                                        autocomplete="off" />
                                 </div>
                                 <div class="col-md-4">
                                     <button @onclick="@OnSubmit" class="btn btn-outline-primary" type="button">Submit</button>

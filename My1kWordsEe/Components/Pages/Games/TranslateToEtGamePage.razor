@@ -55,18 +55,23 @@
     // todo add succes/fail sound
     private async Task OnSubmit()
     {
-        await Game.Value.Submit();
-        // todo: not nice
-        if (Game.Value.CheckResult.HasValue)
+        await Game.Execute(async game =>
         {
-            var checkResult = Game.Value.CheckResult.Value;
+
+            await game.Submit();
+
+            // todo move score update logic to game class
+            game.CheckResult.Execute(r => r.Tap(r =>
+    {
             _ = FavoritesStateContainer.UpdateScore(
-            EtWord,
-            checkResult.Value.Match >= 4
-            ? UpdateScoreCommand.ScoreUpdate.Up
-            : UpdateScoreCommand.ScoreUpdate.Down);
+    EtWord,
+    r.Match >= 4
+    ? UpdateScoreCommand.ScoreUpdate.Up
+    : UpdateScoreCommand.ScoreUpdate.Down);
+        // but keep sound on the frontend
             _ = PlaySample();
-        }
+        }));
+        });
     }
 
     private void OnGiveUp()
