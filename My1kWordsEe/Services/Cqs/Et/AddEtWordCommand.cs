@@ -71,6 +71,11 @@ Väljund peab olema JSON-objekt vastavalt antud skeemile.";
 
         private async Task<Result<EtWord>> GetWordMetadata(string etWord)
         {
+            // todo try making a self-trim type
+            // of etWord (or just word)
+            // and implicit convert into it
+            etWord = etWord.TrimToLower();
+
             var response = await this.openAiClient.CompleteJsonSchemaAsync<WordSenses>(
                 Prompt,
                 etWord,
@@ -84,8 +89,7 @@ Väljund peab olema JSON-objekt vastavalt antud skeemile.";
 
             return Result.Success(new EtWord
             {
-                // todo: make it nicer than that
-                Value = etWord.Trim().ToLower(),
+                Value = etWord,
                 Senses = response.Value.Senses
             });
         }

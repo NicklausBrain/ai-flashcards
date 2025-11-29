@@ -9,6 +9,11 @@ namespace My1kWordsEe.Models
 
         private static readonly Regex UnicodeWordRegex = new(@"(\p{L}|[0-9]|-?)+", RegexOptions.Compiled);
 
+        public static string TrimToLower(this string word)
+        {
+            return word.Trim().ToLower();
+        }
+
         public static bool ValidateWord(this string word)
         {
             if (string.IsNullOrWhiteSpace(word))
