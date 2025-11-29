@@ -1,5 +1,5 @@
 # ai-flashcards
-flascards for words memoization
+flascards for Estonian words and sentences memoization
 
 ## ./My1kWordsEe
 - current development
@@ -9,6 +9,5 @@ flascards for words memoization
 - [tartu nlp](https://neurokone.ee/) for speech
 - [blazor](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor) + [blazor bootstrap](https://demos.blazorbootstrap.com/) 
 
-## ./blazor-app & ./data
-- my first (deprecated) poc using generative ai
-- https://nicklausbrain.github.io/ai-flashcards/
+## ./source-data
+- most used Estonian words utilized as seed data to generate initial app content
