@@ -83,11 +83,9 @@ namespace My1kWordsEe.Models.Games
             CheckResult.Execute(r => r.Tap(r =>
             {
                 var update = r.Match >= 4
-    ? UpdateScoreCommand.ScoreUpdate.Up
-    : UpdateScoreCommand.ScoreUpdate.Down;
-                _ = this.favoritesStateContainer.UpdateScore(
-        EtWord,
-        update);
+                ? UpdateScoreCommand.ScoreUpdate.Up
+                : UpdateScoreCommand.ScoreUpdate.Down;
+                _ = this.favoritesStateContainer.UpdateScore(EtWord, update);
             }));
         }
 
@@ -97,9 +95,7 @@ namespace My1kWordsEe.Models.Games
                 eeSentence: EtSentence,
                 enSentence: SampleSentence.Sentence.En));
 
-            _ = favoritesStateContainer.UpdateScore(
-        EtWord,
-        UpdateScoreCommand.ScoreUpdate.Down);
+            _ = favoritesStateContainer.UpdateScore(EtWord, UpdateScoreCommand.ScoreUpdate.Down);
         }
     }
 }
