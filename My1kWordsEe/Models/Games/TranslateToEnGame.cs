@@ -12,20 +12,20 @@ namespace My1kWordsEe.Models.Games
         private readonly FavoritesStateContainer favoritesStateContainer;
 
         public TranslateToEnGame(
-            string eeWord,
+            string etWord,
             int sampleIndex,
             SampleSentenceWithMedia sampleSentence,
             CheckEnTranslationCommand checkEnTranslationCommand,
             FavoritesStateContainer favoritesStateContainer)
         {
-            this.EeWord = eeWord;
+            this.EtWord = etWord;
             this.SampleIndex = sampleIndex;
             this.SampleSentence = sampleSentence;
             this.checkEnTranslationCommand = checkEnTranslationCommand;
             this.favoritesStateContainer = favoritesStateContainer;
         }
 
-        public string EeWord { get; init; }
+        public string EtWord { get; init; }
 
         public int SampleIndex { get; init; }
 
@@ -86,7 +86,7 @@ namespace My1kWordsEe.Models.Games
     ? UpdateScoreCommand.ScoreUpdate.Up
     : UpdateScoreCommand.ScoreUpdate.Down;
                 _ = this.favoritesStateContainer.UpdateScore(
-        EeWord,
+        EtWord,
         update);
             }));
         }
@@ -98,7 +98,7 @@ namespace My1kWordsEe.Models.Games
                 enSentence: SampleSentence.Sentence.En));
 
             _ = favoritesStateContainer.UpdateScore(
-        EeWord,
+        EtWord,
         UpdateScoreCommand.ScoreUpdate.Down);
         }
     }

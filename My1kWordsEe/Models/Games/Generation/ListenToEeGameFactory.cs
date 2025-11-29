@@ -74,8 +74,8 @@ namespace My1kWordsEe.Models.Games
         private string GetRandomEtWord()
         {
             var rn = new Random(Environment.TickCount);
-            var eeWord = this.etWordsCache.AllWords[rn.Next(0, this.etWordsCache.AllWords.Length)];
-            return eeWord.Value;
+            var etWord = this.etWordsCache.AllWords[rn.Next(0, this.etWordsCache.AllWords.Length)];
+            return etWord.Value;
         }
     }
 }
