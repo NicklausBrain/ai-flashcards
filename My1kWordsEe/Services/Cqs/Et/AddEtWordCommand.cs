@@ -13,7 +13,7 @@ namespace My1kWordsEe.Services.Cqs.Et
     {
         private readonly OpenAiClient openAiClient;
         private readonly WordStorageClient wordStorageClient;
-        private readonly AddAudioCommand addAudioCommand;
+        private readonly GenerateSpeechCommand generateSpeechCommand;
 
         public static readonly string Prompt =
 @"See on keeleõppe süsteem.
@@ -25,13 +25,13 @@ Lisage üksnes algajale vajalikud sõnatähendused.
 Väljund peab olema JSON-objekt vastavalt antud skeemile.";
 
         public AddEtWordCommand(
-            OpenAiClient openAiService,
+            OpenAiClient openAiClient,
             WordStorageClient wordStorageClient,
-            AddAudioCommand createAudioCommand)
+            GenerateSpeechCommand generateSpeechCommand)
         {
             this.wordStorageClient = wordStorageClient;
-            this.openAiClient = openAiService;
-            this.addAudioCommand = createAudioCommand;
+            this.openAiClient = openAiClient;
+            this.generateSpeechCommand = generateSpeechCommand;
         }
 
         public async Task<Result<EtWord>> Invoke(string eeWord, string? comment = null)
@@ -52,9 +52,9 @@ Väljund peab olema JSON-objekt vastavalt antud skeemile.";
                 return Result.Failure<EtWord>(aiError);
             }
 
-            (await this.addAudioCommand.Invoke(
-                text: eeWord,
-                fileName: $"{eeWord}.{AudioFormat}")).Deconstruct(
+            (await this.generateSpeechCommand.Invoke(
+                sampleId: eeWord,
+                sentence: eeWord)).Deconstruct(
                 out bool _,
                 out bool isAudioFailure,
                 out Uri _,
@@ -71,6 +71,11 @@ Väljund peab olema JSON-objekt vastavalt antud skeemile.";
 
         private async Task<Result<EtWord>> GetWordMetadata(string etWord)
         {
+            // todo try making a self-trim type
+            // of etWord (or just word)
+            // and implicit convert into it
+            etWord = etWord.TrimToLower();
+
             var response = await this.openAiClient.CompleteJsonSchemaAsync<WordSenses>(
                 Prompt,
                 etWord,
@@ -84,8 +89,7 @@ Väljund peab olema JSON-objekt vastavalt antud skeemile.";
 
             return Result.Success(new EtWord
             {
-                // todo: make it nicer than that
-                Value = etWord.Trim().ToLower(),
+                Value = etWord,
                 Senses = response.Value.Senses
             });
         }

@@ -71,20 +71,20 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<AddEtFormsCommand>();
             builder.Services.AddSingleton<GetOrAddEtFormsCommand>();
 
-            builder.Services.AddSingleton<AddAudioCommand>();
+            builder.Services.AddSingleton<GenerateImageCommand>();
+            builder.Services.AddSingleton<GenerateSpeechCommand>();
             builder.Services.AddSingleton<CheckEnTranslationCommand>();
             builder.Services.AddSingleton<CheckEtTranslationCommand>();
             builder.Services.AddSingleton<CheckEeListeningCommand>();
             builder.Services.AddSingleton<GetFavoritesQuery>();
             builder.Services.AddSingleton<AddToFavoritesCommand>();
             builder.Services.AddSingleton<RemoveFromFavoritesCommand>();
-            builder.Services.AddSingleton<RedoSampleWordCommand>();
             builder.Services.AddSingleton<ReorderFavoritesCommand>();
             builder.Services.AddSingleton<UpdateScoreCommand>();
 
             // scoped states
             builder.Services.AddScoped<FavoritesStateContainer>();
-            builder.Services.AddScoped<NextWordSelector>();
+            builder.Services.AddScoped<NextEtWordSelector>();
             builder.Services.AddScoped<Et1kWords>();
             builder.Services.AddScoped<TranslateToEnGameFactory>();
             builder.Services.AddScoped<TranslateToEtGameFactory>();

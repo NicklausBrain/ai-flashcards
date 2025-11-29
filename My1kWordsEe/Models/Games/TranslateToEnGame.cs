@@ -2,26 +2,30 @@ using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Cqs;
+using My1kWordsEe.Services.Scoped;
 
 namespace My1kWordsEe.Models.Games
 {
     public class TranslateToEnGame
     {
         private readonly CheckEnTranslationCommand checkEnTranslationCommand;
+        private readonly FavoritesStateContainer favoritesStateContainer;
 
         public TranslateToEnGame(
-            string eeWord,
+            string etWord,
             int sampleIndex,
             SampleSentenceWithMedia sampleSentence,
-            CheckEnTranslationCommand checkEnTranslationCommand)
+            CheckEnTranslationCommand checkEnTranslationCommand,
+            FavoritesStateContainer favoritesStateContainer)
         {
-            this.EeWord = eeWord;
+            this.EtWord = etWord;
             this.SampleIndex = sampleIndex;
             this.SampleSentence = sampleSentence;
             this.checkEnTranslationCommand = checkEnTranslationCommand;
+            this.favoritesStateContainer = favoritesStateContainer;
         }
 
-        public string EeWord { get; init; }
+        public string EtWord { get; init; }
 
         public int SampleIndex { get; init; }
 
@@ -74,6 +78,15 @@ namespace My1kWordsEe.Models.Games
                     enSentence: userInput);
                 IsCheckInProgress = false;
             }
+
+
+            CheckResult.Execute(r => r.Tap(r =>
+            {
+                var update = r.Match >= 4
+                ? UpdateScoreCommand.ScoreUpdate.Up
+                : UpdateScoreCommand.ScoreUpdate.Down;
+                _ = this.favoritesStateContainer.UpdateScore(EtWord, update);
+            }));
         }
 
         public void GiveUp()
@@ -81,6 +94,8 @@ namespace My1kWordsEe.Models.Games
             CheckResult = Result.Success(EnTranslationCheckResult.Fail(
                 eeSentence: EtSentence,
                 enSentence: SampleSentence.Sentence.En));
+
+            _ = favoritesStateContainer.UpdateScore(EtWord, UpdateScoreCommand.ScoreUpdate.Down);
         }
     }
 }

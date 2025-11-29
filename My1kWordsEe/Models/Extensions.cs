@@ -4,10 +4,17 @@ namespace My1kWordsEe.Models
 {
     public static class Extensions
     {
-        // The longest word in Estonian is 43 characters long
+        /// <summary>
+        /// The longest word in Estonian is 43 characters long
+        /// </summary>
         public const int MaxWordLength = 43;
 
         private static readonly Regex UnicodeWordRegex = new(@"(\p{L}|[0-9]|-?)+", RegexOptions.Compiled);
+
+        public static string TrimToLower(this string word)
+        {
+            return word.Trim().ToLower();
+        }
 
         public static bool ValidateWord(this string word)
         {

@@ -3,32 +3,36 @@ using CSharpFunctionalExtensions;
 using My1kWordsEe.Models.Games.Generation;
 using My1kWordsEe.Services.Cqs;
 using My1kWordsEe.Services.Cqs.Et;
+using My1kWordsEe.Services.Scoped;
 
 namespace My1kWordsEe.Models.Games
 {
     public class TranslateToEnGameFactory
     {
-        private readonly NextWordSelector nextWordSelector;
+        private readonly NextEtWordSelector nextWordSelector;
         private readonly GetOrAddEtWordCommand getOrAddEtWordCommand;
         private readonly GetEtSampleSentencesQuery getEtSampleSentencesQuery;
         private readonly AddEtSampleSentenceCommand addEtSampleSentenceCommand;
         private readonly CheckEnTranslationCommand checkEnTranslationCommand;
+        private readonly FavoritesStateContainer favoritesStateContainer;
 
         public TranslateToEnGameFactory(
-            NextWordSelector nextWordSelector,
+            NextEtWordSelector nextWordSelector,
             GetOrAddEtWordCommand getOrAddEtWordCommand,
             GetEtSampleSentencesQuery getEtSampleSentencesQuery,
             AddEtSampleSentenceCommand addEtSampleSentenceCommand,
-            CheckEnTranslationCommand checkEnTranslationCommand)
+            CheckEnTranslationCommand checkEnTranslationCommand,
+            FavoritesStateContainer favoritesStateContainer)
         {
             this.nextWordSelector = nextWordSelector;
             this.getOrAddEtWordCommand = getOrAddEtWordCommand;
             this.getEtSampleSentencesQuery = getEtSampleSentencesQuery;
             this.addEtSampleSentenceCommand = addEtSampleSentenceCommand;
             this.checkEnTranslationCommand = checkEnTranslationCommand;
+            this.favoritesStateContainer = favoritesStateContainer;
         }
 
-        // todo checl eeWord naming
+        // todo: fix mixed naming eeWord vs etWord
         public async Task<Result<TranslateToEnGame>> Generate(string? eeWord, int? wordIndex)
         {
             const int senseIndex = 0;
@@ -49,7 +53,8 @@ namespace My1kWordsEe.Models.Games
 
             if (samples.Value.Any())
             {
-                return new TranslateToEnGame(eeWord, 0, samples.Value.First(), this.checkEnTranslationCommand);
+                return new TranslateToEnGame(
+                    eeWord, 0, samples.Value.First(), this.checkEnTranslationCommand, this.favoritesStateContainer);
             }
             else
             {
@@ -57,7 +62,8 @@ namespace My1kWordsEe.Models.Games
 
                 if (addSampleResult.IsSuccess)
                 {
-                    return new TranslateToEnGame(eeWord, 0, addSampleResult.Value.First(), this.checkEnTranslationCommand);
+                    return new TranslateToEnGame(
+                        eeWord, 0, addSampleResult.Value.First(), this.checkEnTranslationCommand, this.favoritesStateContainer);
                 }
 
                 return Result.Failure<TranslateToEnGame>(addSampleResult.Error);

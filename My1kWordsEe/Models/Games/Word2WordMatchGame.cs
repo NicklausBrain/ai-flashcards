@@ -3,25 +3,25 @@ namespace My1kWordsEe.Models.Games
     public class Word2WordMatchGame
     {
         private readonly IEnumerable<Pair> pairs;
-        private readonly IReadOnlyDictionary<string, Pair> eeWords;
+        private readonly IReadOnlyDictionary<string, Pair> etWords;
         private readonly IReadOnlyDictionary<string, Pair> enWords;
-        private readonly ISet<string> eeWords2Match = new HashSet<string>();
+        private readonly ISet<string> etWords2Match = new HashSet<string>();
         private readonly ISet<string> enWords2Match = new HashSet<string>();
         private readonly Stack<Pair> matches = new Stack<Pair>();
 
         public Word2WordMatchGame(
             IEnumerable<Pair> pairs,
-            IReadOnlyDictionary<string, Pair> eeWords,
+            IReadOnlyDictionary<string, Pair> etWords,
             IReadOnlyDictionary<string, Pair> enWords)
         {
             this.pairs = pairs;
-            this.eeWords = eeWords;
+            this.etWords = etWords;
             this.enWords = enWords;
-            var eeWords2MatchArray = eeWords.Keys.ToArray();
+            var etWords2MatchArray = etWords.Keys.ToArray();
             var enWords2MatchArray = enWords.Keys.ToArray();
-            Random.Shared.Shuffle(eeWords2MatchArray);
+            Random.Shared.Shuffle(etWords2MatchArray);
             Random.Shared.Shuffle(enWords2MatchArray);
-            this.eeWords2Match = eeWords2MatchArray.ToHashSet();
+            this.etWords2Match = etWords2MatchArray.ToHashSet();
             this.enWords2Match = enWords2MatchArray.ToHashSet();
         }
 
@@ -33,7 +33,7 @@ namespace My1kWordsEe.Models.Games
         /// <summary>
         /// Gets pair by Estonian word.
         /// </summary>
-        public IReadOnlyDictionary<string, Pair> EeWords => this.eeWords;
+        public IReadOnlyDictionary<string, Pair> EtWords => this.etWords;
 
         /// <summary>
         /// Gets pair by English word.
@@ -48,7 +48,7 @@ namespace My1kWordsEe.Models.Games
         /// <summary>
         /// All Estonian words to match.
         /// </summary>
-        public IEnumerable<string> EeWords2Match => this.eeWords2Match;
+        public IEnumerable<string> EtWords2Match => this.etWords2Match;
 
         /// <summary>
         /// The game is initialized and ready to play.
@@ -66,11 +66,11 @@ namespace My1kWordsEe.Models.Games
         /// <returns>True if words are correspond to each other. Otherwise False.</returns>
         public bool TryMatch(string eeWord, string enWord)
         {
-            var pair = this.eeWords[eeWord];
+            var pair = this.etWords[eeWord];
             if (pair.EnWord == enWord)
             {
                 this.matches.Push(pair);
-                this.eeWords2Match.Remove(pair.EeWord);
+                this.etWords2Match.Remove(pair.EtWord);
                 this.enWords2Match.Remove(pair.EnWord);
                 return pair.IsMatched = true;
             }
@@ -90,13 +90,13 @@ namespace My1kWordsEe.Models.Games
         /// </summary>
         public class Pair
         {
-            public required string EeWord { get; init; }
+            public required string EtWord { get; init; }
 
             public required string EnWord { get; init; }
 
             public bool IsMatched { get; set; }
 
-            public Uri? EeAudioUrl { get; init; }
+            public Uri? EtAudioUrl { get; init; }
         }
     }
 }
