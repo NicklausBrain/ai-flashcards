@@ -34,11 +34,11 @@ namespace My1kWordsEe.Models.Games
 
                 var pair = new Pair
                 {
-                    EeWord = nextWord.DefaultSense.Word.Et,
+                    EtWord = nextWord.DefaultSense.Word.Et,
                     EnWord = nextWord.DefaultSense.Word.En
                 };
 
-                etWords.Add(pair.EeWord, pair);
+                etWords.Add(pair.EtWord, pair);
                 enWords.Add(pair.EnWord, pair);
                 pairs.Add(pair);
             }

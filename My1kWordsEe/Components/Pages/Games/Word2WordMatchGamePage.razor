@@ -19,7 +19,7 @@
 
     Word2WordMatchGame Game = Word2WordMatchGame.Empty;
 
-    string SelectedEeWord = string.Empty;
+    string SelectedEtWord = string.Empty;
     string SelectedEnWord = string.Empty;
 
     protected override async Task OnParametersSetAsync()
@@ -41,14 +41,14 @@
         return this.TryMatch();
     }
 
-    private Task SelectEeWord(string eeWord)
+    private Task SelectEtWord(string etWord)
     {
-        if (Game.EeWords[eeWord].IsMatched)
+        if (Game.EtWords[etWord].IsMatched)
         {
             // ignore already matched words
             return Task.CompletedTask;
         }
-        SelectedEeWord = eeWord;
+        SelectedEtWord = etWord;
         return this.TryMatch();
     }
 
@@ -67,14 +67,14 @@
         return CardColor.Light;
     }
 
-    private CardColor GetEeCardColor(string eeWord)
+    private CardColor GetEtCardColor(string etWord)
     {
-        if (SelectedEeWord == eeWord)
+        if (SelectedEtWord == etWord)
         {
             return CardColor.Warning;
         }
 
-        if (Game.EeWords[eeWord].IsMatched)
+        if (Game.EtWords[etWord].IsMatched)
         {
             return CardColor.Success;
         }
@@ -84,27 +84,27 @@
 
     private async Task TryMatch()
     {
-        if (string.IsNullOrEmpty(SelectedEeWord) || string.IsNullOrEmpty(SelectedEnWord))
+        if (string.IsNullOrEmpty(SelectedEtWord) || string.IsNullOrEmpty(SelectedEnWord))
         {
             return;
         }
 
-        var hasMatch = Game.TryMatch(SelectedEeWord, SelectedEnWord);
+        var hasMatch = Game.TryMatch(SelectedEtWord, SelectedEnWord);
 
         if (hasMatch)
         {
             ToastService.Notify(new ToastMessage(ToastType.Success, "Great match!"));
             await SuccessSound();
-            _ = FavoritesStateContainer.UpdateScore(SelectedEeWord, UpdateScoreCommand.ScoreUpdate.Up);
+            _ = FavoritesStateContainer.UpdateScore(SelectedEtWord, UpdateScoreCommand.ScoreUpdate.Up);
         }
         else
         {
             ToastService.Notify(new ToastMessage(ToastType.Danger, "Try again!"));
             await FailSound();
-            _ = FavoritesStateContainer.UpdateScore(SelectedEeWord, UpdateScoreCommand.ScoreUpdate.Down);
+            _ = FavoritesStateContainer.UpdateScore(SelectedEtWord, UpdateScoreCommand.ScoreUpdate.Down);
         }
 
-        SelectedEeWord = string.Empty;
+        SelectedEtWord = string.Empty;
         SelectedEnWord = string.Empty;
     }
 
@@ -159,20 +159,20 @@
             </div>
 
             <div class="col-5 p-1">
-                @foreach (var eeWord in Game.EeWords2Match.Concat(Game.Matches.Select(m => m.EeWord)))
+                @foreach (var etWord in Game.EtWords2Match.Concat(Game.Matches.Select(m => m.EtWord)))
                 {
-                    <Card Color="@GetEeCardColor(eeWord)" Class="mb-4" role="button" @onclick="@(e => SelectEeWord(eeWord))">
+                    <Card Color="@GetEtCardColor(etWord)" Class="mb-4" role="button" @onclick="@(e => SelectEtWord(etWord))">
                         <CardBody>
-                            <CardTitle>@eeWord</CardTitle>
+                            <CardTitle>@etWord</CardTitle>
                         </CardBody>
                     </Card>
                 }
             </div>
 
             <div class="col-2 p-1">
-                @foreach (var eeWord in Game.EeWords2Match.Concat(Game.Matches.Select(m => m.EeWord)))
+                @foreach (var etWord in Game.EtWords2Match.Concat(Game.Matches.Select(m => m.EtWord)))
                 {
-                    <a href="word/@eeWord" target="_blank">
+                    <a href="word/@etWord" target="_blank">
                         <Card Class="mb-4 text-center">
                             <CardBody>
                                 <CardTitle>
