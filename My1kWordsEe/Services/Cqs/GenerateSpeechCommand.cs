@@ -2,6 +2,8 @@ using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Services.Db;
 
+using static My1kWordsEe.Models.Conventions;
+
 namespace My1kWordsEe.Services.Cqs
 {
     public class GenerateSpeechCommand
@@ -17,8 +19,8 @@ namespace My1kWordsEe.Services.Cqs
             this.audioStorageClient = audioStorageClient;
         }
 
-        public Task<Result<Uri>> Invoke(string text, string fileName) =>
-          this.tartuNlpService.GetSpeech(text).Bind(stream =>
-          this.audioStorageClient.SaveAudio(stream, fileName));
+        public Task<Result<Uri>> Invoke(string sampleId, string sentence) =>
+          this.tartuNlpService.GetSpeech(sentence).Bind(stream =>
+          this.audioStorageClient.SaveAudio(stream, $"{sampleId}.{AudioFormat}"));
     }
 }

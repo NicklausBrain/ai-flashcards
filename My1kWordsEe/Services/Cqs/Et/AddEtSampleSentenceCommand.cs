@@ -9,7 +9,6 @@ using My1kWordsEe.Models;
 using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Db;
 
-using static My1kWordsEe.Models.Conventions;
 using static My1kWordsEe.Services.Db.SamplesStorageClient;
 
 namespace My1kWordsEe.Services.Cqs.Et
@@ -28,23 +27,20 @@ Sinu ülesanne on:
 3. Kasutage seda tähendust, mis on JSON-objektis märgitud!";
 
         private readonly SamplesStorageClient samplesStorageClient;
-        private readonly ImageStorageClient imageStorageClient;
         private readonly OpenAiClient openAiClient;
         private readonly GenerateSpeechCommand generateSpeechCommand;
-        private readonly StabilityAiClient stabilityAiClient;
+        private readonly GenerateImageCommand generateImageCommand;
 
         public AddEtSampleSentenceCommand(
             SamplesStorageClient samplesStorageClient,
-            ImageStorageClient imageStorageClient,
             OpenAiClient openAiService,
-            GenerateSpeechCommand generateSpeechCommand,
-            StabilityAiClient stabilityAiService)
+            GenerateImageCommand generateImageCommand,
+            GenerateSpeechCommand generateSpeechCommand)
         {
             this.samplesStorageClient = samplesStorageClient;
-            this.imageStorageClient = imageStorageClient;
             this.openAiClient = openAiService;
             this.generateSpeechCommand = generateSpeechCommand;
-            this.stabilityAiClient = stabilityAiService;
+            this.generateImageCommand = generateImageCommand;
         }
 
         public async Task<Result<SampleSentenceWithMedia[]>> Invoke(EtWord word, uint senseIndex)
@@ -102,17 +98,11 @@ Sinu ülesanne on:
                 .Bind(r => Result.Success(updatedSamples));
         }
 
-        // todo: move to separate command
         private Task<Result<Uri>> GenerateImage(Guid sampleId, SampleEtSentence sentence) =>
-            this.openAiClient.GetDallEPrompt(sentence.Sentence.En).BindZip(
-            this.stabilityAiClient.GenerateImage).Bind(p =>
-            this.imageStorageClient.SaveImage(sampleId, p.First, p.Second));
+            this.generateImageCommand.Invoke(sampleId, sentence.Sentence.En);
 
-        // todo: rename addAudioCommand
         private Task<Result<Uri>> GenerateSpeech(Guid sampleId, SampleEtSentence sentence) =>
-            this.generateSpeechCommand.Invoke(
-                text: sentence.Sentence.Et,
-                fileName: $"{sampleId}.{AudioFormat}");
+            this.generateSpeechCommand.Invoke(sampleId.ToString(), sentence.Sentence.Et);
 
         private async Task<Result<SampleEtSentence>> GetSampleSentence(
             EtWord word,

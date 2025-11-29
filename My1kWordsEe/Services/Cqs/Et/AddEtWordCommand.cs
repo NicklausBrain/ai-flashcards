@@ -53,8 +53,8 @@ Väljund peab olema JSON-objekt vastavalt antud skeemile.";
             }
 
             (await this.generateSpeechCommand.Invoke(
-                text: eeWord,
-                fileName: $"{eeWord}.{AudioFormat}")).Deconstruct(
+                sampleId: eeWord,
+                sentence: eeWord)).Deconstruct(
                 out bool _,
                 out bool isAudioFailure,
                 out Uri _,
