@@ -3,6 +3,7 @@ using CSharpFunctionalExtensions;
 using My1kWordsEe.Models.Games.Generation;
 using My1kWordsEe.Services.Cqs;
 using My1kWordsEe.Services.Cqs.Et;
+using My1kWordsEe.Services.Scoped;
 
 namespace My1kWordsEe.Models.Games
 {
@@ -13,19 +14,22 @@ namespace My1kWordsEe.Models.Games
         private readonly GetEtSampleSentencesQuery getEtSampleSentencesQuery;
         private readonly AddEtSampleSentenceCommand addEtSampleSentenceCommand;
         private readonly CheckEtTranslationCommand checkEtTranslationCommand;
+        private readonly FavoritesStateContainer favoritesStateContainer;
 
         public TranslateToEtGameFactory(
             NextWordSelector nextWordSelector,
             GetOrAddEtWordCommand getOrAddEtWordCommand,
             GetEtSampleSentencesQuery getEtSampleSentencesQuery,
             AddEtSampleSentenceCommand addEtSampleSentenceCommand,
-            CheckEtTranslationCommand checkEtTranslationCommand)
+            CheckEtTranslationCommand checkEtTranslationCommand,
+            FavoritesStateContainer favoritesStateContainer)
         {
             this.nextWordSelector = nextWordSelector;
             this.getOrAddEtWordCommand = getOrAddEtWordCommand;
             this.getEtSampleSentencesQuery = getEtSampleSentencesQuery;
             this.addEtSampleSentenceCommand = addEtSampleSentenceCommand;
             this.checkEtTranslationCommand = checkEtTranslationCommand;
+            this.favoritesStateContainer = favoritesStateContainer;
         }
 
         public async Task<Result<TranslateToEtGame>> Generate(string? word, int? wordIndex)
@@ -48,7 +52,8 @@ namespace My1kWordsEe.Models.Games
 
             if (samples.Value.Any())
             {
-                return new TranslateToEtGame(word, 0, samples.Value.First(), this.checkEtTranslationCommand);
+                return new TranslateToEtGame(
+                    word, 0, samples.Value.First(), this.checkEtTranslationCommand, this.favoritesStateContainer);
             }
             else
             {
@@ -56,7 +61,8 @@ namespace My1kWordsEe.Models.Games
 
                 if (addSampleResult.IsSuccess)
                 {
-                    return new TranslateToEtGame(word, 0, addSampleResult.Value.First(), this.checkEtTranslationCommand);
+                    return new TranslateToEtGame(
+                        word, 0, addSampleResult.Value.First(), this.checkEtTranslationCommand, this.favoritesStateContainer);
                 }
 
                 return Result.Failure<TranslateToEtGame>(addSampleResult.Error);

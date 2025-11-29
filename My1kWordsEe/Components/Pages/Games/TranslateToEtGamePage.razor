@@ -57,29 +57,14 @@
     {
         await Game.Execute(async game =>
         {
-
             await game.Submit();
-
-            // todo move score update logic to game class
-            game.CheckResult.Execute(r => r.Tap(r =>
-    {
-            _ = FavoritesStateContainer.UpdateScore(
-    EtWord,
-    r.Match >= 4
-    ? UpdateScoreCommand.ScoreUpdate.Up
-    : UpdateScoreCommand.ScoreUpdate.Down);
-        // but keep sound on the frontend
             _ = PlaySample();
-        }));
         });
     }
 
     private void OnGiveUp()
     {
         Game.Value.GiveUp();
-        _ = FavoritesStateContainer.UpdateScore(
-        EtWord,
-        UpdateScoreCommand.ScoreUpdate.Down);
         _ = PlaySample();
     }
 

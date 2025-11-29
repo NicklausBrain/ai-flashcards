@@ -14,7 +14,6 @@
 @using Microsoft.ApplicationInsights
 
 @inject TranslateToEnGameFactory TranslateToEnGameFactory
-@inject FavoritesStateContainer FavoritesStateContainer
 @inject NavigationManager Navigation
 @inject UrlService Url
 @inject IJSRuntime JS
@@ -56,33 +55,26 @@
     // todo add succes/fail sound
     private async Task OnSubmit()
     {
-        await Game.Value.Submit();
-        Game.Value.CheckResult.Execute(r => r.Tap(r =>
+        await Game.Execute(async game =>
         {
-            // todo move score update logic to game class
-            var update = r.Match >= 4
-    ? UpdateScoreCommand.ScoreUpdate.Up
-    : UpdateScoreCommand.ScoreUpdate.Down;
-            _ = FavoritesStateContainer.UpdateScore(
-    EtWord,
-    update);
-            // but keep sound on the frontend
+            await game.Submit();
             _ = PlaySample();
-        }));
+        });
     }
 
-    private void OnGiveUp()
+    private async Task OnGiveUp()
     {
-        Game.Value.GiveUp();
-        _ = FavoritesStateContainer.UpdateScore(
-        EtWord,
-        UpdateScoreCommand.ScoreUpdate.Down);
+        Game.Execute(g => g.GiveUp());
+
         _ = PlaySample();
     }
 
     private async Task PlaySample()
     {
-        await JS.InvokeVoidAsync("playAudioSample", Game.Value.AudioUrl);
+        await Game.Execute(async g =>
+        {
+            await JS.InvokeVoidAsync("playAudioSample", g.AudioUrl);
+        });
     }
 
     private void RegenGame() => Navigation.NavigateTo($"/translate-game/en");

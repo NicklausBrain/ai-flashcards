@@ -2,23 +2,27 @@ using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Cqs;
+using My1kWordsEe.Services.Scoped;
 
 namespace My1kWordsEe.Models.Games
 {
     public class TranslateToEtGame
     {
         private readonly CheckEtTranslationCommand checkEtTranslationCommand;
+        private readonly FavoritesStateContainer favoritesStateContainer;
 
         public TranslateToEtGame(
             string etWord,
             int sampleIndex,
             SampleSentenceWithMedia sampleSentence,
-            CheckEtTranslationCommand checkEtTranslationCommand)
+            CheckEtTranslationCommand checkEtTranslationCommand,
+            FavoritesStateContainer favoritesStateContainer)
         {
             this.EtWord = etWord;
             this.SampleIndex = sampleIndex;
             this.SampleSentence = sampleSentence;
             this.checkEtTranslationCommand = checkEtTranslationCommand;
+            this.favoritesStateContainer = favoritesStateContainer;
         }
 
         public string EtWord { get; init; }
@@ -74,6 +78,16 @@ namespace My1kWordsEe.Models.Games
                     enSentence: EnSentence);
                 IsCheckInProgress = false;
             }
+
+            CheckResult.Execute(r => r.Tap(r =>
+            {
+                var update = r.Match >= 4
+    ? UpdateScoreCommand.ScoreUpdate.Up
+    : UpdateScoreCommand.ScoreUpdate.Down;
+                _ = this.favoritesStateContainer.UpdateScore(
+        EtWord,
+        update);
+            }));
         }
 
         public void GiveUp()
