@@ -15,8 +15,7 @@ namespace My1kWordsEe.Services.Db
             public required string Word { get; init; }
             public required uint SenseIndex { get; init; }
 
-            // todo: add user id
-
+            // todo: add user id if we want to make samples user-specific
             public override string ToString() => $"{Word}-{SenseIndex}";
             public static implicit operator string(SamplesContainerId id) => id.ToString();
         }

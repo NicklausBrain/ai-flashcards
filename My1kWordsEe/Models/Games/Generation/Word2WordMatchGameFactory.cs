@@ -6,9 +6,9 @@ namespace My1kWordsEe.Models.Games
 {
     public class Word2WordMatchGameFactory
     {
-        private readonly NextWordSelector nextWordSelector;
+        private readonly NextEtWordSelector nextWordSelector;
 
-        public Word2WordMatchGameFactory(NextWordSelector nextWordSelector)
+        public Word2WordMatchGameFactory(NextEtWordSelector nextWordSelector)
         {
             this.nextWordSelector = nextWordSelector;
         }

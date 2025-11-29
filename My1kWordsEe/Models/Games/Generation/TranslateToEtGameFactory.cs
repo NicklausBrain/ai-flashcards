@@ -9,7 +9,7 @@ namespace My1kWordsEe.Models.Games
 {
     public class TranslateToEtGameFactory
     {
-        private readonly NextWordSelector nextWordSelector;
+        private readonly NextEtWordSelector nextWordSelector;
         private readonly GetOrAddEtWordCommand getOrAddEtWordCommand;
         private readonly GetEtSampleSentencesQuery getEtSampleSentencesQuery;
         private readonly AddEtSampleSentenceCommand addEtSampleSentenceCommand;
@@ -17,7 +17,7 @@ namespace My1kWordsEe.Models.Games
         private readonly FavoritesStateContainer favoritesStateContainer;
 
         public TranslateToEtGameFactory(
-            NextWordSelector nextWordSelector,
+            NextEtWordSelector nextWordSelector,
             GetOrAddEtWordCommand getOrAddEtWordCommand,
             GetEtSampleSentencesQuery getEtSampleSentencesQuery,
             AddEtSampleSentenceCommand addEtSampleSentenceCommand,

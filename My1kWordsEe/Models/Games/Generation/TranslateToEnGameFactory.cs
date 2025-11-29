@@ -9,7 +9,7 @@ namespace My1kWordsEe.Models.Games
 {
     public class TranslateToEnGameFactory
     {
-        private readonly NextWordSelector nextWordSelector;
+        private readonly NextEtWordSelector nextWordSelector;
         private readonly GetOrAddEtWordCommand getOrAddEtWordCommand;
         private readonly GetEtSampleSentencesQuery getEtSampleSentencesQuery;
         private readonly AddEtSampleSentenceCommand addEtSampleSentenceCommand;
@@ -17,7 +17,7 @@ namespace My1kWordsEe.Models.Games
         private readonly FavoritesStateContainer favoritesStateContainer;
 
         public TranslateToEnGameFactory(
-            NextWordSelector nextWordSelector,
+            NextEtWordSelector nextWordSelector,
             GetOrAddEtWordCommand getOrAddEtWordCommand,
             GetEtSampleSentencesQuery getEtSampleSentencesQuery,
             AddEtSampleSentenceCommand addEtSampleSentenceCommand,
@@ -32,7 +32,7 @@ namespace My1kWordsEe.Models.Games
             this.favoritesStateContainer = favoritesStateContainer;
         }
 
-        // todo checl eeWord naming
+        // todo: fix mixed naming eeWord vs etWord
         public async Task<Result<TranslateToEnGame>> Generate(string? eeWord, int? wordIndex)
         {
             const int senseIndex = 0;
