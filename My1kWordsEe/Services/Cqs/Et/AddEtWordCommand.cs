@@ -13,7 +13,7 @@ namespace My1kWordsEe.Services.Cqs.Et
     {
         private readonly OpenAiClient openAiClient;
         private readonly WordStorageClient wordStorageClient;
-        private readonly AddAudioCommand addAudioCommand;
+        private readonly GenerateSpeechCommand generateSpeechCommand;
 
         public static readonly string Prompt =
 @"See on keeleõppe süsteem.
@@ -25,13 +25,13 @@ Lisage üksnes algajale vajalikud sõnatähendused.
 Väljund peab olema JSON-objekt vastavalt antud skeemile.";
 
         public AddEtWordCommand(
-            OpenAiClient openAiService,
+            OpenAiClient openAiClient,
             WordStorageClient wordStorageClient,
-            AddAudioCommand createAudioCommand)
+            GenerateSpeechCommand generateSpeechCommand)
         {
             this.wordStorageClient = wordStorageClient;
-            this.openAiClient = openAiService;
-            this.addAudioCommand = createAudioCommand;
+            this.openAiClient = openAiClient;
+            this.generateSpeechCommand = generateSpeechCommand;
         }
 
         public async Task<Result<EtWord>> Invoke(string eeWord, string? comment = null)
@@ -52,7 +52,7 @@ Väljund peab olema JSON-objekt vastavalt antud skeemile.";
                 return Result.Failure<EtWord>(aiError);
             }
 
-            (await this.addAudioCommand.Invoke(
+            (await this.generateSpeechCommand.Invoke(
                 text: eeWord,
                 fileName: $"{eeWord}.{AudioFormat}")).Deconstruct(
                 out bool _,

@@ -71,7 +71,7 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<AddEtFormsCommand>();
             builder.Services.AddSingleton<GetOrAddEtFormsCommand>();
 
-            builder.Services.AddSingleton<AddAudioCommand>();
+            builder.Services.AddSingleton<GenerateSpeechCommand>();
             builder.Services.AddSingleton<CheckEnTranslationCommand>();
             builder.Services.AddSingleton<CheckEtTranslationCommand>();
             builder.Services.AddSingleton<CheckEeListeningCommand>();

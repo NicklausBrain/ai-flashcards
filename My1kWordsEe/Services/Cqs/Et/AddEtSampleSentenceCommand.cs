@@ -30,20 +30,20 @@ Sinu ülesanne on:
         private readonly SamplesStorageClient samplesStorageClient;
         private readonly ImageStorageClient imageStorageClient;
         private readonly OpenAiClient openAiClient;
-        private readonly AddAudioCommand addAudioCommand;
+        private readonly GenerateSpeechCommand generateSpeechCommand;
         private readonly StabilityAiClient stabilityAiClient;
 
         public AddEtSampleSentenceCommand(
             SamplesStorageClient samplesStorageClient,
             ImageStorageClient imageStorageClient,
             OpenAiClient openAiService,
-            AddAudioCommand createAudioCommand,
+            GenerateSpeechCommand generateSpeechCommand,
             StabilityAiClient stabilityAiService)
         {
             this.samplesStorageClient = samplesStorageClient;
             this.imageStorageClient = imageStorageClient;
             this.openAiClient = openAiService;
-            this.addAudioCommand = createAudioCommand;
+            this.generateSpeechCommand = generateSpeechCommand;
             this.stabilityAiClient = stabilityAiService;
         }
 
@@ -110,7 +110,7 @@ Sinu ülesanne on:
 
         // todo: rename addAudioCommand
         private Task<Result<Uri>> GenerateSpeech(Guid sampleId, SampleEtSentence sentence) =>
-            this.addAudioCommand.Invoke(
+            this.generateSpeechCommand.Invoke(
                 text: sentence.Sentence.Et,
                 fileName: $"{sampleId}.{AudioFormat}");
 
