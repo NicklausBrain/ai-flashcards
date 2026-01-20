@@ -1,5 +1,4 @@
 using My1kWordsEe.Models.Semantics;
-using My1kWordsEe.Services.Scoped;
 
 namespace My1kWordsEe.Models
 {
@@ -9,12 +8,10 @@ namespace My1kWordsEe.Models
     public class Et1kWords
     {
         private readonly EtWordsCache etWordsCache;
-        private readonly FavoritesStateContainer favoritesStateContainer;
 
-        public Et1kWords(EtWordsCache etWordsCache, FavoritesStateContainer favoritesStateContainer)
+        public Et1kWords(EtWordsCache etWordsCache)
         {
             this.etWordsCache = etWordsCache;
-            this.favoritesStateContainer = favoritesStateContainer;
             this.Search = null;
             this.SelectedWords = etWordsCache.AllWords;
         }

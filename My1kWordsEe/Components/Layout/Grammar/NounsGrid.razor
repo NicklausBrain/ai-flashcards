@@ -17,28 +17,34 @@
     public required bool IsPlural { get; init; } = false;
 }
 
-<Grid TItem="NounForm" Class="table table-hover table-bordered table-striped table-sm" Data="NounForms" PageSize="14" Responsive="true">
+<Grid TItem="NounForm" Class="table table-hover table-bordered table-striped table-sm" Data="NounForms" PageSize="14"
+    Responsive="true">
     <GridColumns>
         <GridColumn TItem="NounForm" HeaderText="Case" PropertyName="GrammaticalCase">
             @context.GrammaticalCase
         </GridColumn>
         <GridColumn TItem="NounForm" HeaderText="Eesti" PropertyName="GrammaticalCase">
-            @if (IsPlural) {
+            @if (IsPlural)
+            {
                 @NounForm.PluralQuestion(context.GrammaticalCase).Et
 
-            } else {
+            }
+            else
+            {
                 @NounForm.SingularQuestion(context.GrammaticalCase).Et
             }
         </GridColumn>
         <GridColumn TItem="NounForm" HeaderText="Eesti" PropertyName="CaseForm">
-            @if (string.Equals(EtWord.Value, @context.CaseForm.Et, StringComparison.OrdinalIgnoreCase))
-            {   // highlight the word form
-                <b>@context.CaseForm.Et</b>
-            }
-            else
-            {
-                @context.CaseForm.Et
-            }
+            <a href="/word/@context.CaseForm.Et">
+                @if (string.Equals(EtWord.Value, @context.CaseForm.Et, StringComparison.OrdinalIgnoreCase))
+                { // highlight the word form
+                  <b>@context.CaseForm.Et</b>
+                }
+                else
+                {
+                    @context.CaseForm.Et
+                }
+            </a>
         </GridColumn>
         <GridColumn TItem="NounForm" HeaderText="English" PropertyName="CaseForm">
             @context.CaseForm.En

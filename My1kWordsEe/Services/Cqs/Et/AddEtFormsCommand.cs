@@ -87,6 +87,10 @@ Väljund peab olema järgmine JSON-objekt:";
 
             [Description("Kõneosa")]
             public required string PartOfSpeech { get; init; }
+
+            // maybe we can add PartOfSpeechEx | Or Tags whatever to keep extra grammar info:
+            // what case is that
+            // what time is that
         }
     }
 }
