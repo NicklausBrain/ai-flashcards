@@ -23,7 +23,9 @@ namespace My1kWordsEe.Models.Semantics
 
         [JsonIgnore]
         public bool IsNoun =>
-            string.Equals(this.PartOfSpeech.Et, "nimisõna", StringComparison.OrdinalIgnoreCase) ||
-            string.Equals(this.PartOfSpeech.En, "noun", StringComparison.OrdinalIgnoreCase);
+            // string.Equals(this.PartOfSpeech.Et, "nimisõna", StringComparison.OrdinalIgnoreCase) ||
+            // string.Equals(this.PartOfSpeech.En, "noun", StringComparison.OrdinalIgnoreCase);
+            this.PartOfSpeech.Et.Contains("nimisõna", StringComparison.OrdinalIgnoreCase) ||
+            this.PartOfSpeech.En.Contains("noun", StringComparison.OrdinalIgnoreCase);
     }
 }
