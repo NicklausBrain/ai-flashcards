@@ -33,7 +33,7 @@
     {
         telemetry.TrackPageView(nameof(TranslateToEnGamePage));
 
-        var gameGen = await TranslateToEnGameFactory.Generate(EtWord, SampleIndex);
+        var gameGen = await TranslateToEnGameFactory.Generate(EtWord, (uint)SampleIndex);
         if (gameGen.IsSuccess)
         {
             if (string.IsNullOrEmpty(EtWord))

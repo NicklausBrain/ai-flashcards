@@ -32,19 +32,17 @@ namespace My1kWordsEe.Models.Games
             this.favoritesStateContainer = favoritesStateContainer;
         }
 
-        // todo: fix mixed naming eeWord vs etWord
-        public async Task<Result<TranslateToEnGame>> Generate(string? eeWord, int? wordIndex)
+        public async Task<Result<TranslateToEnGame>> Generate(string etWord, uint senseIndex)
         {
-            const int senseIndex = 0;
-            eeWord = (eeWord ?? await GetRandomEeWord()).ToLower();
-            var etWord = await getOrAddEtWordCommand.Invoke(eeWord);
+            etWord = (etWord ?? await GetRandomEtWord()).ToLower();
+            var etWordObj = await getOrAddEtWordCommand.Invoke(etWord);
 
-            if (etWord.IsFailure)
+            if (etWordObj.IsFailure)
             {
-                return Result.Failure<TranslateToEnGame>(etWord.Error);
+                return Result.Failure<TranslateToEnGame>(etWordObj.Error);
             }
 
-            var samples = await getEtSampleSentencesQuery.Invoke(etWord.Value, senseIndex);
+            var samples = await getEtSampleSentencesQuery.Invoke(etWordObj.Value, senseIndex);
 
             if (samples.IsFailure)
             {
@@ -54,26 +52,26 @@ namespace My1kWordsEe.Models.Games
             if (samples.Value.Any())
             {
                 return new TranslateToEnGame(
-                    eeWord, 0, samples.Value.First(), this.checkEnTranslationCommand, this.favoritesStateContainer);
+                    etWord, 0, samples.Value.First(), this.checkEnTranslationCommand, this.favoritesStateContainer);
             }
             else
             {
-                var addSampleResult = await addEtSampleSentenceCommand.Invoke(etWord.Value, senseIndex);
+                var addSampleResult = await addEtSampleSentenceCommand.Invoke(etWordObj.Value, senseIndex);
 
                 if (addSampleResult.IsSuccess)
                 {
                     return new TranslateToEnGame(
-                        eeWord, 0, addSampleResult.Value.First(), this.checkEnTranslationCommand, this.favoritesStateContainer);
+                        etWord, 0, addSampleResult.Value.First(), this.checkEnTranslationCommand, this.favoritesStateContainer);
                 }
 
                 return Result.Failure<TranslateToEnGame>(addSampleResult.Error);
             }
         }
 
-        private async Task<string> GetRandomEeWord()
+        private async Task<string> GetRandomEtWord()
         {
-            var eeWord = await nextWordSelector.GetNextWord();
-            return eeWord.Value;
+            var etWord = await nextWordSelector.GetNextWord();
+            return etWord.Value;
         }
     }
 }
