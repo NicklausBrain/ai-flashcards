@@ -5,26 +5,22 @@ using My1kWordsEe.Models.Semantics;
 
 public class EtNoun3FormsGame
 {
-    // Nimetav, // (nominatiiv)
-    // Omastav, // (genitiiv)
-    // Osastav, // (partitiiv)
-
-    [Description("todo")]
+    [Description("Sõna ainsuse nimetavas käändes")]
     public string NimetavSõna { get; set; }
 
-    [Description("todo")]
+    [Description("Lihtne lause, kus sõna on ainsuse nimetavas käändes")]
     public string NimetavLause { get; set; }
 
-    [Description("todo")]
+    [Description("Sõna ainsuse omastavas käändes")]
     public string OmastavSõna { get; set; }
 
-    [Description("todo")]
+    [Description("Lihtne lause, kus sõna on ainsuse omastavas käändes")]
     public string OmastavLause { get; set; }
 
-    [Description("todo")]
+    [Description("Sõna ainsuse osastavas käändes")]
     public string OsastavSõna { get; set; }
 
-    [Description("todo")]
+    [Description("Lihtne lause, kus sõna on ainsuse osastavas käändes")]
     public string OsastavLause { get; set; }
 
     [JsonIgnore]
@@ -57,7 +53,6 @@ public class EtNoun3FormsGame
         {
             return;
         }
-
 
         if (string.Equals(this.NimetavLause, this.UserNimetavLause, StringComparison.OrdinalIgnoreCase))
         {
