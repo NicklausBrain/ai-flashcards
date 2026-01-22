@@ -3,6 +3,9 @@ using System.Text.Json.Serialization;
 
 using My1kWordsEe.Models.Semantics;
 
+// todo: make game object a class
+// todo: move struct part to the factory
+// struct is requred by serializer
 public struct EtNoun3FormsGame
 {
     public EtNoun3FormsGame() { }
