@@ -116,7 +116,5 @@ namespace My1kWordsEe.Services.Db
                 return Result.Failure<bool>("Failure to delete blob {name}");
             }
         }
-
-        private static string JsonBlobName(string stringId) => stringId.ToLower() + ".json";
     }
 }
