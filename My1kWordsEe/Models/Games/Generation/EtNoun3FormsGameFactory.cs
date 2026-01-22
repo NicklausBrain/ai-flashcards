@@ -1,3 +1,6 @@
+using System.ComponentModel;
+using System.Text.Json.Serialization;
+
 using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Models;
@@ -22,12 +25,44 @@ Sisend: Eesti keele nimisõna (nimetav kääne).
 
     public async Task<Result<EtNoun3FormsGame>> Generate(string etNoun)
     {
-        var response = await this.openAiClient.CompleteJsonSchemaAsync<EtNoun3FormsGame>(
+        var gameData = await this.openAiClient.CompleteJsonSchemaAsync<EtNoun3FormsGameData>(
             Prompt,
             etNoun,
-            JsonSchemaRecord.For(typeof(EtNoun3FormsGame)),
+            JsonSchemaRecord.For(typeof(EtNoun3FormsGameData)),
             temperature: 0.1f);
 
-        return response;
+        // todo: save gameData in storage
+
+        var game = gameData.Map((r) => new EtNoun3FormsGame(
+            nimetavSõna: r.NimetavSõna,
+            nimetavLause: r.NimetavLause,
+            omastavSõna: r.OmastavSõna,
+            omastavLause: r.OmastavLause,
+            osastavSõna: r.OsastavSõna,
+            osastavLause: r.OsastavLause
+        ));
+
+        return game;
+    }
+
+    public struct EtNoun3FormsGameData
+    {
+        [Description("Sõna ainsuse nimetavas käändes")]
+        public string NimetavSõna { get; set; }
+
+        [Description("Lihtne lause, kus sõna on ainsuse nimetavas käändes")]
+        public string NimetavLause { get; set; }
+
+        [Description("Sõna ainsuse omastavas käändes")]
+        public string OmastavSõna { get; set; }
+
+        [Description("Lihtne lause, kus sõna on ainsuse omastavas käändes")]
+        public string OmastavLause { get; set; }
+
+        [Description("Sõna ainsuse osastavas käändes")]
+        public string OsastavSõna { get; set; }
+
+        [Description("Lihtne lause, kus sõna on ainsuse osastavas käändes")]
+        public string OsastavLause { get; set; }
     }
 }

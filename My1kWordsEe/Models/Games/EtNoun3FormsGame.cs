@@ -3,65 +3,51 @@ using System.Text.Json.Serialization;
 
 using My1kWordsEe.Models.Semantics;
 
-// todo: make game object a class
-// todo: move struct part to the factory
-// struct is requred by serializer
-public struct EtNoun3FormsGame
+public class EtNoun3FormsGame
 {
-    public EtNoun3FormsGame() { }
+    public EtNoun3FormsGame(
+        string nimetavSõna,
+        string nimetavLause,
+        string omastavSõna,
+        string omastavLause,
+        string osastavSõna,
+        string osastavLause
+    )
+    {
+        this.NimetavSõna = nimetavSõna;
+        this.NimetavLause = nimetavLause;
+        this.OmastavSõna = omastavSõna;
+        this.OmastavLause = omastavLause;
+        this.OsastavSõna = osastavSõna;
+        this.OsastavLause = osastavLause;
+    }
 
-    [Description("Sõna ainsuse nimetavas käändes")]
-    public string NimetavSõna { get; set; }
+    public string NimetavSõna { get; private set; }
 
-    [Description("Lihtne lause, kus sõna on ainsuse nimetavas käändes")]
-    public string NimetavLause { get; set; }
+    public string NimetavLause { get; private set; }
 
-    [Description("Sõna ainsuse omastavas käändes")]
-    public string OmastavSõna { get; set; }
+    public string OmastavSõna { get; private set; }
 
-    [Description("Lihtne lause, kus sõna on ainsuse omastavas käändes")]
-    public string OmastavLause { get; set; }
+    public string OmastavLause { get; private set; }
 
-    [Description("Sõna ainsuse osastavas käändes")]
-    public string OsastavSõna { get; set; }
+    public string OsastavSõna { get; private set; }
 
-    [Description("Lihtne lause, kus sõna on ainsuse osastavas käändes")]
-    public string OsastavLause { get; set; }
+    public string OsastavLause { get; private set; }
 
-    // remove?
-    [JsonIgnore]
-    public string UserNimetavLause { get; set; }
+    public string UserNimetavSõna { get; set; } = string.Empty;
 
-    // remove?
-    [JsonIgnore]
-    public string UserOmastavLause { get; set; }
+    public string UserOmastavSõna { get; set; } = string.Empty;
 
-    // remove?
-    [JsonIgnore]
-    public string UserOsastavLause { get; set; }
+    public string UserOsastavSõna { get; set; } = string.Empty;
 
-    [JsonIgnore]
-    public string UserNimetavSõna { get; set; }
-
-    [JsonIgnore]
-    public string UserOmastavSõna { get; set; }
-
-    [JsonIgnore]
-    public string UserOsastavSõna { get; set; }
-
-    [JsonIgnore]
     public bool IsFinished { get; private set; } = false;
 
-    [JsonIgnore]
     public int Score { get; private set; } = 0;
 
-    [JsonIgnore]
     public bool IsNimetavOk { get; private set; } = false;
 
-    [JsonIgnore]
     public bool IsOmastavOk { get; private set; } = false;
 
-    [JsonIgnore]
     public bool IsOsastavOk { get; private set; } = false;
 
     public void Submit()
