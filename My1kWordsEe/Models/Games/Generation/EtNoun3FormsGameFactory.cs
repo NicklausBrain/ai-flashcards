@@ -4,6 +4,8 @@ using System.Text.Json.Serialization;
 using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Models;
+using My1kWordsEe.Models.Grammar;
+using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services;
 
 public class EtNoun3FormsGameFactory
@@ -18,7 +20,8 @@ Sisend: Eesti keele nimisõna (nimetav kääne).
 
     private readonly OpenAiClient openAiClient;
 
-    public EtNoun3FormsGameFactory(OpenAiClient openAiClient)
+    public EtNoun3FormsGameFactory(
+        OpenAiClient openAiClient)
     {
         this.openAiClient = openAiClient;
     }

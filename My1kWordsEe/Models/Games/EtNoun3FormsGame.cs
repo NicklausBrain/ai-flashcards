@@ -1,8 +1,3 @@
-using System.ComponentModel;
-using System.Text.Json.Serialization;
-
-using My1kWordsEe.Models.Semantics;
-
 public class EtNoun3FormsGame
 {
     public EtNoun3FormsGame(
@@ -75,6 +70,11 @@ public class EtNoun3FormsGame
             Score++;
         }
 
+        this.IsFinished = true;
+    }
+
+    public void GiveUp()
+    {
         this.IsFinished = true;
     }
 }

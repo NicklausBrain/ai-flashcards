@@ -1,5 +1,5 @@
 @page "/forms-game/et"
-@page "/forms-game/et/{etWord}"
+@page "/forms-game/et/{etNoun}"
 
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
@@ -8,6 +8,7 @@
 @using My1kWordsEe.Components.Layout
 @using My1kWordsEe.Models
 @using My1kWordsEe.Models.Games
+@using My1kWordsEe.Models.Semantics
 @using My1kWordsEe.Services
 @using My1kWordsEe.Services.Cqs
 @using My1kWordsEe.Services.Scoped
@@ -17,40 +18,48 @@
 @inject EtNoun3FormsGameFactory EtNoun3FormsGameFactory
 @inject NavigationManager Navigation
 @inject TelemetryClient telemetry
+@inject EtWordsCache etWordsCache;
 
 @code {
     [Parameter]
-    public string EtWord { get; init; } = string.Empty;
+    public string EtNoun { get; init; } = string.Empty;
 
     Maybe<EtNoun3FormsGame> Game;
     Maybe<string> GameGenerationError;
+
+    private string GetRandomNoun()
+    {
+        var random = new Random(Environment.TickCount);
+
+        var nouns = etWordsCache.AllWords.Where(w => w.DefaultSense.IsNoun).ToArray();
+
+        var noun = nouns[random.Next(0, nouns.Length - 1)];
+        return noun.Value;
+    }
 
     protected override async Task OnParametersSetAsync()
     {
         telemetry.TrackPageView(nameof(EtNoun3FormsGamePage));
 
-        // If no word is provided, we can't generate this specific game easily unless the factory handles random words.
-        // Assuming for now the user comes here with a word, or we need to pick one?
-        // The factory takes 'etNoun'. If empty, it might fail or we should pick a random one.
-        // Let's assume for this prototype we need a word.
-        // If EtWord is empty, I'll pick a default for testing or redirect?
-        // TranslateToEtGameFactory had logic to pick a word. Let's see if this factory has it.
-        // It does not seem to have a "random word" method exposed in the interface I saw.
-        // It only had Generate(string etNoun).
-        // I will default to "koer" (dog) if empty for now to make it playable directly.
-
-        var wordToUse = string.IsNullOrWhiteSpace(EtWord) ? "koer" : EtWord;
-
-        var gameGen = await EtNoun3FormsGameFactory.Generate(wordToUse);
-        if (gameGen.IsSuccess)
+        if (string.IsNullOrEmpty(EtNoun))
         {
-            Game = gameGen.Value;
+            // Pick a random noun
+            var randomNoun = GetRandomNoun();
+            Navigation.NavigateTo($"/forms-game/et/{randomNoun}", forceLoad: true);
         }
         else
         {
-            GameGenerationError = gameGen.Error;
+            var gameGen = await EtNoun3FormsGameFactory.Generate(EtNoun);
+            if (gameGen.IsSuccess)
+            {
+                Game = gameGen.Value;
+            }
+            else
+            {
+                GameGenerationError = gameGen.Error;
+            }
+            await base.OnParametersSetAsync();
         }
-        await base.OnParametersSetAsync();
     }
 
     private void OnSubmit()
@@ -62,19 +71,15 @@
     {
         // Auto-fill correct answers
         var game = Game.Value;
-        game.UserNimetavSõna = game.NimetavSõna;
+        @* game.UserNimetavSõna = game.NimetavSõna;
         game.UserOmastavSõna = game.OmastavSõna;
-        game.UserOsastavSõna = game.OsastavSõna;
-        game.Submit();
+        game.UserOsastavSõna = game.OsastavSõna; *@
+        game.GiveUp();
     }
 
     private void RegenGame()
     {
-        // Reload with the same word? Or redirect to main?
-        // If we want a new word, we'd need a random word picker.
-        // For now, just reload current page logic (which uses same word).
-        // Actually, let's navigate to empty to trigger default 'koer' again or stay same.
-        Navigation.NavigateTo($"/forms-game/et/{EtWord}", forceLoad: true);
+        Navigation.NavigateTo($"/forms-game/et/{GetRandomNoun()}", forceLoad: true);
     }
 
     private string MaskWord(string sentence, string word)
@@ -110,8 +115,7 @@
 
         <div class="row mb-3">
             <div class="col-12">
-                <h5>Base Word: <strong>@EtWord</strong> (or default: koer) -> Target: <strong>@game.NimetavSõna</strong>
-                    (Base)</h5>
+                <h5>Base Word: <a href="/word/@game.NimetavSõna" target="_blank"><strong>@game.NimetavSõna</strong></a></h5>
             </div>
         </div>
 
