@@ -1,0 +1,236 @@
+@page "/forms-game/et"
+@page "/forms-game/et/{etWord}"
+
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+
+@using BlazorBootstrap
+@using CSharpFunctionalExtensions
+@using My1kWordsEe.Components.Layout
+@using My1kWordsEe.Models
+@using My1kWordsEe.Models.Games
+@using My1kWordsEe.Services
+@using My1kWordsEe.Services.Cqs
+@using My1kWordsEe.Services.Scoped
+@using Microsoft.ApplicationInsights
+@using System.Text.RegularExpressions
+
+@inject EtNoun3FormsGameFactory EtNoun3FormsGameFactory
+@inject NavigationManager Navigation
+@inject TelemetryClient telemetry
+
+@code {
+    [Parameter]
+    public string EtWord { get; init; } = string.Empty;
+
+    Maybe<EtNoun3FormsGame> Game;
+    Maybe<string> GameGenerationError;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        telemetry.TrackPageView(nameof(EtNoun3FormsGamePage));
+
+        // If no word is provided, we can't generate this specific game easily unless the factory handles random words.
+        // Assuming for now the user comes here with a word, or we need to pick one?
+        // The factory takes 'etNoun'. If empty, it might fail or we should pick a random one.
+        // Let's assume for this prototype we need a word.
+        // If EtWord is empty, I'll pick a default for testing or redirect?
+        // TranslateToEtGameFactory had logic to pick a word. Let's see if this factory has it.
+        // It does not seem to have a "random word" method exposed in the interface I saw.
+        // It only had Generate(string etNoun).
+        // I will default to "koer" (dog) if empty for now to make it playable directly.
+
+        var wordToUse = string.IsNullOrWhiteSpace(EtWord) ? "koer" : EtWord;
+
+        var gameGen = await EtNoun3FormsGameFactory.Generate(wordToUse);
+        if (gameGen.IsSuccess)
+        {
+            Game = gameGen.Value;
+        }
+        else
+        {
+            GameGenerationError = gameGen.Error;
+        }
+        await base.OnParametersSetAsync();
+    }
+
+    private void OnSubmit()
+    {
+        Game.Value.Submit();
+    }
+
+    private void OnGiveUp()
+    {
+        // Auto-fill correct answers
+        var game = Game.Value;
+        game.UserNimetavSõna = game.NimetavSõna;
+        game.UserOmastavSõna = game.OmastavSõna;
+        game.UserOsastavSõna = game.OsastavSõna;
+        game.Submit();
+    }
+
+    private void RegenGame()
+    {
+        // Reload with the same word? Or redirect to main?
+        // If we want a new word, we'd need a random word picker.
+        // For now, just reload current page logic (which uses same word).
+        // Actually, let's navigate to empty to trigger default 'koer' again or stay same.
+        Navigation.NavigateTo($"/forms-game/et/{EtWord}", forceLoad: true);
+    }
+
+    private string MaskWord(string sentence, string word)
+    {
+        if (string.IsNullOrEmpty(sentence) || string.IsNullOrEmpty(word)) return sentence;
+        // Simple case-insensitive replacement
+        // Using Regex for word boundary might be better but let's stick to simple for now as forms might change ending.
+        // Actually, the word in the sentence IS the form we are looking for.
+        // So we are masking 'word' (which is the answer) in 'sentence'.
+        return Regex.Replace(sentence, Regex.Escape(word), "_______", RegexOptions.IgnoreCase);
+    }
+}
+
+<div class="text-left">
+    <div class="row">
+        <div class="col-7">
+            <h3>Nimisõna 3 vormi (Noun 3 Forms)</h3>
+        </div>
+        <div class="col-5">
+            @if (Game.HasValue && Game.Value.IsFinished)
+            {
+                <Button Color="ButtonColor.Primary" Type="ButtonType.Reset" @onclick="@RegenGame">
+                    <i class="bi bi-arrow-repeat"></i>
+                    Try again!
+                </Button>
+            }
+        </div>
+    </div>
+
+    @if (Game.HasValue)
+    {
+        var game = Game.Value;
+
+        <div class="row mb-3">
+            <div class="col-12">
+                <h5>Base Word: <strong>@EtWord</strong> (or default: koer) -> Target: <strong>@game.NimetavSõna</strong>
+                    (Base)</h5>
+            </div>
+        </div>
+
+        <div class="row">
+            @* Nimetav *@
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-header">Nimetav (Nominative)</div>
+                    <div class="card-body">
+                        <p class="card-text">@MaskWord(game.NimetavLause, game.NimetavSõna)</p>
+                        @if (game.IsFinished)
+                        {
+                            <div class="mb-2">
+                                @if (game.IsNimetavOk)
+                                {
+                                    <span class="text-success fw-bold">@game.NimetavSõna</span>
+                                    <i class="bi bi-check-circle-fill text-success"></i>
+                                }
+                                else
+                                {
+                                    <span class="text-danger text-decoration-line-through">@game.UserNimetavSõna</span>
+                                    <br />
+                                    <span class="text-success fw-bold">@game.NimetavSõna</span>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <InputText @bind-Value="game.UserNimetavSõna" class="form-control"
+                                placeholder="Type word form..." />
+                        }
+                    </div>
+                </div>
+            </div>
+
+            @* Omastav *@
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-header">Omastav (Genitive)</div>
+                    <div class="card-body">
+                        <p class="card-text">@MaskWord(game.OmastavLause, game.OmastavSõna)</p>
+                        @if (game.IsFinished)
+                        {
+                            <div class="mb-2">
+                                @if (game.IsOmastavOk)
+                                {
+                                    <span class="text-success fw-bold">@game.OmastavSõna</span>
+                                    <i class="bi bi-check-circle-fill text-success"></i>
+                                }
+                                else
+                                {
+                                    <span class="text-danger text-decoration-line-through">@game.UserOmastavSõna</span>
+                                    <br />
+                                    <span class="text-success fw-bold">@game.OmastavSõna</span>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <InputText @bind-Value="game.UserOmastavSõna" class="form-control"
+                                placeholder="Type word form..." />
+                        }
+                    </div>
+                </div>
+            </div>
+
+            @* Osastav *@
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-header">Osastav (Partitive)</div>
+                    <div class="card-body">
+                        <p class="card-text">@MaskWord(game.OsastavLause, game.OsastavSõna)</p>
+                        @if (game.IsFinished)
+                        {
+                            <div class="mb-2">
+                                @if (game.IsOsastavOk)
+                                {
+                                    <span class="text-success fw-bold">@game.OsastavSõna</span>
+                                    <i class="bi bi-check-circle-fill text-success"></i>
+                                }
+                                else
+                                {
+                                    <span class="text-danger text-decoration-line-through">@game.UserOsastavSõna</span>
+                                    <br />
+                                    <span class="text-success fw-bold">@game.OsastavSõna</span>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <InputText @bind-Value="game.UserOsastavSõna" class="form-control"
+                                placeholder="Type word form..." />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (!game.IsFinished)
+        {
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <button class="btn btn-primary me-2" @onclick="OnSubmit">Submit</button>
+                    <button class="btn btn-secondary" @onclick="OnGiveUp">Give Up</button>
+                </div>
+            </div>
+        }
+    }
+    else if (GameGenerationError.HasNoValue)
+    {
+        <div class="d-flex justify-content-center">
+            <Spinner />
+        </div>
+    }
+
+    @if (GameGenerationError.HasValue)
+    {
+        <p class="text-danger">
+            @GameGenerationError
+        </p>
+    }
+</div>

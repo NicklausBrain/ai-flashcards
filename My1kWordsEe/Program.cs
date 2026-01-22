@@ -88,6 +88,7 @@ namespace My1kWordsEe
             builder.Services.AddScoped<Et1kWords>();
             builder.Services.AddScoped<TranslateToEnGameFactory>();
             builder.Services.AddScoped<TranslateToEtGameFactory>();
+            builder.Services.AddScoped<EtNoun3FormsGameFactory>();
             builder.Services.AddScoped<ListenToEeGameFactory>();
             builder.Services.AddScoped<Word2WordMatchGameFactory>();
 

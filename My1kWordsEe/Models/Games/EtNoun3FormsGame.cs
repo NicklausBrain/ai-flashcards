@@ -3,8 +3,10 @@ using System.Text.Json.Serialization;
 
 using My1kWordsEe.Models.Semantics;
 
-public class EtNoun3FormsGame
+public struct EtNoun3FormsGame
 {
+    public EtNoun3FormsGame() { }
+
     [Description("Sõna ainsuse nimetavas käändes")]
     public string NimetavSõna { get; set; }
 
@@ -23,14 +25,26 @@ public class EtNoun3FormsGame
     [Description("Lihtne lause, kus sõna on ainsuse osastavas käändes")]
     public string OsastavLause { get; set; }
 
+    // remove?
     [JsonIgnore]
     public string UserNimetavLause { get; set; }
 
+    // remove?
     [JsonIgnore]
     public string UserOmastavLause { get; set; }
 
+    // remove?
     [JsonIgnore]
     public string UserOsastavLause { get; set; }
+
+    [JsonIgnore]
+    public string UserNimetavSõna { get; set; }
+
+    [JsonIgnore]
+    public string UserOmastavSõna { get; set; }
+
+    [JsonIgnore]
+    public string UserOsastavSõna { get; set; }
 
     [JsonIgnore]
     public bool IsFinished { get; private set; } = false;
@@ -54,19 +68,19 @@ public class EtNoun3FormsGame
             return;
         }
 
-        if (string.Equals(this.NimetavLause, this.UserNimetavLause, StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(this.NimetavSõna, this.UserNimetavSõna, StringComparison.OrdinalIgnoreCase))
         {
             this.IsNimetavOk = true;
             Score++;
         }
 
-        if (string.Equals(this.OmastavLause, this.UserOmastavLause, StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(this.OmastavSõna, this.UserOmastavSõna, StringComparison.OrdinalIgnoreCase))
         {
             this.IsOmastavOk = true;
             Score++;
         }
 
-        if (string.Equals(this.OsastavLause, this.UserOsastavLause, StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(this.OsastavSõna, this.UserOsastavSõna, StringComparison.OrdinalIgnoreCase))
         {
             this.IsOsastavOk = true;
             Score++;
