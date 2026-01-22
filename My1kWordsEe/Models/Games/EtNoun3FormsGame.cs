@@ -15,6 +15,7 @@ public class EtNoun3FormsGame
         this.OmastavLause = omastavLause;
         this.OsastavSõna = osastavSõna;
         this.OsastavLause = osastavLause;
+        this.UserNimetavSõna = nimetavSõna;
     }
 
     public string NimetavSõna { get; private set; }

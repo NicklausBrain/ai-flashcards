@@ -32,9 +32,9 @@ namespace My1kWordsEe.Models.Games
             this.favoritesStateContainer = favoritesStateContainer;
         }
 
-        public async Task<Result<TranslateToEnGame>> Generate(string etWord, uint senseIndex)
+        public async Task<Result<TranslateToEnGame>> Generate(string? etWord, uint senseIndex)
         {
-            etWord = (etWord ?? await GetRandomEtWord()).ToLower();
+            etWord = (string.IsNullOrEmpty(etWord) ? await GetRandomEtWord() : etWord).ToLower();
             var etWordObj = await getOrAddEtWordCommand.Invoke(etWord);
 
             if (etWordObj.IsFailure)

@@ -33,7 +33,7 @@
 
         var nouns = etWordsCache.AllWords.Where(w => w.DefaultSense.IsNoun).ToArray();
 
-        var noun = nouns[random.Next(0, nouns.Length - 1)];
+        var noun = nouns[random.Next(0, nouns.Length)];
         return noun.Value;
     }
 
@@ -53,6 +53,7 @@
             if (gameGen.IsSuccess)
             {
                 Game = gameGen.Value;
+                //gameGen.Value.UserNimetavSõna = string.Empty;
             }
             else
             {
@@ -69,11 +70,7 @@
 
     private void OnGiveUp()
     {
-        // Auto-fill correct answers
         var game = Game.Value;
-        @* game.UserNimetavSõna = game.NimetavSõna;
-        game.UserOmastavSõna = game.OmastavSõna;
-        game.UserOsastavSõna = game.OsastavSõna; *@
         game.GiveUp();
     }
 
