@@ -16,7 +16,15 @@ public class BlazorTest : PageTest
     [SetUp]
     public async Task SetUpWebApplication()
     {
-        _host = Program.BuildWebHost(new string[] { });
+        var executionDir = Path.GetDirectoryName(typeof(BlazorTest).Assembly.Location)!;
+        var webRootPath = Path.Combine(executionDir, "../../../../My1kWordsEe/wwwroot");
+        var args = new[] 
+        { 
+            $"--webroot={Path.GetFullPath(webRootPath)}",
+            "--environment=Development",
+            "--applicationName=My1kWordsEe"
+        };
+        _host = Program.BuildWebHost(args);
 
         await _host.StartAsync();
 
