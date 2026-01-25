@@ -1,7 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
+@using BlazorBootstrap
+
 @implements IDisposable
 
 @inject NavigationManager NavigationManager
+
+@rendermode InteractiveServer
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -13,6 +17,10 @@
 </div>
 
 <input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+
+<div class="d-flex justify-content-center text-primary">
+    <ThemeSwitcher />
+</div>
 
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="flex-column">
