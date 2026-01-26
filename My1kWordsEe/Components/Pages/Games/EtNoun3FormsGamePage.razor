@@ -78,14 +78,19 @@
         Navigation.NavigateTo($"/forms-game/et/{GetRandomNoun()}", forceLoad: true);
     }
 
-    private string MaskWord(string sentence, string word)
+    private string MaskWord(string sentence, string word, string? userWord)
     {
-        if (string.IsNullOrEmpty(sentence) || string.IsNullOrEmpty(word)) return sentence;
+        if (string.IsNullOrEmpty(sentence) || string.IsNullOrEmpty(word))
+        {
+            return sentence;
+        }
+
+        var replacement = string.IsNullOrEmpty(userWord) ? "_______" : userWord;
         // Simple case-insensitive replacement
         // Using Regex for word boundary might be better but let's stick to simple for now as forms might change ending.
         // Actually, the word in the sentence IS the form we are looking for.
         // So we are masking 'word' (which is the answer) in 'sentence'.
-        return Regex.Replace(sentence, Regex.Escape(word), "_______", RegexOptions.IgnoreCase);
+        return Regex.Replace(sentence, Regex.Escape(word), replacement, RegexOptions.IgnoreCase);
     }
 }
 
@@ -121,7 +126,7 @@
                 <div class="card h-100">
                     <div class="card-header">Nimetav (Nominative)</div>
                     <div class="card-body">
-                        <p class="card-text">@MaskWord(game.NimetavLause, game.NimetavSõna)</p>
+                        <p class="card-text">@MaskWord(game.NimetavLause, game.NimetavSõna, @game.UserNimetavSõna)</p>
                         @if (game.IsFinished)
                         {
                             <div class="mb-2">
@@ -140,7 +145,7 @@
                         }
                         else
                         {
-                            <InputText @bind-Value="@game.UserNimetavSõna" class="form-control"
+                            <InputText @bind:event="oninput" @bind-Value="@game.UserNimetavSõna" class="form-control"
                                 placeholder="Type word form..." />
                         }
                     </div>
@@ -152,7 +157,7 @@
                 <div class="card h-100">
                     <div class="card-header">Omastav (Genitive)</div>
                     <div class="card-body">
-                        <p class="card-text">@MaskWord(game.OmastavLause, game.OmastavSõna)</p>
+                        <p class="card-text">@MaskWord(game.OmastavLause, game.OmastavSõna, @game.UserOmastavSõna)</p>
                         @if (game.IsFinished)
                         {
                             <div class="mb-2">
@@ -171,7 +176,7 @@
                         }
                         else
                         {
-                            <InputText @bind-Value="@game.UserOmastavSõna" class="form-control"
+                            <InputText @bind:event="oninput" @bind-Value="@game.UserOmastavSõna" class="form-control"
                                 placeholder="Type word form..." />
                         }
                     </div>
@@ -183,7 +188,7 @@
                 <div class="card h-100">
                     <div class="card-header">Osastav (Partitive)</div>
                     <div class="card-body">
-                        <p class="card-text">@MaskWord(game.OsastavLause, game.OsastavSõna)</p>
+                        <p class="card-text">@MaskWord(game.OsastavLause, game.OsastavSõna, @game.UserOsastavSõna)</p>
                         @if (game.IsFinished)
                         {
                             <div class="mb-2">
@@ -202,7 +207,7 @@
                         }
                         else
                         {
-                            <InputText @bind-Value="@game.UserOsastavSõna" class="form-control"
+                            <InputText @bind:event="oninput" @bind-Value="@game.UserOsastavSõna" class="form-control"
                                 placeholder="Type word form..." />
                         }
                     </div>

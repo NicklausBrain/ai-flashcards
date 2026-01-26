@@ -24,6 +24,7 @@
 @inject GetOrAddEtWordCommand GetOrAddEtWordCommand
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject TelemetryClient telemetry
+@inject NavigationManager Navigation
 
 @code {
     public const string SamplesTab = "SamplesTab";
@@ -160,6 +161,7 @@
                         <FormsGrid EtWord="EtWord" SenseIndex="SenseIndex" />
                     </Content>
                 </Tab>
+                <Tab Title="Exercise 3 forms" OnClick="@(_ => Navigation.NavigateTo($"/forms-game/et/{Word}"))" />
             </Tabs>
         }
         else
