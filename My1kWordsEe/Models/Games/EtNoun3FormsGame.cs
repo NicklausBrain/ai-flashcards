@@ -30,11 +30,11 @@ public class EtNoun3FormsGame
 
     public string OsastavLause { get; private set; }
 
-    public string UserNimetavSõna { get; set; } = string.Empty;
+    public required string UserNimetavSõna { get; set; } = string.Empty;
 
-    public string UserOmastavSõna { get; set; } = string.Empty;
+    public required string UserOmastavSõna { get; set; } = string.Empty;
 
-    public string UserOsastavSõna { get; set; } = string.Empty;
+    public required string UserOsastavSõna { get; set; } = string.Empty;
 
     public bool IsFinished { get; private set; } = false;
 
@@ -53,19 +53,19 @@ public class EtNoun3FormsGame
             return;
         }
 
-        if (string.Equals(this.NimetavSõna, this.UserNimetavSõna, StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(this.NimetavSõna, this.UserNimetavSõna.Trim(), StringComparison.OrdinalIgnoreCase))
         {
             this.IsNimetavOk = true;
             Score++;
         }
 
-        if (string.Equals(this.OmastavSõna, this.UserOmastavSõna, StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(this.OmastavSõna, this.UserOmastavSõna.Trim(), StringComparison.OrdinalIgnoreCase))
         {
             this.IsOmastavOk = true;
             Score++;
         }
 
-        if (string.Equals(this.OsastavSõna, this.UserOsastavSõna, StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(this.OsastavSõna, this.UserOsastavSõna.Trim(), StringComparison.OrdinalIgnoreCase))
         {
             this.IsOsastavOk = true;
             Score++;
