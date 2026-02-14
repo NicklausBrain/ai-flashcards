@@ -63,10 +63,11 @@
     private HttpContext HttpContext { get; set; } = default!;
 
     [SupplyParameterFromForm(FormName = "change-email")]
-    private InputModel Input { get; set; } = new();
+    private InputModel? Input { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        Input ??= new();
         user = await UserAccessor.GetRequiredUserAsync(HttpContext);
         email = await UserManager.GetEmailAsync(user);
         isEmailConfirmed = await UserManager.IsEmailConfirmedAsync(user);
@@ -76,6 +77,7 @@
 
     private async Task OnValidSubmitAsync()
     {
+        Input ??= new();
         if (Input.NewEmail is null || Input.NewEmail == email)
         {
             message = "Your email is unchanged.";

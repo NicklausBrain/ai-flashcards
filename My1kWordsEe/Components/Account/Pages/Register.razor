@@ -68,15 +68,21 @@ else
     private IEnumerable<IdentityError>? identityErrors;
 
     [SupplyParameterFromForm]
-    private InputModel Input { get; set; } = new();
+    private InputModel? Input { get; set; }
 
     [SupplyParameterFromQuery]
     private string? ReturnUrl { get; set; }
 
     private string? Message => identityErrors is null ? null : $"Error: {string.Join(", ", identityErrors.Select(error => error.Description))}";
 
+    protected override void OnInitialized()
+    {
+        Input ??= new();
+    }
+
     public async Task RegisterUser(EditContext editContext)
     {
+        Input ??= new();
         var user = CreateUser();
 
         await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);

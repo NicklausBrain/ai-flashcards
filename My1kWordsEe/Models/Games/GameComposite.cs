@@ -2,7 +2,7 @@ namespace My1kWordsEe.Models.Games
 {
     public class GameComposite
     {
-        private readonly object[] gameSlides;
+        private readonly object[] gameSlides = Array.Empty<object>();
 
         public ushort CalcResuls()
         {

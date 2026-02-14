@@ -79,10 +79,11 @@ else
     private HttpContext HttpContext { get; set; } = default!;
 
     [SupplyParameterFromForm]
-    private InputModel Input { get; set; } = new();
+    private InputModel? Input { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        Input ??= new();
         user = await UserAccessor.GetRequiredUserAsync(HttpContext);
 
         await LoadSharedKeyAndQrCodeUriAsync(user);
@@ -90,6 +91,7 @@ else
 
     private async Task OnValidSubmitAsync()
     {
+        Input ??= new();
         // Strip spaces and hyphens
         var verificationCode = Input.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
 

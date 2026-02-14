@@ -54,7 +54,7 @@
     private HttpContext HttpContext { get; set; } = default!;
 
     [SupplyParameterFromForm]
-    private InputModel Input { get; set; } = new();
+    private InputModel? Input { get; set; }
 
     [SupplyParameterFromQuery]
     private string? RemoteError { get; set; }
@@ -69,6 +69,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        Input ??= new();
         if (RemoteError is not null)
         {
             RedirectManager.RedirectToWithStatus("Account/Login", $"Error from external provider: {RemoteError}", HttpContext);
@@ -98,6 +99,7 @@
 
     private async Task OnLoginCallbackAsync()
     {
+        Input ??= new();
         // Sign in the user with this external login provider if the user already has a login.
         var result = await SignInManager.ExternalLoginSignInAsync(
             externalLoginInfo.LoginProvider,
@@ -127,6 +129,7 @@
 
     private async Task OnValidSubmitAsync()
     {
+        Input ??= new();
         var emailStore = GetEmailStore();
         var user = CreateUser();
 
