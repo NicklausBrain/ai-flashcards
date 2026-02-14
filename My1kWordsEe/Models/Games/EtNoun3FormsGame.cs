@@ -30,11 +30,11 @@ public class EtNoun3FormsGame
 
     public string OsastavLause { get; private set; }
 
-    public required string UserNimetavSõna { get; set; } = string.Empty;
+    public string UserNimetavSõna { get; set; } = string.Empty;
 
-    public required string UserOmastavSõna { get; set; } = string.Empty;
+    public string UserOmastavSõna { get; set; } = string.Empty;
 
-    public required string UserOsastavSõna { get; set; } = string.Empty;
+    public string UserOsastavSõna { get; set; } = string.Empty;
 
     public bool IsFinished { get; private set; } = false;
 
