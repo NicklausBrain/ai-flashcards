@@ -2,7 +2,9 @@ using System.ComponentModel;
 
 using CSharpFunctionalExtensions;
 
+using My1kWordsEe.Models.Grammar;
 using My1kWordsEe.Services;
+using My1kWordsEe.Services.Cqs.Et;
 
 namespace My1kWordsEe.Models.Games
 {
@@ -17,20 +19,29 @@ Sisend: Eesti keele nimisõna (nimetav kääne).
 3. Tagasta JSON, mis vastab skeemile.";
 
         private readonly OpenAiClient openAiClient;
+        private readonly GetOrAddEtWordCommand getOrAddEtWordCommand;
+        private readonly GetOrAddEtFormsCommand getOrAddEtFormsCommand;
 
         public EtNoun3FormsGameFactory(
-            OpenAiClient openAiClient)
+            OpenAiClient openAiClient,
+            GetOrAddEtWordCommand getOrAddEtWordCommand,
+            GetOrAddEtFormsCommand getOrAddEtFormsCommand)
         {
             this.openAiClient = openAiClient;
+            this.getOrAddEtWordCommand = getOrAddEtWordCommand;
+            this.getOrAddEtFormsCommand = getOrAddEtFormsCommand;
         }
 
         public async Task<Result<EtNoun3FormsGame>> Generate(string etNoun)
         {
-            var gameData = await this.openAiClient.CompleteJsonSchemaAsync<EtNoun3FormsGameData>(
-                Prompt,
-                etNoun,
-                JsonSchemaRecord.For(typeof(EtNoun3FormsGameData)),
-                temperature: 0.1f);
+            var gameData = await this.getOrAddEtWordCommand.Invoke(etNoun)
+                .BindIf(word => word.DefaultSense.IsNoun, word => word)
+                .Bind(word => this.getOrAddEtFormsCommand.Invoke<NounForms>(word, 0))
+                .Bind(forms => this.openAiClient.CompleteJsonSchemaAsync<EtNoun3FormsGameData>(
+                    Prompt,
+                    forms.BaseForm,
+                    JsonSchemaRecord.For(typeof(EtNoun3FormsGameData)),
+                    temperature: 0.1f));
 
             // todo: save gameData in storage
 
