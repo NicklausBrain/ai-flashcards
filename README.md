@@ -1,6 +1,6 @@
 # ai-flashcards
 
-flascards for Estonian words and sentences memoization
+flashcards for Estonian words and sentences memoization
 
 ## ./My1kWordsEe
 
