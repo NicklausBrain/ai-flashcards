@@ -1,12 +1,14 @@
+using My1kWordsEe.Models;
+
 public class EtNoun3FormsGame
 {
     public EtNoun3FormsGame(
-        string nimetavSõna,
-        string nimetavLause,
-        string omastavSõna,
-        string omastavLause,
-        string osastavSõna,
-        string osastavLause
+        TranslatedString nimetavSõna,
+        TranslatedString nimetavLause,
+        TranslatedString omastavSõna,
+        TranslatedString omastavLause,
+        TranslatedString osastavSõna,
+        TranslatedString osastavLause
     )
     {
         this.NimetavSõna = nimetavSõna;
@@ -15,20 +17,21 @@ public class EtNoun3FormsGame
         this.OmastavLause = omastavLause;
         this.OsastavSõna = osastavSõna;
         this.OsastavLause = osastavLause;
-        this.UserNimetavSõna = nimetavSõna;
+        // preset default case because user knows it
+        this.UserNimetavSõna = nimetavSõna.Et;
     }
 
-    public string NimetavSõna { get; private set; }
+    public TranslatedString NimetavSõna { get; private set; }
 
-    public string NimetavLause { get; private set; }
+    public TranslatedString NimetavLause { get; private set; }
 
-    public string OmastavSõna { get; private set; }
+    public TranslatedString OmastavSõna { get; private set; }
 
-    public string OmastavLause { get; private set; }
+    public TranslatedString OmastavLause { get; private set; }
 
-    public string OsastavSõna { get; private set; }
+    public TranslatedString OsastavSõna { get; private set; }
 
-    public string OsastavLause { get; private set; }
+    public TranslatedString OsastavLause { get; private set; }
 
     public string UserNimetavSõna { get; set; } = string.Empty;
 
@@ -53,19 +56,19 @@ public class EtNoun3FormsGame
             return;
         }
 
-        if (string.Equals(this.NimetavSõna, this.UserNimetavSõna.Trim(), StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(this.NimetavSõna.Et, this.UserNimetavSõna.Trim(), StringComparison.OrdinalIgnoreCase))
         {
             this.IsNimetavOk = true;
             Score++;
         }
 
-        if (string.Equals(this.OmastavSõna, this.UserOmastavSõna.Trim(), StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(this.OmastavSõna.Et, this.UserOmastavSõna.Trim(), StringComparison.OrdinalIgnoreCase))
         {
             this.IsOmastavOk = true;
             Score++;
         }
 
-        if (string.Equals(this.OsastavSõna, this.UserOsastavSõna.Trim(), StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(this.OsastavSõna.Et, this.UserOsastavSõna.Trim(), StringComparison.OrdinalIgnoreCase))
         {
             this.IsOsastavOk = true;
             Score++;
