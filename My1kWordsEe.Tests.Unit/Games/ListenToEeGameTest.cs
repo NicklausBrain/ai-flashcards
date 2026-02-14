@@ -16,7 +16,7 @@ namespace My1kWordsEe.Tests.Models.Games
 
         public ListenToEeGameTest()
         {
-            _checkEeListeningCommandMock = new Mock<CheckEeListeningCommand>(null, null);
+            _checkEeListeningCommandMock = new Mock<CheckEeListeningCommand>(null!, null!);
             _sampleSentence = new SampleSentenceWithMedia
             {
                 Id = Guid.NewGuid(),
