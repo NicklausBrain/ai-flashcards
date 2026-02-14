@@ -161,7 +161,9 @@
                         <FormsGrid EtWord="EtWord" SenseIndex="SenseIndex" />
                     </Content>
                 </Tab>
-                <Tab Title="Exercise 3 forms" OnClick="@(_ => Navigation.NavigateTo($"/forms-game/et/{Word}"))" />
+                <Tab Title="Exercise 3 forms" OnClick="@(_ => Navigation.NavigateTo($"/forms-game/et/{Word}"))">
+                    <Content></Content>
+                </Tab>
             </Tabs>
         }
         else

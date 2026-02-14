@@ -15,10 +15,10 @@ namespace My1kWordsEe.Tests.Models
         [InlineData("123", true)]
         [InlineData("võib-olla", true)]
         [InlineData("äöü", true)]
-        public void ValidateWord_ShouldReturnExpectedResult(string word, bool expected)
+        public void ValidateWord_ShouldReturnExpectedResult(string? word, bool expected)
         {
             // Act
-            var result = word.ValidateWord();
+            var result = word!.ValidateWord();
 
             // Assert
             Assert.Equal(expected, result);

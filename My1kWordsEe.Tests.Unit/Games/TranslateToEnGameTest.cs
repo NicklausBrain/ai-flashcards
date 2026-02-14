@@ -18,8 +18,8 @@ namespace My1kWordsEe.Tests.Models.Games
 
         public TranslateToEnGameTest()
         {
-            _checkEnTranslationCommandMock = new Mock<CheckEnTranslationCommand>(null, null);
-            _favoritesStateContainer = new Mock<FavoritesStateContainer>(null, null, null, null, null, null);
+            _checkEnTranslationCommandMock = new Mock<CheckEnTranslationCommand>(null!, null!);
+            _favoritesStateContainer = new Mock<FavoritesStateContainer>(null!, null!, null!, null!, null!, null!);
             _sampleSentence = new SampleSentenceWithMedia
             {
                 Id = Guid.NewGuid(),

@@ -7,7 +7,7 @@ using Microsoft.Playwright.NUnit;
 
 namespace My1kWordsEe.Tests.E2E.Infra;
 
-public class BlazorTest : PageTest
+public abstract class BlazorTest : PageTest
 {
     private IHost? _host;
 
@@ -18,8 +18,8 @@ public class BlazorTest : PageTest
     {
         var executionDir = Path.GetDirectoryName(typeof(BlazorTest).Assembly.Location)!;
         var webRootPath = Path.Combine(executionDir, "../../../../My1kWordsEe/wwwroot");
-        var args = new[] 
-        { 
+        var args = new[]
+        {
             $"--webroot={Path.GetFullPath(webRootPath)}",
             "--environment=Development",
             "--applicationName=My1kWordsEe"
