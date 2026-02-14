@@ -32,4 +32,5 @@ jobs:
           Secrets__StabilityAiKey: ${{ secrets.Secrets__StabilityAiKey }}
           Secrets__AzureBlobConnectionString: ${{ secrets.Secrets__AzureBlobConnectionString }}
           Secrets__AzureCosmosConnectionString: ${{ secrets.Secrets__AzureCosmosConnectionString }}
+          Secrets__AppInsightsConnectionString: ${{ secrets.Secrets__AppInsightsConnectionString }}
         run: dotnet test
