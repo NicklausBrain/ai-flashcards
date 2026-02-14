@@ -15,9 +15,9 @@
 @using Microsoft.ApplicationInsights
 @using System.Text.RegularExpressions
 
-@inject EtNoun3FormsGameFactory EtNoun3FormsGameFactory
-@inject NavigationManager Navigation
-@inject TelemetryClient telemetry
+@inject EtNoun3FormsGameFactory EtNoun3FormsGameFactory;
+@inject NavigationManager Navigation;
+@inject TelemetryClient telemetry;
 @inject EtWordsCache etWordsCache;
 
 @code {
@@ -111,7 +111,7 @@
 
         <div class="row mb-3">
             <div class="col-12">
-                <h5>Base Word: <a href="/word/@game.NimetavSõna" target="_blank"><strong>@game.NimetavSõna</strong></a></h5>
+                <h5>Base Word: <a href="/word/@game.NimetavSõna.Et" target="_blank"><strong>@game.NimetavSõna.Et</strong></a></h5>
             </div>
         </div>
 
@@ -121,20 +121,20 @@
                 <div class="card h-100">
                     <div class="card-header">Nimetav (Nominative)</div>
                     <div class="card-body">
-                        <p class="card-text">@MaskWord(game.NimetavLause, game.NimetavSõna, game.UserNimetavSõna)</p>
+                        <p class="card-text">@MaskWord(game.NimetavLause.Et, game.NimetavSõna.Et, game.UserNimetavSõna)</p>
                         @if (game.IsFinished)
                         {
                             <div class="mb-2">
                                 @if (game.IsNimetavOk)
                                 {
-                                    <span class="text-success fw-bold">@game.NimetavSõna</span>
+                                    <span class="text-success fw-bold">@game.NimetavSõna.Et</span>
                                     <i class="bi bi-check-circle-fill text-success"></i>
                                 }
                                 else
                                 {
                                     <span class="text-danger text-decoration-line-through">@game.UserNimetavSõna</span>
                                     <br />
-                                    <span class="text-success fw-bold">@game.NimetavSõna</span>
+                                    <span class="text-success fw-bold">@game.NimetavSõna.Et</span>
                                 }
                             </div>
                         }
@@ -153,20 +153,20 @@
                 <div class="card h-100">
                     <div class="card-header">Omastav (Genitive)</div>
                     <div class="card-body">
-                        <p class="card-text">@MaskWord(game.OmastavLause, game.OmastavSõna, game.UserOmastavSõna)</p>
+                        <p class="card-text">@MaskWord(game.OmastavLause.Et, game.OmastavSõna.Et, game.UserOmastavSõna)</p>
                         @if (game.IsFinished)
                         {
                             <div class="mb-2">
                                 @if (game.IsOmastavOk)
                                 {
-                                    <span class="text-success fw-bold">@game.OmastavSõna</span>
+                                    <span class="text-success fw-bold">@game.OmastavSõna.Et</span>
                                     <i class="bi bi-check-circle-fill text-success"></i>
                                 }
                                 else
                                 {
                                     <span class="text-danger text-decoration-line-through">@game.UserOmastavSõna</span>
                                     <br />
-                                    <span class="text-success fw-bold">@game.OmastavSõna</span>
+                                    <span class="text-success fw-bold">@game.OmastavSõna.Et</span>
                                 }
                             </div>
                         }
@@ -185,20 +185,20 @@
                 <div class="card h-100">
                     <div class="card-header">Osastav (Partitive)</div>
                     <div class="card-body">
-                        <p class="card-text">@MaskWord(game.OsastavLause, game.OsastavSõna, game.UserOsastavSõna)</p>
+                        <p class="card-text">@MaskWord(game.OsastavLause.Et, game.OsastavSõna.Et, game.UserOsastavSõna)</p>
                         @if (game.IsFinished)
                         {
                             <div class="mb-2">
                                 @if (game.IsOsastavOk)
                                 {
-                                    <span class="text-success fw-bold">@game.OsastavSõna</span>
+                                    <span class="text-success fw-bold">@game.OsastavSõna.Et</span>
                                     <i class="bi bi-check-circle-fill text-success"></i>
                                 }
                                 else
                                 {
                                     <span class="text-danger text-decoration-line-through">@game.UserOsastavSõna</span>
                                     <br />
-                                    <span class="text-success fw-bold">@game.OsastavSõna</span>
+                                    <span class="text-success fw-bold">@game.OsastavSõna.Et</span>
                                 }
                             </div>
                         }

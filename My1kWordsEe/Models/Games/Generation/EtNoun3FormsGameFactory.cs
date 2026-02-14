@@ -60,22 +60,22 @@ Sisend: Eesti keele nimisõna (nimetav kääne).
         public struct EtNoun3FormsGameData
         {
             [Description("Sõna ainsuse nimetavas käändes")]
-            public string NimetavSõna { get; set; }
+            public TranslatedString NimetavSõna { get; set; }
 
             [Description("Lihtne lause, kus sõna on ainsuse nimetavas käändes")]
-            public string NimetavLause { get; set; }
+            public TranslatedString NimetavLause { get; set; }
 
             [Description("Sõna ainsuse omastavas käändes")]
-            public string OmastavSõna { get; set; }
+            public TranslatedString OmastavSõna { get; set; }
 
             [Description("Lihtne lause, kus sõna on ainsuse omastavas käändes")]
-            public string OmastavLause { get; set; }
+            public TranslatedString OmastavLause { get; set; }
 
             [Description("Sõna ainsuse osastavas käändes")]
-            public string OsastavSõna { get; set; }
+            public TranslatedString OsastavSõna { get; set; }
 
             [Description("Lihtne lause, kus sõna on ainsuse osastavas käändes")]
-            public string OsastavLause { get; set; }
+            public TranslatedString OsastavLause { get; set; }
         }
     }
 }
