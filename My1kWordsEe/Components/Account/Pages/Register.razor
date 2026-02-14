@@ -81,9 +81,6 @@ else
 
     private string? Message => identityErrors is null ? null : $"Error: {string.Join(", ", identityErrors.Select(error => error.Description))}";
 
-    protected override void OnInitialized()
-    {
-    }
 
     public async Task RegisterUser(EditContext editContext)
     {
