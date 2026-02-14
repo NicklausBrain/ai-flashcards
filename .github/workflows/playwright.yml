@@ -21,11 +21,11 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 9.0.x
+          dotnet-version: 10.x
       - name: Build & Install
         run: dotnet build
       - name: Ensure browsers are installed
-        run: pwsh bin/Debug/net9.0/playwright.ps1 install --with-deps
+        run: pwsh bin/Debug/net10.0/playwright.ps1 install --with-deps
       - name: Run e2e tests
         env:
           Secrets__OpenAiKey: ${{ secrets.Secrets__OpenAiKey }}
