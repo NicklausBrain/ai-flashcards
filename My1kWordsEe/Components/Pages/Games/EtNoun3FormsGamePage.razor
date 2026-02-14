@@ -39,7 +39,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        telemetry.TrackPageView(nameof(EtNoun3FormsGamePage));
+        telemetry.TrackEvent($"PageView:{nameof(EtNoun3FormsGamePage)}");
 
         if (string.IsNullOrEmpty(EtNoun))
         {

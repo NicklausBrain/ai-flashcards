@@ -42,7 +42,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        telemetry.TrackPageView(nameof(WordPage));
+        telemetry.TrackEvent($"PageView:{nameof(WordPage)}");
 
         // todo: duplicated code with sample page
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();

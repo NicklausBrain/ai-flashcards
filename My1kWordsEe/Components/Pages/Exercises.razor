@@ -9,7 +9,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        telemetry.TrackPageView(nameof(Exercises));
+        telemetry.TrackEvent($"PageView:{nameof(Exercises)}");
         await base.OnParametersSetAsync();
     }
 
