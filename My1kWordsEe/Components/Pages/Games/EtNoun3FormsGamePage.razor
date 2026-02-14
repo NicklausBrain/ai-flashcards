@@ -89,7 +89,6 @@
     }
 
     private RenderFragment GrammarCaseCard(
-        EtNoun3FormsGame game,
         string headerLabel,
         TranslatedString sentence,
         TranslatedString correctWord,
@@ -102,7 +101,7 @@
                 <div class="card-header">@headerLabel</div>
                 <div class="card-body">
                     <p class="card-text">@MaskWord(sentence.Et, correctWord.Et, userWord)</p>
-                    @if (game.IsFinished)
+                    @if (this.Game.Value.IsFinished)
                     {
                         <div class="mb-2">
                             @if (isCorrect)
@@ -159,9 +158,9 @@
         </div>
 
         <div class="row">
-            @GrammarCaseCard(game, "Nimetav (Nominative)", game.NimetavLause, game.NimetavSõna, game.IsNimetavOk, game.UserNimetavSõna, v => game.UserNimetavSõna = v)
-            @GrammarCaseCard(game, "Omastav (Genitive)", game.OmastavLause, game.OmastavSõna, game.IsOmastavOk, game.UserOmastavSõna, v => game.UserOmastavSõna = v)
-            @GrammarCaseCard(game, "Osastav (Partitive)", game.OsastavLause, game.OsastavSõna, game.IsOsastavOk, game.UserOsastavSõna, v => game.UserOsastavSõna = v)
+            @GrammarCaseCard("Nimetav (Nominative)", game.NimetavLause, game.NimetavSõna, game.IsNimetavOk, game.UserNimetavSõna, v => game.UserNimetavSõna = v)
+            @GrammarCaseCard("Omastav (Genitive)", game.OmastavLause, game.OmastavSõna, game.IsOmastavOk, game.UserOmastavSõna, v => game.UserOmastavSõna = v)
+            @GrammarCaseCard("Osastav (Partitive)", game.OsastavLause, game.OsastavSõna, game.IsOsastavOk, game.UserOsastavSõna, v => game.UserOsastavSõna = v)
         </div>
 
         @if (!game.IsFinished)
