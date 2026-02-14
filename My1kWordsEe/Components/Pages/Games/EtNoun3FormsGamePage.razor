@@ -87,6 +87,47 @@
         var replacement = string.IsNullOrEmpty(userWord) ? "_______" : userWord;
         return Regex.Replace(sentence, Regex.Escape(word), replacement, RegexOptions.IgnoreCase);
     }
+
+    private RenderFragment GrammarCaseCard(
+        EtNoun3FormsGame game,
+        string headerLabel,
+        TranslatedString sentence,
+        TranslatedString correctWord,
+        bool isCorrect,
+        string userWord,
+        Action<string> onUserWordChanged) => __builder =>
+    {
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-header">@headerLabel</div>
+                <div class="card-body">
+                    <p class="card-text">@MaskWord(sentence.Et, correctWord.Et, userWord)</p>
+                    @if (game.IsFinished)
+                    {
+                        <div class="mb-2">
+                            @if (isCorrect)
+                            {
+                                <span class="text-success fw-bold">@correctWord.Et</span>
+                                <i class="bi bi-check-circle-fill text-success"></i>
+                            }
+                            else
+                            {
+                                <span class="text-danger text-decoration-line-through">@userWord</span>
+                                <br />
+                                <span class="text-success fw-bold">@correctWord.Et</span>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <input type="text" value="@userWord"
+                            @oninput="e => onUserWordChanged(e.Value?.ToString() ?? string.Empty)"
+                            class="form-control" placeholder="Type word form..." />
+                    }
+                </div>
+            </div>
+        </div>
+    };
 }
 
 <div class="text-left">
@@ -118,101 +159,9 @@
         </div>
 
         <div class="row">
-            @* Nimetav *@
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <div class="card-header">Nimetav (Nominative)</div>
-                    <div class="card-body">
-                        <p class="card-text">@MaskWord(game.NimetavLause.Et, game.NimetavSõna.Et, game.UserNimetavSõna)</p>
-                        @if (game.IsFinished)
-                        {
-                            <div class="mb-2">
-                                @if (game.IsNimetavOk)
-                                {
-                                    <span class="text-success fw-bold">@game.NimetavSõna.Et</span>
-                                    <i class="bi bi-check-circle-fill text-success"></i>
-                                }
-                                else
-                                {
-                                    <span class="text-danger text-decoration-line-through">@game.UserNimetavSõna</span>
-                                    <br />
-                                    <span class="text-success fw-bold">@game.NimetavSõna.Et</span>
-                                }
-                            </div>
-                        }
-                        else
-                        {
-                            <input type="text" value="@game.UserNimetavSõna"
-                                @oninput="e => { game.UserNimetavSõna = e.Value?.ToString() ?? string.Empty; }"
-                                class="form-control" placeholder="Type word form..." />
-                        }
-                    </div>
-                </div>
-            </div>
-
-            @* Omastav *@
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <div class="card-header">Omastav (Genitive)</div>
-                    <div class="card-body">
-                        <p class="card-text">@MaskWord(game.OmastavLause.Et, game.OmastavSõna.Et, game.UserOmastavSõna)</p>
-                        @if (game.IsFinished)
-                        {
-                            <div class="mb-2">
-                                @if (game.IsOmastavOk)
-                                {
-                                    <span class="text-success fw-bold">@game.OmastavSõna.Et</span>
-                                    <i class="bi bi-check-circle-fill text-success"></i>
-                                }
-                                else
-                                {
-                                    <span class="text-danger text-decoration-line-through">@game.UserOmastavSõna</span>
-                                    <br />
-                                    <span class="text-success fw-bold">@game.OmastavSõna.Et</span>
-                                }
-                            </div>
-                        }
-                        else
-                        {
-                            <input type="text" value="@game.UserOmastavSõna"
-                                @oninput="e => { game.UserOmastavSõna = e.Value?.ToString() ?? string.Empty; }"
-                                class="form-control" placeholder="Type word form..." />
-                        }
-                    </div>
-                </div>
-            </div>
-
-            @* Osastav *@
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <div class="card-header">Osastav (Partitive)</div>
-                    <div class="card-body">
-                        <p class="card-text">@MaskWord(game.OsastavLause.Et, game.OsastavSõna.Et, game.UserOsastavSõna)</p>
-                        @if (game.IsFinished)
-                        {
-                            <div class="mb-2">
-                                @if (game.IsOsastavOk)
-                                {
-                                    <span class="text-success fw-bold">@game.OsastavSõna.Et</span>
-                                    <i class="bi bi-check-circle-fill text-success"></i>
-                                }
-                                else
-                                {
-                                    <span class="text-danger text-decoration-line-through">@game.UserOsastavSõna</span>
-                                    <br />
-                                    <span class="text-success fw-bold">@game.OsastavSõna.Et</span>
-                                }
-                            </div>
-                        }
-                        else
-                        {
-                            <input type="text" value="@game.UserOsastavSõna"
-                                @oninput="e => { game.UserOsastavSõna = e.Value?.ToString() ?? string.Empty; }"
-                                class="form-control" placeholder="Type word form..." />
-                        }
-                    </div>
-                </div>
-            </div>
+            @GrammarCaseCard(game, "Nimetav (Nominative)", game.NimetavLause, game.NimetavSõna, game.IsNimetavOk, game.UserNimetavSõna, v => game.UserNimetavSõna = v)
+            @GrammarCaseCard(game, "Omastav (Genitive)", game.OmastavLause, game.OmastavSõna, game.IsOmastavOk, game.UserOmastavSõna, v => game.UserOmastavSõna = v)
+            @GrammarCaseCard(game, "Osastav (Partitive)", game.OsastavLause, game.OsastavSõna, game.IsOsastavOk, game.UserOsastavSõna, v => game.UserOsastavSõna = v)
         </div>
 
         @if (!game.IsFinished)
