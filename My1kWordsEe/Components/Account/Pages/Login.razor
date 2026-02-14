@@ -77,15 +77,20 @@
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
 
+    private InputModel? _input;
+
     [SupplyParameterFromForm]
-    private InputModel? Input { get; set; }
+    private InputModel Input
+    {
+        get => _input ??= new();
+        set => _input = value;
+    }
 
     [SupplyParameterFromQuery]
     private string? ReturnUrl { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Input ??= new();
         if (HttpMethods.IsGet(HttpContext.Request.Method))
         {
             // Clear the existing external cookie to ensure a clean login process
@@ -95,7 +100,6 @@
 
     public async Task LoginUser()
     {
-        Input ??= new();
         // This doesn't count login failures towards account lockout
         // To enable password failures to trigger account lockout, set lockoutOnFailure: true
         var result = await SignInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);

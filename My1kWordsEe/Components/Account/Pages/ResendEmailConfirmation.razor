@@ -36,17 +36,21 @@
 @code {
     private string? message;
 
+    private InputModel? _input;
+
     [SupplyParameterFromForm]
-    private InputModel? Input { get; set; }
+    private InputModel Input
+    {
+        get => _input ??= new();
+        set => _input = value;
+    }
 
     protected override void OnInitialized()
     {
-        Input ??= new();
     }
 
     private async Task OnValidSubmitAsync()
     {
-        Input ??= new();
         var user = await UserManager.FindByEmailAsync(Input.Email!);
         if (user is null)
         {

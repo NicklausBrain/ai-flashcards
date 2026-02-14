@@ -41,12 +41,17 @@
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
 
+    private InputModel? _input;
+
     [SupplyParameterFromForm]
-    private InputModel? Input { get; set; }
+    private InputModel Input
+    {
+        get => _input ??= new();
+        set => _input = value;
+    }
 
     protected override async Task OnInitializedAsync()
     {
-        Input ??= new();
         user = await UserAccessor.GetRequiredUserAsync(HttpContext);
         username = await UserManager.GetUserNameAsync(user);
         phoneNumber = await UserManager.GetPhoneNumberAsync(user);

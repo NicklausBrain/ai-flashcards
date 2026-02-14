@@ -67,8 +67,14 @@ else
 @code {
     private IEnumerable<IdentityError>? identityErrors;
 
+    private InputModel? _input;
+
     [SupplyParameterFromForm]
-    private InputModel? Input { get; set; }
+    private InputModel Input
+    {
+        get => _input ??= new();
+        set => _input = value;
+    }
 
     [SupplyParameterFromQuery]
     private string? ReturnUrl { get; set; }
@@ -77,12 +83,10 @@ else
 
     protected override void OnInitialized()
     {
-        Input ??= new();
     }
 
     public async Task RegisterUser(EditContext editContext)
     {
-        Input ??= new();
         var user = CreateUser();
 
         await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
