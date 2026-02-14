@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# Disallow authentication and account management pages
+Disallow: /Account/
+Disallow: /Identity/
