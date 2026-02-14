@@ -31,7 +31,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        telemetry.TrackPageView(nameof(TranslateToEnGamePage));
+        telemetry.TrackEvent($"PageView:{nameof(TranslateToEnGamePage)}");
 
         var gameGen = await TranslateToEnGameFactory.Generate(EtWord, (uint)SampleIndex);
         if (gameGen.IsSuccess)

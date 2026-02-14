@@ -39,7 +39,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        telemetry.TrackPageView(nameof(FavoritesPage));
+        telemetry.TrackEvent($"PageView:{nameof(FavoritesPage)}");
         Favorites = await FavoritesStateContainer.GetAsync();
         if (Favorites.HasValue && Favorites.Value.IsSuccess)
         {

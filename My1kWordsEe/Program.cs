@@ -21,6 +21,7 @@ namespace My1kWordsEe
         public static async Task Main(string[] args)
         {
             var app = BuildWebHost(args);
+            await EnsureAuthDbCreatedAsync(app.Services);
             await app.RunAsync();
         }
 
@@ -33,7 +34,10 @@ namespace My1kWordsEe
 
             var secrets = RequireSecrets(builder);
 
-            builder.Services.AddApplicationInsightsTelemetry();
+            builder.Services.AddApplicationInsightsTelemetry(options =>
+            {
+                options.ConnectionString = secrets.appInsightsConnectionString;
+            });
 
             builder.Services.AddHttpClient(nameof(StabilityAiClient))
                 .AddStandardResilienceHandler(options =>
@@ -138,11 +142,12 @@ namespace My1kWordsEe
         }
 
         private static (
-           string openAiKey,
-           string stabilityAiKey,
-           string azureBlobConnectionString,
-           string azureCosmosConnectionString) RequireSecrets(
-           WebApplicationBuilder builder)
+            string openAiKey,
+            string stabilityAiKey,
+            string azureBlobConnectionString,
+            string azureCosmosConnectionString,
+            string appInsightsConnectionString) RequireSecrets(
+            WebApplicationBuilder builder)
         {
             var openAiKey =
                builder.Configuration[OpenAiClient.ApiSecretKey];
@@ -174,7 +179,14 @@ namespace My1kWordsEe
                 throw new ApplicationException($"{CosmosSecretKey} is missing");
             }
 
-            return (openAiKey, stabilityAiKey, azureBlobConnectionString, azureCosmosConnectionString);
+            const string AppInsightsSecretKey = "Secrets:AppInsightsConnectionString";
+            var appInsightsConnectionString = builder.Configuration[AppInsightsSecretKey];
+            if (string.IsNullOrWhiteSpace(appInsightsConnectionString))
+            {
+                throw new ApplicationException($"{AppInsightsSecretKey} is missing");
+            }
+
+            return (openAiKey, stabilityAiKey, azureBlobConnectionString, azureCosmosConnectionString, appInsightsConnectionString);
         }
 
         private static void AddAuth(WebApplicationBuilder builder, string azureCosmosConnectionString)
@@ -203,8 +215,13 @@ namespace My1kWordsEe
                 .AddDefaultTokenProviders();
 
             builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+        }
 
-            builder.Services.BuildServiceProvider().GetRequiredService<ApplicationDbContext>().Database.EnsureCreated();
+        private static async Task EnsureAuthDbCreatedAsync(IServiceProvider services)
+        {
+            using var scope = services.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            await db.Database.EnsureCreatedAsync();
         }
     }
 }

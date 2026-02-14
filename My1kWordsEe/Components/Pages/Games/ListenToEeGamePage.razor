@@ -32,7 +32,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        telemetry.TrackPageView(nameof(ListenToEeGamePage));
+        telemetry.TrackEvent($"PageView:{nameof(ListenToEeGamePage)}");
         var gameGen = await ListenToEeGameFactory.Generate(EeWord, SampleIndex);
         if (gameGen.IsSuccess)
         {

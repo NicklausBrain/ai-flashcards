@@ -24,7 +24,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        telemetry.TrackPageView(nameof(Word2WordMatchGamePage));
+        telemetry.TrackEvent($"PageView:{nameof(Word2WordMatchGamePage)}");
         Game = Word2WordMatchGame.Empty;
         Game = await Word2WordMatchGameFactory.Generate();
         await base.OnParametersSetAsync();
