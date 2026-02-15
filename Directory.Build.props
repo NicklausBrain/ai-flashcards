@@ -1,9 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <AnalysisLevel>latest</AnalysisLevel>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" PrivateAssets="all" />
-  </ItemGroup>
-</Project>
