@@ -58,8 +58,19 @@ namespace My1kWordsEe.Services.Scoped
                 return Result.Failure<Favorites>(Errors.AuthRequired);
             }
 
-            this.favorites = await this.getFavoritesQuery.Invoke(idClaim.Value);
-            return this.favorites.Value;
+            var userGuidStr = idClaim.Value.Split("|").Last();
+
+            // expected format: ApplicationUser|e89f192f-976f-4521-a25b-725314c4f193
+
+            if (Guid.TryParse(userGuidStr, out Guid userGuid))
+            {
+                this.favorites = await this.getFavoritesQuery.Invoke(userGuid.ToString());
+                return favorites.Value;
+            }
+            else
+            {
+                return Result.Failure<Favorites>("Invalid user ID format");
+            }
         }
 
         public async Task<Result<Favorites>> AddAsync(dynamic favorite)

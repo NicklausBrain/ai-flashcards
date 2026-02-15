@@ -11,6 +11,10 @@ namespace My1kWordsEe.Data
         {
             base.OnModelCreating(builder);
 
+            builder.HasDefaultContainer(nameof(ApplicationDbContext));
+
+            ConfigureIdentityDiscriminators(builder);
+
             RemoveIdentityIndexes(builder);
             builder.Entity<IdentityRole>()
                 .Property(b => b.ConcurrencyStamp)
@@ -18,6 +22,37 @@ namespace My1kWordsEe.Data
             builder.Entity<ApplicationUser>() // ApplicationUser mean the Identity user 'ApplicationUser : IdentityUser'
                 .Property(b => b.ConcurrencyStamp)
                 .IsETagConcurrency();
+        }
+
+        private static void ConfigureIdentityDiscriminators(ModelBuilder builder)
+        {
+            builder.Entity<ApplicationUser>()
+                .HasDiscriminator<string>("Discriminator")
+                .HasValue("ApplicationUser");
+
+            builder.Entity<IdentityRole>()
+                .HasDiscriminator<string>("Discriminator")
+                .HasValue("IdentityRole");
+
+            builder.Entity<IdentityUserClaim<string>>()
+                .HasDiscriminator<string>("Discriminator")
+                .HasValue("IdentityUserClaim");
+
+            builder.Entity<IdentityUserLogin<string>>()
+                .HasDiscriminator<string>("Discriminator")
+                .HasValue("IdentityUserLogin");
+
+            builder.Entity<IdentityUserRole<string>>()
+                .HasDiscriminator<string>("Discriminator")
+                .HasValue("IdentityUserRole");
+
+            builder.Entity<IdentityUserToken<string>>()
+                .HasDiscriminator<string>("Discriminator")
+                .HasValue("IdentityUserToken");
+
+            builder.Entity<IdentityRoleClaim<string>>()
+                .HasDiscriminator<string>("Discriminator")
+                .HasValue("IdentityRoleClaim");
         }
 
         private static void RemoveIdentityIndexes(ModelBuilder builder)
