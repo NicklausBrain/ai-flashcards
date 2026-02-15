@@ -60,7 +60,10 @@ namespace My1kWordsEe.Services.Scoped
 
             var userGuidStr = idClaim.Value.Split("|").Last();
 
-            if (Guid.TryParse(userGuidStr,out Guid userGuid)){ 
+            // expected format: ApplicationUser|e89f192f-976f-4521-a25b-725314c4f193
+
+            if (Guid.TryParse(userGuidStr, out Guid userGuid))
+            {
                 this.favorites = await this.getFavoritesQuery.Invoke(userGuid.ToString());
                 return favorites.Value;
             }
