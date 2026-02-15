@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace My1kWordsEe.Data
+namespace BlazorApp26.Data
 {
     public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<ApplicationUser>(options)
     {
@@ -11,17 +11,35 @@ namespace My1kWordsEe.Data
         {
             base.OnModelCreating(builder);
 
-            builder.HasDefaultContainer(nameof(ApplicationDbContext));
-
+            builder.HasDefaultContainer("Auth");
             ConfigureIdentityDiscriminators(builder);
 
-            RemoveIdentityIndexes(builder);
+            // Configure Cosmos DB ETag concurrency for all Identity entities
+            builder.Entity<ApplicationUser>()
+                .Property(u => u.ConcurrencyStamp)
+                .IsETagConcurrency();
+
             builder.Entity<IdentityRole>()
-                .Property(b => b.ConcurrencyStamp)
+                .Property(r => r.ConcurrencyStamp)
                 .IsETagConcurrency();
-            builder.Entity<ApplicationUser>() // ApplicationUser mean the Identity user 'ApplicationUser : IdentityUser'
-                .Property(b => b.ConcurrencyStamp)
-                .IsETagConcurrency();
+
+            //// System.InvalidOperationException: 'The entity type 'IdentityUserToken<string>' cannot be marked as keyless because it contains a key {'UserId', 'LoginProvider', 'Name'}.'
+            //builder.Entity<IdentityUserToken<string>>()
+            //    .HasNoKey();
+
+            //builder.Entity<IdentityUserLogin<string>>()
+            //    .HasNoKey();
+
+            //builder.Entity<IdentityUserRole<string>>()
+            //    .HasNoKey();
+
+            //builder.Entity<IdentityRoleClaim<string>>()
+            //    .HasNoKey();
+
+            //builder.Entity<IdentityUserClaim<string>>()
+            //    .HasNoKey();
+
+            RemoveIdentityIndexes(builder);
         }
 
         private static void ConfigureIdentityDiscriminators(ModelBuilder builder)

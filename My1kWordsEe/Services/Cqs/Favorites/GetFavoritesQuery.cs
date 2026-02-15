@@ -17,6 +17,7 @@ namespace My1kWordsEe.Services.Cqs
 
         public async Task<Result<Favorites>> Invoke(string userId)
         {
+            Console.WriteLine($"Getting favorites for user {userId}...", ConsoleColor.Cyan);
             if (string.IsNullOrWhiteSpace(userId))
             {
                 return Result.Failure<Favorites>("Empty user ID");

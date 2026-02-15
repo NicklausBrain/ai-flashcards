@@ -58,8 +58,16 @@ namespace My1kWordsEe.Services.Scoped
                 return Result.Failure<Favorites>(Errors.AuthRequired);
             }
 
-            this.favorites = await this.getFavoritesQuery.Invoke(idClaim.Value);
-            return this.favorites.Value;
+            var userGuidStr = idClaim.Value.Split("|").Last();
+
+            if (Guid.TryParse(userGuidStr,out Guid userGuid)){ 
+                this.favorites = await this.getFavoritesQuery.Invoke(userGuid.ToString());
+                return favorites.Value;
+            }
+            else
+            {
+                return Result.Failure<Favorites>("Unexpected user ID");
+            }
         }
 
         public async Task<Result<Favorites>> AddAsync(dynamic favorite)
