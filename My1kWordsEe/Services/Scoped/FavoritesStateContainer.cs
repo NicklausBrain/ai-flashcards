@@ -69,7 +69,7 @@ namespace My1kWordsEe.Services.Scoped
             }
             else
             {
-                return Result.Failure<Favorites>("Unexpected user ID");
+                return Result.Failure<Favorites>("Invalid user ID format");
             }
         }
 
