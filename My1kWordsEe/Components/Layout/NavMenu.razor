@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
-@using BlazorBootstrap
 
 @implements IDisposable
 
@@ -17,10 +16,6 @@
 </div>
 
 <input type="checkbox" title="Navigation menu" class="navbar-toggler" />
-
-<div class="d-flex justify-content-center text-primary">
-    <ThemeSwitcher />
-</div>
 
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="flex-column">
@@ -77,6 +72,14 @@
                 Match="NavLinkMatch.All">
                 <span class="bi bi-github" aria-hidden="true"></span> Source
             </NavLink>
+        </div>
+
+        <div class="nav-item px-3 row">
+           <button class="btn btn-outline-light btn-sm"
+                   style="border-color:rgba(255, 255, 255, 0.25)"
+                   onclick="toggleTheme()" title="Toggle theme">
+                <i id="theme-icon" class="bi bi-sun-fill"></i>
+            </button>
         </div>
     </nav>
 </div>
