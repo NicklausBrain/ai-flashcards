@@ -60,11 +60,14 @@ Sisend: Eesti keele nimisõna (nimetav kääne).
 
         private static string GetJsonInput(NounForms nounForms)
         {
+            TranslatedString GetCaseForm(EtGrammaticalCase grammaticalCase) =>
+                nounForms.Singular.FirstOrDefault(f => f.GrammaticalCase == grammaticalCase).CaseForm;
+
             var inputJson = JsonSerializer.Serialize(new
             {
-                Nimetav = nounForms.Singular.FirstOrDefault(f => f.GrammaticalCase == EtGrammaticalCase.Nimetav).CaseForm,
-                Omastav = nounForms.Singular.FirstOrDefault(f => f.GrammaticalCase == EtGrammaticalCase.Omastav).CaseForm,
-                Osastav = nounForms.Singular.FirstOrDefault(f => f.GrammaticalCase == EtGrammaticalCase.Osastav).CaseForm
+                Nimetav = GetCaseForm(EtGrammaticalCase.Nimetav),
+                Omastav = GetCaseForm(EtGrammaticalCase.Omastav),
+                Osastav = GetCaseForm(EtGrammaticalCase.Osastav)
             });
 
             return inputJson;
