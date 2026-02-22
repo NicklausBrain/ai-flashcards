@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Text.Json;
 
 using CSharpFunctionalExtensions;
 
@@ -38,9 +39,9 @@ Sisend: Eesti keele nimisõna (nimetav kääne).
                 .BindIf(word => word.DefaultSense.IsNoun, word => word)
                 .Bind(word => this.getOrAddEtFormsCommand.Invoke<NounForms>(word, 0))
                 .Bind(forms => this.openAiClient.CompleteJsonSchemaAsync<EtNoun3FormsGameData>(
-                    Prompt,
-                    forms.BaseForm,
-                    JsonSchemaRecord.For(typeof(EtNoun3FormsGameData)),
+                    instructions: Prompt,
+                    input: GetJsonInput(forms),
+                    schema: JsonSchemaRecord.For(typeof(EtNoun3FormsGameData)),
                     temperature: 0.1f));
 
             // todo: save gameData in storage
@@ -55,6 +56,18 @@ Sisend: Eesti keele nimisõna (nimetav kääne).
             ));
 
             return game;
+        }
+
+        private static string GetJsonInput(NounForms nounForms)
+        {
+            var inputJson = JsonSerializer.Serialize(new
+            {
+                Nimetav = nounForms.Singular.FirstOrDefault(f => f.GrammaticalCase == EtGrammaticalCase.Nimetav).CaseForm,
+                Omastav = nounForms.Singular.FirstOrDefault(f => f.GrammaticalCase == EtGrammaticalCase.Omastav).CaseForm,
+                Osastav = nounForms.Singular.FirstOrDefault(f => f.GrammaticalCase == EtGrammaticalCase.Osastav).CaseForm
+            });
+
+            return inputJson;
         }
 
         public struct EtNoun3FormsGameData
