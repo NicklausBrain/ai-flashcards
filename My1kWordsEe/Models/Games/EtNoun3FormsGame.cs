@@ -81,4 +81,6 @@ public class EtNoun3FormsGame
     {
         this.IsFinished = true;
     }
+
+    public bool IsMaxScore => this.Score == 3;
 }

@@ -19,6 +19,7 @@
 @inject NavigationManager Navigation;
 @inject TelemetryClient telemetry;
 @inject EtWordsCache etWordsCache;
+@inject IJSRuntime JS;
 
 @code {
     [Parameter]
@@ -65,6 +66,10 @@
     private void OnSubmit()
     {
         Game.Value.Submit();
+        if (Game.Value.IsMaxScore)
+        {
+            _ = SuccessSound();
+        }
     }
 
     private void OnGiveUp()
@@ -87,6 +92,8 @@
         var replacement = string.IsNullOrEmpty(userWord) ? "_______" : userWord;
         return Regex.Replace(sentence, Regex.Escape(word), replacement, RegexOptions.IgnoreCase);
     }
+
+    private async Task SuccessSound() => await JS.InvokeVoidAsync("successSound");
 
     private RenderFragment GrammarCaseCard(
         string headerLabel,
@@ -130,7 +137,17 @@
     };
 }
 
+<script>
+    window.successSound = () => {
+        setTimeout(() => {
+            const audio = document.getElementById('successSound');
+            audio.play();
+        }, 0);
+    };
+</script>
+
 <div class="text-left">
+    <audio id="successSound" src="/sound/success.wav"></audio>
     <div class="row">
         <div class="col-7">
             <h3>Nimisõna 3 vormi (Noun 3 Forms)</h3>
