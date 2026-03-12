@@ -141,8 +141,8 @@
                     }
                     else
                     {
-                        <input type="text" value="@userWord" @oninput="e => onUserWordChanged(e.Value?.ToString() ?? string.Empty)"
-                               class="form-control" placeholder="Type word form..." />
+                        <input type="text" @bind:get="userWord" @bind:set="value => onUserWordChanged(value ?? string.Empty)"
+                               @bind:event="oninput" class="form-control" placeholder="Type word form..." />
                     }
                 </div>
             </div>
