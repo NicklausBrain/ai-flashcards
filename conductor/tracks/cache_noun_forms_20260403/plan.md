@@ -12,9 +12,9 @@
     - [x] Write unit tests for the caching logic (mocking factory and storage). 0475eca
     - [x] Implement the check-cache-then-generate logic. 0475eca
 - [x] Task: Integrate `GameStorageClient` into the game generation flow. 0475eca
-- [ ] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md) [checkpoint: ]
+- [x] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md) [checkpoint: 81bece3]
 
 ## Phase 3: Validation and Cleanup
-- [ ] Task: Verify that LLM credits are not consumed on repeated game requests for the same word.
+- [~] Task: Verify that LLM credits are not consumed on repeated game requests for the same word.
 - [ ] Task: Ensure all tests pass and coverage is >80%.
 - [ ] Task: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md) [checkpoint: ]
