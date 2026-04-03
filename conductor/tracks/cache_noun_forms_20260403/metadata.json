@@ -1,0 +1,8 @@
+{
+  "track_id": "cache_noun_forms_20260403",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-04-03T12:00:00Z",
+  "updated_at": "2026-04-03T12:00:00Z",
+  "description": "@My1kWordsEe/Models/Games/Generation/EtNoun3FormsGameFactory.cs & My1kWordsEe/Models/Games/EtNoun3FormsGame.cs currently generated every time by consuming llm credits. I think we need to cache generated 3 noun form game using @My1kWordsEe/Services/Db/AzureStorageClient.cs and re-using the copy. this way we would optimize open ai credit consumption"
+}
