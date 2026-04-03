@@ -7,7 +7,7 @@ This is a Blazor web application that helps users learn Estonian words through f
 **Main Technologies:**
 
 *   **Frontend:** Blazor, Blazor Bootstrap
-*   **Backend:** .NET 9, ASP.NET Core
+*   **Backend:** .NET 10, ASP.NET Core
 *   **Database:** Azure Cosmos DB (for user data), Azure Blob Storage (for media)
 *   **AI Services:**
     *   **OpenAI (gpt-4o):** For text generation and translation checking.
@@ -23,8 +23,6 @@ The project follows a modern ASP.NET Core architecture with a clear separation o
     *   **`Models`:** Defines the data structures for the application, including games, words, and user data.
     *   **`Services`:** Contains the business logic for the application, including services for interacting with AI APIs, managing data, and handling game logic. The project uses a Command and Query Separation (CQS) pattern to organize its services.
     *   **`Program.cs`:** The application's entry point, where services are configured and the application is initialized.
-*   **`blazor-app`:** A deprecated proof-of-concept version of the application.
-*   **`data`:** Contains data files and scripts for fetching data.
 
 ## Building and Running
 
