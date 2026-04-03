@@ -2,9 +2,9 @@
 
 ## Phase 1: Research and Infrastructure Setup
 - [x] Task: Research existing `AzureStorageClient` usage and `FormsStorageClient` implementation. 6efb76f
-- [~] Task: Create `IGameStorageClient` interface and its implementation `GameStorageClient` for Azure Blob Storage.
-    - [ ] Write unit tests for `GameStorageClient` (mocking `AzureStorageClient`).
-    - [ ] Implement `GameStorageClient`.
+- [x] Task: Create `IGameStorageClient` interface and its implementation `GameStorageClient` for Azure Blob Storage. 57aa3d1
+    - [x] Write unit tests for `GameStorageClient` (mocking `AzureStorageClient`). 57aa3d1
+    - [x] Implement `GameStorageClient`. 57aa3d1
 - [ ] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md) [checkpoint: ]
 
 ## Phase 2: Implement Caching Logic

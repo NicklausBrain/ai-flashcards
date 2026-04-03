@@ -2,6 +2,9 @@ using Azure.Storage.Blobs;
 
 using CSharpFunctionalExtensions;
 
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+
 using Moq;
 
 using My1kWordsEe.Services.Db;
@@ -10,12 +13,16 @@ namespace My1kWordsEe.Tests.Unit.Services.Db
 {
     public class GameStorageClientTest
     {
-        private readonly Mock<IAzureStorageClient> _azureStorageClientMock;
+        private readonly Mock<AzureStorageClient> _azureStorageClientMock;
         private readonly GameStorageClient _gameStorageClient;
 
         public GameStorageClientTest()
         {
-            _azureStorageClientMock = new Mock<IAzureStorageClient>();
+            var configMock = new Mock<IConfiguration>();
+            configMock.Setup(x => x[AzureStorageClient.ApiSecretKey]).Returns("DefaultEndpointsProtocol=https;AccountName=test;AccountKey=test;EndpointSuffix=core.windows.net");
+            var loggerMock = new Mock<ILogger<AzureStorageClient>>();
+
+            _azureStorageClientMock = new Mock<AzureStorageClient>(configMock.Object, loggerMock.Object);
             _gameStorageClient = new GameStorageClient(_azureStorageClientMock.Object);
         }
 

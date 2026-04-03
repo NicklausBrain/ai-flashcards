@@ -6,11 +6,11 @@ using static My1kWordsEe.Models.Conventions;
 
 namespace My1kWordsEe.Services.Db
 {
-    public class GameStorageClient : IGameStorageClient
+    public class GameStorageClient
     {
-        private readonly IAzureStorageClient azureStorageClient;
+        private readonly AzureStorageClient azureStorageClient;
 
-        public GameStorageClient(IAzureStorageClient azureStorageClient)
+        public GameStorageClient(AzureStorageClient azureStorageClient)
         {
             this.azureStorageClient = azureStorageClient;
         }
