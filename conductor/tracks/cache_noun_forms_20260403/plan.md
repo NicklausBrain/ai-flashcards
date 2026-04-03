@@ -1,8 +1,8 @@
 # Implementation Plan: Cache Noun Forms Game
 
 ## Phase 1: Research and Infrastructure Setup
-- [ ] Task: Research existing `AzureStorageClient` usage and `FormsStorageClient` implementation.
-- [ ] Task: Create `IGameStorageClient` interface and its implementation `GameStorageClient` for Azure Blob Storage.
+- [x] Task: Research existing `AzureStorageClient` usage and `FormsStorageClient` implementation. 6efb76f
+- [~] Task: Create `IGameStorageClient` interface and its implementation `GameStorageClient` for Azure Blob Storage.
     - [ ] Write unit tests for `GameStorageClient` (mocking `AzureStorageClient`).
     - [ ] Implement `GameStorageClient`.
 - [ ] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md) [checkpoint: ]

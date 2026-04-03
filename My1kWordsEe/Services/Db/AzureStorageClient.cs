@@ -12,7 +12,7 @@ namespace My1kWordsEe.Services.Db
     /// <summary>
     /// Facade for Azure blob storage API
     /// </summary>
-    public partial class AzureStorageClient
+    public class AzureStorageClient : IAzureStorageClient
     {
         public const string ApiSecretKey = "Secrets:AzureBlobConnectionString";
 

@@ -8,7 +8,7 @@ using static My1kWordsEe.Models.Conventions;
 
 namespace My1kWordsEe.Services.Db
 {
-    public partial class WordStorageClient
+    public class WordStorageClient
     {
         private readonly AzureStorageClient azureStorageClient;
 
