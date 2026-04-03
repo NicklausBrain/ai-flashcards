@@ -5,10 +5,10 @@
 - [x] Task: Create `IGameStorageClient` interface and its implementation `GameStorageClient` for Azure Blob Storage. 57aa3d1
     - [x] Write unit tests for `GameStorageClient` (mocking `AzureStorageClient`). 57aa3d1
     - [x] Implement `GameStorageClient`. 57aa3d1
-- [ ] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md) [checkpoint: ]
+- [x] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md) [checkpoint: 2f8e6c7]
 
 ## Phase 2: Implement Caching Logic
-- [ ] Task: Refactor `EtNoun3FormsGameFactory` to support caching or create a decorator/wrapper service.
+- [~] Task: Refactor `EtNoun3FormsGameFactory` to support caching or create a decorator/wrapper service.
     - [ ] Write unit tests for the caching logic (mocking factory and storage).
     - [ ] Implement the check-cache-then-generate logic.
 - [ ] Task: Integrate `GameStorageClient` into the game generation flow.

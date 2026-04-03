@@ -19,7 +19,7 @@ namespace My1kWordsEe.Services.Cqs.Et
             this.addEtWordCommand = addEtWordCommand;
         }
 
-        public async Task<Result<EtWord>> Invoke(string eeWord)
+        public virtual async Task<Result<EtWord>> Invoke(string eeWord)
         {
             if (!eeWord.ValidateWord())
             {

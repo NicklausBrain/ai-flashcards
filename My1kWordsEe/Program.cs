@@ -64,6 +64,7 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<SamplesStorageClient>();
             builder.Services.AddSingleton<WordStorageClient>();
             builder.Services.AddSingleton<FormsStorageClient>();
+            builder.Services.AddSingleton<GameStorageClient>();
             builder.Services.AddSingleton<UrlService>();
             builder.Services.AddSingleton<TartuNlpClient>();
 

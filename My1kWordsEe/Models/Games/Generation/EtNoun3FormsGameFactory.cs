@@ -6,6 +6,7 @@ using CSharpFunctionalExtensions;
 using My1kWordsEe.Models.Grammar;
 using My1kWordsEe.Services;
 using My1kWordsEe.Services.Cqs.Et;
+using My1kWordsEe.Services.Db;
 
 namespace My1kWordsEe.Models.Games
 {
@@ -22,20 +23,29 @@ Sisend: Eesti keele nimisõna (nimetav kääne).
         private readonly OpenAiClient openAiClient;
         private readonly GetOrAddEtWordCommand getOrAddEtWordCommand;
         private readonly GetOrAddEtFormsCommand getOrAddEtFormsCommand;
+        private readonly GameStorageClient gameStorageClient;
 
         public EtNoun3FormsGameFactory(
             OpenAiClient openAiClient,
             GetOrAddEtWordCommand getOrAddEtWordCommand,
-            GetOrAddEtFormsCommand getOrAddEtFormsCommand)
+            GetOrAddEtFormsCommand getOrAddEtFormsCommand,
+            GameStorageClient gameStorageClient)
         {
             this.openAiClient = openAiClient;
             this.getOrAddEtWordCommand = getOrAddEtWordCommand;
             this.getOrAddEtFormsCommand = getOrAddEtFormsCommand;
+            this.gameStorageClient = gameStorageClient;
         }
 
         public async Task<Result<EtNoun3FormsGame>> Generate(string etNoun)
         {
-            var gameData = await this.getOrAddEtWordCommand.Invoke(etNoun)
+            var cachedGame = await this.gameStorageClient.GetGameData<EtNoun3FormsGameData>(etNoun);
+            if (cachedGame.IsSuccess && cachedGame.Value.HasValue)
+            {
+                return MapToGame(cachedGame.Value.Value);
+            }
+
+            var gameDataResult = await this.getOrAddEtWordCommand.Invoke(etNoun)
                 .BindIf(word => word.DefaultSense.IsNoun, word => word)
                 .Bind(word => this.getOrAddEtFormsCommand.Invoke<NounForms>(word, 0))
                 .Bind(forms => this.openAiClient.CompleteJsonSchemaAsync<EtNoun3FormsGameData>(
@@ -44,19 +54,23 @@ Sisend: Eesti keele nimisõna (nimetav kääne).
                     schema: JsonSchemaRecord.For(typeof(EtNoun3FormsGameData)),
                     temperature: 0.1f));
 
-            // todo: save gameData in storage
+            if (gameDataResult.IsSuccess)
+            {
+                await this.gameStorageClient.SaveGameData(etNoun, gameDataResult.Value);
+            }
 
-            var game = gameData.Map((r) => new EtNoun3FormsGame(
+            return gameDataResult.Map(MapToGame);
+        }
+
+        private static EtNoun3FormsGame MapToGame(EtNoun3FormsGameData r) =>
+            new EtNoun3FormsGame(
                 nimetavSõna: r.NimetavSõna,
                 nimetavLause: r.NimetavLause,
                 omastavSõna: r.OmastavSõna,
                 omastavLause: r.OmastavLause,
                 osastavSõna: r.OsastavSõna,
                 osastavLause: r.OsastavLause
-            ));
-
-            return game;
-        }
+            );
 
         private static string GetJsonInput(NounForms nounForms)
         {
@@ -73,7 +87,7 @@ Sisend: Eesti keele nimisõna (nimetav kääne).
             return inputJson;
         }
 
-        public struct EtNoun3FormsGameData
+        public class EtNoun3FormsGameData
         {
             [Description("Sõna ainsuse nimetavas käändes")]
             public TranslatedString NimetavSõna { get; set; }

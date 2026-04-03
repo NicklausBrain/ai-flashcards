@@ -19,7 +19,7 @@ namespace My1kWordsEe.Services.Cqs.Et
             this.addEtFormsCommand = addEtFormsCommand;
         }
 
-        public async Task<Result<T>> Invoke<T>(EtWord word, uint senseIndex) where T : IGrammarForms
+        public virtual async Task<Result<T>> Invoke<T>(EtWord word, uint senseIndex) where T : IGrammarForms
         {
             var sense = word.Senses[senseIndex];
             var containerId = new FormsStorageClient.FormsContainerId { SenseIndex = senseIndex, BaseForm = sense.BaseForm };

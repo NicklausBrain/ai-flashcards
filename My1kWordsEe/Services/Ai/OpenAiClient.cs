@@ -24,7 +24,7 @@ namespace My1kWordsEe.Services
             this.logger = logger;
         }
 
-        public async Task<Result<string>> CompleteAsync(string instructions, string input, ChatCompletionOptions? options = null)
+        public virtual async Task<Result<string>> CompleteAsync(string instructions, string input, ChatCompletionOptions? options = null)
         {
             if (string.IsNullOrWhiteSpace(this.config[ApiSecretKey]))
             {
@@ -48,7 +48,7 @@ namespace My1kWordsEe.Services
             }
         }
 
-        public async Task<Result<T>> CompleteJsonAsync<T>(string instructions, string input, float? temperature = null)
+        public virtual async Task<Result<T>> CompleteJsonAsync<T>(string instructions, string input, float? temperature = null)
         {
             var response = await this.CompleteAsync(instructions, input, new ChatCompletionOptions
             {
@@ -64,7 +64,7 @@ namespace My1kWordsEe.Services
             return this.ParseJsonResponse<T>(response);
         }
 
-        public async Task<Result<T>> CompleteJsonSchemaAsync<T>(
+        public virtual async Task<Result<T>> CompleteJsonSchemaAsync<T>(
             string instructions,
             string input,
             JsonSchemaRecord schema,
@@ -88,7 +88,7 @@ namespace My1kWordsEe.Services
             return this.ParseJsonResponse<T>(response);
         }
 
-        public Result<T> ParseJsonResponse<T>(Result<string> textResult)
+        public virtual Result<T> ParseJsonResponse<T>(Result<string> textResult)
         {
             if (textResult.IsFailure)
             {

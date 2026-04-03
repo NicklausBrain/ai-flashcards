@@ -15,12 +15,12 @@ namespace My1kWordsEe.Services.Db
             this.azureStorageClient = azureStorageClient;
         }
 
-        public Task<Result<Maybe<T>>> GetGameData<T>(string gameId) where T : class =>
+        public virtual Task<Result<Maybe<T>>> GetGameData<T>(string gameId) where T : class =>
             this.GetGameContainer().Bind(container =>
             this.azureStorageClient.DownloadJsonAsync<T>(
                 container.GetBlobClient($"{gameId}.{JsonFormat}")));
 
-        public Task<Result<Uri>> SaveGameData<T>(string gameId, T gameData) where T : class =>
+        public virtual Task<Result<Uri>> SaveGameData<T>(string gameId, T gameData) where T : class =>
             this.GetGameContainer().Bind(container =>
             this.azureStorageClient.UploadJsonAsync<T>(
                 blob: container.GetBlobClient($"{gameId}.{JsonFormat}"),
