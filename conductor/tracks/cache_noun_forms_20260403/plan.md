@@ -8,10 +8,10 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md) [checkpoint: 2f8e6c7]
 
 ## Phase 2: Implement Caching Logic
-- [~] Task: Refactor `EtNoun3FormsGameFactory` to support caching or create a decorator/wrapper service.
-    - [ ] Write unit tests for the caching logic (mocking factory and storage).
-    - [ ] Implement the check-cache-then-generate logic.
-- [ ] Task: Integrate `GameStorageClient` into the game generation flow.
+- [x] Task: Refactor `EtNoun3FormsGameFactory` to support caching or create a decorator/wrapper service. 0475eca
+    - [x] Write unit tests for the caching logic (mocking factory and storage). 0475eca
+    - [x] Implement the check-cache-then-generate logic. 0475eca
+- [x] Task: Integrate `GameStorageClient` into the game generation flow. 0475eca
 - [ ] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md) [checkpoint: ]
 
 ## Phase 3: Validation and Cleanup

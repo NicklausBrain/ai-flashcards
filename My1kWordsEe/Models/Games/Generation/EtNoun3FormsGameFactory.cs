@@ -87,25 +87,25 @@ Sisend: Eesti keele nimisõna (nimetav kääne).
             return inputJson;
         }
 
-        public class EtNoun3FormsGameData
+        public struct EtNoun3FormsGameData
         {
             [Description("Sõna ainsuse nimetavas käändes")]
-            public TranslatedString NimetavSõna { get; set; }
+            public required TranslatedString NimetavSõna { get; set; }
 
             [Description("Lihtne lause, kus sõna on ainsuse nimetavas käändes")]
-            public TranslatedString NimetavLause { get; set; }
+            public required TranslatedString NimetavLause { get; set; }
 
             [Description("Sõna ainsuse omastavas käändes")]
-            public TranslatedString OmastavSõna { get; set; }
+            public required TranslatedString OmastavSõna { get; set; }
 
             [Description("Lihtne lause, kus sõna on ainsuse omastavas käändes")]
-            public TranslatedString OmastavLause { get; set; }
+            public required TranslatedString OmastavLause { get; set; }
 
             [Description("Sõna ainsuse osastavas käändes")]
-            public TranslatedString OsastavSõna { get; set; }
+            public required TranslatedString OsastavSõna { get; set; }
 
             [Description("Lihtne lause, kus sõna on ainsuse osastavas käändes")]
-            public TranslatedString OsastavLause { get; set; }
+            public required TranslatedString OsastavLause { get; set; }
         }
     }
 }
