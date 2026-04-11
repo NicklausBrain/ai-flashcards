@@ -5,7 +5,6 @@ using Moq;
 using My1kWordsEe.Models;
 using My1kWordsEe.Models.Games;
 using My1kWordsEe.Models.Grammar;
-using My1kWordsEe.Models.Grammar.Forms;
 using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services;
 using My1kWordsEe.Services.Cqs.Et;
@@ -26,11 +25,7 @@ namespace My1kWordsEe.Tests.Unit.Models.Games.Generation
             _openAiClientMock = new Mock<OpenAiClient>(null!, null!);
             _getOrAddEtWordCommandMock = new Mock<GetOrAddEtWordCommand>(null!, null!);
             _getOrAddEtFormsCommandMock = new Mock<GetOrAddEtFormsCommand>(null!, null!);
-
-            var configMock = new Mock<Microsoft.Extensions.Configuration.IConfiguration>();
-            configMock.Setup(x => x[AzureStorageClient.ApiSecretKey]).Returns("DefaultEndpointsProtocol=https;AccountName=test;AccountKey=test;EndpointSuffix=core.windows.net");
-            var azureStorageClientMock = new Mock<AzureStorageClient>(configMock.Object, new Mock<Microsoft.Extensions.Logging.ILogger<AzureStorageClient>>().Object);
-            _gameStorageClientMock = new Mock<GameStorageClient>(azureStorageClientMock.Object);
+            _gameStorageClientMock = new Mock<GameStorageClient>(null!);
 
             _factory = new EtNoun3FormsGameFactory(
                 _openAiClientMock.Object,
