@@ -18,7 +18,7 @@ namespace My1kWordsEe.Services.Db
 
         private readonly IConfiguration config;
         private readonly ILogger logger;
-        private readonly BlobServiceClient BlobServiceClient;
+        private readonly Lazy<BlobServiceClient> BlobServiceClient;
 
         public AzureStorageClient(
             IConfiguration config,
@@ -26,10 +26,11 @@ namespace My1kWordsEe.Services.Db
         {
             this.config = config;
             this.logger = logger;
-            this.BlobServiceClient = new BlobServiceClient(this.config[ApiSecretKey]);
+            this.BlobServiceClient = new Lazy<BlobServiceClient>(() =>
+                new BlobServiceClient(this.config[ApiSecretKey]));
         }
 
-        public Uri AzureBlobEndpoint => this.BlobServiceClient.Uri;
+        public Uri AzureBlobEndpoint => this.BlobServiceClient.Value.Uri;
 
         public virtual async Task<Result<BlobContainerClient>> GetOrCreateContainer(string containerId)
         {
