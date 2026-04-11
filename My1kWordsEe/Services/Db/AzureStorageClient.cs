@@ -12,13 +12,13 @@ namespace My1kWordsEe.Services.Db
     /// <summary>
     /// Facade for Azure blob storage API
     /// </summary>
-    public partial class AzureStorageClient
+    public class AzureStorageClient
     {
         public const string ApiSecretKey = "Secrets:AzureBlobConnectionString";
 
         private readonly IConfiguration config;
         private readonly ILogger logger;
-        private readonly BlobServiceClient BlobServiceClient;
+        private readonly Lazy<BlobServiceClient> BlobServiceClient;
 
         public AzureStorageClient(
             IConfiguration config,
@@ -26,12 +26,13 @@ namespace My1kWordsEe.Services.Db
         {
             this.config = config;
             this.logger = logger;
-            this.BlobServiceClient = new BlobServiceClient(this.config[ApiSecretKey]);
+            this.BlobServiceClient = new Lazy<BlobServiceClient>(() =>
+                new BlobServiceClient(this.config[ApiSecretKey]));
         }
 
-        public Uri AzureBlobEndpoint => this.BlobServiceClient.Uri;
+        public Uri AzureBlobEndpoint => this.BlobServiceClient.Value.Uri;
 
-        public async Task<Result<BlobContainerClient>> GetOrCreateContainer(string containerId)
+        public virtual async Task<Result<BlobContainerClient>> GetOrCreateContainer(string containerId)
         {
             try
             {
@@ -48,7 +49,7 @@ namespace My1kWordsEe.Services.Db
             }
         }
 
-        public async Task<Result<Uri>> UploadStreamAsync(BlobClient blob, Stream stream)
+        public virtual async Task<Result<Uri>> UploadStreamAsync(BlobClient blob, Stream stream)
         {
             try
             {
@@ -62,7 +63,7 @@ namespace My1kWordsEe.Services.Db
             }
         }
 
-        public Task<Result<Uri>> UploadJsonAsync<T>(BlobClient blob, T record) =>
+        public virtual Task<Result<Uri>> UploadJsonAsync<T>(BlobClient blob, T record) =>
             this.UploadStreamAsync(
                 blob,
                 new MemoryStream(JsonSerializer.SerializeToUtf8Bytes(record, options: new JsonSerializerOptions
@@ -71,7 +72,7 @@ namespace My1kWordsEe.Services.Db
                     WriteIndented = false
                 })));
 
-        public async Task<Result<Maybe<T>>> DownloadJsonAsync<T>(BlobClient blob)
+        public virtual async Task<Result<Maybe<T>>> DownloadJsonAsync<T>(BlobClient blob)
         {
             if (!await blob.ExistsAsync())
             {
@@ -103,7 +104,7 @@ namespace My1kWordsEe.Services.Db
             }
         }
 
-        public async Task<Result<bool>> DeleteIfExistsAsync(BlobClient blob)
+        public virtual async Task<Result<bool>> DeleteIfExistsAsync(BlobClient blob)
         {
             try
             {
