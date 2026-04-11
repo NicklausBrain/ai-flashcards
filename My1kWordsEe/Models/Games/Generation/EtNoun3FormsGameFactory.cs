@@ -39,6 +39,7 @@ Sisend: Eesti keele nimisõna (nimetav kääne).
 
         public async Task<Result<EtNoun3FormsGame>> Generate(string etNoun)
         {
+            etNoun = etNoun.Trim().ToLower();
             var cachedGame = await this.gameStorageClient.GetGameData<EtNoun3FormsGameData>(etNoun);
             if (cachedGame.IsSuccess && cachedGame.Value.HasValue)
             {
