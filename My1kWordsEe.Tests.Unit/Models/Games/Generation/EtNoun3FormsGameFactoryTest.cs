@@ -49,7 +49,8 @@ namespace My1kWordsEe.Tests.Unit.Models.Games.Generation
                 OsastavLause = new TranslatedString { Et = "Ma näen koera.", En = "I see a dog." }
             };
 
-            _gameStorageClientMock.Setup(x => x.GetGameData<EtNoun3FormsGameFactory.EtNoun3FormsGameData>(etNoun))
+            var gameId = $"{nameof(EtNoun3FormsGame)}-{etNoun}";
+            _gameStorageClientMock.Setup(x => x.GetGameData<EtNoun3FormsGameFactory.EtNoun3FormsGameData>(gameId))
                 .ReturnsAsync(Result.Success(Maybe<EtNoun3FormsGameFactory.EtNoun3FormsGameData>.From(cachedData)));
 
             // Act
@@ -96,7 +97,8 @@ namespace My1kWordsEe.Tests.Unit.Models.Games.Generation
                 OsastavLause = new TranslatedString { Et = "Ma näen koera.", En = "I see a dog." }
             };
 
-            _gameStorageClientMock.Setup(x => x.GetGameData<EtNoun3FormsGameFactory.EtNoun3FormsGameData>(etNoun))
+            var gameId = $"{nameof(EtNoun3FormsGame)}-{etNoun}";
+            _gameStorageClientMock.Setup(x => x.GetGameData<EtNoun3FormsGameFactory.EtNoun3FormsGameData>(gameId))
                 .ReturnsAsync(Result.Success(Maybe<EtNoun3FormsGameFactory.EtNoun3FormsGameData>.None));
 
             _getOrAddEtWordCommandMock.Setup(x => x.Invoke(etNoun))
@@ -113,7 +115,7 @@ namespace My1kWordsEe.Tests.Unit.Models.Games.Generation
             // Assert
             Assert.True(result.IsSuccess);
             Assert.Equal("koer", result.Value.NimetavSõna.Et);
-            _gameStorageClientMock.Verify(x => x.SaveGameData(etNoun, aiData), Times.Once);
+            _gameStorageClientMock.Verify(x => x.SaveGameData(gameId, aiData), Times.Once);
         }
     }
 }

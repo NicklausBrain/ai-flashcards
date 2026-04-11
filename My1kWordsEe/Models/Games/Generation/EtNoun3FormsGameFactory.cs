@@ -40,7 +40,8 @@ Sisend: Eesti keele nimisõna (nimetav kääne).
         public async Task<Result<EtNoun3FormsGame>> Generate(string etNoun)
         {
             etNoun = etNoun.Trim().ToLower();
-            var cachedGame = await this.gameStorageClient.GetGameData<EtNoun3FormsGameData>(etNoun);
+            var gameId = $"{nameof(EtNoun3FormsGame)}-{etNoun}";
+            var cachedGame = await this.gameStorageClient.GetGameData<EtNoun3FormsGameData>(gameId);
             if (cachedGame.IsSuccess && cachedGame.Value.HasValue)
             {
                 return MapToGame(cachedGame.Value.Value);
@@ -57,7 +58,7 @@ Sisend: Eesti keele nimisõna (nimetav kääne).
 
             if (gameDataResult.IsSuccess)
             {
-                await this.gameStorageClient.SaveGameData(etNoun, gameDataResult.Value);
+                await this.gameStorageClient.SaveGameData(gameId, gameDataResult.Value);
             }
 
             return gameDataResult.Map(MapToGame);
