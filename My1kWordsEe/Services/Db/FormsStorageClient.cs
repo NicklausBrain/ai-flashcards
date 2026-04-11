@@ -29,17 +29,17 @@ namespace My1kWordsEe.Services.Db
         }
 
         public Task<Result<Maybe<T>>> GetFormsData<T>(FormsContainerId containerId) where T : IGrammarForms =>
-            this.GetEtFormssContainer().Bind(container =>
+            this.GetEtFormsContainer().Bind(container =>
             this.azureStorageClient.DownloadJsonAsync<T>(
                 container.GetBlobClient($"{containerId}.{JsonFormat}")));
 
         public Task<Result<Uri>> SaveFormsData<T>(FormsContainerId containerId, T forms) where T : IGrammarForms =>
-            this.GetEtFormssContainer().Bind(container =>
+            this.GetEtFormsContainer().Bind(container =>
             this.azureStorageClient.UploadJsonAsync<T>(
                 blob: container.GetBlobClient($"{containerId}.{JsonFormat}"),
                 record: forms));
 
-        private Task<Result<BlobContainerClient>> GetEtFormssContainer() =>
+        private Task<Result<BlobContainerClient>> GetEtFormsContainer() =>
             this.azureStorageClient.GetOrCreateContainer("et-forms");
     }
 }
