@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 using CSharpFunctionalExtensions;
 
 using Moq;
@@ -12,8 +7,6 @@ using My1kWordsEe.Models.Games;
 using My1kWordsEe.Models.Games.Generation;
 using My1kWordsEe.Services;
 using My1kWordsEe.Services.Db;
-
-using Xunit;
 
 namespace My1kWordsEe.Tests.Unit.Models.Games
 {

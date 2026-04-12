@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace My1kWordsEe.Models
 {
     public record WordSet

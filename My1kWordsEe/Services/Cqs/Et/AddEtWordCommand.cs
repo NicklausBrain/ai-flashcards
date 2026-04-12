@@ -4,7 +4,6 @@ using My1kWordsEe.Models;
 using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Db;
 
-using static My1kWordsEe.Models.Conventions;
 using static My1kWordsEe.Models.Extensions;
 
 namespace My1kWordsEe.Services.Cqs.Et

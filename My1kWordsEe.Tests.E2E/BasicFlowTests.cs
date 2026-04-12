@@ -4,8 +4,6 @@ using Microsoft.Playwright;
 
 using My1kWordsEe.Tests.E2E.Infra;
 
-using NUnit.Framework;
-
 namespace My1kWordsEe.Tests.E2E;
 
 [Parallelizable(ParallelScope.Self)]
