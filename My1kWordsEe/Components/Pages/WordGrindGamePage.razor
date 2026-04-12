@@ -18,6 +18,112 @@
 @inject TelemetryClient telemetry;
 @inject IJSRuntime JS;
 
+@code {
+    [Parameter]
+    public string WordSetId { get; set; } = string.Empty;
+
+    private Maybe<WordGrindGame> Game;
+    private Maybe<string> GameGenerationError;
+    private string SetName = string.Empty;
+    private string[] WordsClues = Array.Empty<string>();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        telemetry.TrackEvent($"PageView:{nameof(WordGrindGamePage)}");
+
+        var userIdResult = await WordSetsStateContainer.GetUserIdAsync();
+        if (userIdResult.IsFailure)
+        {
+            GameGenerationError = userIdResult.Error;
+            return;
+        }
+
+        var wordSetResult = await WordSetStorageClient.GetWordSet(userIdResult.Value, WordSetId);
+        if (wordSetResult.IsFailure)
+        {
+            GameGenerationError = wordSetResult.Error;
+            return;
+        }
+
+        if (wordSetResult.Value.HasNoValue)
+        {
+            GameGenerationError = "Word set not found.";
+            return;
+        }
+
+        var wordSet = wordSetResult.Value.Value;
+        SetName = wordSet.Name;
+
+        var gameGen = await WordGrindGameFactory.Generate(wordSet);
+        if (gameGen.IsSuccess)
+        {
+            Game = gameGen.Value;
+            WordsClues = Game.Value.Items.Select(i => i.Word).Shuffle().ToArray();
+        }
+        else
+        {
+            GameGenerationError = gameGen.Error;
+        }
+
+        await base.OnParametersSetAsync();
+    }
+
+    private void OnSubmit()
+    {
+        if (Game.HasValue)
+        {
+            Game.Value.Submit();
+            if (Game.Value.IsMaxScore)
+            {
+                _ = SuccessSound();
+            }
+        }
+    }
+
+    private void OnGiveUp()
+    {
+        if (Game.HasValue)
+        {
+            Game.Value.GiveUp();
+        }
+    }
+
+    private string MaskWord(string sentence, string word, string? userAnswer)
+    {
+        if (string.IsNullOrEmpty(sentence) || string.IsNullOrEmpty(word))
+        {
+            return sentence;
+        }
+
+        string replacement;
+        if (string.IsNullOrEmpty(userAnswer))
+        {
+            replacement = new string('_', word.Length);
+        }
+        else if (userAnswer.Length < word.Length)
+        {
+            replacement = userAnswer + new string('_', word.Length - userAnswer.Length);
+        }
+        else
+        {
+            replacement = userAnswer;
+        }
+
+        // Use Regex to find the word and replace it with underscores/userAnswer
+        // Note: In Word Grind we assume exact form match
+        try
+        {
+            return Regex.Replace(sentence, Regex.Escape(word), replacement, RegexOptions.IgnoreCase);
+        }
+        catch
+        {
+            return sentence.Replace(word, replacement, StringComparison.OrdinalIgnoreCase);
+        }
+    }
+
+    private async Task SuccessSound() => await JS.InvokeVoidAsync("successSound");
+}
+
 <div class="text-left">
     <audio id="successSound" src="/sound/success.wav"></audio>
     <div class="row">
@@ -45,7 +151,7 @@
                     Word Set: <strong>@SetName</strong> (@game.Items.Count words)
                 </h5>
                 <h6>
-                    @string.Join(", ", game.Items.Select(i => i.Word))
+                    @string.Join(", ", WordsClues)
                 </h6>
                 @if (game.IsFinished)
                 {
@@ -127,107 +233,3 @@
         }
     };
 </script>
-
-@code {
-    [Parameter]
-    public string WordSetId { get; set; } = string.Empty;
-
-    private Maybe<WordGrindGame> Game;
-    private Maybe<string> GameGenerationError;
-    private string SetName = string.Empty;
-
-    protected override async Task OnParametersSetAsync()
-    {
-        telemetry.TrackEvent($"PageView:{nameof(WordGrindGamePage)}");
-
-        var userIdResult = await WordSetsStateContainer.GetUserIdAsync();
-        if (userIdResult.IsFailure)
-        {
-            GameGenerationError = userIdResult.Error;
-            return;
-        }
-
-        var wordSetResult = await WordSetStorageClient.GetWordSet(userIdResult.Value, WordSetId);
-        if (wordSetResult.IsFailure)
-        {
-            GameGenerationError = wordSetResult.Error;
-            return;
-        }
-
-        if (wordSetResult.Value.HasNoValue)
-        {
-            GameGenerationError = "Word set not found.";
-            return;
-        }
-
-        var wordSet = wordSetResult.Value.Value;
-        SetName = wordSet.Name;
-
-        var gameGen = await WordGrindGameFactory.Generate(wordSet);
-        if (gameGen.IsSuccess)
-        {
-            Game = gameGen.Value;
-        }
-        else
-        {
-            GameGenerationError = gameGen.Error;
-        }
-
-        await base.OnParametersSetAsync();
-    }
-
-    private void OnSubmit()
-    {
-        if (Game.HasValue)
-        {
-            Game.Value.Submit();
-            if (Game.Value.IsMaxScore)
-            {
-                _ = SuccessSound();
-            }
-        }
-    }
-
-    private void OnGiveUp()
-    {
-        if (Game.HasValue)
-        {
-            Game.Value.GiveUp();
-        }
-    }
-
-    private string MaskWord(string sentence, string word, string? userAnswer)
-    {
-        if (string.IsNullOrEmpty(sentence) || string.IsNullOrEmpty(word))
-        {
-            return sentence;
-        }
-
-        string replacement;
-        if (string.IsNullOrEmpty(userAnswer))
-        {
-            replacement = new string('_', word.Length);
-        }
-        else if (userAnswer.Length < word.Length)
-        {
-            replacement = userAnswer + new string('_', word.Length - userAnswer.Length);
-        }
-        else
-        {
-            replacement = userAnswer;
-        }
-
-        // Use Regex to find the word and replace it with underscores/userAnswer
-        // Note: In Word Grind we assume exact form match
-        try
-        {
-            return Regex.Replace(sentence, Regex.Escape(word), replacement, RegexOptions.IgnoreCase);
-        }
-        catch
-        {
-            return sentence.Replace(word, replacement, StringComparison.OrdinalIgnoreCase);
-        }
-    }
-
-    private async Task SuccessSound() => await JS.InvokeVoidAsync("successSound");
-}
