@@ -1,19 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace My1kWordsEe.Models.Games
 {
-    public record WordGrindItemData
+    public struct WordGrindItemData
     {
         public required string Word { get; init; }
         public required TranslatedString Sentence { get; init; }
     }
 
-    public record WordGrindGameData
+    public struct WordGrindGameData
     {
+        public WordGrindGameData()
+        {
+            Items = new List<WordGrindItemData>();
+        }
+
         public required string WordSetId { get; init; }
-        public required List<WordGrindItemData> Items { get; init; } = new List<WordGrindItemData>();
+        public required List<WordGrindItemData> Items { get; init; }
     }
 
     public class WordGrindItem
