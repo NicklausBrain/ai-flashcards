@@ -1,0 +1,233 @@
+@page "/word-grind/{WordSetId}"
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+
+@using BlazorBootstrap
+@using CSharpFunctionalExtensions
+@using My1kWordsEe.Models
+@using My1kWordsEe.Models.Games
+@using My1kWordsEe.Models.Games.Generation
+@using My1kWordsEe.Services.Scoped
+@using My1kWordsEe.Services.Db
+@using Microsoft.ApplicationInsights
+@using System.Text.RegularExpressions
+
+@inject WordGrindGameFactory WordGrindGameFactory;
+@inject WordSetStorageClient WordSetStorageClient;
+@inject WordSetsStateContainer WordSetsStateContainer;
+@inject NavigationManager Navigation;
+@inject TelemetryClient telemetry;
+@inject IJSRuntime JS;
+
+<div class="text-left">
+    <audio id="successSound" src="/sound/success.wav"></audio>
+    <div class="row">
+        <div class="col-7">
+            <h3>Word Grind | Sõnaharjutused</h3>
+        </div>
+        <div class="col-5">
+            @if (Game.HasValue && Game.Value.IsFinished)
+            {
+                <Button Color="ButtonColor.Primary" @onclick="@(() => Navigation.NavigateTo("/word-sets"))">
+                    <i class="bi bi-arrow-left"></i>
+                    Back to Sets
+                </Button>
+            }
+        </div>
+    </div>
+
+    @if (Game.HasValue)
+    {
+        var game = Game.Value;
+
+        <div class="row mb-3">
+            <div class="col-12">
+                <h5>
+                    Word Set: <strong>@SetName</strong> (@game.Items.Count words)
+                </h5>
+                <h6>
+                    @string.Join(", ", game.Items.Select(i => i.Word))
+                </h6>
+                @if (game.IsFinished)
+                {
+                    <h4 class="mt-2">Your Score: <span class="badge bg-primary">@game.Score / @game.Items.Count</span></h4>
+                }
+            </div>
+        </div>
+
+        <div class="row">
+            @foreach (var item in game.Items)
+            {
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <p class="card-text">@MaskWord(item.Sentence.Et, item.Word, item.UserAnswer)</p>
+                            <p class="card-text"><small class="text-muted">@item.Sentence.En</small></p>
+                            @if (game.IsFinished)
+                            {
+                                <div class="mb-2">
+                                    @if (item.IsCorrect)
+                                    {
+                                        <span class="text-success fw-bold">@item.Word</span>
+                                        <i class="bi bi-check-circle-fill text-success"></i>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-danger text-decoration-line-through">@item.UserAnswer</span>
+                                        <br />
+                                        <span class="text-success fw-bold">@item.Word</span>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <input type="text" @bind:get="item.UserAnswer"
+                                       @bind:set="value => item.UserAnswer = value ?? string.Empty" @bind:event="oninput"
+                                       class="form-control" placeholder="Type word..." />
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (!game.IsFinished)
+        {
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <button class="btn btn-primary me-2" @onclick="OnSubmit">Submit</button>
+                    <button class="btn btn-secondary" @onclick="OnGiveUp">Give Up</button>
+                </div>
+            </div>
+        }
+    }
+    else if (GameGenerationError.HasNoValue)
+    {
+        <div class="d-flex justify-content-center mt-5">
+            <div class="text-center">
+                <Spinner Color="SpinnerColor.Primary" />
+                <p class="mt-2">AI is generating your grind sentences...</p>
+            </div>
+        </div>
+    }
+
+    @if (GameGenerationError.HasValue)
+    {
+        <p class="text-danger mt-3">
+            @GameGenerationError.Value
+        </p>
+        <Button Color="ButtonColor.Secondary" @onclick="@(() => Navigation.NavigateTo("/word-sets"))">Back to Sets</Button>
+    }
+</div>
+
+<script>
+    window.successSound = () => {
+        const audio = document.getElementById('successSound');
+        if (audio) {
+            audio.play();
+        }
+    };
+</script>
+
+@code {
+    [Parameter]
+    public string WordSetId { get; set; } = string.Empty;
+
+    private Maybe<WordGrindGame> Game;
+    private Maybe<string> GameGenerationError;
+    private string SetName = string.Empty;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        telemetry.TrackEvent($"PageView:{nameof(WordGrindGamePage)}");
+
+        var userIdResult = await WordSetsStateContainer.GetUserIdAsync();
+        if (userIdResult.IsFailure)
+        {
+            GameGenerationError = userIdResult.Error;
+            return;
+        }
+
+        var wordSetResult = await WordSetStorageClient.GetWordSet(userIdResult.Value, WordSetId);
+        if (wordSetResult.IsFailure)
+        {
+            GameGenerationError = wordSetResult.Error;
+            return;
+        }
+
+        if (wordSetResult.Value.HasNoValue)
+        {
+            GameGenerationError = "Word set not found.";
+            return;
+        }
+
+        var wordSet = wordSetResult.Value.Value;
+        SetName = wordSet.Name;
+
+        var gameGen = await WordGrindGameFactory.Generate(wordSet);
+        if (gameGen.IsSuccess)
+        {
+            Game = gameGen.Value;
+        }
+        else
+        {
+            GameGenerationError = gameGen.Error;
+        }
+
+        await base.OnParametersSetAsync();
+    }
+
+    private void OnSubmit()
+    {
+        if (Game.HasValue)
+        {
+            Game.Value.Submit();
+            if (Game.Value.IsMaxScore)
+            {
+                _ = SuccessSound();
+            }
+        }
+    }
+
+    private void OnGiveUp()
+    {
+        if (Game.HasValue)
+        {
+            Game.Value.GiveUp();
+        }
+    }
+
+    private string MaskWord(string sentence, string word, string? userAnswer)
+    {
+        if (string.IsNullOrEmpty(sentence) || string.IsNullOrEmpty(word))
+        {
+            return sentence;
+        }
+
+        string replacement;
+        if (string.IsNullOrEmpty(userAnswer))
+        {
+            replacement = new string('_', word.Length);
+        }
+        else if (userAnswer.Length < word.Length)
+        {
+            replacement = userAnswer + new string('_', word.Length - userAnswer.Length);
+        }
+        else
+        {
+            replacement = userAnswer;
+        }
+
+        // Use Regex to find the word and replace it with underscores/userAnswer
+        // Note: In Word Grind we assume exact form match
+        try
+        {
+            return Regex.Replace(sentence, Regex.Escape(word), replacement, RegexOptions.IgnoreCase);
+        }
+        catch
+        {
+            return sentence.Replace(word, replacement, StringComparison.OrdinalIgnoreCase);
+        }
+    }
+
+    private async Task SuccessSound() => await JS.InvokeVoidAsync("successSound");
+}

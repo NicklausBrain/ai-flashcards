@@ -63,6 +63,7 @@ namespace My1kWordsEe
             builder.Services.AddSingleton<FavoritesStorageClient>();
             builder.Services.AddSingleton<SamplesStorageClient>();
             builder.Services.AddSingleton<WordStorageClient>();
+            builder.Services.AddSingleton<WordSetStorageClient>();
             builder.Services.AddSingleton<FormsStorageClient>();
             builder.Services.AddSingleton<GameStorageClient>();
             builder.Services.AddSingleton<UrlService>();
@@ -89,11 +90,13 @@ namespace My1kWordsEe
 
             // scoped states
             builder.Services.AddScoped<FavoritesStateContainer>();
+            builder.Services.AddScoped<WordSetsStateContainer>();
             builder.Services.AddScoped<NextEtWordSelector>();
             builder.Services.AddScoped<Et1kWords>();
             builder.Services.AddScoped<TranslateToEnGameFactory>();
             builder.Services.AddScoped<TranslateToEtGameFactory>();
             builder.Services.AddScoped<EtNoun3FormsGameFactory>();
+            builder.Services.AddScoped<WordGrindGameFactory>();
             builder.Services.AddScoped<ListenToEeGameFactory>();
             builder.Services.AddScoped<Word2WordMatchGameFactory>();
 

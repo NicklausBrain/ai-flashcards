@@ -1,0 +1,167 @@
+@page "/word-sets"
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+
+@using BlazorBootstrap
+@using CSharpFunctionalExtensions
+@using Microsoft.ApplicationInsights
+@using My1kWordsEe.Models;
+@using My1kWordsEe.Services.Scoped
+
+@inject WordSetsStateContainer WordSetsStateContainer
+@inject TelemetryClient telemetry
+@inject NavigationManager Navigation
+
+@code {
+    [Inject] protected PreloadService PreloadService { get; set; } = default!;
+
+    private Maybe<Result<IEnumerable<WordSet>>> wordSetsResult;
+    private string newName = string.Empty;
+    private string newWordsRaw = string.Empty;
+    private string errorMessage = string.Empty;
+    private bool isSaving = false;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        telemetry.TrackEvent($"PageView:{nameof(WordSetsPage)}");
+        wordSetsResult = await WordSetsStateContainer.GetWordSetsAsync();
+        await base.OnParametersSetAsync();
+    }
+
+    private async Task CreateWordSet()
+    {
+        if (string.IsNullOrWhiteSpace(newName))
+        {
+            errorMessage = "Please provide a name for the set.";
+            return;
+        }
+
+        isSaving = true;
+        errorMessage = string.Empty;
+        PreloadService.Show(SpinnerColor.Light, "Saving...");
+
+        var result = await WordSetsStateContainer.SaveWordSetAsync(newName, newWordsRaw);
+        
+        if (result.IsSuccess)
+        {
+            newName = string.Empty;
+            newWordsRaw = string.Empty;
+            wordSetsResult = await WordSetsStateContainer.GetWordSetsAsync(forceRefresh: true);
+        }
+        else
+        {
+            errorMessage = result.Error;
+        }
+
+        isSaving = false;
+        PreloadService.Hide();
+    }
+
+    private async Task DeleteSet(string setId)
+    {
+        PreloadService.Show(SpinnerColor.Light, "Deleting...");
+        var result = await WordSetsStateContainer.DeleteWordSetAsync(setId);
+        if (result.IsSuccess)
+        {
+            wordSetsResult = await WordSetsStateContainer.GetWordSetsAsync(forceRefresh: true);
+        }
+        PreloadService.Hide();
+    }
+
+    private void PlaySet(string setId)
+    {
+        Navigation.NavigateTo($"/word-grind/{setId}");
+    }
+}
+
+<PageTitle>Word Grind | Sõnaharjutused</PageTitle>
+
+<h1>Word Grind | Sõnaharjutused</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <Card>
+            <CardBody>
+                <CardTitle>Create New Word Set</CardTitle>
+                <div class="mb-3">
+                    <label for="setName" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="setName" @bind="newName"
+                           placeholder="e.g., Food words" />
+                </div>
+                <div class="mb-3">
+                    <label for="words" class="form-label">Words (comma or newline separated)</label>
+                    <textarea class="form-control" id="words" rows="5" @bind="newWordsRaw"
+                              placeholder="tere, koer, kass..."></textarea>
+                </div>
+                <Button Color="ButtonColor.Primary" @onclick="CreateWordSet" Disabled="@isSaving">
+                    @if (isSaving)
+                    {
+                        <Spinner Size="SpinnerSize.Small" />
+                    }
+                    Create Set
+                </Button>
+                @if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    <p class="text-danger mt-2">@errorMessage</p>
+                }
+            </CardBody>
+        </Card>
+    </div>
+    <div class="col-md-8">
+        <h3>Your Word Sets</h3>
+        @if (wordSetsResult.HasValue)
+        {
+            if (wordSetsResult.Value.IsSuccess)
+            {
+                var sets = wordSetsResult.Value.Value;
+                if (sets.Any())
+                {
+                    <div class="row">
+                        @foreach (var set in sets)
+                        {
+                            <div class="col-md-6 mb-3">
+                                <Card>
+                                    <CardBody>
+                                        <CardTitle>@set.Name</CardTitle>
+                                        <CardSubTitle>@set.Words.Count words</CardSubTitle>
+                                        <CardText>
+                                            <small class="text-muted">Last updated: @set.UpdatedAt.ToLocalTime().ToString("g")</small>
+                                            <p class="mt-2">@string.Join(", ", set.Words.Take(5))@(set.Words.Count > 5 ? "..." : "")</p>
+                                        </CardText>
+                                        <div class="d-flex justify-content-between">
+                                            <Button Color="ButtonColor.Success" @onclick="@(() => PlaySet(set.Id))">
+                                                <i class="bi bi-play-fill"></i> Play
+                                            </Button>
+                                            <Button Color="ButtonColor.Danger" @onclick="@(() => DeleteSet(set.Id))">
+                                                <i class="bi bi-trash"></i>
+                                            </Button>
+                                        </div>
+                                    </CardBody>
+                                </Card>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p>No word sets found. Create your first one!</p>
+                }
+            }
+            else
+            {
+                <h3 class="alert-warning">@wordSetsResult.Value.Error</h3>
+                @if (wordSetsResult.Value.Error == My1kWordsEe.Models.Errors.AuthRequired)
+                {
+                    <a href="Account/Login" class="btn btn-primary">Login</a>
+                }
+            }
+        }
+        else
+        {
+            <div class="text-center">
+                <Spinner />
+            </div>
+        }
+    </div>
+</div>
+
+<Preload LoadingText="Loading..." />

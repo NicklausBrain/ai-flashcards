@@ -11,8 +11,9 @@
     - **E2E Testing:** Playwright (NUnit)
 
 ## Data Storage
-- **Database:** Azure Cosmos DB (using EF Core Provider) for user data, word data, and favorites.
+- **Database:** Azure Cosmos DB (using EF Core Provider) for user authentication and authorization data.
 - **Media Storage:** Azure Blob Storage for AI-generated images and audio files.
+- **Persistence:** Azure Blob Storage for user-specific data, including favorites, game state, and custom word sets.
 - **Local Cache:** JSON files for initial word seed data.
 
 ## AI & External Services
