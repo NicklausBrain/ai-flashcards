@@ -57,4 +57,18 @@
 
 ---
 
+## Grind Words Game
+
+- **Purpose:** Rapid-fire vocabulary recall game for Estonian words.
+- **Location:** `Components/Games/GrindWords.razor` (UI), logic in `Services/Cqs/`.
+- **How to Use:**
+  - Navigate to the Grind Words game in the app.
+  - Choose a word set or difficulty.
+  - Respond to each word prompt quickly; feedback is immediate.
+  - Review and retry missed words at the end.
+- **Development Conventions:**
+  - Place new games in `Components/Games/`.
+  - Use CQS for game logic separation.
+  - Use dependency injection for all services.
+
 This file summarizes build/test commands, architecture, and conventions for Copilot and other AI agents. Adjust or request more coverage if needed.

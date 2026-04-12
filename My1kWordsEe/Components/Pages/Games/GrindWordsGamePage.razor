@@ -1,0 +1,133 @@
+@page "/grind-words-game"
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+
+@using BlazorBootstrap
+@using CSharpFunctionalExtensions
+@using My1kWordsEe.Models.Games
+@using My1kWordsEe.Models.Games.Generation
+@inject GrindWordsGameFactory GrindWordsGameFactory;
+@inject IJSRuntime JS;
+
+<div class="container mt-4">
+    <h3>Grind Words Game</h3>
+    @if (game == null)
+    {
+        <div class="mb-3">
+            <label for="wordsInput" class="form-label">Enter words (comma or line separated):</label>
+            <textarea id="wordsInput" class="form-control" rows="4" @bind="wordsInput"></textarea>
+        </div>
+        <button class="btn btn-primary" @onclick="StartGame">Start</button>
+        @if (!string.IsNullOrEmpty(errorMsg))
+        {
+            <div class="text-danger mt-2">@errorMsg</div>
+        }
+    }
+    else
+    {
+        <div class="mb-3">
+            <strong>Word @((game.CurrentIndex+1).ToString()) of @game.Items.Count</strong>
+        </div>
+        @if (!game.IsCompleted)
+        {
+            var item = game.Items[game.CurrentIndex];
+            <div class="card mb-3">
+                <div class="card-body">
+                    <p class="card-text">@item.SentenceWithBlank</p>
+                    <p class="card-text"><small class="text-muted">@item.Translation</small></p>
+                    <input class="form-control mb-2" placeholder="Type the missing word..." @bind="userInput" @bind:event="oninput" @onkeydown="@(e => OnKeyDown(e))" disabled="@(item.IsCorrect == true)" />
+                    @if (item.IsCorrect.HasValue)
+                    {
+                        @if (item.IsCorrect.Value)
+                        {
+                            <div class="text-success">Correct!</div>
+                        }
+                        else
+                        {
+                            <div class="text-danger">Incorrect. Try again!</div>
+                        }
+                    }
+                </div>
+            </div>
+            <button class="btn btn-primary me-2" @onclick="SubmitAnswer" disabled="@(item.IsCorrect == true)">Submit</button>
+            <button class="btn btn-secondary" @onclick="NextWord" disabled="@(item.IsCorrect != true)">Next</button>
+        }
+        else
+        {
+            <div class="alert alert-success">Game completed! Score: @game.Score / @game.Items.Count</div>
+            <button class="btn btn-primary" @onclick="Restart">Restart</button>
+        }
+    }
+</div>
+
+@code {
+    private string wordsInput = string.Empty;
+    private string errorMsg = string.Empty;
+    private GrindWordsGame? game;
+    private string userInput = string.Empty;
+
+    private async Task StartGame()
+    {
+        errorMsg = string.Empty;
+        var words = wordsInput.Split(new[] {',', '\n', '\r'}, StringSplitOptions.RemoveEmptyEntries)
+            .Select(w => w.Trim())
+            .Where(w => !string.IsNullOrWhiteSpace(w));
+        var result = await GrindWordsGameFactory.Generate(words);
+        if (result.IsSuccess)
+        {
+            game = result.Value;
+            userInput = string.Empty;
+        }
+        else
+        {
+            errorMsg = result.Error;
+        }
+    }
+
+    private void SubmitAnswer()
+    {
+        if (game == null || game.IsCompleted) return;
+        var item = game.Items[game.CurrentIndex];
+        item.UserInput = userInput.Trim();
+        item.IsCorrect = string.Equals(item.UserInput, item.CorrectAnswer, StringComparison.OrdinalIgnoreCase);
+        if (item.IsCorrect.Value)
+        {
+            game.Score++;
+            JS.InvokeVoidAsync("successSound");
+        }
+    }
+
+    private void NextWord()
+    {
+        if (game == null) return;
+        if (!game.IsCompleted)
+        {
+            game.CurrentIndex++;
+            userInput = string.Empty;
+        }
+    }
+
+    private void Restart()
+    {
+        game = null;
+        userInput = string.Empty;
+        errorMsg = string.Empty;
+    }
+
+    private void OnKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            SubmitAnswer();
+        }
+    }
+}
+
+<script>
+    window.successSound = () => {
+        setTimeout(() => {
+            const audio = document.getElementById('successSound');
+            if(audio) audio.play();
+        }, 0);
+    };
+</script>
+<audio id="successSound" src="/sound/success.wav"></audio>

@@ -2,6 +2,24 @@
 
 flashcards for Estonian words and sentences memoization
 
+## Grind Words Game
+
+The "Grind Words" game is a new feature that helps users master Estonian vocabulary through rapid, repeated exposure and recall. It presents a series of words in quick succession, challenging users to recall meanings or translations under time pressure.
+
+### Usage
+- Access the Grind Words game from the main navigation or games section.
+- Select a word set or difficulty level.
+- The game will present words one by one; respond as quickly as possible.
+- Immediate feedback is provided after each word.
+- At the end, review your performance and retry missed words.
+
+### Development Notes
+- Implemented as a Blazor component in `Components/Games/GrindWords.razor`.
+- Uses services from `Services/Cqs/` for word selection and scoring.
+- Follows the CQS pattern for separation of game logic and UI.
+- New conventions: All new games should be placed in `Components/Games/` and follow the CQS pattern for logic separation.
+
+
 ## ./My1kWordsEe
 
 - current development
