@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 
@@ -18,10 +13,12 @@ namespace My1kWordsEe.Services.Db
     {
         private const string ContainerId = "word-sets";
         private readonly AzureStorageClient azureStorageClient;
+        private readonly ILogger<WordSetStorageClient> logger;
 
-        public WordSetStorageClient(AzureStorageClient azureStorageClient)
+        public WordSetStorageClient(AzureStorageClient azureStorageClient, ILogger<WordSetStorageClient> logger)
         {
             this.azureStorageClient = azureStorageClient;
+            this.logger = logger;
         }
 
         public Task<Result<Uri>> SaveWordSet(WordSet wordSet) =>
@@ -65,7 +62,9 @@ namespace My1kWordsEe.Services.Db
             }
             catch (Exception ex)
             {
-                return Result.Failure<IEnumerable<WordSet>>($"Failed to list word sets: {ex.Message}");
+                var errorMessage = $"Failed to list word sets: {ex.Message}";
+                logger.LogError(errorMessage, ex);
+                return Result.Failure<IEnumerable<WordSet>>(errorMessage);
             }
         }
 
