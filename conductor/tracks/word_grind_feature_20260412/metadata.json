@@ -1,8 +1,0 @@
-{
-  "track_id": "word_grind_feature_20260412",
-  "type": "feature",
-  "status": "new",
-  "created_at": "2026-04-12T12:00:00Z",
-  "updated_at": "2026-04-12T12:00:00Z",
-  "description": "Plan the execution of a new feature: As a user, I want to grind the usage of the given set of words. I want to generate a word game from a given set of words (provided as a comma or any delimiter-separated input)."
-}
