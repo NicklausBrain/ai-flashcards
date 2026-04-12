@@ -1,20 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 
 using CSharpFunctionalExtensions;
 
+using Microsoft.Extensions.Logging;
+
 using Moq;
 
 using My1kWordsEe.Models;
 using My1kWordsEe.Services.Db;
-
-using Xunit;
 
 namespace My1kWordsEe.Tests.Unit.Services.Db
 {
@@ -29,7 +24,8 @@ namespace My1kWordsEe.Tests.Unit.Services.Db
         {
             // AzureStorageClient has no parameterless constructor, providing nulls as it will be mocked anyway
             _azureStorageClientMock = new Mock<AzureStorageClient>(null!, null!);
-            _wordSetStorageClient = new WordSetStorageClient(_azureStorageClientMock.Object);
+            var logger = new Mock<ILogger<WordSetStorageClient>>();
+            _wordSetStorageClient = new WordSetStorageClient(_azureStorageClientMock.Object, logger.Object);
         }
 
         [Fact]
@@ -120,24 +116,24 @@ namespace My1kWordsEe.Tests.Unit.Services.Db
             // Arrange
             var wordSet1 = new WordSet { Id = "1", UserId = _userId, Name = "Set 1", Words = new List<string>(), UpdatedAt = DateTime.UtcNow.AddMinutes(-1) };
             var wordSet2 = new WordSet { Id = "2", UserId = _userId, Name = "Set 2", Words = new List<string>(), UpdatedAt = DateTime.UtcNow };
-            
+
             var blobContainerMock = new Mock<BlobContainerClient>();
             var blobItem1 = BlobsModelFactory.BlobItem("user123/1.json");
             var blobItem2 = BlobsModelFactory.BlobItem("user123/2.json");
-            
+
             var blobItems = new List<BlobItem> { blobItem1, blobItem2 };
             var page = Page<BlobItem>.FromValues(blobItems, null, Mock.Of<Response>());
             var asyncPageable = AsyncPageable<BlobItem>.FromPages(new[] { page });
 
             _azureStorageClientMock.Setup(x => x.GetOrCreateContainer("word-sets"))
                 .ReturnsAsync(Result.Success(blobContainerMock.Object));
-            
+
             blobContainerMock.Setup(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), $"{_userId}/", default))
                 .Returns(asyncPageable);
 
             var blobClient1Mock = new Mock<BlobClient>();
             var blobClient2Mock = new Mock<BlobClient>();
-            
+
             blobContainerMock.Setup(x => x.GetBlobClient("user123/1.json")).Returns(blobClient1Mock.Object);
             blobContainerMock.Setup(x => x.GetBlobClient("user123/2.json")).Returns(blobClient2Mock.Object);
 
