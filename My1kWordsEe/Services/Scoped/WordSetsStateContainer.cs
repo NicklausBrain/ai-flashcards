@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 
 using CSharpFunctionalExtensions;
 
@@ -65,8 +66,7 @@ namespace My1kWordsEe.Services.Scoped
             var userIdResult = await GetUserIdAsync();
             if (userIdResult.IsFailure) return Result.Failure<Uri>(userIdResult.Error);
 
-            var words = wordsRaw.Split(new[] { ',', '\n', '\r', ';' }, StringSplitOptions.RemoveEmptyEntries)
-                                .Select(w => w.Trim())
+            var words = Regex.Split(wordsRaw, @"[^\p{L}\p{M}'-]+")
                                 .Where(w => !string.IsNullOrWhiteSpace(w))
                                 .ToList();
 
