@@ -1,0 +1,8 @@
+{
+  "track_id": "adjective_forms_20260509",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-05-09T12:00:00Z",
+  "updated_at": "2026-05-09T12:00:00Z",
+  "description": "Implement adjective forms support for Estonian words, following the existing pattern for nouns."
+}
