@@ -8,8 +8,8 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Data Models & Storage' (Protocol in workflow.md)
 
 ## Phase 2: AI Generation & CQS Integration
-- [ ] Task: Write unit tests for `AddEtFormsCommand` to ensure it correctly requests and parses `AdjectiveForms` from OpenAI.
-- [ ] Task: Verify that `GetOrAddEtFormsCommand` correctly routes requests for adjectives to `AddEtFormsCommand.Invoke<AdjectiveForms>`.
+- [x] Task: Write unit tests for `AddEtFormsCommand` to ensure it correctly requests and parses `AdjectiveForms` from OpenAI.
+- [x] Task: Verify that `GetOrAddEtFormsCommand` correctly routes requests for adjectives to `AddEtFormsCommand.Invoke<AdjectiveForms>`.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: AI Generation & CQS Integration' (Protocol in workflow.md)
 
 ## Phase 3: UI Components & Integration

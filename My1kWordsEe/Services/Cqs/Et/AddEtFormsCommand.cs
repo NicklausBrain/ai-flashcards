@@ -36,7 +36,7 @@ Väljund peab olema järgmine JSON-objekt:";
             this.openAiClient = openAiService;
         }
 
-        public async Task<Result<T>> Invoke<T>(EtWord word, uint senseIndex) where T : IGrammarForms
+        public virtual async Task<Result<T>> Invoke<T>(EtWord word, uint senseIndex) where T : IGrammarForms
         {
             var sense = word.Senses[senseIndex];
             var containerId = new FormsContainerId { SenseIndex = senseIndex, BaseForm = sense.BaseForm };
