@@ -1,10 +1,10 @@
 # Implementation Plan: Adjective Forms Support
 
 ## Phase 1: Data Models & Storage (The "Noun-like" Foundation)
-- [ ] Task: Create `AdjectiveDegreeForms` struct to hold Singular and Plural `NounForm` arrays (reusing `NounForm` for its 14-case structure).
-- [ ] Task: Refactor `AdjectiveForms.cs` to implement `IGrammarForms` and include `Positive`, `Comparative`, and `Superlative` degrees using `AdjectiveDegreeForms`.
-- [ ] Task: Add static helper methods to `AdjectiveForms` for question strings, similar to the existing `NounForm` helpers.
-- [ ] Task: Write unit tests in `My1kWordsEe.Tests.Unit` to verify that `AdjectiveForms` can be serialized and deserialized correctly.
+- [x] Task: Create `AdjectiveDegreeForms` struct to hold Singular and Plural `NounForm` arrays (reusing `NounForm` for its 14-case structure).
+- [x] Task: Refactor `AdjectiveForms.cs` to implement `IGrammarForms` and include `Positive`, `Comparative`, and `Superlative` degrees using `AdjectiveDegreeForms`.
+- [x] Task: Add static helper methods to `AdjectiveForms` for question strings, similar to the existing `NounForm` helpers.
+- [x] Task: Write unit tests in `My1kWordsEe.Tests.Unit` to verify that `AdjectiveForms` can be serialized and deserialized correctly.
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Data Models & Storage' (Protocol in workflow.md)
 
 ## Phase 2: AI Generation & CQS Integration
