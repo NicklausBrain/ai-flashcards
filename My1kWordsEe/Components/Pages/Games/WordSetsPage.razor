@@ -78,27 +78,32 @@
 <h1>Word Grind | Sõnaharjutused</h1>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <Card>
             <CardBody>
                 <CardTitle>Create New Word Set</CardTitle>
-                <div class="mb-3">
-                    <label for="setName" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="setName" @bind="newName"
-                           placeholder="e.g., Food words" />
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <label for="words" class="form-label">Words (comma or newline separated)</label>
+                        <textarea class="form-control" id="words" rows="5" @bind="newWordsRaw"
+                                  placeholder="tere, koer, kass..."></textarea>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="setName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="setName" @bind="newName"
+                                   placeholder="e.g., Food words" />
+                        
+                        </div>
+                        <Button Color="ButtonColor.Primary" @onclick="CreateWordSet" Disabled="@isSaving">
+                            @if (isSaving)
+                            {
+                                <Spinner Size="SpinnerSize.Small" />
+                            }
+                            Create Set
+                        </Button>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="words" class="form-label">Words (comma or newline separated)</label>
-                    <textarea class="form-control" id="words" rows="5" @bind="newWordsRaw"
-                              placeholder="tere, koer, kass..."></textarea>
-                </div>
-                <Button Color="ButtonColor.Primary" @onclick="CreateWordSet" Disabled="@isSaving">
-                    @if (isSaving)
-                    {
-                        <Spinner Size="SpinnerSize.Small" />
-                    }
-                    Create Set
-                </Button>
                 @if (!string.IsNullOrEmpty(errorMessage))
                 {
                     <p class="text-danger mt-2">@errorMessage</p>
@@ -106,7 +111,7 @@
             </CardBody>
         </Card>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-12">
         <h3>Your Word Sets</h3>
         @if (wordSetsResult.HasValue)
         {
