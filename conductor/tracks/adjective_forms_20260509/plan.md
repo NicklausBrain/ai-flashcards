@@ -12,7 +12,7 @@
 - [x] Task: Verify that `GetOrAddEtFormsCommand` correctly routes requests for adjectives to `AddEtFormsCommand.Invoke<AdjectiveForms>`.
 - [x] Task: Conductor - User Manual Verification 'Phase 2: AI Generation & CQS Integration' (Protocol in workflow.md)
 
-## Phase 3: UI Components & Integration
+## Phase 3: UI Components & Integration [checkpoint: 33354c0]
 - [x] Task: Create `AdjectivesGrid.razor` that displays the forms in a tabular format, with a selector (tabs or dropdown) for the three degrees.
 - [x] Task: Update `FormsGrid.razor` to detect adjectives and render the `AdjectivesGrid`.
 - [x] Task: Manual verification on the `WordPage` with a sample adjective (e.g., "suur").
