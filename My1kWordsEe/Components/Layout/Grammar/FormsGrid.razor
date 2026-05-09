@@ -17,12 +17,17 @@
     public required int SenseIndex { get; init; }
 
     private Maybe<Result<NounForms>> NounForms;
+    private Maybe<Result<AdjectiveForms>> AdjectiveForms;
 
     protected override async Task OnParametersSetAsync()
     {
         if (EtWord.Senses[SenseIndex].IsNoun)
         {
             NounForms = await this.GetOrAddEtFormsCommand.Invoke<NounForms>(EtWord, (uint)SenseIndex);
+        }
+        else if (EtWord.Senses[SenseIndex].IsAdjective)
+        {
+            AdjectiveForms = await this.GetOrAddEtFormsCommand.Invoke<AdjectiveForms>(EtWord, (uint)SenseIndex);
         }
     }
 
@@ -36,21 +41,53 @@
         ? NounForms.Value.Value.Plural
         : Enumerable.Empty<NounForm>();
 
-    private string Error => NounForms.HasValue && NounForms.Value.IsFailure
-        ? NounForms.Value.Error
-        : string.Empty;
+    private string Error => 
+        (NounForms.HasValue && NounForms.Value.IsFailure) ? NounForms.Value.Error :
+        (AdjectiveForms.HasValue && AdjectiveForms.Value.IsFailure) ? AdjectiveForms.Value.Error :
+        string.Empty;
 }
 
 <div class="row">
-    <div class="col-auto">
-        <div class="row text-center"><h4>Singular</h4></div>
-        <NounsGrid NounForms="@SingularForms" EtWord="EtWord" />
-    </div>
+    @if (EtWord.Senses[SenseIndex].IsNoun)
+    {
+        @if (NounForms.HasValue && NounForms.Value.IsSuccess)
+        {
+            <div class="col-auto">
+                <div class="row text-center"><h4>Singular</h4></div>
+                <NounsGrid NounForms="@SingularForms" EtWord="EtWord" />
+            </div>
 
-    <div class="col-auto">
-        <div class="row text-center"><h4>Plural</h4></div>
-        <NounsGrid NounForms="@PluralForms" IsPlural="true" EtWord="EtWord" />
-    </div>
+            <div class="col-auto">
+                <div class="row text-center"><h4>Plural</h4></div>
+                <NounsGrid NounForms="@PluralForms" IsPlural="true" EtWord="EtWord" />
+            </div>
+        }
+        else if (!NounForms.HasValue)
+        {
+            <div class="col-12 text-center">
+                <Spinner />
+            </div>
+        }
+    }
+    else if (EtWord.Senses[SenseIndex].IsAdjective)
+    {
+        @if (AdjectiveForms.HasValue && AdjectiveForms.Value.IsSuccess)
+        {
+            <AdjectivesGrid AdjectiveForms="@AdjectiveForms.Value.Value" EtWord="EtWord" />
+        }
+        else if (!AdjectiveForms.HasValue)
+        {
+            <div class="col-12 text-center">
+                <Spinner />
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-12">
+            <p class="text-muted">No forms available for part of speech: @EtWord.Senses[SenseIndex].PartOfSpeech.Et (@EtWord.Senses[SenseIndex].PartOfSpeech.En)</p>
+        </div>
+    }
 
     @if(!string.IsNullOrWhiteSpace(Error))
     {
