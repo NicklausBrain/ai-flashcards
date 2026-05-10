@@ -9,7 +9,6 @@
 @using My1kWordsEe.Services.Scoped
 @using My1kWordsEe.Services.Db
 @using Microsoft.ApplicationInsights
-@using System.Text.RegularExpressions
 
 @inject WordGrindGameFactory WordGrindGameFactory;
 @inject WordSetStorageClient WordSetStorageClient;
@@ -109,16 +108,7 @@
             replacement = userAnswer;
         }
 
-        // Use Regex to find the word and replace it with underscores/userAnswer
-        // Note: In Word Grind we assume exact form match
-        try
-        {
-            return Regex.Replace(sentence, Regex.Escape(word), replacement, RegexOptions.IgnoreCase);
-        }
-        catch
-        {
-            return sentence.Replace(word, replacement, StringComparison.OrdinalIgnoreCase);
-        }
+        return WordGrindTextMatcher.ReplaceExactWord(sentence, word, replacement);
     }
 
     private async Task SuccessSound() => await JS.InvokeVoidAsync("successSound");

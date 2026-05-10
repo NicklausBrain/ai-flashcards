@@ -1,11 +1,18 @@
+using System.ComponentModel;
+
 namespace My1kWordsEe.Models.Games
 {
+    [Description("Üks sõnaharjutuse üksus: sõna ja seda sisaldav näidislause")]
     public struct WordGrindItemData
     {
+        [Description("Eesti keele sõna TÄPSELT samal kujul nagu sisendis (sama kääne, pööre, arv)")]
         public required string Word { get; init; }
+
+        [Description("Lihtne lause, mis sisaldab sõna täpselt samal kujul. Ära kasuta teisi sisendnimekirja sõnu ega nende vorme.")]
         public required TranslatedString Sentence { get; init; }
     }
 
+    [Description("Sõnaharjutuse mängu andmed")]
     public struct WordGrindGameData
     {
         public WordGrindGameData()
@@ -13,7 +20,10 @@ namespace My1kWordsEe.Models.Games
             Items = new List<WordGrindItemData>();
         }
 
+        [Description("Sõnakomplekti identifikaator")]
         public required string WordSetId { get; init; }
+
+        [Description("Iga sisendi sõna kohta üks üksus")]
         public required List<WordGrindItemData> Items { get; init; }
     }
 
