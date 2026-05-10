@@ -148,7 +148,7 @@
 
     @if (IsEtWordDataLoadedOk)
     {
-        if (@EtWord.Senses[SenseIndex].IsNoun)
+        if (EtWord.Senses[SenseIndex].IsNoun || EtWord.Senses[SenseIndex].IsAdjective)
         {
             <Tabs EnableFadeEffect="true">
                 <Tab Name="@SamplesTab" Title="Samples" Active="@(Tab == SamplesTab)" OnClick="OnSelectTab">
@@ -161,9 +161,12 @@
                         <FormsGrid EtWord="EtWord" SenseIndex="SenseIndex" />
                     </Content>
                 </Tab>
-                <Tab Title="Exercise 3 forms" OnClick="@(_ => Navigation.NavigateTo($"/forms-game/et/{Word}"))">
-                    <Content></Content>
-                </Tab>
+                @if (EtWord.Senses[SenseIndex].IsNoun)
+                {
+                    <Tab Title="Exercise 3 forms" OnClick="@(_ => Navigation.NavigateTo($"/forms-game/et/{Word}"))">
+                        <Content></Content>
+                    </Tab>
+                }
             </Tabs>
         }
         else

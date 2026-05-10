@@ -4,6 +4,7 @@ using System.Text.Json;
 using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Models;
+using My1kWordsEe.Models.Grammar;
 using My1kWordsEe.Models.Grammar.Forms;
 using My1kWordsEe.Models.Semantics;
 using My1kWordsEe.Services.Db;
@@ -17,7 +18,13 @@ namespace My1kWordsEe.Services.Cqs.Et
         private readonly OpenAiClient openAiClient;
         private readonly FormsStorageClient formsStorageClient;
 
-        public static readonly string Prompt =
+        private static readonly Dictionary<Type, string> PartOfSpeechPrompts = new()
+        {
+            { typeof(NounForms), "" },
+            { typeof(AdjectiveForms), "\nSee on omadussõna. Täida algvõre (Positive), keskvõre (Comparative) ja ülivõre (Superlative) käänetega." }
+        };
+
+        public static readonly string BasePrompt =
 @$"See on keeleõppe süsteem.
 Sisend: JSON-objekt sõna grammatilise vormi ja tõlgete kohta.
 Teie ülesanne: 
@@ -36,7 +43,7 @@ Väljund peab olema järgmine JSON-objekt:";
             this.openAiClient = openAiService;
         }
 
-        public async Task<Result<T>> Invoke<T>(EtWord word, uint senseIndex) where T : IGrammarForms
+        public virtual async Task<Result<T>> Invoke<T>(EtWord word, uint senseIndex) where T : IGrammarForms
         {
             var sense = word.Senses[senseIndex];
             var containerId = new FormsContainerId { SenseIndex = senseIndex, BaseForm = sense.BaseForm };
@@ -54,8 +61,11 @@ Väljund peab olema järgmine JSON-objekt:";
 
         private async Task<Result<T>> GetFormsMetadata<T>(WordSense sense) where T : IGrammarForms
         {
+            var extraPrompt = PartOfSpeechPrompts.GetValueOrDefault(typeof(T), string.Empty);
+            var fullPrompt = BasePrompt + extraPrompt;
+
             var response = await this.openAiClient.CompleteJsonSchemaAsync<T>(
-                Prompt,
+                fullPrompt,
                 JsonSerializer.Serialize(new EtWordSense
                 {
                     EtWord = sense.Word.Et,
