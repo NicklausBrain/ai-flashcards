@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Services;
@@ -8,13 +10,16 @@ namespace My1kWordsEe.Models.Games.Generation
     public class WordGrindGameFactory
     {
         public const string Prompt =
-@"See on keeleõppe süsteem (tase A1-A2).
+@"See on keeleõppe süsteem (tase B1).
 Sisend: Eesti keele sõnade nimekiri.
 Ülesanne:
 1. Moodusta iga sõna kohta üks lihtne ja loomulik lause eesti keeles.
-2. SÕNA PEAB OLEMA LAUSES TÄPSELT SELLISEL KUJUL, NAGU SEE ON SISENDIS (sama kääne, pööre jne).
-3. Tõlgi iga lause inglise keelde.
-4. Tagasta JSON, mis vastab skeemile.";
+2. OLULINE: Sõna PEAB esinema lauses TÄPSELT SAMAL KUJUL nagu sisendis — sama kääne, pööre, arv jne.
+   Ära muuda sõna vormi (nt ära kasuta 'kulutada' kui sisendis on 'kulutama').
+   Kui vaja, kohanda lauset nii, et sõna sobiks täpselt sellel kujul.
+3. Ära kasuta lauses teisi sõnu samast sisendnimekirjast ega nende käände-/pöördevorme.
+4. Tõlgi iga lause inglise keelde.
+5. Tagasta JSON, mis vastab skeemile.";
 
         private readonly OpenAiClient openAiClient;
         private readonly GameStorageClient gameStorageClient;
@@ -45,13 +50,29 @@ Sisend: Eesti keele sõnade nimekiri.
 
             if (gameDataResult.IsSuccess)
             {
-                // Ensure WordSetId is correctly set in the result
                 var gameData = gameDataResult.Value with { WordSetId = wordSet.Id };
+                gameData = ValidateAndFixItems(gameData);
                 await this.gameStorageClient.SaveGameData(gameId, gameData);
                 return new WordGrindGame(gameData);
             }
 
             return Result.Failure<WordGrindGame>(gameDataResult.Error);
+        }
+
+        /// <summary>
+        /// Validates that each item's sentence contains its word as a whole word.
+        /// Drops items where the AI used a different word form.
+        /// </summary>
+        public static WordGrindGameData ValidateAndFixItems(WordGrindGameData data)
+        {
+            var validItems = data.Items
+                .Where(item => Regex.IsMatch(
+                    item.Sentence.Et,
+                    @"\b" + Regex.Escape(item.Word) + @"\b",
+                    RegexOptions.IgnoreCase))
+                .ToList();
+
+            return data with { Items = validItems };
         }
     }
 }

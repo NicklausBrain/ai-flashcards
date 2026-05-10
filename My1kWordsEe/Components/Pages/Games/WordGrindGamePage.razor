@@ -113,7 +113,7 @@
         // Note: In Word Grind we assume exact form match
         try
         {
-            return Regex.Replace(sentence, Regex.Escape(word), replacement, RegexOptions.IgnoreCase);
+            return Regex.Replace(sentence, @"\b" + Regex.Escape(word) + @"\b", replacement, RegexOptions.IgnoreCase);
         }
         catch
         {

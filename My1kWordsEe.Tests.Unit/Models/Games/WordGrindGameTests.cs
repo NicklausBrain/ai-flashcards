@@ -103,5 +103,61 @@ namespace My1kWordsEe.Tests.Unit.Models.Games
             Assert.Equal("set1", result.Value.WordSetId);
             gameStorageMock.Verify(x => x.SaveGameData($"WordGrindGame-set1", It.Is<WordGrindGameData>(d => d.WordSetId == "set1")), Times.Once);
         }
+
+        [Fact]
+        public void ValidateAndFixItems_ShouldDropItems_WhenWordFormDoesNotMatch()
+        {
+            // Simulates the reported bug: AI generated "kulutada" instead of "kulutama"
+            var data = new WordGrindGameData
+            {
+                WordSetId = "set1",
+                Items = new List<WordGrindItemData>
+                {
+                    new WordGrindItemData { Word = "kulutama", Sentence = new TranslatedString { Et = "Ma ei taha palju raha kulutada.", En = "I don't want to spend a lot of money." } },
+                    new WordGrindItemData { Word = "kulu", Sentence = new TranslatedString { Et = "See kulu on suur.", En = "This expense is big." } }
+                }
+            };
+
+            var result = WordGrindGameFactory.ValidateAndFixItems(data);
+
+            Assert.Single(result.Items);
+            Assert.Equal("kulu", result.Items[0].Word);
+        }
+
+        [Fact]
+        public void ValidateAndFixItems_ShouldKeepItems_WhenExactWordFormPresent()
+        {
+            var data = new WordGrindGameData
+            {
+                WordSetId = "set1",
+                Items = new List<WordGrindItemData>
+                {
+                    new WordGrindItemData { Word = "kulutama", Sentence = new TranslatedString { Et = "Ma hakkan raha kulutama.", En = "I will start spending money." } },
+                    new WordGrindItemData { Word = "kulu", Sentence = new TranslatedString { Et = "See kulu on suur.", En = "This expense is big." } }
+                }
+            };
+
+            var result = WordGrindGameFactory.ValidateAndFixItems(data);
+
+            Assert.Equal(2, result.Items.Count);
+        }
+
+        [Fact]
+        public void ValidateAndFixItems_ShouldNotMatchSubstrings()
+        {
+            // "kulu" should NOT match inside "kulutama"
+            var data = new WordGrindGameData
+            {
+                WordSetId = "set1",
+                Items = new List<WordGrindItemData>
+                {
+                    new WordGrindItemData { Word = "kulu", Sentence = new TranslatedString { Et = "Ma hakkan raha kulutama.", En = "I will start spending money." } }
+                }
+            };
+
+            var result = WordGrindGameFactory.ValidateAndFixItems(data);
+
+            Assert.Empty(result.Items);
+        }
     }
 }
