@@ -105,7 +105,7 @@ namespace My1kWordsEe.Tests.Unit.Models.Games
         }
 
         [Fact]
-        public void ValidateAndFixItems_ShouldDropItems_WhenWordFormDoesNotMatch()
+        public void FilterInvalidItems_ShouldDropItems_WhenWordFormDoesNotMatch()
         {
             // Simulates the reported bug: AI generated "kulutada" instead of "kulutama"
             var data = new WordGrindGameData
@@ -118,14 +118,14 @@ namespace My1kWordsEe.Tests.Unit.Models.Games
                 }
             };
 
-            var result = WordGrindGameFactory.ValidateAndFixItems(data);
+            var result = WordGrindGameFactory.FilterInvalidItems(data);
 
             Assert.Single(result.Items);
             Assert.Equal("kulu", result.Items[0].Word);
         }
 
         [Fact]
-        public void ValidateAndFixItems_ShouldKeepItems_WhenExactWordFormPresent()
+        public void FilterInvalidItems_ShouldKeepItems_WhenExactWordFormPresent()
         {
             var data = new WordGrindGameData
             {
@@ -137,13 +137,13 @@ namespace My1kWordsEe.Tests.Unit.Models.Games
                 }
             };
 
-            var result = WordGrindGameFactory.ValidateAndFixItems(data);
+            var result = WordGrindGameFactory.FilterInvalidItems(data);
 
             Assert.Equal(2, result.Items.Count);
         }
 
         [Fact]
-        public void ValidateAndFixItems_ShouldNotMatchSubstrings()
+        public void FilterInvalidItems_ShouldNotMatchSubstrings()
         {
             // "kulu" should NOT match inside "kulutama"
             var data = new WordGrindGameData
@@ -155,7 +155,7 @@ namespace My1kWordsEe.Tests.Unit.Models.Games
                 }
             };
 
-            var result = WordGrindGameFactory.ValidateAndFixItems(data);
+            var result = WordGrindGameFactory.FilterInvalidItems(data);
 
             Assert.Empty(result.Items);
         }

@@ -1,5 +1,3 @@
-using System.Text.RegularExpressions;
-
 using CSharpFunctionalExtensions;
 
 using My1kWordsEe.Services;
@@ -51,7 +49,7 @@ Sisend: Eesti keele sõnade nimekiri.
             if (gameDataResult.IsSuccess)
             {
                 var gameData = gameDataResult.Value with { WordSetId = wordSet.Id };
-                gameData = ValidateAndFixItems(gameData);
+                gameData = FilterInvalidItems(gameData);
                 await this.gameStorageClient.SaveGameData(gameId, gameData);
                 return new WordGrindGame(gameData);
             }
@@ -60,16 +58,12 @@ Sisend: Eesti keele sõnade nimekiri.
         }
 
         /// <summary>
-        /// Validates that each item's sentence contains its word as a whole word.
-        /// Drops items where the AI used a different word form.
+        /// Filters out items where the AI-generated sentence does not contain the exact word form.
         /// </summary>
-        public static WordGrindGameData ValidateAndFixItems(WordGrindGameData data)
+        public static WordGrindGameData FilterInvalidItems(WordGrindGameData data)
         {
             var validItems = data.Items
-                .Where(item => Regex.IsMatch(
-                    item.Sentence.Et,
-                    @"\b" + Regex.Escape(item.Word) + @"\b",
-                    RegexOptions.IgnoreCase))
+                .Where(item => WordGrindTextMatcher.ContainsExactWord(item.Sentence.Et, item.Word))
                 .ToList();
 
             return data with { Items = validItems };
