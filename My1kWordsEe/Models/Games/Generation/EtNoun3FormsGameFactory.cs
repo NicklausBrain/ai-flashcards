@@ -19,7 +19,7 @@ namespace My1kWordsEe.Models.Games
 Sisend: Eesti keele nimisõna (nimetav kääne).
 Ülesanne:
 1. Moodusta antud sõnast kolm käänet: ainsuse Nimetav, ainsuse Omastav ja ainsuse Osastav.
-2. Moodusta iga käände kohta üks lihtne ja loomulik lause (tase A1-A2), kus seda sõna on kasutatud vastavas käändes.
+2. Moodusta iga käände kohta üks lihtne ja loomulik lause (tase B1), kus seda sõna on kasutatud vastavas käändes.
 3. Tagasta JSON, mis vastab skeemile.";
 
         private readonly OpenAiClient openAiClient;
