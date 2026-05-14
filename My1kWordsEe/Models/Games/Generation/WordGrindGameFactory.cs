@@ -8,17 +8,29 @@ namespace My1kWordsEe.Models.Games.Generation
     public class WordGrindGameFactory
     {
         public const string Prompt =
-@"See on keeleõppe süsteem (tase B1).
-Sisend: Eesti keele sõnade nimekiri.
-Ülesanne:
-1. Moodusta iga sõna kohta üks lihtne, loomulik ja grammatiliselt korrektne lause eesti keeles.
-2. OLULINE: Sõna PEAB esinema lauses TÄPSELT SAMAL KUJUL nagu sisendis — sama kääne, pööre, arv jne.
-   Ära muuda sõna vormi (nt ära kasuta 'kulutada' kui sisendis on 'kulutama').
-   Kui vaja, kohanda lauset nii, et sõna sobiks täpselt sellel kujul.
-3. Kui sisendis on verbi vorm (nt ma-tegevusnimi või muu infinitiiv), kasuta seda grammatiliselt sobivas konstruktsioonis ilma vormi muutmata.
-4. Ära kasuta lauses teisi sõnu samast sisendnimekirjast ega nende käände-/pöördevorme.
-5. Tõlgi iga lause inglise keelde.
-6. Tagasta JSON, mis vastab skeemile.";
+    @"See on keeleõppe süsteem (tase B1).
+    Sisend: Eesti keele sõnade nimekiri.
+    Ülesanne:
+    1. Moodusta iga sõna kohta üks lihtne, loomulik ja grammatiliselt korrektne lause eesti keeles.
+    2. OLULINE: Sõna PEAB esinema lauses TÄPSELT SAMAL KUJUL nagu sisendis — sama kääne, pööre, arv jne.
+       Ära muuda sõna vormi.
+       Kui vaja, kohanda lauset nii, et sõna sobiks täpselt sellel kujul.
+    3. Kui sisendis on verbi vorm (nt ma-tegevusnimi või muu infinitiiv), kasuta seda grammatiliselt sobivas konstruktsioonis ilma vormi muutmata.
+    4. Ära kasuta lauses teisi sõnu samast sisendnimekirjast ega nende käände-/pöördevorme.
+    5. Tõlgi iga lause inglise keelde.
+    6. Tagasta JSON, mis vastab skeemile.
+
+    Abi verbi vormide kasutamiseks:
+
+    Eesmärk           Näitelause             Kasutatav tegusõna lõpp
+    Liikumine         Ma lähen...            -ma
+    Algus             Ta hakkab...           -ma
+    Kohustus          Ma pean...             -ma
+    Võimekus          Ma oskan...            -da
+    Soovimine         Ma tahan...            -da
+    Vajadus           Mul on vaja...         -da
+    Luba              Ma tohin...            -da
+    ";
 
         private readonly OpenAiClient openAiClient;
         private readonly GameStorageClient gameStorageClient;
