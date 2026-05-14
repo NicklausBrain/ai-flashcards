@@ -1,5 +1,7 @@
 using System.ComponentModel;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Unicode;
 
 using CSharpFunctionalExtensions;
 
@@ -72,6 +74,9 @@ Väljund peab olema järgmine JSON-objekt:";
                     Definition = sense.Definition.Et,
                     BaseForm = sense.BaseForm,
                     PartOfSpeech = sense.PartOfSpeech.Et,
+                }, new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
                 }),
                 JsonSchemaRecord.For(typeof(T)),
                 temperature: 0.1f);
