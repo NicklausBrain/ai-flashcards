@@ -1,5 +1,7 @@
 using System.ComponentModel;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Unicode;
 
 using CSharpFunctionalExtensions;
 
@@ -84,6 +86,9 @@ Sisend: Eesti keele nimisõna (nimetav kääne).
                 Nimetav = GetCaseForm(EtGrammaticalCase.Nimetav),
                 Omastav = GetCaseForm(EtGrammaticalCase.Omastav),
                 Osastav = GetCaseForm(EtGrammaticalCase.Osastav)
+            }, new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
             });
 
             return inputJson;

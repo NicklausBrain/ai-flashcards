@@ -1,5 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 using CSharpFunctionalExtensions;
 
@@ -40,6 +42,9 @@ namespace My1kWordsEe.Services.Cqs
             {
                 ee_sentence = etSentence.Trim('.', ' ').ToLowerInvariant(),
                 ee_user_sentence = userInput.Trim('.', ' ').ToLowerInvariant(),
+            }, new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
             });
 
             var result = await this.openAiClient.CompleteJsonAsync<EeListeningCheckResult>(prompt, input);

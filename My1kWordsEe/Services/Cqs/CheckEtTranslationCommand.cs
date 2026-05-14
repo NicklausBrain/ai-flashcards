@@ -1,6 +1,8 @@
 using System.ComponentModel;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Unicode;
 
 using CSharpFunctionalExtensions;
 
@@ -33,6 +35,10 @@ Teie sisend on JSON-objekt:
             {
                 EnSentence = enSentence.Trim('.', ' ').ToLowerInvariant(),
                 EtUserSentence = etSentence.Trim('.', ' ').ToLowerInvariant()
+            }, new JsonSerializerOptions
+            {
+                WriteIndented = false,
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
             });
 
             var result = await this.openAiClient.CompleteJsonSchemaAsync<EtTranslationCheckResult>(
