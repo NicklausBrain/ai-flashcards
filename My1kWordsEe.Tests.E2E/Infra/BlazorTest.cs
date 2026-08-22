@@ -59,9 +59,15 @@ public abstract class BlazorTest : PageTest
     {
         if (_host is not null)
         {
-            await OnTearDownAsync();
-            await _host.StopAsync();
-            _host.Dispose();
+            try
+            {
+                await OnTearDownAsync();
+            }
+            finally
+            {
+                await _host.StopAsync();
+                _host.Dispose();
+            }
         }
     }
 }

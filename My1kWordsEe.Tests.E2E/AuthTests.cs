@@ -35,13 +35,15 @@ public class AuthTests : BlazorTest
         await passwordFields.Nth(1).FillAsync(password);
 
         await Page.GetByRole(AriaRole.Button, new() { Name = "Register" }).ClickAsync();
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        // Registration signs the user in; wait for the signed-in UI to confirm completion.
+        await Expect(Page.GetByRole(AriaRole.Button, new() { Name = "Logout" })).ToBeVisibleAsync();
     }
 
     private async Task LogoutAsync()
     {
         await Page.GetByRole(AriaRole.Button, new() { Name = "Logout" }).ClickAsync();
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        // Wait for a stable signed-out UI change rather than network idle.
+        await Expect(Page.GetByRole(AriaRole.Link, new() { Name = "Login" })).ToBeVisibleAsync();
     }
 
     [Test]
@@ -80,7 +82,6 @@ public class AuthTests : BlazorTest
         await Page.GetByPlaceholder("name@example.com").FillAsync(email);
         await Page.GetByPlaceholder("password").FillAsync(Password);
         await Page.GetByRole(AriaRole.Button, new() { Name = "Log in" }).ClickAsync();
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
 
         await Expect(Page.GetByRole(AriaRole.Button, new() { Name = "Logout" })).ToBeVisibleAsync();
     }
@@ -96,7 +97,6 @@ public class AuthTests : BlazorTest
         await Page.GetByPlaceholder("name@example.com").FillAsync(email);
         await Page.GetByPlaceholder("password").FillAsync("Wrong-Password-999!");
         await Page.GetByRole(AriaRole.Button, new() { Name = "Log in" }).ClickAsync();
-        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
 
         await Expect(Page.GetByText("Error: Invalid login attempt.")).ToBeVisibleAsync();
     }
