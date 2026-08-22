@@ -4,8 +4,8 @@ using System.Text.Unicode;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-using My1kWordsEe.Models.Semantics;
-using My1kWordsEe.Services.Cqs.Et;
+using My1kWordsEe.Feature.Samples;
+using My1kWordsEe.Feature.Words;
 
 namespace My1kWordsEe.Cmd
 {

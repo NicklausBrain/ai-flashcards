@@ -1,0 +1,48 @@
+using CSharpFunctionalExtensions;
+
+using My1kWordsEe.Common;
+using My1kWordsEe.Feature.Samples;
+using My1kWordsEe.Feature.Games;
+
+namespace My1kWordsEe.Feature.Words
+{
+    public class GetOrAddEtWordCommand
+    {
+        private readonly WordStorageClient wordStorageClient;
+        private readonly AddEtWordCommand addEtWordCommand;
+
+        public GetOrAddEtWordCommand(
+            WordStorageClient wordStorageClient,
+            AddEtWordCommand addEtWordCommand)
+        {
+            this.wordStorageClient = wordStorageClient;
+            this.addEtWordCommand = addEtWordCommand;
+        }
+
+        public virtual async Task<Result<EtWord>> Invoke(string eeWord)
+        {
+            if (!eeWord.ValidateWord())
+            {
+                return Result.Failure<EtWord>("Not an Estonian word");
+            }
+
+            (await wordStorageClient.GetEtWordData(eeWord)).Deconstruct(
+                out bool _,
+                out bool isBlobAccessFailure,
+                out Maybe<EtWord> savedWord,
+                out string blobAccessError);
+
+            if (isBlobAccessFailure)
+            {
+                return Result.Failure<EtWord>(blobAccessError);
+            }
+
+            if (savedWord.HasValue)
+            {
+                return savedWord.Value;
+            }
+
+            return await this.addEtWordCommand.Invoke(eeWord);
+        }
+    }
+}

@@ -8,8 +8,8 @@ using Microsoft.Extensions.Logging;
 
 using Moq;
 
-using My1kWordsEe.Models;
-using My1kWordsEe.Services.Db;
+using My1kWordsEe.Common;
+using My1kWordsEe.Feature.Games;
 
 namespace My1kWordsEe.Tests.Unit.Services.Db
 {

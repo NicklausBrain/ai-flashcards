@@ -1,0 +1,62 @@
+@using BlazorBootstrap
+@using CSharpFunctionalExtensions
+@using My1kWordsEe.Common
+@using My1kWordsEe.Feature.Words
+
+@inject FavoritesStateContainer FavoritesStateContainer;
+
+@code {
+    [Inject] protected PreloadService PreloadService { get; set; } = default!;
+
+    [Parameter]
+    public required dynamic Sample { get; init; }
+
+    protected Maybe<Result<Favorites>> favoritesResult;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        favoritesResult = await FavoritesStateContainer.GetAsync();
+        await base.OnParametersSetAsync();
+    }
+
+    protected bool IsFavorite =>
+        favoritesResult.HasValue &&
+        favoritesResult.Value.IsSuccess &&
+        favoritesResult.Value.Value.IsFavorite(Sample);
+
+    protected bool IsFeatureAvailable => favoritesResult.HasValue && favoritesResult.Value.IsSuccess;
+
+    protected async Task AddToFavorites(dynamic favorite)
+    {
+        PreloadService.Show(SpinnerColor.Light, "Saving data...");
+        favoritesResult = await FavoritesStateContainer.AddAsync(favorite);
+        await Task.Delay(300);
+        PreloadService.Hide();
+        await OnParametersSetAsync();
+        StateHasChanged();
+    }
+
+    protected async Task RemoveFromFavorites(dynamic favorite)
+    {
+        PreloadService.Show(SpinnerColor.Light, "Saving data...");
+        favoritesResult = await FavoritesStateContainer.RemoveAsync(favorite);
+        await Task.Delay(300);
+        PreloadService.Hide();
+        await OnParametersSetAsync();
+        StateHasChanged();
+    }
+}
+
+
+@if (IsFavorite)
+{
+    <i role="button" class="bi bi-star-fill favorite-active" @onclick="() => RemoveFromFavorites(Sample)" title="Marked as favorite"></i>
+}
+else if (IsFeatureAvailable)
+{
+    <i role="button" class="bi bi-star" @onclick="() => AddToFavorites(Sample)" title="Mark as favorite"></i>
+}
+else
+{
+    <a role="button" class="bi bi-star" href="Account/Login" title="Login to use it"></a>
+}

@@ -1,11 +1,11 @@
 using CSharpFunctionalExtensions;
 using Moq;
-using My1kWordsEe.Models;
-using My1kWordsEe.Models.Grammar;
-using My1kWordsEe.Models.Grammar.Forms;
-using My1kWordsEe.Models.Semantics;
-using My1kWordsEe.Services.Cqs.Et;
-using My1kWordsEe.Services.Db;
+using My1kWordsEe.Common;
+using My1kWordsEe.Feature.Grammar;
+using My1kWordsEe.Feature.Grammar;
+using My1kWordsEe.Feature.Samples;
+using My1kWordsEe.Feature.Words;
+using My1kWordsEe.Feature.Games;
 using Xunit;
 
 namespace My1kWordsEe.Tests.Unit.Services.Cqs.Et

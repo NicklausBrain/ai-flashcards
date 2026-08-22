@@ -1,0 +1,66 @@
+@using BlazorBootstrap
+@using CSharpFunctionalExtensions
+@using My1kWordsEe.Common
+@using My1kWordsEe.Feature.Samples
+@using My1kWordsEe.Feature.Games
+@using My1kWordsEe.Feature.Words
+
+@inject FavoritesStateContainer FavoritesStateContainer;
+
+@code {
+    [Inject] protected PreloadService PreloadService { get; set; } = default!;
+
+    [Parameter]
+    public required EtWord Word { get; init; }
+
+    protected Maybe<Result<Favorites>> favoritesResult;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        favoritesResult = await FavoritesStateContainer.GetAsync();
+        await base.OnParametersSetAsync();
+    }
+
+    protected bool IsKnown =>
+        favoritesResult.HasValue &&
+        favoritesResult.Value.IsSuccess &&
+        favoritesResult.Value.Value.IsKnown(Word);
+
+    private string UserId => favoritesResult.Value.Value.UserId;
+
+    protected bool IsFeatureAvailable => favoritesResult.HasValue && favoritesResult.Value.IsSuccess;
+
+    protected async Task MarkAsKnownWord(EtWord word)
+    {
+        PreloadService.Show(SpinnerColor.Light, "Saving data...");
+        favoritesResult = await FavoritesStateContainer.UpdateScore(word.Value, UpdateScoreCommand.ScoreUpdate.Max);
+        await Task.Delay(300);
+        PreloadService.Hide();
+        await OnParametersSetAsync();
+        StateHasChanged();
+    }
+
+    protected async Task RemoveFromKnownWords(EtWord word)
+    {
+        PreloadService.Show(SpinnerColor.Light, "Saving data...");
+        favoritesResult = await FavoritesStateContainer.UpdateScore(word.Value, UpdateScoreCommand.ScoreUpdate.Down);
+        await Task.Delay(300);
+        PreloadService.Hide();
+        await OnParametersSetAsync();
+        StateHasChanged();
+    }
+}
+
+
+@if (IsKnown)
+{
+    <i role="button" class="bi bi-clipboard-check-fill known-active" @onclick="() => RemoveFromKnownWords(Word)" title="Marked as known"></i>
+}
+else if (IsFeatureAvailable)
+{
+    <i role="button" class="bi bi-clipboard-minus" @onclick="() => MarkAsKnownWord(Word)" title="Mark as known"></i>
+}
+else
+{
+    <a role="button" class="bi bi-clipboard-minus" href="Account/Login" title="Login to use it"></a>
+}

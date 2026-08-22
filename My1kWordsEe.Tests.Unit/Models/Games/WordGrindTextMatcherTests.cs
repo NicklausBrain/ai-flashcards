@@ -1,4 +1,4 @@
-using My1kWordsEe.Models.Games;
+using My1kWordsEe.Feature.Games;
 
 namespace My1kWordsEe.Tests.Unit.Models.Games
 {

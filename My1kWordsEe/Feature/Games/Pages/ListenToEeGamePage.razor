@@ -1,0 +1,245 @@
+@page "/listen-game/et"
+@page "/listen-game/et/{eeWord}/{sampleIndex:int}"
+
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+
+@using BlazorBootstrap
+@using CSharpFunctionalExtensions
+@using My1kWordsEe.Common
+@using My1kWordsEe.Feature.Games
+@using My1kWordsEe.Common
+@using My1kWordsEe.Feature.Games
+@using My1kWordsEe.Components.Layout
+@using Microsoft.ApplicationInsights
+
+@inject ListenToEeGameFactory ListenToEeGameFactory
+@inject NavigationManager Navigation
+@inject UrlService Url
+@inject IJSRuntime JS
+@inject TelemetryClient telemetry
+
+@code {
+    [Inject] protected ToastService ToastService { get; set; } = default!;
+
+    [Parameter]
+    public string EeWord { get; init; } = string.Empty;
+
+    [Parameter]
+    public int SampleIndex { get; init; } = 0;
+
+    Maybe<ListenToEeGame> Game;
+    Maybe<string> GameGenerationError;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        telemetry.TrackEvent($"PageView:{nameof(ListenToEeGamePage)}");
+        var gameGen = await ListenToEeGameFactory.Generate(EeWord, SampleIndex);
+        if (gameGen.IsSuccess)
+        {
+            if (string.IsNullOrEmpty(EeWord))
+            {
+                Navigation.NavigateTo($"/listen-game/et/{gameGen.Value.EtWord}/{gameGen.Value.SampleIndex}");
+            }
+            else
+            {
+                Game = gameGen.Value;
+                SuggestedWords = new List<string>(Game.Value.RandomizedWords);
+            }
+        }
+        else
+        {
+            GameGenerationError = gameGen.Error;
+        }
+        await base.OnParametersSetAsync();
+    }
+
+    private void RegenGame() => Navigation.NavigateTo($"/listen-game/et");
+
+    private async Task OnSubmit()
+    {
+        Game.Value.UserInput = UserInput;
+        await Game.Value.Submit();
+        await PlaySample();
+    }
+
+    private async Task PlaySample()
+    {
+        await JS.InvokeVoidAsync("playAudioSample", Game.Value.AudioUrl);
+    }
+
+    private List<string> SuggestedWords = new List<string>();
+    private List<string> UserInputWords = new List<string>();
+    private string UserInput => string.Join(" ", UserInputWords);
+
+    private async Task AddUserInputWord(int index)
+    {
+        if (SuggestedWords[index] == Game.Value.OrderedWords[UserInputWords.Count])
+        {
+            UserInputWords.Add(SuggestedWords[index]);
+            SuggestedWords.RemoveAt(index);
+        }
+        else
+        {
+            ToastService.Notify(new ToastMessage(ToastType.Danger, "Try again!"));
+            await FailSound();
+        }
+
+        if (SuggestedWords.Count == 0)
+        {
+            await OnSubmit();
+        }
+    }
+
+    private void DropUserInputWord(int index)
+    {
+        SuggestedWords.Add(UserInputWords[index]);
+        UserInputWords.RemoveAt(index);
+    }
+
+    private async Task FailSound() => await JS.InvokeVoidAsync("failSound");
+}
+
+<script>
+    window.playAudioSample = async (audioId) => {
+        const audio = document.getElementById(audioId);
+        await audio.play();
+    };
+    window.failSound = () => {
+        setTimeout(() => {
+            const audio = document.getElementById('failureSound');
+            audio.play();
+        }, 0);
+    };
+</script>
+
+<div class="text-left">
+    <audio id="failureSound" src="/sound/failure.wav"></audio>
+    <div class="row">
+        <div class="col-7">
+            <h3>Listen and catch Estonian speech</h3>
+        </div>
+        <div class="col-5">
+            @if (Game.HasValue && Game.Value.IsFinished)
+            {
+                <Button Color="ButtonColor.Primary" Type="ButtonType.Reset" @onclick="@RegenGame">
+                    <i class="bi bi-arrow-repeat"></i>
+                    Try again!
+                </Button>
+            }
+        </div>
+    </div>
+    <div class="row">
+
+        @if (Game.HasValue)
+        {
+            var game = Game.Value;
+            <div class="row">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <button type="button" class="btn btn-primary btn-sm" @onclick="PlaySample">
+                                <i class="bi bi-volume-down-fill"></i>
+                            </button>
+                            <audio id="@game.AudioUrl" src="@Url.Resolve(game.AudioUrl)" autoplay></audio>
+                            <FavoriteOutlineButton Sample="@game.SampleSentence" />
+                        </h5>
+                        <img id="sampleImage" class="img-fluid rounded img-max-w-256 p-1"
+                            src="@Url.Resolve(@game.ImageUrl)" />
+
+                        @if (game.CheckResult.HasValue && game.CheckResult.Value.IsSuccess)
+                        {
+                            var checkResult = game.CheckResult.Value.Value;
+
+                            <ul class="list-group">
+                                @if (checkResult.IsMaxMatch)
+                                {
+                                    <li class="list-group-item list-group-item-success">
+                                        @checkResult.EeSentence
+                                        <br />
+                                        (@checkResult.EnSentence)
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="list-group-item list-group-item-warning">
+                                        @checkResult.EeUserSentence
+                                        (@checkResult.Match / 5)
+                                    </li>
+                                    <li class="list-group-item list-group-item-success">
+                                        @checkResult.EeSentence
+                                        <br />
+                                        (@checkResult.EnSentence)
+                                    </li>
+                                    <li class="list-group-item list-group-item-info">
+                                        @checkResult.EnComment
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        @if (game.CheckResult.HasValue && game.CheckResult.Value.IsFailure)
+                        {
+                            <p class="text-danger">
+                                @game.CheckResult.Value.Error
+                            </p>
+                        }
+                        @if (@game.IsCheckInProgress)
+                        {
+                            <div class="text-center">
+                                <Spinner />
+                            </div>
+                        }
+                        else if (game.CheckResult.HasNoValue)
+                        {
+                            <div class="row mb-1 gap-2 justify-content-center">
+                                @for (var i = 0; i < SuggestedWords.Count; i++)
+                                {
+                                    var wordIndex = i;
+                                    <Button @onclick="@(() => AddUserInputWord(wordIndex))" Class="col-auto"
+                                        Type="ButtonType.Button" Color="ButtonColor.Primary">
+                                        @SuggestedWords[wordIndex]
+                                    </Button>
+                                }
+                            </div>
+
+                            <div class="row mb-1 gap-2 justify-content-center">
+                                @for (var i = 0; i < UserInputWords.Count; i++)
+                                {
+                                    var wordIndex = i;
+                                    <Button Class="col-auto" Type="ButtonType.Button" Color="ButtonColor.Secondary">
+                                        @UserInputWords[wordIndex]
+                                        <Badge @onclick="@(() => DropUserInputWord(wordIndex))">
+                                            <i class="bi bi-x"></i>
+                                        </Badge>
+                                    </Button>
+                                }
+                            </div>
+
+                            <div class="row mb-1 gap-2 justify-content-center">
+                                @if (SuggestedWords.Count == 0)
+                                {
+                                    <Button Class="col-auto" Type="ButtonType.Submit" Color="ButtonColor.Primary"
+                                        @onclick="@OnSubmit">Submit</Button>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+        else if (GameGenerationError.HasNoValue)
+        {
+            <div class="d-flex justify-content-center">
+                <Spinner />
+            </div>
+        }
+
+        @if (GameGenerationError.HasValue)
+        {
+            <p class="text-danger">
+                @GameGenerationError
+            </p>
+        }
+    </div>
+</div>
+<Preload LoadingText="Loading..." />
+<Toasts class="p-3" AutoHide="true" StackLength="5" Placement="ToastsPlacement.BottomRight" />

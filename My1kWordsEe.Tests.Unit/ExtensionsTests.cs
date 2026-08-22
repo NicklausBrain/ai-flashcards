@@ -1,4 +1,4 @@
-using My1kWordsEe.Models;
+using My1kWordsEe.Common;
 
 namespace My1kWordsEe.Tests.Models
 {
