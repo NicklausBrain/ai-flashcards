@@ -29,7 +29,8 @@
 - **Blazor Web Application** (My1kWordsEe):
   - Uses Blazor and Blazor Bootstrap for UI.
   - Main entry: `Program.cs` configures services, secrets, and telemetry.
-  - **CQS Pattern:** Services are organized into Command and Query Separation for business logic.
+  - **Vertical Feature Slices:** Code is organized under `Feature/` (`Favorites`, `Games`, `Grammar`, `Samples`, `Words`) rather than horizontal `Models`/`Services` layers. Each slice co-locates its models, CQS commands/queries, storage clients, state containers, and Razor `Pages`.
+  - **CQS Pattern:** Business logic is organized into Command and Query Separation within each feature slice.
   - **AI Integrations:**
     - OpenAI (text/translation)
     - Stability AI (image generation)
@@ -48,12 +49,10 @@
 
 - **Secrets:** Use `dotnet user-secrets` to set API keys (see README for keys required).
 - **Source Data:** Place seed Estonian word lists in `/source-data`.
-- **Service Organization:**
-  - `Services/Cqs/` for command/query logic
-  - `Services/Db/` for database access
-  - `Services/Scoped/` for scoped services
-- **Models:** All data structures are in `Models/`.
-- **Components:** UI elements and pages are in `Components/`.
+- **Feature Slices:** Feature code lives under `Feature/<slice>/`, co-locating models, CQS commands/queries, storage clients, state containers, and Razor `Pages`.
+- **Shared Infrastructure:** Cross-cutting code lives in `Common/` — `Ai` (OpenAI, Stability AI, Tartu NLP clients), `Media`, and `Storage` (Azure Blob).
+- **App-wide UI:** Shared Blazor components (`Account`, `Layout`, `Pages`) are in `Components/`; feature-specific pages live in each slice's `Pages/` folder.
+- **Auth:** ASP.NET Core Identity (`ApplicationDbContext`, `ApplicationUser`) lives in `AuthData/`, backed by Cosmos DB.
 
 ---
 
