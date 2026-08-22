@@ -1,0 +1,63 @@
+name: Unit Test Coverage - my-1k-ee
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  coverage:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    env:
+      COVERAGE_THRESHOLD: 12.5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.x
+
+      - name: Restore
+        run: dotnet restore My1kWordsEe.Tests.Unit/My1kWordsEe.Tests.Unit.csproj
+
+      - name: Build unit tests
+        run: dotnet build My1kWordsEe.Tests.Unit/My1kWordsEe.Tests.Unit.csproj --configuration Release --no-restore
+
+      - name: Run unit tests with coverage
+        run: dotnet test My1kWordsEe.Tests.Unit/My1kWordsEe.Tests.Unit.csproj --configuration Release --no-build --collect:"XPlat Code Coverage" --settings CodeCoverage.runsettings
+
+      - name: Install ReportGenerator
+        run: dotnet tool install dotnet-reportgenerator-globaltool --tool-path ./.tools
+
+      - name: Generate coverage reports
+        run: ./.tools/reportgenerator -reports:"My1kWordsEe.Tests.Unit/TestResults/**/coverage.cobertura.xml" -targetdir:"My1kWordsEe.Tests.Unit/TestResults/CoverageReport" -reporttypes:"HtmlInline;MarkdownSummaryGithub;Cobertura"
+
+      - name: Publish coverage summary
+        run: cat My1kWordsEe.Tests.Unit/TestResults/CoverageReport/SummaryGithub.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload coverage artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-coverage
+          path: My1kWordsEe.Tests.Unit/TestResults/CoverageReport
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Enforce minimum line coverage
+        run: |
+          python - <<'PY'
+          import os
+          import xml.etree.ElementTree as ET
+
+          tree = ET.parse('My1kWordsEe.Tests.Unit/TestResults/CoverageReport/Cobertura.xml')
+          root = tree.getroot()
+          line_rate = float(root.attrib.get('line-rate', 0.0)) * 100
+          threshold = float(os.environ.get('COVERAGE_THRESHOLD', '0'))
+          print(f"Line coverage: {line_rate:.2f}% (threshold: {threshold:.2f}%)")
+          if line_rate < threshold:
+              raise SystemExit(f"Coverage gate failed: line coverage {line_rate:.2f}% is below threshold {threshold:.2f}%.")
+          PY

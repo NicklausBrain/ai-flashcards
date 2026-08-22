@@ -22,6 +22,15 @@
   ```bash
   dotnet test My1kWordsEe.Tests.E2E/My1kWordsEe.Tests.E2E.csproj --filter "FullyQualifiedName~<TestClassName>"
   ```
+- **Run unit tests with coverage (Cobertura):**
+  ```bash
+  dotnet test My1kWordsEe.Tests.Unit/My1kWordsEe.Tests.Unit.csproj --configuration Release --collect:"XPlat Code Coverage" --settings CodeCoverage.runsettings
+  ```
+- **Generate local coverage report (optional):**
+  ```bash
+  dotnet tool install --global dotnet-reportgenerator-globaltool
+  reportgenerator -reports:"My1kWordsEe.Tests.Unit/TestResults/**/coverage.cobertura.xml" -targetdir:"My1kWordsEe.Tests.Unit/TestResults/CoverageReport" -reporttypes:"HtmlInline;MarkdownSummaryGithub;Cobertura"
+  ```
 - **No dedicated linter configured.**
 
 ## High-Level Architecture
@@ -58,6 +67,7 @@
 
 - Treat this file and `AGENTS.md` as living docs. When a change alters build/test commands, project structure, dependencies, secrets, or AI models, update both in the same PR.
 - During code review, flag any drift between the code and these docs and propose the reconciling edit.
+- Coverage standards: use `CodeCoverage.runsettings` for collection and keep CI coverage gate configuration in `.github/workflows/coverage_my-1k-ee.yml` aligned with current quality targets.
 
 ---
 
