@@ -2,13 +2,13 @@ using CSharpFunctionalExtensions;
 
 using Moq;
 
-using My1kWordsEe.Models;
-using My1kWordsEe.Models.Games;
-using My1kWordsEe.Models.Grammar;
-using My1kWordsEe.Models.Semantics;
-using My1kWordsEe.Services;
-using My1kWordsEe.Services.Cqs.Et;
-using My1kWordsEe.Services.Db;
+using My1kWordsEe.Common;
+using My1kWordsEe.Feature.Games;
+using My1kWordsEe.Feature.Grammar;
+using My1kWordsEe.Feature.Samples;
+using My1kWordsEe.Common;
+using My1kWordsEe.Feature.Words;
+using My1kWordsEe.Feature.Games;
 
 namespace My1kWordsEe.Tests.Unit.Models.Games.Generation
 {

@@ -1,0 +1,224 @@
+@page "/forms-game/et"
+@page "/forms-game/et/{etNoun}"
+
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+
+@using BlazorBootstrap
+@using CSharpFunctionalExtensions
+@using My1kWordsEe.Components.Layout
+@using My1kWordsEe.Common
+@using My1kWordsEe.Feature.Games
+@using My1kWordsEe.Feature.Samples
+@using My1kWordsEe.Common
+@using My1kWordsEe.Feature.Games
+@using My1kWordsEe.Feature.Words
+@using Microsoft.ApplicationInsights
+@using System.Text.RegularExpressions
+
+@inject EtNoun3FormsGameFactory EtNoun3FormsGameFactory;
+@inject NavigationManager Navigation;
+@inject TelemetryClient telemetry;
+@inject EtWordsCache etWordsCache;
+@inject IJSRuntime JS;
+
+@code {
+    [Parameter]
+    public string EtNoun { get; init; } = string.Empty;
+
+    Maybe<EtNoun3FormsGame> Game;
+    Maybe<string> GameGenerationError;
+
+    private string GetRandomNoun()
+    {
+        var random = new Random(Environment.TickCount);
+
+        var nouns = etWordsCache.AllWords.Where(w => w.DefaultSense.IsNoun).ToArray();
+
+        var noun = nouns[random.Next(0, nouns.Length)];
+        return noun.Value;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        telemetry.TrackEvent($"PageView:{nameof(EtNoun3FormsGamePage)}");
+
+        if (string.IsNullOrEmpty(EtNoun))
+        {
+            // Pick a random noun
+            var randomNoun = GetRandomNoun();
+            Navigation.NavigateTo($"/forms-game/et/{randomNoun}", forceLoad: true);
+        }
+        else
+        {
+            var gameGen = await EtNoun3FormsGameFactory.Generate(EtNoun);
+            if (gameGen.IsSuccess)
+            {
+                Game = gameGen.Value;
+            }
+            else
+            {
+                GameGenerationError = gameGen.Error;
+            }
+            await base.OnParametersSetAsync();
+        }
+    }
+
+    private void OnSubmit()
+    {
+        Game.Value.Submit();
+        if (Game.Value.IsMaxScore)
+        {
+            _ = SuccessSound();
+        }
+    }
+
+    private void OnGiveUp()
+    {
+        Game.Value.GiveUp();
+    }
+
+    private void RegenGame()
+    {
+        Navigation.NavigateTo($"/forms-game/et/{GetRandomNoun()}", forceLoad: true);
+    }
+
+    private string MaskWord(string sentence, string word, string? userWord)
+    {
+        if (string.IsNullOrEmpty(sentence) || string.IsNullOrEmpty(word))
+        {
+            return sentence;
+        }
+
+        string replacement;
+
+        if (string.IsNullOrEmpty(userWord))
+        {
+            replacement = new string('_', word.Length);
+        }
+        else if (userWord.Length < word.Length)
+        {
+            replacement = userWord + new string('_', word.Length - userWord.Length);
+        }
+        else
+        {
+            replacement = userWord;
+        }
+
+        return Regex.Replace(sentence, Regex.Escape(word), replacement, RegexOptions.IgnoreCase);
+    }
+
+    private async Task SuccessSound() => await JS.InvokeVoidAsync("successSound");
+
+    private RenderFragment GrammarCaseCard(
+        string headerLabel,
+        TranslatedString sentence,
+        TranslatedString correctWord,
+        bool isCorrect,
+        string userWord,
+        Action<string> onUserWordChanged) => __builder =>
+    {
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-header">@headerLabel</div>
+                <div class="card-body">
+                    <p class="card-text">@MaskWord(sentence.Et, correctWord.Et, userWord)</p>
+                    <p class="card-text"><small class="text-muted">@sentence.En</small></p>
+                    @if (this.Game.Value.IsFinished)
+                    {
+                        <div class="mb-2">
+                            @if (isCorrect)
+                            {
+                                <span class="text-success fw-bold">@correctWord.Et</span>
+                                <i class="bi bi-check-circle-fill text-success"></i>
+                            }
+                            else
+                            {
+                                <span class="text-danger text-decoration-line-through">@userWord</span>
+                                <br />
+                                <span class="text-success fw-bold">@correctWord.Et</span>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <input type="text" @bind:get="userWord" @bind:set="value => onUserWordChanged(value ?? string.Empty)"
+                               @bind:event="oninput" class="form-control" placeholder="Type word form..." />
+                    }
+                </div>
+            </div>
+        </div>
+    };
+}
+
+<script>
+    window.successSound = () => {
+        setTimeout(() => {
+            const audio = document.getElementById('successSound');
+            audio.play();
+        }, 0);
+    };
+</script>
+
+<div class="text-left">
+    <audio id="successSound" src="/sound/success.wav"></audio>
+    <div class="row">
+        <div class="col-7">
+            <h3>Nimisõna 3 vormi (Noun 3 Forms)</h3>
+        </div>
+        <div class="col-5">
+            @if (Game.HasValue && Game.Value.IsFinished)
+            {
+                <Button Color="ButtonColor.Primary" Type="ButtonType.Reset" @onclick="@RegenGame">
+                    <i class="bi bi-arrow-repeat"></i>
+                    Try again!
+                </Button>
+            }
+        </div>
+    </div>
+
+    @if (Game.HasValue)
+    {
+        var game = Game.Value;
+
+        <div class="row mb-3">
+            <div class="col-12">
+                <h5>
+                    Base Word: <a href="/word/@game.NimetavSõna.Et"
+                                  target="_blank"><strong>@game.NimetavSõna.Et</strong></a> (@game.NimetavSõna.En)
+                </h5>
+            </div>
+        </div>
+
+        <div class="row">
+            @GrammarCaseCard("Nimetav (Nominative)", game.NimetavLause, game.NimetavSõna, game.IsNimetavOk,
+        game.UserNimetavSõna, v => game.UserNimetavSõna = v)
+            @GrammarCaseCard("Omastav (Genitive)", game.OmastavLause, game.OmastavSõna, game.IsOmastavOk,
+        game.UserOmastavSõna, v => game.UserOmastavSõna = v)
+            @GrammarCaseCard("Osastav (Partitive)", game.OsastavLause, game.OsastavSõna, game.IsOsastavOk,
+        game.UserOsastavSõna, v => game.UserOsastavSõna = v)
+        </div>
+
+        @if (!game.IsFinished)
+        {
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <button class="btn btn-primary me-2" @onclick="OnSubmit">Submit</button>
+                    <button class="btn btn-secondary" @onclick="OnGiveUp">Give Up</button>
+                </div>
+            </div>
+        }
+    }
+    else if (GameGenerationError.HasNoValue)
+    {
+        <div class="d-flex justify-content-center">
+            <Spinner />
+        </div>
+    }
+
+    @if (GameGenerationError.HasValue)
+    {
+        <p class="text-danger">
+            @GameGenerationError
+        </p>
+    }
+</div>

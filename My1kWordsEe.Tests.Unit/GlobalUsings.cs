@@ -1,0 +1,9 @@
+global using My1kWordsEe.Common;
+global using My1kWordsEe.Common.Ai;
+global using My1kWordsEe.Common.Media;
+global using My1kWordsEe.Common.Storage;
+global using My1kWordsEe.Feature.Favorites;
+global using My1kWordsEe.Feature.Games;
+global using My1kWordsEe.Feature.Grammar;
+global using My1kWordsEe.Feature.Samples;
+global using My1kWordsEe.Feature.Words;

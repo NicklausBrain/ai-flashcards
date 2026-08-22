@@ -1,0 +1,96 @@
+using CSharpFunctionalExtensions;
+
+using My1kWordsEe.Common;
+using My1kWordsEe.Feature.Samples;
+using My1kWordsEe.Feature.Games;
+
+using static My1kWordsEe.Common.Extensions;
+
+namespace My1kWordsEe.Feature.Words
+{
+    public class AddEtWordCommand
+    {
+        private readonly OpenAiClient openAiClient;
+        private readonly WordStorageClient wordStorageClient;
+        private readonly GenerateSpeechCommand generateSpeechCommand;
+
+        public static readonly string Prompt =
+@"See on keeleõppe süsteem.
+Teie sisend on üks eestikeelne sõna (ja ainult eestikeelne sõna).
+Ärge lisage tähendusi, mis põhinevad ingliskeelsetel homonüümidel.
+Sõna tähendused peavad tulenema ainult eesti keelest.
+Kirjeldage iga sõna funktsiooni või tähendust ainult ühes kirjes.
+Lisage üksnes algajale vajalikud sõnatähendused.
+Väljund peab olema JSON-objekt vastavalt antud skeemile.";
+
+        public AddEtWordCommand(
+            OpenAiClient openAiClient,
+            WordStorageClient wordStorageClient,
+            GenerateSpeechCommand generateSpeechCommand)
+        {
+            this.wordStorageClient = wordStorageClient;
+            this.openAiClient = openAiClient;
+            this.generateSpeechCommand = generateSpeechCommand;
+        }
+
+        public async Task<Result<EtWord>> Invoke(string eeWord, string? comment = null)
+        {
+            if (!eeWord.ValidateWord())
+            {
+                return Result.Failure<EtWord>("Not an Estonian word");
+            }
+
+            (await this.GetWordMetadata(eeWord)).Deconstruct(
+                out bool _,
+                out bool isAiFailure,
+                out EtWord etWord,
+                out string aiError);
+
+            if (isAiFailure)
+            {
+                return Result.Failure<EtWord>(aiError);
+            }
+
+            (await this.generateSpeechCommand.Invoke(
+                sampleId: eeWord,
+                sentence: eeWord)).Deconstruct(
+                out bool _,
+                out bool isAudioFailure,
+                out Uri _,
+                out string audioError);
+
+            if (isAudioFailure)
+            {
+                return Result.Failure<EtWord>(audioError);
+            }
+
+            return (await wordStorageClient.SaveEtWordData(etWord))
+                .Map(_ => etWord);
+        }
+
+        private async Task<Result<EtWord>> GetWordMetadata(string etWord)
+        {
+            // todo try making a self-trim type
+            // of etWord (or just word)
+            // and implicit convert into it
+            etWord = etWord.TrimToLower();
+
+            var response = await this.openAiClient.CompleteJsonSchemaAsync<WordSenses>(
+                Prompt,
+                etWord,
+                JsonSchemaRecord.For(typeof(WordSenses)),
+                temperature: 0.1f);
+
+            if (response.IsFailure)
+            {
+                return Result.Failure<EtWord>(response.Error);
+            }
+
+            return Result.Success(new EtWord
+            {
+                Value = etWord,
+                Senses = response.Value.Senses
+            });
+        }
+    }
+}

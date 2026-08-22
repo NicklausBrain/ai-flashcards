@@ -1,0 +1,196 @@
+@page "/word-2-word-match-game/en"
+
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+
+@using BlazorBootstrap
+@using My1kWordsEe.Common
+@using My1kWordsEe.Feature.Games
+@using My1kWordsEe.Feature.Games
+@using My1kWordsEe.Feature.Words
+@using Microsoft.ApplicationInsights
+
+@inject Word2WordMatchGameFactory Word2WordMatchGameFactory
+@inject FavoritesStateContainer FavoritesStateContainer
+@inject IJSRuntime JS
+@inject TelemetryClient telemetry
+
+@code {
+    [Inject] protected ToastService ToastService { get; set; } = default!;
+
+    Word2WordMatchGame Game = Word2WordMatchGame.Empty;
+
+    string SelectedEtWord = string.Empty;
+    string SelectedEnWord = string.Empty;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        telemetry.TrackEvent($"PageView:{nameof(Word2WordMatchGamePage)}");
+        Game = Word2WordMatchGame.Empty;
+        Game = await Word2WordMatchGameFactory.Generate();
+        await base.OnParametersSetAsync();
+    }
+
+    private Task SelectEnWord(string enWord)
+    {
+        if (Game.EnWords[enWord].IsMatched)
+        {
+            // ignore already matched words
+            return Task.CompletedTask;
+        }
+        SelectedEnWord = enWord;
+        return this.TryMatch();
+    }
+
+    private Task SelectEtWord(string etWord)
+    {
+        if (Game.EtWords[etWord].IsMatched)
+        {
+            // ignore already matched words
+            return Task.CompletedTask;
+        }
+        SelectedEtWord = etWord;
+        return this.TryMatch();
+    }
+
+    private CardColor GetEnCardColor(string enWord)
+    {
+        if (SelectedEnWord == enWord)
+        {
+            return CardColor.Warning;
+        }
+
+        if (Game.EnWords[enWord].IsMatched)
+        {
+            return CardColor.Success;
+        }
+
+        return CardColor.Light;
+    }
+
+    private CardColor GetEtCardColor(string etWord)
+    {
+        if (SelectedEtWord == etWord)
+        {
+            return CardColor.Warning;
+        }
+
+        if (Game.EtWords[etWord].IsMatched)
+        {
+            return CardColor.Success;
+        }
+
+        return CardColor.Light;
+    }
+
+    private async Task TryMatch()
+    {
+        if (string.IsNullOrEmpty(SelectedEtWord) || string.IsNullOrEmpty(SelectedEnWord))
+        {
+            return;
+        }
+
+        var hasMatch = Game.TryMatch(SelectedEtWord, SelectedEnWord);
+
+        if (hasMatch)
+        {
+            ToastService.Notify(new ToastMessage(ToastType.Success, "Great match!"));
+            await SuccessSound();
+            _ = FavoritesStateContainer.UpdateScore(SelectedEtWord, UpdateScoreCommand.ScoreUpdate.Up);
+        }
+        else
+        {
+            ToastService.Notify(new ToastMessage(ToastType.Danger, "Try again!"));
+            await FailSound();
+            _ = FavoritesStateContainer.UpdateScore(SelectedEtWord, UpdateScoreCommand.ScoreUpdate.Down);
+        }
+
+        SelectedEtWord = string.Empty;
+        SelectedEnWord = string.Empty;
+    }
+
+    private async Task SuccessSound() => await JS.InvokeVoidAsync("successSound");
+    private async Task FailSound() => await JS.InvokeVoidAsync("failSound");
+}
+
+<script>
+    window.successSound = () => {
+        setTimeout(() => {
+            const audio = document.getElementById('successSound');
+            audio.play();
+        }, 0);
+    };
+    window.failSound = () => {
+        setTimeout(() => {
+            const audio = document.getElementById('failureSound');
+            audio.play();
+        }, 0);
+    };
+</script>
+
+<div class="text-left">
+    <audio id="successSound" src="/sound/success.wav"></audio>
+    <audio id="failureSound" src="/sound/failure.wav"></audio>
+    <div class="row">
+        <div class="col-7">
+            <h3>Match word pairs</h3>
+        </div>
+        <div class="col-5">
+            @if (Game.IsFinished)
+            {
+                <Button Color="ButtonColor.Primary" Type="ButtonType.Reset" @onclick="@OnParametersSetAsync">
+                    <i class="bi bi-arrow-repeat"></i>
+                    Try again!
+                </Button>
+            }
+        </div>
+    </div>
+    <div class="row">
+        @if (Game.IsReady)
+        {
+            <div class="col-5 p-1">
+                @foreach (var enWord in Game.EnWords2Match.Concat(Game.Matches.Select(m => m.EnWord)))
+                {
+                    <Card Color="@GetEnCardColor(enWord)" Class="mb-4" role="button" @onclick="@(e => SelectEnWord(enWord))">
+                        <CardBody>
+                            <CardTitle>@enWord</CardTitle>
+                        </CardBody>
+                    </Card>
+                }
+            </div>
+
+            <div class="col-5 p-1">
+                @foreach (var etWord in Game.EtWords2Match.Concat(Game.Matches.Select(m => m.EtWord)))
+                {
+                    <Card Color="@GetEtCardColor(etWord)" Class="mb-4" role="button" @onclick="@(e => SelectEtWord(etWord))">
+                        <CardBody>
+                            <CardTitle>@etWord</CardTitle>
+                        </CardBody>
+                    </Card>
+                }
+            </div>
+
+            <div class="col-2 p-1">
+                @foreach (var etWord in Game.EtWords2Match.Concat(Game.Matches.Select(m => m.EtWord)))
+                {
+                    <a href="word/@etWord" target="_blank">
+                        <Card Class="mb-4 text-center">
+                            <CardBody>
+                                <CardTitle>
+                                    <i class="bi bi-box-arrow-up-right"></i>
+                                </CardTitle>
+                            </CardBody>
+                        </Card>
+                    </a>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="d-flex justify-content-center">
+                <Spinner />
+            </div>
+        }
+    </div>
+</div>
+
+<Toasts class="p-3" AutoHide="true" StackLength="5" Placement="ToastsPlacement.BottomRight" />

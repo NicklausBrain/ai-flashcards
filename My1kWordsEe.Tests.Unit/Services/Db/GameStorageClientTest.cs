@@ -4,7 +4,7 @@ using CSharpFunctionalExtensions;
 
 using Moq;
 
-using My1kWordsEe.Services.Db;
+using My1kWordsEe.Feature.Games;
 
 namespace My1kWordsEe.Tests.Unit.Services.Db
 {

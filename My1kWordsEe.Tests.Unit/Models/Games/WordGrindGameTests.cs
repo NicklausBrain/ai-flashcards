@@ -2,11 +2,11 @@ using CSharpFunctionalExtensions;
 
 using Moq;
 
-using My1kWordsEe.Models;
-using My1kWordsEe.Models.Games;
-using My1kWordsEe.Models.Games.Generation;
-using My1kWordsEe.Services;
-using My1kWordsEe.Services.Db;
+using My1kWordsEe.Common;
+using My1kWordsEe.Feature.Games;
+using My1kWordsEe.Feature.Games;
+using My1kWordsEe.Common;
+using My1kWordsEe.Feature.Games;
 
 namespace My1kWordsEe.Tests.Unit.Models.Games
 {
