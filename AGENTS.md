@@ -53,3 +53,8 @@ To build and run the project, you will need to have the .NET 10 SDK installed.
 - **Testing:** The project includes unit tests (`My1kWordsEe.Tests.Unit`) and end-to-end tests (`My1kWordsEe.Tests.E2E`).
 - **CQS:** The project uses a Command and Query Separation (CQS) pattern to separate read and write operations. This helps to keep the code organized and maintainable.
 - **Dependency Injection:** The project makes extensive use of dependency injection to manage dependencies between services.
+
+## Keeping Docs in Sync
+
+- Treat this file (and `.github/copilot-instructions.md`) as living docs; When a change alters build/test commands, project structure, dependencies, secrets, or AI models, update both in the same PR.
+- During code review, flag any drift between the code and these docs and propose the reconciling edit.

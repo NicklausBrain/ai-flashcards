@@ -54,6 +54,11 @@
 - **App-wide UI:** Shared Blazor components (`Account`, `Layout`, `Pages`) are in `Components/`; feature-specific pages live in each slice's `Pages/` folder.
 - **Auth:** ASP.NET Core Identity (`ApplicationDbContext`, `ApplicationUser`) lives in `AuthData/`, backed by Cosmos DB.
 
+## Keeping Docs in Sync
+
+- Treat this file and `AGENTS.md` as living docs. When a change alters build/test commands, project structure, dependencies, secrets, or AI models, update both in the same PR.
+- During code review, flag any drift between the code and these docs and propose the reconciling edit.
+
 ---
 
 This file summarizes build/test commands, architecture, and conventions for Copilot and other AI agents. Adjust or request more coverage if needed.
