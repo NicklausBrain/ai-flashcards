@@ -7,7 +7,7 @@
 		  <Format>cobertura</Format>
 		  <Include>[My1kWordsEe*]*</Include>
 		  <Exclude>[*.Tests.*]*,[xunit.*]*,[nunit.*]*,[Moq]*</Exclude>
-		  <ExcludeByFile>**/*.g.cs,**/*.g.i.cs,**/Migrations/*.cs</ExcludeByFile>
+		  <ExcludeByFile>**/*.g.cs,**/*.g.i.cs,**/Migrations/*.cs,**/*.razor,**/*.razor.cs</ExcludeByFile>
 		  <ExcludeByAttribute>GeneratedCodeAttribute,CompilerGeneratedAttribute,ExcludeFromCodeCoverageAttribute</ExcludeByAttribute>
 		  <SingleHit>false</SingleHit>
 		  <UseSourceLink>true</UseSourceLink>
