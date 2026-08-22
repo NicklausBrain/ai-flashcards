@@ -54,6 +54,23 @@ To build and run the project, you will need to have the .NET 10 SDK installed.
 - **CQS:** The project uses a Command and Query Separation (CQS) pattern to separate read and write operations. This helps to keep the code organized and maintainable.
 - **Dependency Injection:** The project makes extensive use of dependency injection to manage dependencies between services.
 
+## Test Coverage
+
+- Coverage is collected with `coverlet.collector` using repo-level settings in `CodeCoverage.runsettings`.
+- A dedicated CI workflow (`.github/workflows/coverage_my-1k-ee.yml`) enforces the minimum line-coverage gate.
+- Local coverage run (unit tests):
+
+  ```bash
+  dotnet test My1kWordsEe.Tests.Unit/My1kWordsEe.Tests.Unit.csproj --configuration Release --collect:"XPlat Code Coverage" --settings CodeCoverage.runsettings
+  ```
+
+- Optional local HTML report (requires tool):
+
+  ```bash
+  dotnet tool install --global dotnet-reportgenerator-globaltool
+  reportgenerator -reports:"My1kWordsEe.Tests.Unit/TestResults/**/coverage.cobertura.xml" -targetdir:"My1kWordsEe.Tests.Unit/TestResults/CoverageReport" -reporttypes:"HtmlInline;MarkdownSummaryGithub;Cobertura"
+  ```
+
 ## Keeping Docs in Sync
 
 - Treat this file (and `.github/copilot-instructions.md`) as living docs; When a change alters build/test commands, project structure, dependencies, secrets, or AI models, update both in the same PR.
