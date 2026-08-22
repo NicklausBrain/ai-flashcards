@@ -1,17 +1,14 @@
 using CSharpFunctionalExtensions;
-using Microsoft.Extensions.Logging;
 using Moq;
 using My1kWordsEe.Common;
-using My1kWordsEe.Feature.Grammar;
+using My1kWordsEe.Feature.Games;
 using My1kWordsEe.Feature.Grammar;
 using My1kWordsEe.Feature.Samples;
-using My1kWordsEe.Common;
 using My1kWordsEe.Feature.Words;
-using My1kWordsEe.Feature.Games;
 using System.Text.Json;
 using Xunit;
 
-namespace My1kWordsEe.Tests.Unit.Services.Cqs.Et
+namespace My1kWordsEe.Tests.Unit.Feature.Grammar
 {
     public class AddEtFormsCommandTests
     {

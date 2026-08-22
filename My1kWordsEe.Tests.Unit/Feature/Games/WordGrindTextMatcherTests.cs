@@ -1,6 +1,6 @@
 using My1kWordsEe.Feature.Games;
 
-namespace My1kWordsEe.Tests.Unit.Models.Games
+namespace My1kWordsEe.Tests.Unit.Feature.Games
 {
     public class WordGrindTextMatcherTests
     {

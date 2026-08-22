@@ -1,10 +1,9 @@
 using My1kWordsEe.Common;
 using My1kWordsEe.Feature.Grammar;
-using My1kWordsEe.Feature.Grammar;
 using System.Text.Json;
 using Xunit;
 
-namespace My1kWordsEe.Tests.Unit.Models.Grammar
+namespace My1kWordsEe.Tests.Unit.Feature.Grammar
 {
     public class AdjectiveFormsTests
     {
