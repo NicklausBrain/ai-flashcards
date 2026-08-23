@@ -54,10 +54,16 @@ jobs:
       - name: Prepare PR coverage comment
         if: github.event_name == 'pull_request'
         run: |
-          cp My1kWordsEe.Tests.Unit/TestResults/CoverageReport/SummaryGithub.md coverage-comment.md
+          echo "## My1kWordsEe Unit Test Coverage Report" > coverage-comment.md
+          echo "" >> coverage-comment.md
+          echo "**Project:** \`My1kWordsEe.Tests.Unit\`  " >> coverage-comment.md
+          echo "**Workflow:** \`${{ github.workflow }}\`  " >> coverage-comment.md
+          echo "**Commit:** \`${{ github.sha }}\`  " >> coverage-comment.md
+          echo "**Run:** https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> coverage-comment.md
+          echo "" >> coverage-comment.md
+          cat My1kWordsEe.Tests.Unit/TestResults/CoverageReport/SummaryGithub.md >> coverage-comment.md
           echo "" >> coverage-comment.md
           echo "> Full HTML report is available in the **unit-test-coverage** artifact for this workflow run." >> coverage-comment.md
-          echo "> Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> coverage-comment.md
 
       - name: Post sticky PR coverage comment
         if: github.event_name == 'pull_request'
