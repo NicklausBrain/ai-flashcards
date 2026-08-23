@@ -17,6 +17,7 @@ Teie sisend on üks eestikeelne sõna (ja ainult eestikeelne sõna).
 Sõna tähendused peavad tulenema ainult eesti keelest.
 Kirjeldage iga sõna funktsiooni või tähendust ainult ühes kirjes.
 Lisage üksnes algajale vajalikud sõnatähendused.
+Tähelepanu: -mine lõpuga tegevusnimed (nt õppimine, sõitmine) on nimisõnad (mitte tegusõnad) ja nende kõneosa peab olema 'nimisõna'.
 Väljund peab olema JSON-objekt vastavalt antud skeemile.";
 
         public AddEtWordCommand(
