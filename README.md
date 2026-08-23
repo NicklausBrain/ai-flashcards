@@ -1,6 +1,7 @@
 # ai-flashcards
 
-flashcards for Estonian words and sentences memoization
+- Exercises for Estonian words and sentences memoization
+- [Demo](https://youtu.be/ugRFUHiGXPc?si=sIdP3VqwOtmoAZzx)
 
 ## ./My1kWordsEe
 
