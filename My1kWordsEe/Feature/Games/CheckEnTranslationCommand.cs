@@ -1,6 +1,6 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using System.ComponentModel;
 using System.Text.Encodings.Web;
+using System.Text.Json;
 using System.Text.Unicode;
 
 using CSharpFunctionalExtensions;
@@ -11,6 +11,13 @@ namespace My1kWordsEe.Feature.Games
 {
     public class CheckEnTranslationCommand
     {
+        public static readonly string Prompt =
+$@"Your task is to check the user's translation from Estonian into English.
+Ignore letter case (upper or lower) and punctuation in your check.
+When your comment quotes Estonian words, always use correct Estonian spelling (ä, ö, õ, ü, š, ž) and never replace Estonian letters with digits or other symbols.
+Your input is a JSON object:
+{JsonSchemaRecord.For(typeof(Input))}";
+
         private readonly TelemetryClient telemetry;
         private readonly OpenAiClient openAiClient;
 
@@ -22,33 +29,21 @@ namespace My1kWordsEe.Feature.Games
 
         public virtual async Task<Result<EnTranslationCheckResult>> Invoke(string etSentence, string enSentence, string enExpectedSentence)
         {
-            var prompt = "Your task is to check user's translation from Estonian into English.\n" +
-                         "Ignore the letters case (upper or lower) and punctuation symbols in your check.\n" +
-                         "Always use correct Estonian spelling (ä, ö, õ, ü, š, ž) in the output. Never replace Estonian letters with digits or other symbols.\n" +
-                         $"Your input is JSON object:\n" +
-                         "```\n{\n" +
-                         "\"ee_sentence\": \"<eestikeelne lause>\", \"en_user_sentence\": \"<user translation to English>\", \"en_expected_sentence\": \"<expected translation to English>\"\n" +
-                         "}\n```\n" +
-                         "Your outpur is JSON object:\n" +
-                         "```\n{\n" +
-                         "\"ee_sentence\": \"<eestikeelne lause>\",\n" +
-                         "\"en_user_sentence\": \"<user translation to English>\",\n" +
-                         "\"en_expected_sentence\": \"<expected translation to English>\",\n" +
-                         "\"en_comment\": \"<comment explaining to the student his mistake (if any)>\",\n" +
-                         "\"match_level\": <correctes level in integer from 0 to 5>\n" +
-                         "}\n```\n";
-
-            var input = JsonSerializer.Serialize(new
+            var input = JsonSerializer.Serialize(new Input
             {
-                ee_sentence = etSentence.Trim('.', ' ').ToLowerInvariant(),
-                en_user_sentence = enSentence.Trim('.', ' ').ToLowerInvariant(),
-                en_expected_sentence = enExpectedSentence.Trim('.', ' ').ToLowerInvariant(),
+                EeSentence = etSentence.Trim('.', ' ').ToLowerInvariant(),
+                EnUserSentence = enSentence.Trim('.', ' ').ToLowerInvariant(),
+                EnExpectedSentence = enExpectedSentence.Trim('.', ' ').ToLowerInvariant(),
             }, new JsonSerializerOptions
             {
+                WriteIndented = false,
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
             });
 
-            var result = await this.openAiClient.CompleteJsonAsync<EnTranslationCheckResult>(prompt, input);
+            var result = await this.openAiClient.CompleteJsonSchemaAsync<Response>(
+                instructions: Prompt,
+                input: input,
+                schema: JsonSchemaRecord.For(typeof(Response)));
 
             telemetry.TrackEvent("CheckEnTranslationCommand-done", new Dictionary<string, string>
             {
@@ -56,37 +51,54 @@ namespace My1kWordsEe.Feature.Games
                 { "enSentence", enSentence },
             });
 
-            // Canonical Estonian source comes from local truth, not the AI echo,
-            // which can garble diacritics. Only Match and EnComment are trusted from the model.
+            // Canonical fields come from local truth; the model supplies only Match and EnComment.
             if (result.IsSuccess)
             {
-                return Result.Success(result.Value with
+                return Result.Success(new EnTranslationCheckResult
                 {
                     EeSentence = etSentence,
                     EnUserSentence = enSentence,
                     EnExpectedSentence = enExpectedSentence,
+                    EnComment = result.Value.EnComment,
+                    Match = result.Value.Match,
                 });
             }
 
-            return result;
+            return Result.Failure<EnTranslationCheckResult>(result.Error);
+        }
+
+        public struct Input
+        {
+            [Description("The Estonian sentence shown to the user")]
+            public string EeSentence { get; init; }
+
+            [Description("The user's translation into English")]
+            public string EnUserSentence { get; init; }
+
+            [Description("The expected translation into English")]
+            public string EnExpectedSentence { get; init; }
+        }
+
+        public struct Response
+        {
+            [Description("Comment explaining to the student his mistake (if any) in English")]
+            public string EnComment { get; init; }
+
+            [Description("Correctness level as an integer from 0 to 5")]
+            public ushort Match { get; init; }
         }
     }
 
     public record EnTranslationCheckResult
     {
-        [JsonPropertyName("ee_sentence")]
         public required string EeSentence { get; init; }
 
-        [JsonPropertyName("en_user_sentence")]
         public required string EnUserSentence { get; init; }
 
-        [JsonPropertyName("en_expected_sentence")]
         public required string EnExpectedSentence { get; init; }
 
-        [JsonPropertyName("en_comment")]
         public required string EnComment { get; init; } = string.Empty;
 
-        [JsonPropertyName("match_level")]
         public required ushort Match { get; init; }
 
         public bool IsMaxMatch => this.Match == 5;

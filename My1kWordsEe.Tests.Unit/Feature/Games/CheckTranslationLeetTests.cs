@@ -52,17 +52,14 @@ namespace My1kWordsEe.Tests.Unit.Feature.Games
         }
 
         [Fact]
-        public async Task CheckEnTranslation_UsesLocalTruth_WhenAiEchoesLeet()
+        public async Task CheckEnTranslation_UsesLocalTruth_ForCanonicalFields()
         {
             var openAiMock = new Mock<OpenAiClient>(null!, null!);
             openAiMock
-                .Setup(x => x.CompleteJsonAsync<EnTranslationCheckResult>(
-                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<float?>()))
-                .ReturnsAsync(Result.Success(new EnTranslationCheckResult
+                .Setup(x => x.CompleteJsonSchemaAsync<CheckEnTranslationCommand.Response>(
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<JsonSchemaRecord>(), It.IsAny<float?>()))
+                .ReturnsAsync(Result.Success(new CheckEnTranslationCommand.Response
                 {
-                    EeSentence = "v4ike koer",
-                    EnUserSentence = "small dog",
-                    EnExpectedSentence = "a small dog",
                     EnComment = "ok",
                     Match = 5,
                 }));
@@ -83,17 +80,14 @@ namespace My1kWordsEe.Tests.Unit.Feature.Games
         }
 
         [Fact]
-        public async Task CheckEeListening_UsesLocalTruth_WhenAiEchoesLeet()
+        public async Task CheckEeListening_UsesLocalTruth_ForCanonicalFields()
         {
             var openAiMock = new Mock<OpenAiClient>(null!, null!);
             openAiMock
-                .Setup(x => x.CompleteJsonAsync<EeListeningCheckResult>(
-                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<float?>()))
-                .ReturnsAsync(Result.Success(new EeListeningCheckResult
+                .Setup(x => x.CompleteJsonSchemaAsync<CheckEeListeningCommand.Response>(
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<JsonSchemaRecord>(), It.IsAny<float?>()))
+                .ReturnsAsync(Result.Success(new CheckEeListeningCommand.Response
                 {
-                    EeSentence = "v4ike maja",
-                    EnSentence = "sm4ll house",
-                    EeUserSentence = "v4ike maja",
                     EnComment = "ok",
                     Match = 5,
                 }));

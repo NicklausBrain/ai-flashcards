@@ -46,22 +46,6 @@ namespace My1kWordsEe.Common.Ai
             }
         }
 
-        public virtual async Task<Result<T>> CompleteJsonAsync<T>(string instructions, string input, float? temperature = null)
-        {
-            var response = await this.CompleteAsync(instructions, input, new ChatCompletionOptions
-            {
-                ResponseFormat = ChatResponseFormat.CreateJsonObjectFormat(),
-                Temperature = temperature,
-            });
-
-            if (response.IsFailure)
-            {
-                return Result.Failure<T>(response.Error);
-            }
-
-            return this.ParseJsonResponse<T>(response);
-        }
-
         public virtual async Task<Result<T>> CompleteJsonSchemaAsync<T>(
             string instructions,
             string input,
