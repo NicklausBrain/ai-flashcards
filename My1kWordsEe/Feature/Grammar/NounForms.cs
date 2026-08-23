@@ -1,7 +1,5 @@
 using System.ComponentModel;
 
-using My1kWordsEe.Feature.Grammar;
-
 namespace My1kWordsEe.Feature.Grammar
 {
     public struct NounForms : IGrammarForms

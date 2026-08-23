@@ -5,11 +5,6 @@ using System.Text.Unicode;
 
 using CSharpFunctionalExtensions;
 
-using My1kWordsEe.Feature.Grammar;
-using My1kWordsEe.Common;
-using My1kWordsEe.Feature.Words;
-using My1kWordsEe.Feature.Games;
-
 namespace My1kWordsEe.Feature.Games
 {
     public class EtNoun3FormsGameFactory

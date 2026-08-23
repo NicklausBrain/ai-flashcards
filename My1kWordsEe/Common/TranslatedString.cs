@@ -1,8 +1,6 @@
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 
-using My1kWordsEe.Feature.Grammar;
-
 namespace My1kWordsEe.Common
 {
     public struct TranslatedString

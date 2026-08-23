@@ -1,5 +1,3 @@
-using My1kWordsEe.Feature.Games;
-
 using static My1kWordsEe.Feature.Games.Word2WordMatchGame;
 
 namespace My1kWordsEe.Feature.Games

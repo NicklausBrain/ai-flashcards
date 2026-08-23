@@ -2,10 +2,6 @@ using CSharpFunctionalExtensions;
 
 using Microsoft.AspNetCore.Components.Authorization;
 
-using My1kWordsEe.Common;
-using My1kWordsEe.Feature.Samples;
-using My1kWordsEe.Feature.Words;
-
 using static My1kWordsEe.Feature.Favorites.UpdateScoreCommand;
 
 namespace My1kWordsEe.Feature.Favorites

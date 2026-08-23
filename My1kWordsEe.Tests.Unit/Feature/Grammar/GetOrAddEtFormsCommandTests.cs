@@ -1,11 +1,6 @@
 using CSharpFunctionalExtensions;
+
 using Moq;
-using My1kWordsEe.Common;
-using My1kWordsEe.Feature.Games;
-using My1kWordsEe.Feature.Grammar;
-using My1kWordsEe.Feature.Samples;
-using My1kWordsEe.Feature.Words;
-using Xunit;
 
 namespace My1kWordsEe.Tests.Unit.Feature.Grammar
 {

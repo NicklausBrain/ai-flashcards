@@ -2,18 +2,9 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-using My1kWordsEe.Common;
-using My1kWordsEe.Common.Ai;
-using My1kWordsEe.Common.Media;
-using My1kWordsEe.Common.Storage;
 using My1kWordsEe.Components;
 using My1kWordsEe.Components.Account;
 using My1kWordsEe.Data;
-using My1kWordsEe.Feature.Favorites;
-using My1kWordsEe.Feature.Games;
-using My1kWordsEe.Feature.Grammar;
-using My1kWordsEe.Feature.Samples;
-using My1kWordsEe.Feature.Words;
 
 namespace My1kWordsEe
 {

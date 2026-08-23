@@ -5,10 +5,6 @@ using System.Text.Unicode;
 
 using CSharpFunctionalExtensions;
 
-using My1kWordsEe.Common;
-using My1kWordsEe.Feature.Samples;
-using My1kWordsEe.Feature.Games;
-
 using static My1kWordsEe.Feature.Samples.SamplesStorageClient;
 
 namespace My1kWordsEe.Feature.Samples

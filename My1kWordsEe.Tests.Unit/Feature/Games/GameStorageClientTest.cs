@@ -4,8 +4,6 @@ using CSharpFunctionalExtensions;
 
 using Moq;
 
-using My1kWordsEe.Feature.Games;
-
 namespace My1kWordsEe.Tests.Unit.Feature.Games
 {
     public class GameStorageClientTest

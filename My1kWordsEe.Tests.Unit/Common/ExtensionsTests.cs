@@ -1,5 +1,3 @@
-using My1kWordsEe.Common;
-
 namespace My1kWordsEe.Tests.Unit.Common
 {
     public class ExtensionsTests

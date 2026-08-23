@@ -1,7 +1,5 @@
 using CSharpFunctionalExtensions;
 
-using My1kWordsEe.Feature.Words;
-
 namespace My1kWordsEe.Feature.Favorites
 {
     public class ReorderFavoritesCommand

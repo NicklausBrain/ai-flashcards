@@ -2,8 +2,6 @@ using Azure.Storage.Blobs;
 
 using CSharpFunctionalExtensions;
 
-using My1kWordsEe.Common;
-
 using static My1kWordsEe.Common.Conventions;
 
 namespace My1kWordsEe.Feature.Favorites

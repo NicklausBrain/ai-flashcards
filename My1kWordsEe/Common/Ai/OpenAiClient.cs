@@ -2,8 +2,6 @@ using System.Text.Json;
 
 using CSharpFunctionalExtensions;
 
-using My1kWordsEe.Common;
-
 using OpenAI.Chat;
 
 namespace My1kWordsEe.Common.Ai

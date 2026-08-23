@@ -1,7 +1,5 @@
 using System.Text.Json.Serialization;
 
-using My1kWordsEe.Feature.Grammar;
-
 using static My1kWordsEe.Common.Conventions;
 
 namespace My1kWordsEe.Feature.Words

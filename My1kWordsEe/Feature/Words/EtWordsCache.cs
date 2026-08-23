@@ -2,8 +2,6 @@ using System.Globalization;
 using System.Text;
 using System.Text.Json;
 
-using My1kWordsEe.Feature.Samples;
-
 namespace My1kWordsEe.Feature.Words
 {
     public class EtWordsCache

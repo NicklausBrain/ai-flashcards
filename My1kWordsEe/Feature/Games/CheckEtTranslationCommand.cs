@@ -8,8 +8,6 @@ using CSharpFunctionalExtensions;
 
 using Microsoft.ApplicationInsights;
 
-using My1kWordsEe.Common;
-
 namespace My1kWordsEe.Feature.Games
 {
     public class CheckEtTranslationCommand

@@ -1,6 +1,5 @@
 global using My1kWordsEe.Common;
 global using My1kWordsEe.Common.Ai;
-global using My1kWordsEe.Common.Media;
 global using My1kWordsEe.Common.Storage;
 global using My1kWordsEe.Feature.Favorites;
 global using My1kWordsEe.Feature.Games;

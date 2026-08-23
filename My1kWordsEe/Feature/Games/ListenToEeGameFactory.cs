@@ -1,8 +1,5 @@
 using CSharpFunctionalExtensions;
 
-using My1kWordsEe.Feature.Games;
-using My1kWordsEe.Feature.Words;
-
 namespace My1kWordsEe.Feature.Games
 {
     public class ListenToEeGameFactory

@@ -1,9 +1,5 @@
 using CSharpFunctionalExtensions;
 
-using My1kWordsEe.Common;
-using My1kWordsEe.Feature.Samples;
-using My1kWordsEe.Feature.Games;
-
 namespace My1kWordsEe.Feature.Words
 {
     public class GetOrAddEtWordCommand

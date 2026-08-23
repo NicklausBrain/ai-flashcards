@@ -5,9 +5,6 @@ using CSharpFunctionalExtensions;
 
 using Microsoft.AspNetCore.Components.Authorization;
 
-using My1kWordsEe.Common;
-using My1kWordsEe.Feature.Games;
-
 namespace My1kWordsEe.Feature.Words
 {
     public class WordSetsStateContainer

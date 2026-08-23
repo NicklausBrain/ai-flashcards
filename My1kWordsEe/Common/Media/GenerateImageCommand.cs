@@ -1,7 +1,5 @@
 using CSharpFunctionalExtensions;
 
-using My1kWordsEe.Feature.Games;
-
 namespace My1kWordsEe.Common.Media
 {
     public class GenerateImageCommand

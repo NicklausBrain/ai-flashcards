@@ -1,8 +1,5 @@
 using CSharpFunctionalExtensions;
 
-using My1kWordsEe.Feature.Samples;
-using My1kWordsEe.Feature.Words;
-
 namespace My1kWordsEe.Feature.Favorites
 {
     public class RemoveFromFavoritesCommand

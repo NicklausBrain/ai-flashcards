@@ -1,5 +1,3 @@
-using My1kWordsEe.Feature.Samples;
-
 namespace My1kWordsEe.Feature.Favorites
 {
     public record Favorites

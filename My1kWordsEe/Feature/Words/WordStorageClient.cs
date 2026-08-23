@@ -2,8 +2,6 @@ using Azure.Storage.Blobs;
 
 using CSharpFunctionalExtensions;
 
-using My1kWordsEe.Feature.Samples;
-
 using static My1kWordsEe.Common.Conventions;
 
 namespace My1kWordsEe.Feature.Words
