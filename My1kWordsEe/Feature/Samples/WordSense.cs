@@ -25,6 +25,7 @@ namespace My1kWordsEe.Feature.Samples
         public bool IsNoun =>
             this.PartOfSpeech.Et.Contains("nimisõna", StringComparison.OrdinalIgnoreCase) ||
             this.PartOfSpeech.Et.Contains("substantiiv", StringComparison.OrdinalIgnoreCase) ||
+            this.PartOfSpeech.Et.Contains("tegevusnimi", StringComparison.OrdinalIgnoreCase) ||
             this.PartOfSpeech.En.Contains("noun", StringComparison.OrdinalIgnoreCase) ||
             this.PartOfSpeech.En.Contains("subst.", StringComparison.OrdinalIgnoreCase);
 
