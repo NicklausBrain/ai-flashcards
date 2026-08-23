@@ -61,7 +61,7 @@ namespace My1kWordsEe.Tests.Unit.Feature.Games
             var game = new TranslateToEnGame("Tere", 1, _sampleSentence, _checkEnTranslationCommandMock.Object, _favoritesStateContainer.Object);
             game.UserTranslation = "Hi";
 
-            _checkEnTranslationCommandMock.Setup(cmd => cmd.Invoke(It.IsAny<string>(), It.IsAny<string>()))
+            _checkEnTranslationCommandMock.Setup(cmd => cmd.Invoke(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(Result.Success(new EnTranslationCheckResult
                 {
                     EeSentence = "Tere",
@@ -76,7 +76,7 @@ namespace My1kWordsEe.Tests.Unit.Feature.Games
             Assert.True(game.CheckResult.HasValue);
             Assert.True(game.CheckResult.Value.IsSuccess);
             Assert.Equal("Hi", game.CheckResult.Value.Value.EnExpectedSentence);
-            _checkEnTranslationCommandMock.Verify(cmd => cmd.Invoke("Tere", "Hi"), Times.Once);
+            _checkEnTranslationCommandMock.Verify(cmd => cmd.Invoke("Tere", "Hi", "Hello"), Times.Once);
         }
 
         [Fact]
@@ -96,7 +96,7 @@ namespace My1kWordsEe.Tests.Unit.Feature.Games
             var game = new TranslateToEnGame("Tere", 1, _sampleSentence, _checkEnTranslationCommandMock.Object, _favoritesStateContainer.Object);
             game.UserTranslation = "Hi";
 
-            _checkEnTranslationCommandMock.Setup(cmd => cmd.Invoke(It.IsAny<string>(), It.IsAny<string>()))
+            _checkEnTranslationCommandMock.Setup(cmd => cmd.Invoke(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(Result.Failure<EnTranslationCheckResult>("Translation failed"));
 
             await game.Submit();

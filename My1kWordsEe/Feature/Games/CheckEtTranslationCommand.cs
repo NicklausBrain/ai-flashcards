@@ -15,6 +15,7 @@ namespace My1kWordsEe.Feature.Games
         public static readonly string Prompt =
 $@"Sinu ülesandeks on kontrollida õpilase tõlget inglise keelest eesti keelde.
 Ignoreeri oma tšekis suurtähti (ülemine või alumine) ja kirjavahemärke.
+Kasuta väljundis alati korrektset eesti õigekirja (ä, ö, õ, ü, š, ž). Ära asenda täpitähti numbrite ega muude sümbolitega.
 Teie sisend on JSON-objekt:
 {JsonSchemaRecord.For(typeof(Input))}";
 
@@ -27,12 +28,13 @@ Teie sisend on JSON-objekt:
             this.openAiClient = openAiClient;
         }
 
-        public virtual async Task<Result<EtTranslationCheckResult>> Invoke(string etSentence, string enSentence)
+        public virtual async Task<Result<EtTranslationCheckResult>> Invoke(string etSentence, string enSentence, string etExpectedSentence)
         {
             var input = JsonSerializer.Serialize(new Input
             {
                 EnSentence = enSentence.Trim('.', ' ').ToLowerInvariant(),
-                EtUserSentence = etSentence.Trim('.', ' ').ToLowerInvariant()
+                EtUserSentence = etSentence.Trim('.', ' ').ToLowerInvariant(),
+                EtExpectedSentence = etExpectedSentence.Trim('.', ' ').ToLowerInvariant(),
             }, new JsonSerializerOptions
             {
                 WriteIndented = false,
@@ -50,6 +52,18 @@ Teie sisend on JSON-objekt:
                 { "enSentence", enSentence },
             });
 
+            // Canonical Estonian/reference fields come from local truth, not the AI echo,
+            // which can garble diacritics (e.g. "värske" -> "ve4rske"). Only Match and EnComment are trusted from the model.
+            if (result.IsSuccess)
+            {
+                return Result.Success(result.Value with
+                {
+                    EnSentence = enSentence,
+                    EtUserSentence = etSentence,
+                    EtExpectedSentence = etExpectedSentence,
+                });
+            }
+
             return result;
         }
 
@@ -60,6 +74,9 @@ Teie sisend on JSON-objekt:
 
             [Description("Kasutaja poolt tehtud tõlge eesti keelde")]
             public string EtUserSentence { get; init; }
+
+            [Description("Eeldatav eestikeelne lause")]
+            public string EtExpectedSentence { get; init; }
         }
     }
 

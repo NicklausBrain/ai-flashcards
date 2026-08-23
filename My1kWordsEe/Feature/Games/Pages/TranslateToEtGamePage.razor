@@ -5,12 +5,8 @@
 
 @using BlazorBootstrap
 @using CSharpFunctionalExtensions
-@using My1kWordsEe.Components.Layout
 @using My1kWordsEe.Common
 @using My1kWordsEe.Feature.Games
-@using My1kWordsEe.Common
-@using My1kWordsEe.Feature.Games
-@using My1kWordsEe.Feature.Words
 @using Microsoft.ApplicationInsights
 
 @inject TranslateToEtGameFactory TranslateToEtGameFactory
@@ -54,7 +50,7 @@
 
     private async Task OnSubmit()
     {
-        await Game.Execute(async game =>
+        await Game.Tap(async game =>
         {
             await game.Submit();
             _ = PlaySample();

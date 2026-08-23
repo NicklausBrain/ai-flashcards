@@ -71,11 +71,12 @@ namespace My1kWordsEe.Feature.Games
                 IsCheckInProgress = true;
                 CheckResult = await checkEtTranslationCommand.Invoke(
                     etSentence: userInput,
-                    enSentence: EnSentence);
+                    enSentence: EnSentence,
+                    etExpectedSentence: defaultEtTranslation);
                 IsCheckInProgress = false;
             }
 
-            CheckResult.Execute(r => r.Tap(r =>
+            CheckResult.Tap(r => r.Tap(r =>
             {
                 var update = r.Match >= 4
                 ? UpdateScoreCommand.ScoreUpdate.Up

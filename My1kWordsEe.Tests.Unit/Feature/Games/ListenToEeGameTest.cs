@@ -59,7 +59,7 @@ namespace My1kWordsEe.Tests.Unit.Feature.Games
             var game = new ListenToEeGame("Tere", 1, _sampleSentence, _checkEeListeningCommandMock.Object);
             game.UserInput = "Tere";
 
-            _checkEeListeningCommandMock.Setup(cmd => cmd.Invoke(It.IsAny<string>(), It.IsAny<string>()))
+            _checkEeListeningCommandMock.Setup(cmd => cmd.Invoke(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(Result.Success(new EeListeningCheckResult
                 {
                     EeSentence = "Tere tulemast",
@@ -74,7 +74,7 @@ namespace My1kWordsEe.Tests.Unit.Feature.Games
             Assert.True(game.CheckResult.HasValue);
             Assert.True(game.CheckResult.Value.IsSuccess);
             Assert.Equal("Tere tulemast", game.CheckResult.Value.Value.EeSentence);
-            _checkEeListeningCommandMock.Verify(cmd => cmd.Invoke("Tere tulemast", "Tere"), Times.Once);
+            _checkEeListeningCommandMock.Verify(cmd => cmd.Invoke("Tere tulemast", "Welcome", "Tere"), Times.Once);
         }
 
         [Fact]
@@ -96,7 +96,7 @@ namespace My1kWordsEe.Tests.Unit.Feature.Games
             var game = new ListenToEeGame("Tere", 1, _sampleSentence, _checkEeListeningCommandMock.Object);
             game.UserInput = "Pere";
 
-            _checkEeListeningCommandMock.Setup(cmd => cmd.Invoke(It.IsAny<string>(), It.IsAny<string>()))
+            _checkEeListeningCommandMock.Setup(cmd => cmd.Invoke(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(Result.Failure<EeListeningCheckResult>("Listening failed"));
 
             await game.Submit();
