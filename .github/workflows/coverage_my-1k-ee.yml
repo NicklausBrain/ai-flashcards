@@ -1,5 +1,9 @@
 name: Unit Test Coverage - my-1k-ee
 
+permissions:
+  contents: read
+  pull-requests: write
+
 on:
   push:
     branches: [main]
@@ -46,6 +50,27 @@ jobs:
           path: My1kWordsEe.Tests.Unit/TestResults/CoverageReport
           if-no-files-found: error
           retention-days: 14
+
+      - name: Prepare PR coverage comment
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "## My1kWordsEe Unit Test Coverage Report" > coverage-comment.md
+          echo "" >> coverage-comment.md
+          echo "**Project:** \`My1kWordsEe.Tests.Unit\`  " >> coverage-comment.md
+          echo "**Workflow:** \`${{ github.workflow }}\`  " >> coverage-comment.md
+          echo "**Commit:** \`${{ github.sha }}\`  " >> coverage-comment.md
+          echo "**Run:** https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> coverage-comment.md
+          echo "" >> coverage-comment.md
+          cat My1kWordsEe.Tests.Unit/TestResults/CoverageReport/SummaryGithub.md >> coverage-comment.md
+          echo "" >> coverage-comment.md
+          echo "> Full HTML report is available in the **unit-test-coverage** artifact for this workflow run." >> coverage-comment.md
+
+      - name: Post sticky PR coverage comment
+        if: github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: unit-test-coverage
+          path: coverage-comment.md
 
       - name: Enforce minimum line coverage
         run: |
