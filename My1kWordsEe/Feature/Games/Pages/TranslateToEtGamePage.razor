@@ -54,7 +54,7 @@
 
     private async Task OnSubmit()
     {
-        await Game.Execute(async game =>
+        await Game.Tap(async game =>
         {
             await game.Submit();
             _ = PlaySample();

@@ -54,7 +54,7 @@
 
     private async Task OnSubmit()
     {
-        await Game.Execute(async game =>
+        await Game.Tap(async game =>
         {
             await game.Submit();
             _ = PlaySample();
@@ -63,14 +63,14 @@
 
     private async Task OnGiveUp()
     {
-        Game.Execute(g => g.GiveUp());
+        Game.Tap(g => g.GiveUp());
 
         _ = PlaySample();
     }
 
     private async Task PlaySample()
     {
-        await Game.Execute(async g =>
+        await Game.Tap(async g =>
         {
             await JS.InvokeVoidAsync("playAudioSample", g.AudioUrl);
         });
