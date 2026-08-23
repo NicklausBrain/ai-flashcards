@@ -20,11 +20,11 @@ namespace My1kWordsEe.Feature.Games
             this.openAiClient = openAiClient;
         }
 
-        public virtual async Task<Result<EeListeningCheckResult>> Invoke(string etSentence, string userInput)
+        public virtual async Task<Result<EeListeningCheckResult>> Invoke(string etSentence, string enSentence, string userInput)
         {
             var prompt = "Your task is to check user's listening to Estonian speech.\n" +
                          "Ignore the letters case (upper or lower) and termination symbols in your check.\n" +
-                         "Ignore the  diacritical marks.\n" +
+                         "Ignore the  diacritical marks when judging correctness, but always output correct Estonian spelling (ä, ö, õ, ü, š, ž) and never replace Estonian letters with digits or other symbols.\n" +
                          $"Your input is JSON object:\n" +
                          "```\n{\n" +
                          "\"ee_sentence\": \"<eestikeelne lause>\", \"ee_user_sentence\": \"<mida kasutaja ära tundis>\n" +
@@ -54,6 +54,18 @@ namespace My1kWordsEe.Feature.Games
                 { "etSentence", etSentence },
                 { "userInput", userInput },
             });
+
+            // Canonical Estonian/reference fields come from local truth, not the AI echo,
+            // which can garble diacritics. Only Match and EnComment are trusted from the model.
+            if (result.IsSuccess)
+            {
+                return Result.Success(result.Value with
+                {
+                    EeSentence = etSentence,
+                    EnSentence = enSentence,
+                    EeUserSentence = userInput,
+                });
+            }
 
             return result;
         }

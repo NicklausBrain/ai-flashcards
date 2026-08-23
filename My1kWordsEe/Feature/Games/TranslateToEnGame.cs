@@ -71,7 +71,8 @@ namespace My1kWordsEe.Feature.Games
                 IsCheckInProgress = true;
                 CheckResult = await checkEnTranslationCommand.Invoke(
                     etSentence: EtSentence,
-                    enSentence: userInput);
+                    enSentence: userInput,
+                    enExpectedSentence: defaultEnTranslation);
                 IsCheckInProgress = false;
             }
 

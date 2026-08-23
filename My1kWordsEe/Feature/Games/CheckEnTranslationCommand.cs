@@ -20,13 +20,14 @@ namespace My1kWordsEe.Feature.Games
             this.openAiClient = openAiClient;
         }
 
-        public virtual async Task<Result<EnTranslationCheckResult>> Invoke(string etSentence, string enSentence)
+        public virtual async Task<Result<EnTranslationCheckResult>> Invoke(string etSentence, string enSentence, string enExpectedSentence)
         {
             var prompt = "Your task is to check user's translation from Estonian into English.\n" +
                          "Ignore the letters case (upper or lower) and punctuation symbols in your check.\n" +
+                         "Always use correct Estonian spelling (ä, ö, õ, ü, š, ž) in the output. Never replace Estonian letters with digits or other symbols.\n" +
                          $"Your input is JSON object:\n" +
                          "```\n{\n" +
-                         "\"ee_sentence\": \"<eestikeelne lause>\", \"en_user_sentence\": \"<user translation to English>\n" +
+                         "\"ee_sentence\": \"<eestikeelne lause>\", \"en_user_sentence\": \"<user translation to English>\", \"en_expected_sentence\": \"<expected translation to English>\"\n" +
                          "}\n```\n" +
                          "Your outpur is JSON object:\n" +
                          "```\n{\n" +
@@ -41,6 +42,7 @@ namespace My1kWordsEe.Feature.Games
             {
                 ee_sentence = etSentence.Trim('.', ' ').ToLowerInvariant(),
                 en_user_sentence = enSentence.Trim('.', ' ').ToLowerInvariant(),
+                en_expected_sentence = enExpectedSentence.Trim('.', ' ').ToLowerInvariant(),
             }, new JsonSerializerOptions
             {
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
@@ -53,6 +55,18 @@ namespace My1kWordsEe.Feature.Games
                 { "etSentence", etSentence },
                 { "enSentence", enSentence },
             });
+
+            // Canonical Estonian source comes from local truth, not the AI echo,
+            // which can garble diacritics. Only Match and EnComment are trusted from the model.
+            if (result.IsSuccess)
+            {
+                return Result.Success(result.Value with
+                {
+                    EeSentence = etSentence,
+                    EnUserSentence = enSentence,
+                    EnExpectedSentence = enExpectedSentence,
+                });
+            }
 
             return result;
         }
