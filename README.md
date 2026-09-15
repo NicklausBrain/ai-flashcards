@@ -12,6 +12,23 @@
 - [tartu nlp](https://neurokone.ee/) for speech
 - [blazor](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor) + [blazor bootstrap](https://demos.blazorbootstrap.com/)
 
+## ./source-data
+
+- most used Estonian words utilized as seed data to generate initial app content
+
+## Local setup
+
+- [dotnet 10](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
+- setup the api keys
+
+```
+dotnet user-secrets set "Secrets:StabilityAiKey" "XYZ"
+dotnet user-secrets set "Secrets:OpenAiKey" "XYZ"
+dotnet user-secrets set "Secrets:AzureCosmosConnectionString" "XYZ"
+dotnet user-secrets set "Secrets:AzureBlobConnectionString" "XYZ"
+dotnet user-secrets set "Secrets:AppInsightsConnectionString" "XYZ"
+```
+
 ## Architecture and communication
 
 This is a **single .NET 10 Blazor Web App**, not a collection of microservices. Interactive pages run on the server; the browser sends UI events and receives rendering updates over a Blazor SignalR circuit. Features use **Command and Query Separation (CQS)** and dependency injection to call C# services directly, rather than calling a separate REST backend.
@@ -91,14 +108,14 @@ flowchart LR
 
 Each slice under [`Feature/`](My1kWordsEe/Feature) keeps its models and relevant commands, queries, storage clients, state containers, pages or components together. Commands and storage clients are generally singleton services; favorites/word-set state and game factories are scoped to the interactive circuit. These in-memory objects are not the persistent store.
 
-| Stored information | Location |
-| --- | --- |
-| Base word catalog loaded by `EtWordsCache` | App file: `My1kWordsEe/wwwroot/data/et-words.json` |
-| Generated word senses, grammatical forms and example sentences | Blob containers: `et-word`, `et-forms`, `et-samples` |
-| Per-user favorites/learning scores and custom word sets | Blob containers: `favorites`, `word-sets` |
-| Reusable generated game content | Blob container: `cached-games` |
-| Speech, images and image prompt text | Blob containers: `audio` (WAV), `image` (JPG and TXT) |
-| Accounts and Identity records | Cosmos database: `Auth`; container: `ApplicationDbContext` |
+| Stored information                                             | Location                                                   |
+| -------------------------------------------------------------- | ---------------------------------------------------------- |
+| Base word catalog loaded by `EtWordsCache`                     | App file: `My1kWordsEe/wwwroot/data/et-words.json`         |
+| Generated word senses, grammatical forms and example sentences | Blob containers: `et-word`, `et-forms`, `et-samples`       |
+| Per-user favorites/learning scores and custom word sets        | Blob containers: `favorites`, `word-sets`                  |
+| Reusable generated game content                                | Blob container: `cached-games`                             |
+| Speech, images and image prompt text                           | Blob containers: `audio` (WAV), `image` (JPG and TXT)      |
+| Accounts and Identity records                                  | Cosmos database: `Auth`; container: `ApplicationDbContext` |
 
 ### Representative user flows
 
@@ -108,34 +125,17 @@ Each slice under [`Feature/`](My1kWordsEe/Feature) keeps its models and relevant
 
 ### Repository map and supporting dependencies
 
-| Project or directory | Responsibility and relationship |
-| --- | --- |
-| [`My1kWordsEe/Program.cs`](My1kWordsEe/Program.cs) | Start here: DI registrations, required secrets, Blazor hosting, Identity/Cosmos configuration and telemetry. `Main` ensures the auth database exists before serving requests. |
-| [`My1kWordsEe/Components/`](My1kWordsEe/Components) | Application shell, routing, navigation, shared pages and account UI. Feature-specific UI lives with its slice. |
-| [`My1kWordsEe/Feature/`](My1kWordsEe/Feature) | The five learning feature slices shown above. Start with a page, then follow its injected commands, state containers or game factory. |
-| [`My1kWordsEe/Common/`](My1kWordsEe/Common) | Shared AI adapters, media generation/storage, Blob Storage facade and helpers. |
-| [`My1kWordsEe/AuthData/`](My1kWordsEe/AuthData) | Identity user model and EF Core Cosmos mappings. The registered email sender is a no-op, not a production email integration. |
-| [`My1kWordsEe.Cmd/`](My1kWordsEe.Cmd) | Developer console utility referencing the web project and reusing `BuildWebHost`/DI for data-generation routines. Calls in `Main` are currently commented out; it is not a running background worker. |
-| [`My1kWordsEe.Tests.Unit/`](My1kWordsEe.Tests.Unit) | xUnit tests referencing the app; Moq is available for substituting dependencies. Not a runtime dependency. |
-| [`My1kWordsEe.Tests.E2E/`](My1kWordsEe.Tests.E2E) | NUnit/Playwright browser tests referencing the app and starting it with `BuildWebHost`. The shared fixture uses the real service registrations, so secrets and reachable services are required for exercised integrations. |
-| [`source-data/`](source-data) and [`scripts/`](scripts) | Seed word lists and developer data-maintenance scripts. The app loads its packaged JSON catalog, not this source directory directly. |
-| [`.github/workflows/`](.github/workflows) | Test/coverage automation and deployment. The deployment workflow builds/publishes the web app after a successful Playwright workflow on `main`, then deploys to Azure App Service `my-1k-ee`. |
+| Project or directory                                    | Responsibility and relationship                                                                                                                                                                                            |
+| ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`My1kWordsEe/Program.cs`](My1kWordsEe/Program.cs)      | Start here: DI registrations, required secrets, Blazor hosting, Identity/Cosmos configuration and telemetry. `Main` ensures the auth database exists before serving requests.                                              |
+| [`My1kWordsEe/Components/`](My1kWordsEe/Components)     | Application shell, routing, navigation, shared pages and account UI. Feature-specific UI lives with its slice.                                                                                                             |
+| [`My1kWordsEe/Feature/`](My1kWordsEe/Feature)           | The five learning feature slices shown above. Start with a page, then follow its injected commands, state containers or game factory.                                                                                      |
+| [`My1kWordsEe/Common/`](My1kWordsEe/Common)             | Shared AI adapters, media generation/storage, Blob Storage facade and helpers.                                                                                                                                             |
+| [`My1kWordsEe/AuthData/`](My1kWordsEe/AuthData)         | Identity user model and EF Core Cosmos mappings. The registered email sender is a no-op, not a production email integration.                                                                                               |
+| [`My1kWordsEe.Cmd/`](My1kWordsEe.Cmd)                   | Developer console utility referencing the web project and reusing `BuildWebHost`/DI for data-generation routines. Calls in `Main` are currently commented out; it is not a running background worker.                      |
+| [`My1kWordsEe.Tests.Unit/`](My1kWordsEe.Tests.Unit)     | xUnit tests referencing the app; Moq is available for substituting dependencies. Not a runtime dependency.                                                                                                                 |
+| [`My1kWordsEe.Tests.E2E/`](My1kWordsEe.Tests.E2E)       | NUnit/Playwright browser tests referencing the app and starting it with `BuildWebHost`. The shared fixture uses the real service registrations, so secrets and reachable services are required for exercised integrations. |
+| [`source-data/`](source-data) and [`scripts/`](scripts) | Seed word lists and developer data-maintenance scripts. The app loads its packaged JSON catalog, not this source directory directly.                                                                                       |
+| [`.github/workflows/`](.github/workflows)               | Test/coverage automation and deployment. The deployment workflow builds/publishes the web app after a successful Playwright workflow on `main`, then deploys to Azure App Service `my-1k-ee`.                              |
 
 The console and both test projects depend on the web project, **not the other way around**. Production serves the web application; the supporting projects are development/test tools. Package versions are centralized in [`Directory.Packages.props`](Directory.Packages.props).
-
-## Local setup
-
-- [dotnet 10](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
-- setup the api keys
-
-```
-dotnet user-secrets set "Secrets:StabilityAiKey" "XYZ"
-dotnet user-secrets set "Secrets:OpenAiKey" "XYZ"
-dotnet user-secrets set "Secrets:AzureCosmosConnectionString" "XYZ"
-dotnet user-secrets set "Secrets:AzureBlobConnectionString" "XYZ"
-dotnet user-secrets set "Secrets:AppInsightsConnectionString" "XYZ"
-```
-
-## ./source-data
-
-- most used Estonian words utilized as seed data to generate initial app content
